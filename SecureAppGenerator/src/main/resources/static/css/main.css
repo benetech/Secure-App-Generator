@@ -4,35 +4,36 @@ body {
 
 .cellphone_logo {
     position: absolute;
-    top: 107px;
-    left: 43px;
+    top: 101px;
+    left: 33px;
     padding: 2px;
-    background-color: #4D4D4D;
+    background-color: #3C3D3C;
   }
 
 .cellphone_title {
     position: absolute;
-    top: 107px;
-    left: 77px;
-    width: 222px;
-    padding: 2px;
-    background-color: #4D4D4D;
+    top: 101px;
+    left: 67px;
+    width: 211px;
+    height: 32px;
+    padding: 3px;
+    background-color: #3C3D3C;
     color: #6ECDE4;
     font-weight: bold;
-    font-size: 25px;
+    font-size: 24px;
   }
 
 .cellphone_center {
     position: absolute;
-    top: 140px;
-    left: 43px;
-    width: 252px;
-    height: 400px;
+    top: 138px;
+    left: 33px;
+    width: 243px;
+    height: 352px;
     padding: 4px;
     background-color: #4D4D4D;
     color: yellow;
     font-weight: bold;
-    font-size: 25px;
+    font-size: 24px;
   }
 
 .main_title {
@@ -71,7 +72,7 @@ body {
 
 .info_area_2 {
     position: absolute;
-    top: 450px;
+    top: 375px;
     left: 450px;
     padding: 4px;
     background-color: #3C3D3C;
@@ -82,7 +83,7 @@ body {
   
 .info_area_3 {
     position: absolute;
-    top: 400px;
+    top: 350px;
     left: 550px;
     padding: 4px;
     background-color: #3C3D3C;
@@ -93,7 +94,7 @@ body {
   
 .button_start{
     position: absolute;
-    top: 600px;
+    top: 500px;
     left: 550px;
 	background-color: yellow;
     color: Black;
@@ -103,7 +104,7 @@ body {
 
 .button_previous{
     position: absolute;
-    top: 600px;
+    top: 500px;
     left: 450px;
 	background-color: yellow;
     color: Black;
@@ -113,7 +114,7 @@ body {
 
 .button_next{
     position: absolute;
-    top: 600px;
+    top: 500px;
     left: 650px;
 	background-color: yellow;
     color: Black;
