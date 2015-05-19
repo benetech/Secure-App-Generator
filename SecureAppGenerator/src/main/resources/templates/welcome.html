@@ -1,12 +1,43 @@
 <!DOCTYPE HTML>
 <html xmlns:th="http://www.thymeleaf.org">
 	<head> 
-	    <title>Welcome: Secure App Generator</title> 
+	    <title>Secure App Generator</title> 
 	    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
   		  <link rel="stylesheet" type="text/css" media="all"  
      		 href="../css/main.css" th:href="@{../css/main.css}" />
  	</head>
 	<body>
-		<div class="style1">Welcome To the Secure App Generator</div>
+	
+      	<img src="../images/cellphone.png" alt="Android Cellphone"/>
+		<div class="cellphone_center">Secure Data Collection<p>Customized for your projects</p></div>
+     	<div class="main_title">
+     		secureApp generator
+		</div>
+     	<div class="sub_title">
+     		powered by<img  src="../images/MartusLogoWhite.png" alt="Martus"/>
+		</div>
+		
+     	<div class="info_area_1">
+     		Create a custom app for your project
+     		<p>quick and easy installation for your field team!</p>
+     		<p>No need for complicated setup or configuration!</p>
+		</div>
+	    	
+	    	<div class="info_area_2">
+     		You can
+		</div>
+     	
+     	<div class="info_area_3">
+     		<ul>
+	     		<li>Add your project name and logo</li>
+	     		<li>Specify the forms your field team can use</li>
+	     		<li>Ensure they always use Tor</li>
+	     		<li>Include geo-location of records sent</li>
+	     	</ul>
+		</div>
+			
+		<form method="POST" action="/welcome">
+			<input class="button_start" name="next" type="submit" value="GET STARTED"/>
+		</form>
 	</body>
 </html>

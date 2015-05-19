@@ -29,5 +29,5 @@ public interface WebPage
 {
 	public static final String WELCOME = "welcome";
 	public static final String ERROR = "error";
-
+	public static final String NAME_APP = "nameApp";
 }

@@ -51,9 +51,16 @@ public class WelcomePage
 	}
 
 	@RequestMapping(value="/"+ WebPage.WELCOME, method=RequestMethod.GET)
-    public String provideUploadInfo(HttpSession session, Model model) 
+    public String directError(HttpSession session, Model model) 
     {
 		setInvalidResults(session);
         return WebPage.ERROR;
     }
+	
+	@RequestMapping(value="/"+ WebPage.WELCOME, method=RequestMethod.POST)
+    public String loadAppNamePage(HttpSession session, Model model) 
+    {
+        return WebPage.NAME_APP;
+    }
+	
 }

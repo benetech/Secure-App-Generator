@@ -1,9 +1,102 @@
-.style1 
-{
-  background-color: #00FF00;
+body {
+    background-color: #3C3D3C;
 }
 
-.style2 
-{
-  background-color: #FFDDAA;
+.cellphone_center {
+    position: absolute;
+    top: 142px;
+    left: 56px;
+    width: 318px;
+    height: 506px;
+    padding: 4px;
+    background-color: #4D4D4D;
+    color: yellow;
+    font-weight: bold;
+    font-size: 28px;
+  }
+
+.main_title {
+    position: absolute;
+    top: 50px;
+    left: 450px;
+    padding: 4px;
+    background-color: #3C3D3C;
+    color: white;
+    font-weight: bold;
+    font-size: 50px;
+  }
+  
+.sub_title {
+    position: absolute;
+    top: 125px;
+    left: 550px;
+    padding: 4px;
+    background-color: #3C3D3C;
+    color: #6ECDE4; 
+    font-weight: normal;
+    font-size: 24px;
+  }
+  
+.info_area_1 {
+    position: absolute;
+    top: 200px;
+    left: 500px;
+    padding: 4px;
+    background-color: #3C3D3C;
+    color: white;
+    font-weight: normal;
+    font-size: 20px;
+  }
+  
+
+.info_area_2 {
+    position: absolute;
+    top: 450px;
+    left: 450px;
+    padding: 4px;
+    background-color: #3C3D3C;
+    color: white;
+    font-weight: normal;
+    font-size: 20px;
+  }
+  
+.info_area_3 {
+    position: absolute;
+    top: 400px;
+    left: 550px;
+    padding: 4px;
+    background-color: #3C3D3C;
+    color: #6ECDE4;
+    font-weight: normal;
+    font-size: 20px;
+  }
+  
+.button_start{
+    position: absolute;
+    top: 600px;
+    left: 550px;
+	background-color: yellow;
+    color: Black;
+    font-weight: bold;
+    font-size: 36px;
 }
+
+.button_previous{
+    position: absolute;
+    top: 600px;
+    left: 450px;
+	background-color: yellow;
+    color: Black;
+    font-weight: bold;
+    font-size: 36px;
+}
+
+.button_next{
+    position: absolute;
+    top: 600px;
+    left: 650px;
+	background-color: yellow;
+    color: Black;
+    font-weight: bold;
+    font-size: 36px;
+}  
