@@ -39,21 +39,14 @@ public class WelcomePage
 	@RequestMapping({"/"})
 	String index(HttpSession session) 
 	{
-		setInvalidResults(session);
+		SecureAppGeneratorApplication.setInvalidResults(session);
 	    return WebPage.WELCOME;
-	}
-
-	private void setInvalidResults(HttpSession session) 
-	{
-		ErrorResults invalidRequest = new ErrorResults();
-		invalidRequest.setResults("Invalid Request");  //TODO move this to a localizable String Table
-		session.setAttribute("invalidRequest", invalidRequest);
 	}
 
 	@RequestMapping(value="/"+ WebPage.WELCOME, method=RequestMethod.GET)
     public String directError(HttpSession session, Model model) 
     {
-		setInvalidResults(session);
+		SecureAppGeneratorApplication.setInvalidResults(session);
         return WebPage.ERROR;
     }
 	
