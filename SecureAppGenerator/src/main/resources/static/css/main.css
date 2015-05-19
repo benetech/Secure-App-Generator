@@ -2,17 +2,37 @@ body {
     background-color: #3C3D3C;
 }
 
+.cellphone_logo {
+    position: absolute;
+    top: 107px;
+    left: 43px;
+    padding: 2px;
+    background-color: #4D4D4D;
+  }
+
+.cellphone_title {
+    position: absolute;
+    top: 107px;
+    left: 77px;
+    width: 222px;
+    padding: 2px;
+    background-color: #4D4D4D;
+    color: #6ECDE4;
+    font-weight: bold;
+    font-size: 25px;
+  }
+
 .cellphone_center {
     position: absolute;
-    top: 142px;
-    left: 56px;
-    width: 318px;
-    height: 506px;
+    top: 140px;
+    left: 43px;
+    width: 252px;
+    height: 400px;
     padding: 4px;
     background-color: #4D4D4D;
     color: yellow;
     font-weight: bold;
-    font-size: 28px;
+    font-size: 25px;
   }
 
 .main_title {

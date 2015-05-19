@@ -17,6 +17,7 @@ public class SecureAppGeneratorApplication
 	{
 		ErrorResults invalidRequest = new ErrorResults();
 		invalidRequest.setResults("Invalid Request");  //TODO move this to a localizable String Table
-		session.setAttribute("invalidRequest", invalidRequest);
+		session.setAttribute(SessionAttributes.INVALID_REQUEST, invalidRequest);
 	}
+	
 }

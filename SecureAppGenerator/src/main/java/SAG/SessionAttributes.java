@@ -25,11 +25,8 @@ Boston, MA 02111-1307, USA.
 
 package SAG;
 
-public interface WebPage
+public class SessionAttributes
 {
-	public static final String WELCOME = "welcome";
-	public static final String ERROR = "error";
-	public static final String NAME_APP = "nameApp";
-	public static final String NAME_APP_PREV = "nameApp/previous";
-	public static final String NAME_APP_NEXT = "nameApp/next";
+	final public static String INVALID_REQUEST = "invalidRequest";
+	final public static String APP_CONFIG = "config";
 }
