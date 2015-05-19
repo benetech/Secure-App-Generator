@@ -31,29 +31,31 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 
 @Controller
-public class WelcomePage
+public class NameAppController
 {
-
-	@RequestMapping({"/"})
-	String index(HttpSession session) 
-	{
-		SecureAppGeneratorApplication.setInvalidResults(session);
-	    return WebPage.WELCOME;
-	}
-
-	@RequestMapping(value="/"+ WebPage.WELCOME, method=RequestMethod.GET)
+	@RequestMapping(value="/"+ WebPage.NAME_APP, method=RequestMethod.GET)
     public String directError(HttpSession session, Model model) 
     {
 		SecureAppGeneratorApplication.setInvalidResults(session);
         return WebPage.ERROR;
     }
-	
-	@RequestMapping(value="/"+ WebPage.WELCOME, method=RequestMethod.POST)
-    public String loadAppNamePage(HttpSession session, Model model) 
+
+	@RequestMapping(value="/"+ WebPage.NAME_APP_PREV, method=RequestMethod.POST)
+    public String goBack(HttpSession session, Model model) 
     {
-        return WebPage.NAME_APP;
+        return WebPage.WELCOME;
     }
+
+	@RequestMapping(value="/"+ WebPage.NAME_APP_NEXT, method=RequestMethod.POST)
+    public String nextPage(HttpSession session, Model model, @RequestParam("appName") String name) 
+    {
+		AppConfiguration config = new AppConfiguration();
+		config.setAppName(name);
+		session.setAttribute(SessionAttributes.APP_CONFIG, config);
 	
+        return WebPage.ERROR;
+    }
 }
