@@ -25,8 +25,8 @@
       		My Secure App
 		</div>
  
-     	<div class="info_area_1">
-     		Name your app!
+     	<div class="page_title">
+     		<h1>Name Your Custom App!</h1>
  		</div>
    	
  			
@@ -36,7 +36,9 @@
 		
 		<form method="POST" th:action="@{/nameApp/next}">
    		 	<div class="info_area_3">
- 				App name: <input type="text" name="appName"/>
+ 				name: <input type="text" name="appName"/>
+ 				<p/>
+ 				Give your new app a name
  			</div>
 			<input class="button_next" name="next" type="submit" value="Next"/>
 		</form>

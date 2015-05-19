@@ -57,6 +57,15 @@ body {
     font-weight: normal;
     font-size: 24px;
   }
+
+.page_title {
+    position: absolute;
+    top: 250px;
+    left: 500px;
+    padding: 4px;
+    background-color: #3C3D3C;
+    color: lightgray;
+  }
   
 .info_area_1 {
     position: absolute;
