@@ -28,6 +28,7 @@ package SAG;
 public class AppConfiguration
 {
 	private String appName;
+	private String appNameError;
 	
 	public void setAppName(String name)
 	{
@@ -37,5 +38,15 @@ public class AppConfiguration
 	public String getAppName()
 	{
 		return appName;
+	}
+
+	public String getAppNameError()
+	{
+		return appNameError;
+	}
+
+	public void setAppNameError(String appNameError)
+	{
+		this.appNameError = appNameError;
 	}
 }

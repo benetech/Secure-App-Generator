@@ -34,9 +34,19 @@
 			<input class="button_previous" name="previous" type="submit" value="Previous"/>
 		</form>
 		
-		<form method="POST" th:action="@{/nameApp/next}">
+		<form action = "#/nameApp/next" th:action="@{/nameApp/next}" th:object="${appConfig}" method="POST">
    		 	<div class="info_area_3">
- 				name: <input type="text" name="appName"/>
+           		 <table>
+	                <tr>
+ 	                    <td>Name:</td>
+	                    <td>
+	                    		<input type="text" th:field="*{appName}" />
+	                    	</td>
+	                    <td>
+	                    		<span class="error_msg" th:if="*{appNameError != null}" th:text="*{appNameError}">Errors</span>
+	                    	</td>
+	                </tr>
+                </table>
  				<p/>
  				Give your new app a name
  			</div>

@@ -31,10 +31,10 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.servlet.config.annotation.WebMvcConfigurerAdapter;
 
 @Controller
-public class NameAppController
+public class NameAppController extends WebMvcConfigurerAdapter
 {
 	@RequestMapping(value="/"+ WebPage.NAME_APP, method=RequestMethod.GET)
     public String directError(HttpSession session, Model model) 
@@ -49,13 +49,32 @@ public class NameAppController
         return WebPage.WELCOME;
     }
 
-	@RequestMapping(value="/"+ WebPage.NAME_APP_NEXT, method=RequestMethod.POST)
-    public String nextPage(HttpSession session, Model model, @RequestParam("appName") String name) 
-    {
-		AppConfiguration config = new AppConfiguration();
-		config.setAppName(name);
-		session.setAttribute(SessionAttributes.APP_CONFIG, config);
 	
+	@RequestMapping(value="/"+ WebPage.NAME_APP_NEXT, method=RequestMethod.POST)
+	
+	public String nextPage(HttpSession session, Model model, AppConfiguration appConfig) 
+    {
+		if (!validateAppName(appConfig)) 
+		{
+			model.addAttribute("appConfig", appConfig);
+			return WebPage.NAME_APP;
+		}
+		session.setAttribute(SessionAttributes.APP_CONFIG, appConfig);
         return WebPage.ERROR;
     }
+
+	private boolean validateAppName(AppConfiguration appConfig)
+	{
+		String name = appConfig.getAppName();
+		int length = name.length();
+		if(length<3 || length>30)
+		{
+			appConfig.setAppNameError("Error: App name must be between 3-30 characters long.");
+			return false;
+		}
+		//TODO Check to see if app name contains special characters such 
+		
+		appConfig.setAppNameError(null);
+		return true;
+	}
 }
