@@ -63,9 +63,11 @@ public class NameAppController extends WebMvcConfigurerAdapter
         return WebPage.ERROR;
     }
 
+	//TODO add unit tests!
 	private boolean validateAppName(AppConfiguration appConfig)
 	{
-		String name = appConfig.getAppName();
+		String name = appConfig.getAppName().trim();
+		appConfig.setAppName(name);
 		int length = name.length();
 		if(length<3 || length>30)
 		{
