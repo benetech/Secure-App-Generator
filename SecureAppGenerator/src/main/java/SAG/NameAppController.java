@@ -74,8 +74,12 @@ public class NameAppController extends WebMvcConfigurerAdapter
 			appConfig.setAppNameError("Error: App name must be between 3-30 characters long.");
 			return false;
 		}
-		//TODO Check to see if app name contains special characters such 
 		
+		if (!name.matches("^[^!\"#$%&'()\\[\\]*+,/:;<=>?@\\^`{|}~]+$")) 
+		{
+			appConfig.setAppNameError("Error: App name nay not contain any special characters");
+			return false;
+		}		
 		appConfig.setAppNameError(null);
 		return true;
 	}
