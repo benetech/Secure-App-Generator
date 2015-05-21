@@ -40,7 +40,7 @@
 	                <tr>
  	                    <td>Name:</td>
 	                    <td>
-	                    		<input type="text" th:field="*{appName}" />
+	                    		<input type="text" th:field="*{appName}" autofocus="true"/>
 	                    	</td>
 	                    <td>
 	                    		<span class="error_msg" th:if="*{appNameError != null}" th:text="*{appNameError}">Errors</span>
