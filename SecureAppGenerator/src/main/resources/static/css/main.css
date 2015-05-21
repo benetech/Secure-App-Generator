@@ -114,8 +114,8 @@ body {
 .button_previous{
     position: absolute;
     top: 500px;
-    left: 450px;
-	background-color: yellow;
+    left: 400px;
+	background-color: gray;
     color: Black;
     font-weight: bold;
     font-size: 36px;
@@ -124,7 +124,7 @@ body {
 .button_next{
     position: absolute;
     top: 500px;
-    left: 650px;
+    right: 100px;
 	background-color: yellow;
     color: Black;
     font-weight: bold;

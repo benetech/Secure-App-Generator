@@ -31,7 +31,7 @@
    	
  			
 		<form method="POST" th:action="@{/nameApp/previous}">
-			<input class="button_previous" name="previous" type="submit" value="Previous"/>
+			<input class="button_previous" name="previous" type="submit" value="&lt; Back"/>
 		</form>
 		
 		<form action = "#/nameApp/next" th:action="@{/nameApp/next}" th:object="${appConfig}" method="POST">
@@ -50,7 +50,7 @@
  				<p/>
  				Give your new app a name
  			</div>
-			<input class="button_next" name="next" type="submit" value="Next"/>
+			<input class="button_next" name="next" type="submit" value="Continue &gt;"/>
 		</form>
 	</body>
 </html>
