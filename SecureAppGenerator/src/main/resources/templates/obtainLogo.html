@@ -14,41 +14,43 @@
      		secureApp generator
 		</div>
      	<div class="sub_title">
-     		powered by<img  src="../images/MartusLogoWhite.png" alt="Martus"/>
+     		powered by<img src="../images/MartusLogoWhite.png" alt="Martus"/>
 		</div>
 		
  	   	<div class="cellphone_logo">
       		<img src="../images/Martus-swoosh-30x30.png" role="presentation" alt=""/>
 		</div>
 
-	   	<div class="cellphone_title">
-      		My Secure App
+	   	<div class="cellphone_title" th:text="${session.appConfig.appName}">
 		</div>
  
      	<div class="page_title">
-     		<h1>Name Your Custom App!</h1>
+     		<h1>Upload a Logo (Optional)</h1>
  		</div>
    	
  			
-		<form method="POST" th:action="@{/nameAppPrevious}">
+		<div class="info_area_3">
+			<table>
+				<tr>
+                    <td>Logo:</td>
+                   	<td>
+                   		<img class="logo_area" src="../images/Martus-swoosh-30x30.png" alt="default logo - blue elipse on transparent background"/>
+                   	</td>
+                   <td>
+					<form method="POST" th:action="@{/obtainLogoUpload}">
+                    		<input class="button_upload" name="upload" type="submit" value="Browse"/>
+                    	</form>
+                   	</td>
+               </tr>
+			</table>
+			Upload a .png image file.
+		</div>
+
+		<form method="POST" th:action="@{/obtainLogoPrevious}">
 			<input class="button_previous" name="previous" type="submit" value="&lt; Back"/>
 		</form>
 		
-		<form action = "#/nameAppNext" th:action="@{/nameAppNext}" th:object="${appConfig}" method="POST">
-   		 	<div class="info_area_3">
-           		 <table>
-	                <tr>
- 	                    <td>Name:</td>
-	                    <td>
-	                    		<input type="text" th:field="*{appName}" autofocus="true"/>
-	                    	</td>
-	                    <td>
-	                    		<span class="error_msg" th:if="*{appNameError != null}" th:text="*{appNameError}">Errors</span>
-	                    	</td>
-	                </tr>
-                </table>
-  				Give your new app a name
- 			</div>
+		<form action = "#/obtainLogoNext" th:action="@{/obtainLogoNext}" th:object="${appConfig}" method="POST">
 			<input class="button_next" name="next" type="submit" value="Continue &gt;"/>
 		</form>
 	</body>

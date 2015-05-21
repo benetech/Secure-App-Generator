@@ -135,3 +135,17 @@ body {
 .error_msg{
 	color: red;
 }
+
+.logo_area{
+    width: 70px;
+    height: 70px;
+	background-color: white;
+    padding: 4px;
+}
+
+.button_upload{
+	background-color: gray;
+    color: Black;
+	font-family: 'Arial Narrow', Arial, sans-serif;
+    font-size: 36px;
+}  

@@ -34,54 +34,37 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurerAdapter;
 
 @Controller
-public class NameAppController extends WebMvcConfigurerAdapter
+public class ObtainLogoController extends WebMvcConfigurerAdapter
 {
-	@RequestMapping(value=WebPage.NAME_APP, method=RequestMethod.GET)
+	@RequestMapping(value=WebPage.OBTAIN_LOGO, method=RequestMethod.GET)
     public String directError(HttpSession session, Model model) 
     {
 		SecureAppGeneratorApplication.setInvalidResults(session);
         return WebPage.ERROR;
     }
 
-	@RequestMapping(value=WebPage.NAME_APP_PREV, method=RequestMethod.POST)
-    public String goBack(HttpSession session, Model model, AppConfiguration appConfig) 
+	@RequestMapping(value=WebPage.OBTAIN_LOGO_PREVIOUS, method=RequestMethod.POST)
+    public String goBack(HttpSession session, Model model) 
     {
-		model.addAttribute("appConfig", appConfig);
-       return WebPage.WELCOME;
+		AppConfiguration config = (AppConfiguration) session.getAttribute("appConfig");
+		model.addAttribute("appConfig", config);
+		return WebPage.NAME_APP;
     }
 
+	@RequestMapping(value=WebPage.OBTAIN_LOGO_UPLOAD, method=RequestMethod.POST)
+	public String retrieveLogo(HttpSession session, Model model, AppConfiguration appConfig) 
+    {
+		session.setAttribute(SessionAttributes.APP_CONFIG, appConfig);
+        return WebPage.WELCOME;
+    }
 	
-	@RequestMapping(value=WebPage.NAME_APP_NEXT, method=RequestMethod.POST)
-	
+	@RequestMapping(value=WebPage.OBTAIN_LOGO_NEXT, method=RequestMethod.POST)
 	public String nextPage(HttpSession session, Model model, AppConfiguration appConfig) 
     {
-//		model.addAttribute("appConfig", appConfig);
-		session.setAttribute("appConfig", appConfig);
-		if (!validateAppName(appConfig)) 
-		{
-			return WebPage.NAME_APP;
-		}
-        return WebPage.OBTAIN_LOGO;
+		session.setAttribute(SessionAttributes.APP_CONFIG, appConfig);
+        return WebPage.FINAL;
     }
 
-	//TODO add unit tests!
-	private boolean validateAppName(AppConfiguration appConfig)
-	{
-		String name = appConfig.getAppName().trim();
-		appConfig.setAppName(name);
-		int length = name.length();
-		if(length<3 || length>30)
-		{
-			appConfig.setAppNameError("Error: App name must be between 3-30 characters long.");
-			return false;
-		}
-		
-		if (!name.matches("^[^!\"#$%&'()\\[\\]*+,/:;<=>?@\\^`{|}~]+$")) 
-		{
-			appConfig.setAppNameError("Error: App name nay not contain any special characters");
-			return false;
-		}		
-		appConfig.setAppNameError(null);
-		return true;
-	}
+	
+	
 }
