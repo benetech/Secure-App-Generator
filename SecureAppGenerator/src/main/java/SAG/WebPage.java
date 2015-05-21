@@ -27,9 +27,12 @@ package SAG;
 
 public interface WebPage
 {
-	public static final String WELCOME = "welcome";
-	public static final String ERROR = "error";
-	public static final String NAME_APP = "nameApp";
-	public static final String NAME_APP_PREV = "nameApp/previous";
-	public static final String NAME_APP_NEXT = "nameApp/next";
+	public static final String WELCOME = "/welcome";
+	public static final String ERROR = "/error";
+	public static final String NAME_APP = "/nameApp";
+	public static final String NAME_APP_PREV = "/nameApp/previous";
+	public static final String NAME_APP_NEXT = "/nameApp/next";
+	public static final String OBTAIN_LOGO = "/obtainLogo";
+	public static final String OBTAIN_LOGO_PREVIOUS = "/obtainLogo/previous";
+	public static final String OBTAIN_LOGO_NEXT = "/obtainLogo/next";
 }

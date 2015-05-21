@@ -36,21 +36,21 @@ import org.springframework.web.servlet.config.annotation.WebMvcConfigurerAdapter
 @Controller
 public class NameAppController extends WebMvcConfigurerAdapter
 {
-	@RequestMapping(value="/"+ WebPage.NAME_APP, method=RequestMethod.GET)
+	@RequestMapping(value=WebPage.NAME_APP, method=RequestMethod.GET)
     public String directError(HttpSession session, Model model) 
     {
 		SecureAppGeneratorApplication.setInvalidResults(session);
         return WebPage.ERROR;
     }
 
-	@RequestMapping(value="/"+ WebPage.NAME_APP_PREV, method=RequestMethod.POST)
+	@RequestMapping(value=WebPage.NAME_APP_PREV, method=RequestMethod.POST)
     public String goBack(HttpSession session, Model model) 
     {
         return WebPage.WELCOME;
     }
 
 	
-	@RequestMapping(value="/"+ WebPage.NAME_APP_NEXT, method=RequestMethod.POST)
+	@RequestMapping(value=WebPage.NAME_APP_NEXT, method=RequestMethod.POST)
 	
 	public String nextPage(HttpSession session, Model model, AppConfiguration appConfig) 
     {

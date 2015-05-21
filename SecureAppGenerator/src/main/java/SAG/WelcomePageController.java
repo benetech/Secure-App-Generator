@@ -44,14 +44,14 @@ public class WelcomePageController
 	    return WebPage.WELCOME;
 	}
 
-	@RequestMapping(value="/"+ WebPage.WELCOME, method=RequestMethod.GET)
+	@RequestMapping(value=WebPage.WELCOME, method=RequestMethod.GET)
     public String directError(HttpSession session, Model model) 
     {
 		SecureAppGeneratorApplication.setInvalidResults(session);
         return WebPage.ERROR;
     }
 	
-	@RequestMapping(value="/"+ WebPage.WELCOME, method=RequestMethod.POST)
+	@RequestMapping(value=WebPage.WELCOME, method=RequestMethod.POST)
     public String loadAppNamePage(HttpSession session, Model model) 
     {
         return WebPage.NAME_APP;
