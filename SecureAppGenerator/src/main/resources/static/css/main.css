@@ -32,7 +32,7 @@ body {
     padding: 4px;
     background-color: #4D4D4D;
     color: yellow;
-    font-weight: bold;
+	font-family: 'Arial', Arial, sans-serif;
     font-size: 24px;
   }
 
@@ -43,6 +43,7 @@ body {
     padding: 4px;
     background-color: #3C3D3C;
     color: white;
+	font-family: 'Arial Narrow', Arial, sans-serif;
     font-weight: bold;
     font-size: 50px;
   }
@@ -107,7 +108,7 @@ body {
     left: 550px;
 	background-color: yellow;
     color: Black;
-    font-weight: bold;
+	font-family: 'Arial Narrow', Arial, sans-serif;
     font-size: 36px;
 }
 
@@ -117,7 +118,7 @@ body {
     left: 400px;
 	background-color: gray;
     color: Black;
-    font-weight: bold;
+	font-family: 'Arial Narrow', Arial, sans-serif;
     font-size: 36px;
 }
 
@@ -127,7 +128,7 @@ body {
     right: 100px;
 	background-color: yellow;
     color: Black;
-    font-weight: bold;
+	font-family: 'Arial Narrow', Arial, sans-serif;
     font-size: 36px;
 }  
 
