@@ -29,6 +29,7 @@ public class AppConfiguration
 {
 	private String appName;
 	private String appNameError;
+	private String appIconLocation;
 	
 	public void setAppName(String name)
 	{
@@ -49,4 +50,20 @@ public class AppConfiguration
 	{
 		this.appNameError = appNameError;
 	}
+
+	public String getAppIconLocation()
+	{
+		return appIconLocation;
+	}
+
+	public void setAppIconLocation(String appIconLocation)
+	{
+		this.appIconLocation = appIconLocation;
+	}
+	
+	@Override
+	public String toString()
+	{
+		return "Name: " + appName + ", Icon Loc: " + appIconLocation;
+	}	
 }

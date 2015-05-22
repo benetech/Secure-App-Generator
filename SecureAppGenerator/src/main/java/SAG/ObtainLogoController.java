@@ -25,17 +25,27 @@ Boston, MA 02111-1307, USA.
 
 package SAG;
 
+import java.io.BufferedOutputStream;
+import java.io.File;
+import java.io.FileOutputStream;
+
 import javax.servlet.http.HttpSession;
 
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurerAdapter;
 
 @Controller
 public class ObtainLogoController extends WebMvcConfigurerAdapter
 {
+	
+	private static final String LOGO_FILE_LOCATION = "./bin/static/myCompanyLogo.png";  //TODO this will be based on build directory for this session
+	private static final String IMAGE_PNG = "image/png";
+
 	@RequestMapping(value=WebPage.OBTAIN_LOGO, method=RequestMethod.GET)
     public String directError(HttpSession session, Model model) 
     {
@@ -51,19 +61,30 @@ public class ObtainLogoController extends WebMvcConfigurerAdapter
 		return WebPage.NAME_APP;
     }
 
-	@RequestMapping(value=WebPage.OBTAIN_LOGO_UPLOAD, method=RequestMethod.POST)
-	public String retrieveLogo(HttpSession session, Model model, AppConfiguration appConfig) 
-    {
-		session.setAttribute(SessionAttributes.APP_CONFIG, appConfig);
-        return WebPage.WELCOME;
-    }
-	
 	@RequestMapping(value=WebPage.OBTAIN_LOGO_NEXT, method=RequestMethod.POST)
-	public String nextPage(HttpSession session, Model model, AppConfiguration appConfig) 
+    public String retrieveLogo(HttpSession session, @RequestParam("file") MultipartFile file, Model model)
     {
+        if (!file.isEmpty()) 
+        {
+            try 
+            {
+            		if(!file.getContentType().contains(IMAGE_PNG))
+            			return WebPage.NAME_APP; //TODO add error notification
+                byte[] bytes = file.getBytes();
+                File formFileUploaded = new File(LOGO_FILE_LOCATION);//TODO fix file location
+				BufferedOutputStream stream = new BufferedOutputStream(new FileOutputStream(formFileUploaded));
+                stream.write(bytes);
+                stream.close();
+                AppConfiguration config = (AppConfiguration)session.getAttribute(SessionAttributes.APP_CONFIG);
+        			config.setAppIconLocation("myCompanyLogo.png"); //TODO fix file location
+        			session.setAttribute(SessionAttributes.APP_CONFIG, config);
+            } 
+            catch (Exception e) 
+            {
+            		SecureAppGeneratorApplication.setInvalidResults(session, "You failed to upload a file => " + e.getMessage());
+                return WebPage.ERROR;
+            }
+        } 
         return WebPage.FINAL;
     }
-
-	
-	
 }

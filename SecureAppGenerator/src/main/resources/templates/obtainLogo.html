@@ -4,11 +4,14 @@
 	    <title>Secure App Generator</title> 
 	    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
   		  <link rel="stylesheet" type="text/css" media="all"  
-     		 href="../css/main.css" th:href="@{../css/main.css}" />
+     		 href="/css/main.css" th:href="@{../css/main.css}" />
  	</head>
 	<body>
 
-      	<img src="../images/cellphone.png" alt="Android Cellphone"/>
+      	<img src="/images/cellphone.png" alt="Android Cellphone"/>
+	   	<div class="cellphone_logo"><img class="cellphone_logo_size" th:src="${session.appConfig.appIconLocation}" role="presentation" alt=""/></div>
+	   	<div class="cellphone_title" th:text="${session.appConfig.appName}"></div>
+
 		<div class="cellphone_center"><p/>Secure Data Collection<p>Customized for your projects</p></div>
      	<div class="main_title">
      		secureApp generator
@@ -17,40 +20,20 @@
      		powered by<img src="../images/MartusLogoWhite.png" alt="Martus"/>
 		</div>
 		
- 	   	<div class="cellphone_logo">
-      		<img src="../images/Martus-swoosh-30x30.png" role="presentation" alt=""/>
-		</div>
-
-	   	<div class="cellphone_title" th:text="${session.appConfig.appName}">
-		</div>
- 
-     	<div class="page_title">
+      	<div class="page_title">
      		<h1>Upload a Logo (Optional)</h1>
  		</div>
    	
- 			
-		<div class="info_area_3">
-			<table>
-				<tr>
-                    <td>Logo:</td>
-                   	<td>
-                   		<img class="logo_area" src="../images/Martus-swoosh-30x30.png" alt="default logo - blue elipse on transparent background"/>
-                   	</td>
-                   <td>
-					<form method="POST" th:action="@{/obtainLogoUpload}">
-                    		<input class="button_upload" name="upload" type="submit" value="Browse"/>
-                    	</form>
-                   	</td>
-               </tr>
-			</table>
-			Upload a .png image file.
-		</div>
-
 		<form method="POST" th:action="@{/obtainLogoPrevious}">
 			<input class="button_previous" name="previous" type="submit" value="&lt; Back"/>
 		</form>
-		
-		<form action = "#/obtainLogoNext" th:action="@{/obtainLogoNext}" th:object="${appConfig}" method="POST">
+
+		<form method="POST" enctype="multipart/form-data" action = "#/obtainLogoNext"  th:action="@{/obtainLogoNext}">
+ 			<div class="info_area_3">
+           		<input class = "button_upload" type="file" name="file"></input> 
+ 				<p/>
+ 				Upload a .png image file.
+			</div>
 			<input class="button_next" name="next" type="submit" value="Continue &gt;"/>
 		</form>
 	</body>
