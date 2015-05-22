@@ -28,5 +28,5 @@ package SAG;
 public class SessionAttributes
 {
 	final public static String INVALID_REQUEST = "invalidRequest";
-	final public static String APP_CONFIG = "config";
+	final public static String APP_CONFIG = "appConfig";
 }

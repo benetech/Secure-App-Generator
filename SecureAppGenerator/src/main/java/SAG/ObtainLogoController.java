@@ -61,7 +61,6 @@ public class ObtainLogoController extends WebMvcConfigurerAdapter
 	@RequestMapping(value=WebPage.OBTAIN_LOGO_NEXT, method=RequestMethod.POST)
 	public String nextPage(HttpSession session, Model model, AppConfiguration appConfig) 
     {
-		session.setAttribute(SessionAttributes.APP_CONFIG, appConfig);
         return WebPage.FINAL;
     }
 

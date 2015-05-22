@@ -46,7 +46,7 @@ public class NameAppController extends WebMvcConfigurerAdapter
 	@RequestMapping(value=WebPage.NAME_APP_PREV, method=RequestMethod.POST)
     public String goBack(HttpSession session, Model model, AppConfiguration appConfig) 
     {
-		model.addAttribute("appConfig", appConfig);
+		model.addAttribute(SessionAttributes.APP_CONFIG, appConfig);
        return WebPage.WELCOME;
     }
 
@@ -55,8 +55,8 @@ public class NameAppController extends WebMvcConfigurerAdapter
 	
 	public String nextPage(HttpSession session, Model model, AppConfiguration appConfig) 
     {
-//		model.addAttribute("appConfig", appConfig);
-		session.setAttribute("appConfig", appConfig);
+		model.addAttribute(SessionAttributes.APP_CONFIG, appConfig);
+		session.setAttribute(SessionAttributes.APP_CONFIG, appConfig);
 		if (!validateAppName(appConfig)) 
 		{
 			return WebPage.NAME_APP;

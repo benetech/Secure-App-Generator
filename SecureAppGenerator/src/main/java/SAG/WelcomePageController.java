@@ -57,7 +57,7 @@ public class WelcomePageController
         return WebPage.NAME_APP;
     }
 	
-	@ModelAttribute("appConfig")
+	@ModelAttribute(SessionAttributes.APP_CONFIG)
 	public AppConfiguration appConfig() 
 	{
 	    return new AppConfiguration();
