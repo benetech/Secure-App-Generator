@@ -56,12 +56,14 @@ public class NameAppController extends WebMvcConfigurerAdapter
 	public String nextPage(HttpSession session, Model model, AppConfiguration appConfig) 
     {
 		SecureAppGeneratorApplication.setDefaultIconForSession(session, appConfig);
-		model.addAttribute(SessionAttributes.APP_CONFIG, appConfig);
-		session.setAttribute(SessionAttributes.APP_CONFIG, appConfig);
 		if (!validateAppName(appConfig)) 
 		{
+			model.addAttribute(SessionAttributes.APP_CONFIG, appConfig);
+			SecureAppGeneratorApplication.setDefaultNameForSession(session, appConfig);
 			return WebPage.NAME_APP;
 		}
+		model.addAttribute(SessionAttributes.APP_CONFIG, appConfig);
+		session.setAttribute(SessionAttributes.APP_CONFIG, appConfig);
         return WebPage.OBTAIN_LOGO;
     }
 
