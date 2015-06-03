@@ -1,0 +1,49 @@
+<!DOCTYPE HTML>
+<html xmlns:th="http://www.thymeleaf.org">
+	<head> 
+	    <title>Secure App Generator</title> 
+	    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+  		  <link rel="stylesheet" type="text/css" media="all"  
+     		 href="/css/main.css" th:href="@{../css/main.css}" />
+ 	</head>
+	<body>
+
+      	<img src="/images/cellphone.png" alt="Android Cellphone"/>
+	   	<div class="cellphone_logo"><img class="cellphone_logo_size" th:src="${session.appConfig.appIconLocation}" role="presentation" alt=""/></div>
+	   	<div class="cellphone_title" th:text="${session.appConfig.appName}"></div>
+
+		<div class="cellphone_center"><p/>Secure Data Collection<p>Customized for your projects</p></div>
+     	<div class="main_title">
+     		secureApp generator
+		</div>
+     	<div class="sub_title">
+     		powered by<img src="../images/MartusLogoWhite.png" alt="Martus"/>
+		</div>
+		
+      	<div class="page_title">
+     		<h1>Choose or Upload a Custom XForm</h1>
+ 		</div>
+   	
+		<form method="POST" th:action="@{/obtainXFormPrevious}">
+			<input class="button_previous" name="previous" type="submit" value="&lt; Back"/>
+		</form>
+
+		<form  method="POST" enctype="multipart/form-data" th:action="@{/obtainXFormNext}" th:object="${appConfig}">
+ 			<div class="info_area_3">
+         		 <table>
+	                <tr>
+ 	                    <td>
+  	       					<input class = "button_upload" type="file" name="file"></input> 
+  	                    	</td>
+	                    <td>
+	                    		<span class="error_msg" th:if="*{appXFormError != null}" th:text="*{appXFormError}">Errors</span>
+	                    	</td>
+	                </tr>
+                </table>
+ 				<p/>
+ 				Upload your XForm .xml file.
+			</div>
+			<input class="button_next" name="next" type="submit" value="Continue &gt;"/>
+		</form>
+	</body>
+</html>

@@ -31,6 +31,8 @@ public class AppConfiguration
 	private String appNameError;
 	private String appIconLocation;
 	private String appIconError;
+	private String appXFormLocation;
+	private String appXFormError;
 	
 	public void setAppName(String name)
 	{
@@ -65,7 +67,7 @@ public class AppConfiguration
 	@Override
 	public String toString()
 	{
-		return "Name: " + appName + ", Icon Loc: " + appIconLocation;
+		return "Name: " + appName + ", Icon Loc: " + appIconLocation + ", XForm Loc: " + appXFormLocation;
 	}
 
 	public String getAppIconError()
@@ -76,5 +78,25 @@ public class AppConfiguration
 	public void setAppIconError(String appIconError)
 	{
 		this.appIconError = appIconError;
+	}
+
+	public String getAppXFormLocation()
+	{
+		return appXFormLocation;
+	}
+
+	public void setAppXFormLocation(String appXFormLocation)
+	{
+		this.appXFormLocation = appXFormLocation;
+	}
+
+	public String getAppXFormError()
+	{
+		return appXFormError;
+	}
+
+	public void setAppXFormError(String appXFormError)
+	{
+		this.appXFormError = appXFormError;
 	}	
 }

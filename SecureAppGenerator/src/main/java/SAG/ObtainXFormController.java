@@ -40,47 +40,46 @@ import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurerAdapter;
 
 @Controller
-public class ObtainLogoController extends WebMvcConfigurerAdapter
+public class ObtainXFormController extends WebMvcConfigurerAdapter
 {
-	
-	private static final String LOGO_FILE_LOCATION = "./bin/static/myCompanyLogo.png";  //TODO this will be based on build directory for this session
-	private static final String IMAGE_PNG = "image/png";
+	private static final String XML_TYPE = "xml";
+	private static final String XML_FILE_LOCATION = "./bin/static/xFormToUse.xml";  //TODO this will be based on build directory for this session
 
-	@RequestMapping(value=WebPage.OBTAIN_LOGO, method=RequestMethod.GET)
+	@RequestMapping(value=WebPage.OBTAIN_XFORM, method=RequestMethod.GET)
     public String directError(HttpSession session, Model model) 
     {
 		SecureAppGeneratorApplication.setInvalidResults(session);
         return WebPage.ERROR;
     }
 
-	@RequestMapping(value=WebPage.OBTAIN_LOGO_PREVIOUS, method=RequestMethod.POST)
+	@RequestMapping(value=WebPage.OBTAIN_XFORM_PREVIOUS, method=RequestMethod.POST)
     public String goBack(HttpSession session, Model model) 
     {
 		AppConfiguration config = (AppConfiguration) session.getAttribute("appConfig");
 		model.addAttribute("appConfig", config);
-		return WebPage.NAME_APP;
+		return WebPage.OBTAIN_LOGO;
     }
 
-	@RequestMapping(value=WebPage.OBTAIN_LOGO_NEXT, method=RequestMethod.POST)
+	@RequestMapping(value=WebPage.OBTAIN_XFORM_NEXT, method=RequestMethod.POST)
     public String retrieveLogo(HttpSession session, @RequestParam("file") MultipartFile file, Model model, AppConfiguration appConfig)
     {
         if (!file.isEmpty()) 
         {
             try 
             {
-            		if(!file.getContentType().contains(IMAGE_PNG))
+            		if(!file.getContentType().contains(XML_TYPE))
             		{
-            			appConfig.setAppIconError("Error: Image type must be png.");
+            			appConfig.setAppXFormError("Error: Xforms type must be of type xml.");
             			model.addAttribute(SessionAttributes.APP_CONFIG, appConfig);
-         			return WebPage.OBTAIN_LOGO; 
+         			return WebPage.OBTAIN_XFORM; 
             		}
                 byte[] bytes = file.getBytes();
-                File formFileUploaded = new File(LOGO_FILE_LOCATION);//TODO fix file location
+                File formFileUploaded = new File(XML_FILE_LOCATION);//TODO fix file location
 				BufferedOutputStream stream = new BufferedOutputStream(new FileOutputStream(formFileUploaded));
                 stream.write(bytes);
                 stream.close();
                 AppConfiguration config = (AppConfiguration)session.getAttribute(SessionAttributes.APP_CONFIG);
-        			config.setAppIconLocation("myCompanyLogo.png"); //TODO fix file location
+        			config.setAppXFormLocation("xFormToUse.xml"); //TODO fix file location
         			session.setAttribute(SessionAttributes.APP_CONFIG, config);
             } 
             catch (Exception e) 
@@ -90,6 +89,6 @@ public class ObtainLogoController extends WebMvcConfigurerAdapter
             }
         } 
 		model.addAttribute(SessionAttributes.APP_CONFIG, appConfig);
-       return WebPage.OBTAIN_XFORM;
+       return WebPage.FINAL;
     }
 }
