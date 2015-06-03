@@ -25,9 +25,6 @@ Boston, MA 02111-1307, USA.
 
 package SAG;
 
-import java.io.BufferedOutputStream;
-import java.io.File;
-import java.io.FileOutputStream;
 import java.io.IOException;
 import java.net.MalformedURLException;
 import java.util.Map;
@@ -78,14 +75,12 @@ public class ObtainLogoController extends WebMvcConfigurerAdapter
             			model.addAttribute(SessionAttributes.APP_CONFIG, appConfig);
          			return WebPage.OBTAIN_LOGO; 
             		}
-                byte[] bytes = file.getBytes();
-                File formFileUploaded = new File(LOGO_FILE_LOCATION);//TODO fix file location
-				BufferedOutputStream stream = new BufferedOutputStream(new FileOutputStream(formFileUploaded));
-                stream.write(bytes);
-                stream.close();
-                AppConfiguration config = (AppConfiguration)session.getAttribute(SessionAttributes.APP_CONFIG);
-        			config.setAppIconLocation("myCompanyLogo.png"); //TODO fix file location
-        			session.setAttribute(SessionAttributes.APP_CONFIG, config);
+            		
+            		SecureAppGeneratorApplication.saveMultiPartFileToLocation(file, LOGO_FILE_LOCATION);
+
+            		AppConfiguration config = (AppConfiguration)session.getAttribute(SessionAttributes.APP_CONFIG);
+            		config.setAppIconLocation("myCompanyLogo.png"); //TODO fix file location
+            		session.setAttribute(SessionAttributes.APP_CONFIG, config);
             } 
             catch (Exception e) 
             {

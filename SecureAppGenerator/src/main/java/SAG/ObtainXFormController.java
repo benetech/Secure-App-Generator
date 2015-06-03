@@ -25,11 +25,14 @@ Boston, MA 02111-1307, USA.
 
 package SAG;
 
-import java.io.BufferedOutputStream;
 import java.io.File;
-import java.io.FileOutputStream;
 import java.io.IOException;
 import java.net.MalformedURLException;
+import java.nio.file.CopyOption;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
+import java.nio.file.StandardCopyOption;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashMap;
@@ -50,7 +53,7 @@ import org.springframework.web.servlet.config.annotation.WebMvcConfigurerAdapter
 public class ObtainXFormController extends WebMvcConfigurerAdapter
 {
 	private static final String XML_TYPE = "xml";
-	private static final String XML_FILE_LOCATION = "./bin/static/xFormToUse.xml";  //TODO this will be based on build directory for this session
+	private static final String XML_FILE_LOCATION = "bin/static/xFormToUse.xml";  //TODO this will be based on build directory for this session
 	private static final String XFORM_FILE_EXTENSION = ".xml";
 	private static final String XFORMS_DEFAULT_DIRECTORY = "bin/static/xforms";
 
@@ -72,10 +75,14 @@ public class ObtainXFormController extends WebMvcConfigurerAdapter
 	@RequestMapping(value=WebPage.OBTAIN_XFORM_NEXT, method=RequestMethod.POST)
     public String retrieveLogo(HttpSession session, @RequestParam("file") MultipartFile file, @RequestParam("selectedForm") String formName, Model model, AppConfiguration appConfig)
     {
-        if (file.isEmpty()) 
+        String fileLocation = XML_FILE_LOCATION;
+		if (file.isEmpty()) 
         {
-            AppConfiguration config = (AppConfiguration)session.getAttribute(SessionAttributes.APP_CONFIG);
-            config.setAppXFormLocation(formName); //TODO fix file location
+             if(!copyXFormsFileSelectedToBuildDirectory(session, formName))
+            		return WebPage.ERROR; 
+
+             AppConfiguration config = (AppConfiguration)session.getAttribute(SessionAttributes.APP_CONFIG);
+            config.setAppXFormLocation(fileLocation); //TODO fix file location
      		session.setAttribute(SessionAttributes.APP_CONFIG, config);
         }
         else
@@ -88,11 +95,7 @@ public class ObtainXFormController extends WebMvcConfigurerAdapter
             			model.addAttribute(SessionAttributes.APP_CONFIG, appConfig);
          			return WebPage.OBTAIN_XFORM; 
             		}
-                byte[] bytes = file.getBytes();
-                File formFileUploaded = new File(XML_FILE_LOCATION);//TODO fix file location
-				BufferedOutputStream stream = new BufferedOutputStream(new FileOutputStream(formFileUploaded));
-                stream.write(bytes);
-                stream.close();
+                SecureAppGeneratorApplication.saveMultiPartFileToLocation(file, fileLocation);
                 AppConfiguration config = (AppConfiguration)session.getAttribute(SessionAttributes.APP_CONFIG);
         			config.setAppXFormLocation("xFormToUse.xml"); //TODO fix file location
         			session.setAttribute(SessionAttributes.APP_CONFIG, config);
@@ -106,6 +109,23 @@ public class ObtainXFormController extends WebMvcConfigurerAdapter
 		model.addAttribute(SessionAttributes.APP_CONFIG, appConfig);
        return WebPage.FINAL;
     }
+
+	public boolean copyXFormsFileSelectedToBuildDirectory(HttpSession session, String formName)
+	{
+		CopyOption[] options = new CopyOption[]{ StandardCopyOption.REPLACE_EXISTING, StandardCopyOption.COPY_ATTRIBUTES}; 
+		Path source = Paths.get(formName);
+		Path destination = Paths.get(XML_FILE_LOCATION);
+		try
+		{
+			Files.copy(source, destination, options);
+			return true;
+		}
+		catch (IOException e)
+		{
+			SecureAppGeneratorApplication.setInvalidResults(session, "Failed to copy file => " + e.getMessage());
+		    return false;
+		}
+	}
 	
 	@ModelAttribute("formsImpMap")
 	public static Map<String,String> populateFormsMap() throws MalformedURLException, IOException 
