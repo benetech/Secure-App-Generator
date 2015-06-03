@@ -75,14 +75,14 @@ public class ObtainXFormController extends WebMvcConfigurerAdapter
 	@RequestMapping(value=WebPage.OBTAIN_XFORM_NEXT, method=RequestMethod.POST)
     public String retrieveLogo(HttpSession session, @RequestParam("file") MultipartFile file, @RequestParam("selectedForm") String formName, Model model, AppConfiguration appConfig)
     {
-        String fileLocation = XML_FILE_LOCATION;
+		Path xFormBuildPath = Paths.get(XML_FILE_LOCATION);
 		if (file.isEmpty()) 
         {
              if(!copyXFormsFileSelectedToBuildDirectory(session, formName))
             		return WebPage.ERROR; 
 
              AppConfiguration config = (AppConfiguration)session.getAttribute(SessionAttributes.APP_CONFIG);
-            config.setAppXFormLocation(fileLocation); //TODO fix file location
+            config.setAppXFormLocation(xFormBuildPath.toString()); //TODO fix file location
      		session.setAttribute(SessionAttributes.APP_CONFIG, config);
         }
         else
@@ -90,14 +90,18 @@ public class ObtainXFormController extends WebMvcConfigurerAdapter
             try 
             {
             		if(!file.getContentType().contains(XML_TYPE))
-            		{
-            			appConfig.setAppXFormError("Error: Xforms type must be of type xml.");
-            			model.addAttribute(SessionAttributes.APP_CONFIG, appConfig);
-         			return WebPage.OBTAIN_XFORM; 
-            		}
-                SecureAppGeneratorApplication.saveMultiPartFileToLocation(file, fileLocation);
+             		return returnErrorMessage(model, appConfig, "Error: Xform must be of type xml."); 
+ 
+            		SecureAppGeneratorApplication.saveMultiPartFileToLocation(file, xFormBuildPath.toString());
+  
+                if(!isValidXForm(xFormBuildPath))
+                {
+                		Files.delete(xFormBuildPath);
+             		return returnErrorMessage(model, appConfig, "Error: Xform Invalid."); 
+                }
+
                 AppConfiguration config = (AppConfiguration)session.getAttribute(SessionAttributes.APP_CONFIG);
-        			config.setAppXFormLocation("xFormToUse.xml"); //TODO fix file location
+        			config.setAppXFormLocation(xFormBuildPath.getFileName().toString()); 
         			session.setAttribute(SessionAttributes.APP_CONFIG, config);
             } 
             catch (Exception e) 
@@ -109,6 +113,19 @@ public class ObtainXFormController extends WebMvcConfigurerAdapter
 		model.addAttribute(SessionAttributes.APP_CONFIG, appConfig);
        return WebPage.FINAL;
     }
+
+	private boolean isValidXForm(Path fileLocation)
+	{
+		return false;
+	}
+
+	public String returnErrorMessage(Model model, AppConfiguration appConfig,
+			String errorMsg)
+	{
+		appConfig.setAppXFormError(errorMsg);
+		model.addAttribute(SessionAttributes.APP_CONFIG, appConfig);
+		return WebPage.OBTAIN_XFORM;
+	}
 
 	public boolean copyXFormsFileSelectedToBuildDirectory(HttpSession session, String formName)
 	{
