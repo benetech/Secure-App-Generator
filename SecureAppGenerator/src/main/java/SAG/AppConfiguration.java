@@ -30,6 +30,7 @@ public class AppConfiguration
 	private String appName;
 	private String appNameError;
 	private String appIconLocation;
+	private String appIconError;
 	
 	public void setAppName(String name)
 	{
@@ -65,5 +66,15 @@ public class AppConfiguration
 	public String toString()
 	{
 		return "Name: " + appName + ", Icon Loc: " + appIconLocation;
+	}
+
+	public String getAppIconError()
+	{
+		return appIconError;
+	}
+
+	public void setAppIconError(String appIconError)
+	{
+		this.appIconError = appIconError;
 	}	
 }

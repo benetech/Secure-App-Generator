@@ -62,14 +62,18 @@ public class ObtainLogoController extends WebMvcConfigurerAdapter
     }
 
 	@RequestMapping(value=WebPage.OBTAIN_LOGO_NEXT, method=RequestMethod.POST)
-    public String retrieveLogo(HttpSession session, @RequestParam("file") MultipartFile file, Model model)
+    public String retrieveLogo(HttpSession session, @RequestParam("file") MultipartFile file, Model model, AppConfiguration appConfig)
     {
         if (!file.isEmpty()) 
         {
             try 
             {
             		if(!file.getContentType().contains(IMAGE_PNG))
-            			return WebPage.NAME_APP; //TODO add error notification
+            		{
+            			appConfig.setAppIconError("Error: Image type must be png.");
+            			model.addAttribute(SessionAttributes.APP_CONFIG, appConfig);
+         			return WebPage.OBTAIN_LOGO; 
+            		}
                 byte[] bytes = file.getBytes();
                 File formFileUploaded = new File(LOGO_FILE_LOCATION);//TODO fix file location
 				BufferedOutputStream stream = new BufferedOutputStream(new FileOutputStream(formFileUploaded));

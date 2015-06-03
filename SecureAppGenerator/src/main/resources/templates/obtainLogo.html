@@ -28,9 +28,18 @@
 			<input class="button_previous" name="previous" type="submit" value="&lt; Back"/>
 		</form>
 
-		<form method="POST" enctype="multipart/form-data" action = "#/obtainLogoNext"  th:action="@{/obtainLogoNext}">
+		<form enctype="multipart/form-data" th:action="@{/obtainLogoNext}" th:object="${appConfig}" method="POST" >
  			<div class="info_area_3">
-           		<input class = "button_upload" type="file" name="file"></input> 
+         		 <table>
+	                <tr>
+ 	                    <td>
+  	       					<input class = "button_upload" type="file" name="file"></input> 
+  	                    	</td>
+	                    <td>
+	                    		<span class="error_msg" th:if="*{appIconError != null}" th:text="*{appIconError}">Errors</span>
+	                    	</td>
+	                </tr>
+                </table>
  				<p/>
  				Upload a .png image file.
 			</div>
