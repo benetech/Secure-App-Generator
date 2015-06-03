@@ -19,8 +19,21 @@
      		powered by<img src="../images/MartusLogoWhite.png" alt="Martus"/>
 		</div>
 		
-      	<div class="page_title">
-     		<h1>Enjoy your App!</h1>
- 		</div>
+    		 <div class="info_area_3">
+             <table>
+	                <tr>
+ 	                    <td>Name:</td>
+	   					<td th:text="${session.appConfig.appName}"></td>
+	                </tr>
+	                <tr>
+ 	                    <td>Logo:</td>
+	   					<td th:text="${session.appConfig.appIconLocation}"></td>
+	                </tr>
+	                <tr>
+ 	                    <td>XForm:</td>
+	   					<td th:text="${session.appConfig.appXFormLocation}"></td>
+	                </tr>
+            </table>
+		</div>
  	</body>
 </html>

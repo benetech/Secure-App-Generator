@@ -28,11 +28,18 @@ package SAG;
 import java.io.BufferedOutputStream;
 import java.io.File;
 import java.io.FileOutputStream;
+import java.io.IOException;
+import java.net.MalformedURLException;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.HashMap;
+import java.util.Map;
 
 import javax.servlet.http.HttpSession;
 
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -44,6 +51,8 @@ public class ObtainXFormController extends WebMvcConfigurerAdapter
 {
 	private static final String XML_TYPE = "xml";
 	private static final String XML_FILE_LOCATION = "./bin/static/xFormToUse.xml";  //TODO this will be based on build directory for this session
+	private static final String XFORM_FILE_EXTENSION = ".xml";
+	private static final String XFORMS_DEFAULT_DIRECTORY = "bin/static/xforms";
 
 	@RequestMapping(value=WebPage.OBTAIN_XFORM, method=RequestMethod.GET)
     public String directError(HttpSession session, Model model) 
@@ -51,6 +60,7 @@ public class ObtainXFormController extends WebMvcConfigurerAdapter
 		SecureAppGeneratorApplication.setInvalidResults(session);
         return WebPage.ERROR;
     }
+
 
 	@RequestMapping(value=WebPage.OBTAIN_XFORM_PREVIOUS, method=RequestMethod.POST)
     public String goBack(HttpSession session, Model model) 
@@ -61,9 +71,15 @@ public class ObtainXFormController extends WebMvcConfigurerAdapter
     }
 
 	@RequestMapping(value=WebPage.OBTAIN_XFORM_NEXT, method=RequestMethod.POST)
-    public String retrieveLogo(HttpSession session, @RequestParam("file") MultipartFile file, Model model, AppConfiguration appConfig)
+    public String retrieveLogo(HttpSession session, @RequestParam("file") MultipartFile file, @RequestParam("selectedForm") String formName, Model model, AppConfiguration appConfig)
     {
-        if (!file.isEmpty()) 
+        if (file.isEmpty()) 
+        {
+            AppConfiguration config = (AppConfiguration)session.getAttribute(SessionAttributes.APP_CONFIG);
+            config.setAppXFormLocation(formName); //TODO fix file location
+     		session.setAttribute(SessionAttributes.APP_CONFIG, config);
+        }
+        else
         {
             try 
             {
@@ -91,4 +107,27 @@ public class ObtainXFormController extends WebMvcConfigurerAdapter
 		model.addAttribute(SessionAttributes.APP_CONFIG, appConfig);
        return WebPage.FINAL;
     }
+	
+	@ModelAttribute("formsImpMap")
+	public static Map<String,String> populateFormsMap() throws MalformedURLException, IOException 
+	{
+	    Map<String,String> formsImpMap = new HashMap<String,String>();
+		File xFormsDirectory = new File(XFORMS_DEFAULT_DIRECTORY);
+		if(!xFormsDirectory.exists())
+			return formsImpMap;
+		ArrayList<File> files = new ArrayList<File>(Arrays.asList(xFormsDirectory.listFiles()));
+		files.forEach((file) -> addForms(formsImpMap, file));
+	    return formsImpMap;
+	}
+
+	private static void addForms(Map<String,String> formsImpMap, File file)
+	{
+		String formName = file.getName();
+		if(formName.toLowerCase().endsWith(XFORM_FILE_EXTENSION))
+		{
+			int fileNameLengthWithoutXmlExtension = formName.length()-XFORM_FILE_EXTENSION.length();
+			formsImpMap.put(formName.substring(0, fileNameLengthWithoutXmlExtension), file.getAbsolutePath());
+		}		
+	}
+
 }

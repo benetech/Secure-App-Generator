@@ -31,6 +31,19 @@
 		<form  method="POST" enctype="multipart/form-data" th:action="@{/obtainXFormNext}" th:object="${appConfig}">
  			<div class="info_area_3">
          		 <table>
+         		 	<tr>
+         		 		<td>
+         		 			Form to Use:
+         		 		</td>
+         		 		<td>
+							<select name="selectedForm" >
+			 					<option th:each="type : ${formsImpMap}" 
+			        		    			th:value="${type.value}" 
+			          				th:text="${type.key}">
+			          			</option>
+							</select>
+						</td>
+         		 	</tr>
 	                <tr>
  	                    <td>
   	       					<input class = "button_upload" type="file" name="file"></input> 

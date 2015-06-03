@@ -28,11 +28,15 @@ package SAG;
 import java.io.BufferedOutputStream;
 import java.io.File;
 import java.io.FileOutputStream;
+import java.io.IOException;
+import java.net.MalformedURLException;
+import java.util.Map;
 
 import javax.servlet.http.HttpSession;
 
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -43,7 +47,7 @@ import org.springframework.web.servlet.config.annotation.WebMvcConfigurerAdapter
 public class ObtainLogoController extends WebMvcConfigurerAdapter
 {
 	
-	private static final String LOGO_FILE_LOCATION = "./bin/static/myCompanyLogo.png";  //TODO this will be based on build directory for this session
+	private static final String LOGO_FILE_LOCATION = "bin/static/myCompanyLogo.png";  //TODO this will be based on build directory for this session
 	private static final String IMAGE_PNG = "image/png";
 
 	@RequestMapping(value=WebPage.OBTAIN_LOGO, method=RequestMethod.GET)
@@ -92,4 +96,11 @@ public class ObtainLogoController extends WebMvcConfigurerAdapter
 		model.addAttribute(SessionAttributes.APP_CONFIG, appConfig);
        return WebPage.OBTAIN_XFORM;
     }
+	
+	//NONE: Needed due to how page is called from another page 
+	@ModelAttribute("formsImpMap")
+	public Map<String,String> populateFormsMap() throws MalformedURLException, IOException 
+	{
+		return ObtainXFormController.populateFormsMap();
+	}
 }

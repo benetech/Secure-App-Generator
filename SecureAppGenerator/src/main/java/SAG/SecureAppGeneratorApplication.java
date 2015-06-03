@@ -16,30 +16,29 @@ public class SecureAppGeneratorApplication
         SpringApplication.run(SecureAppGeneratorApplication.class, args);
     }
 
-	public static void setInvalidResults(HttpSession session) 
+	static void setInvalidResults(HttpSession session) 
 	{
 		setInvalidResults(session, "Invalid Request"); //TODO move this to a localizable String Table
 	}
 	
-	public static void setInvalidResults(HttpSession session, String message) 
+	static void setInvalidResults(HttpSession session, String message) 
 	{
 		ErrorResults invalidRequest = new ErrorResults();
 		invalidRequest.setResults(message);  
 		session.setAttribute(SessionAttributes.INVALID_REQUEST, invalidRequest);
 	}
 	
-	public static void setDefaultIconForSession(HttpSession session, AppConfiguration config)
+	static void setDefaultIconForSession(HttpSession session, AppConfiguration config)
 	{
 		config.setAppIconLocation(DEFAULT_APP_ICON_LOCATION);
 		session.setAttribute(SessionAttributes.APP_CONFIG, config);
 	}
 
-	public static void setDefaultNameForSession(HttpSession session, AppConfiguration config)
+	static void setDefaultNameForSession(HttpSession session, AppConfiguration config)
 	{
 		AppConfiguration sessionConfig = new AppConfiguration();
 		sessionConfig.setAppName(APP_DEFAULT_NAME);
 		sessionConfig.setAppIconLocation(config.getAppIconLocation());
 		session.setAttribute(SessionAttributes.APP_CONFIG, sessionConfig);
 	}
-	
 }
