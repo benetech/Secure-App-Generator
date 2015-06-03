@@ -60,7 +60,7 @@ public class ObtainLogoController extends WebMvcConfigurerAdapter
 	@RequestMapping(value=WebPage.OBTAIN_LOGO_PREVIOUS, method=RequestMethod.POST)
     public String goBack(HttpSession session, Model model) 
     {
-		AppConfiguration config = (AppConfiguration) session.getAttribute("appConfig");
+		AppConfiguration config = (AppConfiguration) session.getAttribute(SessionAttributes.APP_CONFIG);
 		model.addAttribute("appConfig", config);
 		return WebPage.NAME_APP;
     }

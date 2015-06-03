@@ -61,11 +61,10 @@ public class ObtainXFormController extends WebMvcConfigurerAdapter
         return WebPage.ERROR;
     }
 
-
 	@RequestMapping(value=WebPage.OBTAIN_XFORM_PREVIOUS, method=RequestMethod.POST)
     public String goBack(HttpSession session, Model model) 
     {
-		AppConfiguration config = (AppConfiguration) session.getAttribute("appConfig");
+		AppConfiguration config = (AppConfiguration) session.getAttribute(SessionAttributes.APP_CONFIG);
 		model.addAttribute("appConfig", config);
 		return WebPage.OBTAIN_LOGO;
     }
