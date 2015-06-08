@@ -91,32 +91,33 @@ public class ObtainXFormController extends WebMvcConfigurerAdapter
             {
             		if(!file.getContentType().contains(XML_TYPE))
              		return returnErrorMessage(model, appConfig, "Error: Xform must be of type xml."); 
- 
             		SecureAppGeneratorApplication.saveMultiPartFileToLocation(file, xFormBuildPath.toString());
   
-                if(!isValidXForm(xFormBuildPath))
-                {
-                		Files.delete(xFormBuildPath);
-             		return returnErrorMessage(model, appConfig, "Error: Xform Invalid."); 
-                }
-
+                isValidXForm(xFormBuildPath);
+ 
                 AppConfiguration config = (AppConfiguration)session.getAttribute(SessionAttributes.APP_CONFIG);
         			config.setAppXFormLocation(xFormBuildPath.getFileName().toString()); 
         			session.setAttribute(SessionAttributes.APP_CONFIG, config);
             } 
             catch (Exception e) 
             {
-            		SecureAppGeneratorApplication.setInvalidResults(session, "You failed to upload a file => " + e.getMessage());
-                return WebPage.ERROR;
+            		try
+				{
+					Files.delete(xFormBuildPath);
+				}
+				catch (IOException e1)
+				{
+					e1.printStackTrace();
+				}
+            		return returnErrorMessage(model, appConfig, "Error: Xform Invalid."); 
             }
         } 
 		model.addAttribute(SessionAttributes.APP_CONFIG, appConfig);
        return WebPage.FINAL;
     }
 
-	private boolean isValidXForm(Path fileLocation)
+	private void isValidXForm(Path fileLocation)
 	{
-		return false;
 	}
 
 	public String returnErrorMessage(Model model, AppConfiguration appConfig,

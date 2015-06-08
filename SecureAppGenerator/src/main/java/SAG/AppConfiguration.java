@@ -34,9 +34,9 @@ public class AppConfiguration
 	private String appXFormLocation;
 	private String appXFormError;
 	
-	public void setAppName(String name)
+	public void setAppName(String appName)
 	{
-		appName = name;
+		this.appName = appName;
 	}
 	
 	public String getAppName()
