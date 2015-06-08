@@ -41,11 +41,12 @@ public class SecureAppGeneratorApplication
 		session.setAttribute(SessionAttributes.APP_CONFIG, config);
 	}
 
-	static void setDefaultNameForSession(HttpSession session, AppConfiguration config)
+	static void setSessionFromConfig(HttpSession session, AppConfiguration config)
 	{
 		AppConfiguration sessionConfig = new AppConfiguration();
 		sessionConfig.setAppName(APP_DEFAULT_NAME);
 		sessionConfig.setAppIconLocation(config.getAppIconLocation());
+		sessionConfig.setClientToken(config.getClientToken());
 		session.setAttribute(SessionAttributes.APP_CONFIG, sessionConfig);
 	}
 

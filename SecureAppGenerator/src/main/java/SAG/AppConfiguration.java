@@ -33,6 +33,9 @@ public class AppConfiguration
 	private String appIconError;
 	private String appXFormLocation;
 	private String appXFormError;
+	private String clientToken;
+	private String clientTokenError;
+	private String clientPublicKey;
 	
 	public void setAppName(String appName)
 	{
@@ -98,5 +101,35 @@ public class AppConfiguration
 	public void setAppXFormError(String appXFormError)
 	{
 		this.appXFormError = appXFormError;
+	}
+
+	public String getClientToken()
+	{
+		return clientToken;
+	}
+
+	public void setClientToken(String clientToken)
+	{
+		this.clientToken = clientToken;
+	}
+
+	public String getClientTokenError()
+	{
+		return clientTokenError;
+	}
+
+	public void setClientTokenError(String clientTokenError)
+	{
+		this.clientTokenError = clientTokenError;
+	}
+
+	public String getClientPublicKey()
+	{
+		return clientPublicKey;
+	}
+
+	public void setClientPublicKey(String clientPublicKey)
+	{
+		this.clientPublicKey = clientPublicKey;
 	}	
 }

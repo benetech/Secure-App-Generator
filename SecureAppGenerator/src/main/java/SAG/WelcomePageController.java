@@ -48,7 +48,7 @@ public class WelcomePageController
 	{
 		AppConfiguration defaultConfig = new AppConfiguration();
 		SecureAppGeneratorApplication.setDefaultIconForSession(session, defaultConfig);
-		SecureAppGeneratorApplication.setDefaultNameForSession(session, defaultConfig);
+		SecureAppGeneratorApplication.setSessionFromConfig(session, defaultConfig);
 	}
 
 	@RequestMapping(value=WebPage.WELCOME, method=RequestMethod.GET)

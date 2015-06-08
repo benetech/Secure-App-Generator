@@ -113,7 +113,7 @@ public class ObtainXFormController extends WebMvcConfigurerAdapter
             }
         } 
 		model.addAttribute(SessionAttributes.APP_CONFIG, appConfig);
-       return WebPage.FINAL;
+       return WebPage.OBTAIN_CLIENT_TOKEN;
     }
 
 	private void isValidXForm(Path fileLocation)

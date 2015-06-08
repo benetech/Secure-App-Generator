@@ -59,7 +59,7 @@ public class NameAppController extends WebMvcConfigurerAdapter
 		if (!validateAppName(appConfig)) 
 		{
 			model.addAttribute(SessionAttributes.APP_CONFIG, appConfig);
-			SecureAppGeneratorApplication.setDefaultNameForSession(session, appConfig);
+			SecureAppGeneratorApplication.setSessionFromConfig(session, appConfig);
 			return WebPage.NAME_APP;
 		}
 		model.addAttribute(SessionAttributes.APP_CONFIG, appConfig);

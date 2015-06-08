@@ -48,4 +48,8 @@ public interface WebPage
 	public static final String OBTAIN_XFORM_NEXT = OBTAIN_XFORM + NEXT_PAGE;
 	public static final String OBTAIN_XFORM_UPLOAD = OBTAIN_XFORM + UPLOAD;
 
+	public static final String OBTAIN_CLIENT_TOKEN = "/obtainToken";
+	public static final String OBTAIN_CLIENT_TOKEN_PREVIOUS = OBTAIN_CLIENT_TOKEN+ PREVIOUS_PAGE;
+	public static final String OBTAIN_CLIENT_TOKEN_NEXT = OBTAIN_CLIENT_TOKEN + NEXT_PAGE;
+
 }
