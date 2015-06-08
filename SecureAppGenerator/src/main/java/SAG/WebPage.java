@@ -27,24 +27,25 @@ package SAG;
 
 public interface WebPage
 {
+	public static final String UPLOAD = "Upload";
+	public static final String NEXT_PAGE = "Next";
+	public static final String PREVIOUS_PAGE = "Previous";
 	public static final String WELCOME = "/welcome";
-
 	public static final String FINAL = "/final";
-	
 	public static final String ERROR = "/error";
 	
 	public static final String NAME_APP = "/nameApp";
-	public static final String NAME_APP_PREV = NAME_APP +"Previous";
-	public static final String NAME_APP_NEXT = NAME_APP +"Next";
+	public static final String NAME_APP_PREV = NAME_APP +PREVIOUS_PAGE;
+	public static final String NAME_APP_NEXT = NAME_APP +NEXT_PAGE;
 	
 	public static final String OBTAIN_LOGO = "/obtainLogo";
-	public static final String OBTAIN_LOGO_PREVIOUS = OBTAIN_LOGO + "Previous";
-	public static final String OBTAIN_LOGO_NEXT = OBTAIN_LOGO + "Next";
-	public static final String OBTAIN_LOGO_UPLOAD = OBTAIN_LOGO + "Upload";
+	public static final String OBTAIN_LOGO_PREVIOUS = OBTAIN_LOGO + PREVIOUS_PAGE;
+	public static final String OBTAIN_LOGO_NEXT = OBTAIN_LOGO + NEXT_PAGE;
+	public static final String OBTAIN_LOGO_UPLOAD = OBTAIN_LOGO + UPLOAD;
 	
 	public static final String OBTAIN_XFORM = "/obtainXForm";
-	public static final String OBTAIN_XFORM_PREVIOUS = OBTAIN_XFORM+ "Previous";
-	public static final String OBTAIN_XFORM_NEXT = OBTAIN_XFORM + "Next";
-	public static final String OBTAIN_XFORM_UPLOAD = OBTAIN_XFORM + "Upload";
+	public static final String OBTAIN_XFORM_PREVIOUS = OBTAIN_XFORM+ PREVIOUS_PAGE;
+	public static final String OBTAIN_XFORM_NEXT = OBTAIN_XFORM + NEXT_PAGE;
+	public static final String OBTAIN_XFORM_UPLOAD = OBTAIN_XFORM + UPLOAD;
 
 }
