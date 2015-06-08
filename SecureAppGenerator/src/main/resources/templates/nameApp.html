@@ -31,9 +31,13 @@
    		 	<div class="info_area_3">
            		 <table>
 	                <tr>
- 	                    <td>Name:</td>
+ 	                    <td>                					
+ 	                    		<label for="appName">
+	                    				Name:
+                    			</label>
+						</td>
 	                    <td>
-	                    		<input type="text" th:field="*{appName}" autofocus="true"/>
+	    	                    	<input type="text" th:field="*{appName}" autofocus="true"/>
 	                    	</td>
 	                    <td>
 	                    		<span class="error_msg" th:if="*{appNameError != null}" th:text="*{appNameError}">Errors</span>
@@ -44,5 +48,6 @@
  			</div>
 			<input class="button_next" name="next" type="submit" value="Continue &gt;"/>
 		</form>
+	<script src="./js/tota11y.min.js"></script>	
 	</body>
 </html>
