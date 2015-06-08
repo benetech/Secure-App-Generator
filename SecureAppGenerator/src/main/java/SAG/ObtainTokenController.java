@@ -33,6 +33,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurerAdapter;
 
+import SAG.MartusAccountAccessToken.TokenInvalidException;
+
 @Controller
 public class ObtainTokenController extends WebMvcConfigurerAdapter
 {
@@ -82,15 +84,17 @@ public class ObtainTokenController extends WebMvcConfigurerAdapter
 	//TODO add unit tests!
 	private boolean isValidToken(AppConfiguration appConfig)
 	{
-		String token = appConfig.getClientToken().trim();
-		appConfig.setClientToken(token);
-		int length = token.length();
-		if(length!=8)
+		String tokenString = appConfig.getClientToken().trim();
+		appConfig.setClientToken(tokenString);
+		try
 		{
-			appConfig.setClientTokenError("Error: Token must be 8 characters long.");
+			new MartusAccountAccessToken(tokenString);
+		}
+		catch (TokenInvalidException e)
+		{
+			appConfig.setClientTokenError("Error: Token is invalid");
 			return false;
 		}
-		//TODO validate token 
 		return true;
 	}
 }
