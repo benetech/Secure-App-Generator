@@ -23,6 +23,8 @@ Software Foundation, Inc., 59 Temple Place - Suite 330,
 Boston, MA 02111-1307, USA.
 
 */
+//This was taken from martus-common and really should be refactored not to include the pieces not needed here\
+//TODO: Make this the base class which the MartusAccountAccessToken would derive from
 package SAG;
 
 

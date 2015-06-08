@@ -40,6 +40,8 @@ Boston, MA 02111-1307, USA.
 */
 //3841590
 //7,1,1,0,9,0,0
+//TODO: This is a copy of martus-common DCDA.  Should only be 1 master copy
+  
 package SAG;
 
 public class DammCheckDigitAlgorithm
