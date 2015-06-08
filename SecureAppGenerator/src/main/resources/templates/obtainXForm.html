@@ -33,10 +33,12 @@
          		 <table>
          		 	<tr>
          		 		<td>
-         		 			Form to Use:
+ 	                    		<label for="defaultXFormSelection">
+	                    				Form to Use:
+                    			</label>
          		 		</td>
          		 		<td>
-							<select name="selectedForm" >
+							<select id="defaultXFormSelection" name="selectedForm" >
 			 					<option th:each="type : ${formsImpMap}" 
 			        		    			th:value="${type.value}" 
 			          				th:text="${type.key}">
@@ -46,7 +48,7 @@
          		 	</tr>
 	                <tr>
  	                    <td>
-  	       					<input class = "button_upload" type="file" name="file"></input> 
+  	       					<input id="uploadCustomXFormButton" class = "button_upload" type="file" name="file"></input> 
   	                    	</td>
 	                    <td>
 	                    		<span class="error_msg" th:if="*{appXFormError != null}" th:text="*{appXFormError}">Errors</span>
@@ -54,8 +56,10 @@
 	                </tr>
                 </table>
  				<p/>
- 				Upload your XForm .xml file.
-			</div>
+         		<label for="uploadCustomXFormButton">
+        				Upload your custom XForm .xml file.
+       			</label>
+ 			</div>
 			<input class="button_next" name="next" type="submit" value="Continue &gt;"/>
 		</form>
 	<script src="./js/tota11y.min.js"></script>	

@@ -33,7 +33,7 @@
          		 <table>
 	                <tr>
  	                    <td>
-  	       					<input class = "button_upload" type="file" name="file"></input> 
+  	       					<input id="uploadLogoButton" class="button_upload" type="file" name="file"></input> 
   	                    	</td>
 	                    <td>
 	                    		<span class="error_msg" th:if="*{appIconError != null}" th:text="*{appIconError}">Errors</span>
@@ -41,7 +41,9 @@
 	                </tr>
                 </table>
  				<p/>
- 				Upload a .png image file.
+	        		<label for="uploadLogoButton">
+					Select a .png image file to upload.
+	    			</label>
 			</div>
 			<input class="button_next" name="next" type="submit" value="Continue &gt;"/>
 		</form>
