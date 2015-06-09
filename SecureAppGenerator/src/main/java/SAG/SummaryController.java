@@ -118,6 +118,8 @@ public class SummaryController extends WebMvcConfigurerAdapter
 	{
 		String tempBuildDirName = getRandomDirectoryFileName();
 		File baseBuildDir = new File(MAIN_BUILD_DIRECTORY, tempBuildDirName);
+		if(baseBuildDir.exists())
+			throw new IOException("Random build directory exists?");
 		if(!baseBuildDir.mkdirs())
 			throw new IOException("Unable to create directories:" + baseBuildDir.getAbsolutePath());
 		File downloadsDirectory = new File(APK_DOWNLOADS_DIRECTORY);
