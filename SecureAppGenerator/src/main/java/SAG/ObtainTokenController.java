@@ -31,8 +31,11 @@ import java.util.Map;
 
 import javax.servlet.http.HttpSession;
 
+import org.martus.common.DammCheckDigitAlgorithm.CheckDigitInvalidException;
 import org.martus.common.MartusAccountAccessToken;
 import org.martus.common.MartusAccountAccessToken.TokenInvalidException;
+import org.martus.common.crypto.MartusCrypto;
+import org.martus.common.crypto.MartusCrypto.CreateDigestException;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.ModelAttribute;
@@ -82,6 +85,15 @@ public class ObtainTokenController extends WebMvcConfigurerAdapter
 		//TODO get real key from Token server.
         AppConfiguration config = (AppConfiguration)session.getAttribute(SessionAttributes.APP_CONFIG);
  		config.setClientPublicKey(DESKTOP_PUBLIC_KEY);
+ 		try
+		{
+			config.setClientPublicCode(MartusCrypto.computeFormattedPublicCode40(DESKTOP_PUBLIC_KEY));
+		}
+		catch (CreateDigestException | CheckDigitInvalidException e)
+		{
+			appConfig.setClientTokenError("Error: Token not found.");
+			return false;
+		}
  		session.setAttribute(SessionAttributes.APP_CONFIG, config);
 		return true;
 	}
