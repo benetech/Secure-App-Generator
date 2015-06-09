@@ -46,6 +46,9 @@ import org.springframework.web.servlet.config.annotation.WebMvcConfigurerAdapter
 @Controller
 public class ObtainTokenController extends WebMvcConfigurerAdapter
 {
+	private static final String APK_EXTENSION = ".apk";
+	private static final char UNDERSCORE_CHAR = '_';
+	private static final char SPACE_CHAR = ' ';
 	public static final String DESKTOP_PUBLIC_KEY = "MIIBojANBgkqhkiG9w0BAQEFAAOCAY8AMIIBigKCAYEAhToihLM3R540behcXLDKSHXjhiRsL3oQdyWeUfphpYXIQydfPny40zoFoznC3YwM8Jykf9ToQstO1k74SYwRuIEEdtews6ETV7U8sDz5IZnjOOg4xtBIEAAtFkO23oG429i1scOFI9L9p8xkhVePeZZ4CNHBXztYDcKVcqn+cEn8aTqBZ0sdcOUkZlMlfR628GhhCekS1lm0t6CSdRWKyqvGRJ6RbROep16ATZdriaJiPyVKMy1y/mAIoz/rRIOCUphnDTQjlKox6sQ6EaWykLCn0oY8KAR87Rar0OY09fuEn2KkP3gdhzVmmITFrGTFi37kzGDfCjJ8tn86G2D8KvAyiDdi8OlgSpDqI/G1MzPB04vrQa/HRcAwT1W7qmd0pKwu+GmQ+o9j1oiOpvFrK48TedZbI9fUWqXfuNSvS1pukfJ+svAPLlo+rBCT6F0hoGYgSFWUzRiiZuKZR4au51tqxhU4Qk7PDcFe/kx3TrtJKYLkLM1jQgT0ERdtlPZ9AgMBAAE=";
 
 	@RequestMapping(value=WebPage.OBTAIN_CLIENT_TOKEN, method=RequestMethod.GET)
@@ -72,6 +75,7 @@ public class ObtainTokenController extends WebMvcConfigurerAdapter
 			if(getClientPublicKeyFromToken(session, appConfig))
 			{
 				updateServerConfiguration(session);
+				updateApkVersionInformationAndName(session);
  				model.addAttribute(SessionAttributes.APP_CONFIG, appConfig);
 				return WebPage.SUMMARY;
 			}
@@ -79,6 +83,17 @@ public class ObtainTokenController extends WebMvcConfigurerAdapter
 		model.addAttribute(SessionAttributes.APP_CONFIG, appConfig);
 		return WebPage.OBTAIN_CLIENT_TOKEN;
     }
+
+	private void updateApkVersionInformationAndName(HttpSession session)
+	{
+        AppConfiguration config = (AppConfiguration)session.getAttribute(SessionAttributes.APP_CONFIG);
+        String appName = config.getAppName();
+        String appNameWithoutSpaces = appName.replace(SPACE_CHAR, UNDERSCORE_CHAR);
+        StringBuilder apkName = new StringBuilder(appNameWithoutSpaces);
+        apkName.append(APK_EXTENSION);
+        config.setApkName(apkName.toString());
+		session.setAttribute(SessionAttributes.APP_CONFIG, config);
+	}
 
 	private void updateServerConfiguration(HttpSession session)
 	{

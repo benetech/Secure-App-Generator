@@ -42,6 +42,7 @@ public class AppConfiguration
 	private String serverIP;
 	private String serverPublicCode;
 	private String apkLink;
+	private String apkName;
 	
 	public void setAppName(String appName)
 	{
@@ -197,6 +198,16 @@ public class AppConfiguration
 	public void setServerPublicCode(String serverPublicCode)
 	{
 		this.serverPublicCode = serverPublicCode;
+	}
+
+	public String getApkName()
+	{
+		return apkName;
+	}
+
+	public void setApkName(String apkName)
+	{
+		this.apkName = apkName;
 	}
 
 }

@@ -18,11 +18,11 @@
      	<div class="sub_title">
      		powered by<img src="../images/MartusLogoWhite.png" alt="Martus"/>
 		</div>
-     	<div class="page_title">
+     	<div class="summary_title">
      		<h1>Verify all information is correct and that the Public Code matches the contact you wish to send your records before building your App.</h1>
  		</div>
 		
-    		 <div class="info_area_3">
+    		 <div class="info_area_summary">
              <table>
 	                <tr>
  	                    <td>App's Name:</td>
@@ -44,7 +44,11 @@
  	                    <td>Server being used:</td>
 	   					<td th:text="${session.appConfig.serverName}"></td>
 	                </tr>
-            </table>
+	                <tr>
+ 	                    <td>APK Name:</td>
+	   					<td th:text="${session.appConfig.apkName}"></td>
+	                </tr>
+             </table>
 		</div>
 		<form method="POST" th:action="@{/summaryPrevious}">
 			<input class="button_previous" name="previous" type="submit" value="&lt; Back"/>
