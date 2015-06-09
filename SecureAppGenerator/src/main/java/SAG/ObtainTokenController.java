@@ -46,6 +46,7 @@ import org.springframework.web.servlet.config.annotation.WebMvcConfigurerAdapter
 @Controller
 public class ObtainTokenController extends WebMvcConfigurerAdapter
 {
+	private static final char DASH_CHAR = '-';
 	private static final String APK_EXTENSION = ".apk";
 	private static final char UNDERSCORE_CHAR = '_';
 	private static final char SPACE_CHAR = ' ';
@@ -75,7 +76,7 @@ public class ObtainTokenController extends WebMvcConfigurerAdapter
 			if(getClientPublicKeyFromToken(session, appConfig))
 			{
 				updateServerConfiguration(session);
-				updateApkVersionInformationAndName(session);
+				updateApkVersionInfoAndName(session);
  				model.addAttribute(SessionAttributes.APP_CONFIG, appConfig);
 				return WebPage.SUMMARY;
 			}
@@ -84,15 +85,53 @@ public class ObtainTokenController extends WebMvcConfigurerAdapter
 		return WebPage.OBTAIN_CLIENT_TOKEN;
     }
 
-	private void updateApkVersionInformationAndName(HttpSession session)
+	private void updateApkVersionInfoAndName(HttpSession session)
 	{
         AppConfiguration config = (AppConfiguration)session.getAttribute(SessionAttributes.APP_CONFIG);
         String appName = config.getAppName();
         String appNameWithoutSpaces = appName.replace(SPACE_CHAR, UNDERSCORE_CHAR);
         StringBuilder apkName = new StringBuilder(appNameWithoutSpaces);
+        apkName.append(DASH_CHAR);
+ 
+        int majorVersionNumber = getMajorVersionNumber();
+        config.setApkVersionMajor(majorVersionNumber);
+        apkName.append(majorVersionNumber);
+        apkName.append(UNDERSCORE_CHAR);
+       
+        int minorVersionNumber = getMinorVersionNumber();
+        config.setApkVersionMinor(minorVersionNumber);
+        apkName.append(minorVersionNumber);
+        apkName.append(UNDERSCORE_CHAR);
+        
+        int uniqueBuildNumber = getUniqueBuildNumber(apkName.toString());
+        config.setApkVersionBuild(uniqueBuildNumber);
+        
+        apkName.append(uniqueBuildNumber);
         apkName.append(APK_EXTENSION);
+        
         config.setApkName(apkName.toString());
 		session.setAttribute(SessionAttributes.APP_CONFIG, config);
+	}
+
+	private int getMajorVersionNumber()
+	{
+		//TODO get real Major Version # from Build configuration
+		return 2;
+	}
+
+	private int getMinorVersionNumber()
+	{
+		//TODO get real Minor Version # from Build configuration
+		return 3;
+	}
+
+	private int getUniqueBuildNumber(String partialApkName)
+	{
+		int greatestBuildNumberFound = 0;
+		//TODO check the build directory for any APK's with this name & Major/Minor version # then
+		//get the last build # and increment by 1.
+		
+		return greatestBuildNumberFound+1;
 	}
 
 	private void updateServerConfiguration(HttpSession session)

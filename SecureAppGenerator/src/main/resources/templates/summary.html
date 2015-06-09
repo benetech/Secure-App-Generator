@@ -30,7 +30,7 @@
 	                </tr>
 	                <tr>
  	                    <td>App's Logo:</td>
-	   					<td><img class="summary_logo_size" th:src="${session.appConfig.appIconLocation}" role="presentation" alt=""/></td>
+	   					<td><img class="summary_logo_size" th:src="${session.appConfig.appIconLocation}" alt="image of logo to use in app"/></td>
 	                </tr>
 	                <tr>
  	                    <td>XForm To Use:</td>
@@ -45,6 +45,10 @@
 	   					<td th:text="${session.appConfig.serverName}"></td>
 	                </tr>
 	                <tr>
+ 	                    <td>APK Version:</td>
+	   					<td th:text="${session.appConfig.apkVersionMajor} + '.' +${session.appConfig.apkVersionMinor} + '.' + ${session.appConfig.apkVersionBuild}"></td>
+	                </tr>
+ 	                <tr>
  	                    <td>APK Name:</td>
 	   					<td th:text="${session.appConfig.apkName}"></td>
 	                </tr>
@@ -56,5 +60,6 @@
 		<form method="POST" action="/summaryNext">
 			<input class="button_next" name="next" type="submit" value="BUILD APP &gt;"/>
 		</form>
+	<script src="./js/tota11y.min.js"></script>	
  	</body>
 </html>

@@ -43,6 +43,9 @@ public class AppConfiguration
 	private String serverPublicCode;
 	private String apkLink;
 	private String apkName;
+	private int apkVersionMajor;
+	private int apkVersionMinor;
+	private int apkVersionBuild;
 	
 	public void setAppName(String appName)
 	{
@@ -208,6 +211,36 @@ public class AppConfiguration
 	public void setApkName(String apkName)
 	{
 		this.apkName = apkName;
+	}
+
+	public int getApkVersionMajor()
+	{
+		return apkVersionMajor;
+	}
+
+	public void setApkVersionMajor(int apkVersionMajor)
+	{
+		this.apkVersionMajor = apkVersionMajor;
+	}
+
+	public int getApkVersionMinor()
+	{
+		return apkVersionMinor;
+	}
+
+	public void setApkVersionMinor(int apkVersionMinor)
+	{
+		this.apkVersionMinor = apkVersionMinor;
+	}
+
+	public int getApkVersionBuild()
+	{
+		return apkVersionBuild;
+	}
+
+	public void setApkVersionBuild(int apkVersionBuild)
+	{
+		this.apkVersionBuild = apkVersionBuild;
 	}
 
 }
