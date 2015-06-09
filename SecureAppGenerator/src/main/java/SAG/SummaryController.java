@@ -43,11 +43,15 @@ import org.springframework.web.servlet.config.annotation.WebMvcConfigurerAdapter
 @Controller
 public class SummaryController extends WebMvcConfigurerAdapter
 {
-	
+    private static final String GRADLE_LOCATION = "/Users/charlesl/Dev/gradle-2.3/bin/gradle";
+    private static final String GRADLE_PARAMETERS = " -p ";
+	private static final String GRADLE_BUILD_COMMAND = " build";
 	private static final String APK_LOCAL_FILE_DIRECTORY = "/build/outputs/apk/";
-	private static String ORIGINAL_BUILD_DIRECTORY = "/Users/charlesl/EclipseMartus/martus-android/secure-app-vital-voices"; 
-	private static String MAIN_BUILD_DIRECTORY = "/Users/charlesl/SAG/Build";
-	private static String APK_DOWNLOADS_DIRECTORY = "/Users/charlesl/SAG/Downloads/";
+	private static final String ORIGINAL_BUILD_DIRECTORY = "/Users/charlesl/EclipseMartus/martus-android/secure-app-vital-voices"; 
+	private static final String MAIN_BUILD_DIRECTORY = "/Users/charlesl/SAG/Build";
+	private static final String APK_DOWNLOADS_DIRECTORY = "/Users/charlesl/SAG/Downloads/";
+	private static final int EXIT_VALUE_GRADLE_SUCCESS = 0;
+
 	@RequestMapping(value=WebPage.SUMMARY, method=RequestMethod.GET)
     public String directError(HttpSession session, Model model) 
     {
@@ -65,33 +69,53 @@ public class SummaryController extends WebMvcConfigurerAdapter
 	@RequestMapping(value=WebPage.SUMMARY_NEXT, method=RequestMethod.POST)	
 	public String buildApk(HttpSession session, Model model, AppConfiguration appConfig) 
     {
+		File baseBuildDir = null;
 		try
 		{
-			File baseBuildDir = getSessionBuildDirectory();
+			baseBuildDir = getSessionBuildDirectory();
 			copyDefaultBuildFilesToStagingArea(baseBuildDir);
 			AppConfiguration config = (AppConfiguration)session.getAttribute(SessionAttributes.APP_CONFIG);
-			File apkCreated = buildApk(baseBuildDir, config.getApkName());
+			File apkCreated = buildApk(baseBuildDir.getAbsolutePath(), config.getApkName());
 			copyApkToDownloads(session, apkCreated);
-			FileUtils.deleteDirectory(baseBuildDir);			
+			model.addAttribute(SessionAttributes.APP_CONFIG, appConfig);
+			return WebPage.FINAL;
 		}
-		catch (IOException e)
+		catch (Exception e)
 		{
 			appConfig.setApkBuildError("Error: Unable to generate APK.");
 			model.addAttribute(SessionAttributes.APP_CONFIG, appConfig);
 			e.printStackTrace();
 			return WebPage.SUMMARY;
 		}
-		
-		model.addAttribute(SessionAttributes.APP_CONFIG, appConfig);
-		return WebPage.FINAL;
+		finally
+		{
+			try
+			{
+				if(baseBuildDir != null)
+					FileUtils.deleteDirectory(baseBuildDir);
+			}
+			catch (IOException e)
+			{
+			}			
+		}
     }
 
-	private File buildApk(File baseBuildDir, String apkFileName) throws IOException
+	private File buildApk(String baseBuildDir, String apkFileName) throws IOException, InterruptedException
 	{
-		String baseDir = baseBuildDir.getAbsolutePath();
-		String tempApkBuildFileDirectory = baseDir + APK_LOCAL_FILE_DIRECTORY;
+		System.out.println("Building " + apkFileName);
+		Runtime rt = Runtime.getRuntime();
+   		String gradleCommand = GRADLE_LOCATION + GRADLE_PARAMETERS + baseBuildDir + GRADLE_BUILD_COMMAND;
+   		Process pr = rt.exec(gradleCommand);
+   		pr.waitFor();
+		System.out.println("Finished Building " + apkFileName);
+ 
+		int returnCode = pr.exitValue();
+   		if(returnCode != EXIT_VALUE_GRADLE_SUCCESS)
+	   		throw new IOException("Error creating APK");
+
+   		String tempApkBuildFileDirectory = baseBuildDir + APK_LOCAL_FILE_DIRECTORY;
 		File appFileCreated = new File(tempApkBuildFileDirectory, apkFileName);
-		appFileCreated.createNewFile();
+		appFileCreated.createNewFile();//FIXME
 		return appFileCreated;
 	}
 
