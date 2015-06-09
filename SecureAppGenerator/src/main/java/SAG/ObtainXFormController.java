@@ -101,7 +101,7 @@ public class ObtainXFormController extends WebMvcConfigurerAdapter
                 AppConfiguration config = (AppConfiguration)session.getAttribute(SessionAttributes.APP_CONFIG);
         			String uploadedFormName = xFormBuildPath.getFileName().toString();
 				config.setAppXFormLocation(uploadedFormName); 
-        			config.setAppXFormName(getFormNameOnly(uploadedFormName));
+        			config.setAppXFormName(getFormNameOnly(file.getOriginalFilename()));
         			session.setAttribute(SessionAttributes.APP_CONFIG, config);
             } 
             catch (Exception e) 
