@@ -46,6 +46,7 @@ public class AppConfiguration
 	private int apkVersionMajor;
 	private int apkVersionMinor;
 	private int apkVersionBuild;
+	private String apkBuildError;
 	
 	public void setAppName(String appName)
 	{
@@ -241,6 +242,16 @@ public class AppConfiguration
 	public void setApkVersionBuild(int apkVersionBuild)
 	{
 		this.apkVersionBuild = apkVersionBuild;
+	}
+
+	public String getApkBuildError()
+	{
+		return apkBuildError;
+	}
+
+	public void setApkBuildError(String apkBuildError)
+	{
+		this.apkBuildError = apkBuildError;
 	}
 
 }

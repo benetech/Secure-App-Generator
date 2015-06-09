@@ -52,6 +52,12 @@
  	                    <td>APK Name:</td>
 	   					<td th:text="${session.appConfig.apkName}"></td>
 	                </tr>
+	                <tr>
+	                		<td/>
+	                    	<td>
+	                    		<span class="error_msg" th:if="${appConfig.apkBuildError != null}" th:text="${appConfig.apkBuildError}">Errors</span>
+	                    	</td>
+	                </tr>
              </table>
 		</div>
 		<form method="POST" th:action="@{/summaryPrevious}">
