@@ -52,4 +52,8 @@ public interface WebPage
 	public static final String OBTAIN_CLIENT_TOKEN_PREVIOUS = OBTAIN_CLIENT_TOKEN+ PREVIOUS_PAGE;
 	public static final String OBTAIN_CLIENT_TOKEN_NEXT = OBTAIN_CLIENT_TOKEN + NEXT_PAGE;
 
+	public static final String SUMMARY = "/summary";
+	public static final String SUMMARY_PREVIOUS = SUMMARY+ PREVIOUS_PAGE;
+	public static final String SUMMARY_NEXT = SUMMARY + NEXT_PAGE;
+
 }

@@ -22,10 +22,28 @@
     		 <div class="info_area_3">
              <table>
 	                <tr>
- 	                    <td>Here is a link to your app:</td>
-	   					<td th:text="${session.appConfig.apkLink}"></td>
+ 	                    <td>Name:</td>
+	   					<td th:text="${session.appConfig.appName}"></td>
+	                </tr>
+	                <tr>
+ 	                    <td>Logo:</td>
+	   					<td><img class="summary_logo_size" th:src="${session.appConfig.appIconLocation}" role="presentation" alt=""/></td>
+	                </tr>
+	                <tr>
+ 	                    <td>XForm:</td>
+	   					<td th:text="${session.appConfig.appXFormName}"></td>
+	                </tr>
+	                <tr>
+ 	                    <td>Public Code:</td>
+	   					<td th:text="${session.appConfig.clientPublicCode}"></td>
 	                </tr>
             </table>
 		</div>
+		<form method="POST" th:action="@{/summaryPrevious}">
+			<input class="button_previous" name="previous" type="submit" value="&lt; Back"/>
+		</form>
+		<form method="POST" action="/summaryNext">
+			<input class="button_next" name="next" type="submit" value="BUILD APP &gt;"/>
+		</form>
  	</body>
 </html>

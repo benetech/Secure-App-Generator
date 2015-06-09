@@ -31,11 +31,14 @@ public class AppConfiguration
 	private String appNameError;
 	private String appIconLocation;
 	private String appIconError;
+	private String appXFormName;
 	private String appXFormLocation;
 	private String appXFormError;
 	private String clientToken;
 	private String clientTokenError;
 	private String clientPublicKey;
+	private String clientPublicCode;
+	private String apkLink;
 	
 	public void setAppName(String appName)
 	{
@@ -81,6 +84,16 @@ public class AppConfiguration
 	public void setAppIconError(String appIconError)
 	{
 		this.appIconError = appIconError;
+	}
+
+	public String getAppXFormName()
+	{
+		return appXFormName;
+	}
+
+	public void setAppXFormName(String appXFormName)
+	{
+		this.appXFormName = appXFormName;
 	}
 
 	public String getAppXFormLocation()
@@ -131,5 +144,26 @@ public class AppConfiguration
 	public void setClientPublicKey(String clientPublicKey)
 	{
 		this.clientPublicKey = clientPublicKey;
+	}
+
+	public String getClientPublicCode()
+	{
+		return clientPublicCode;
+	}
+
+	public void setClientPublicCode(String clientPublicCode)
+	{
+		this.clientPublicCode = clientPublicCode;
 	}	
+	
+	public String getApkLink()
+	{
+		return apkLink;
+	}
+
+	public void setApkLink(String apkLink)
+	{
+		this.apkLink = apkLink;
+	}
+
 }

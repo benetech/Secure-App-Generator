@@ -25,10 +25,15 @@ Boston, MA 02111-1307, USA.
 
 package SAG;
 
+import java.io.IOException;
+import java.net.MalformedURLException;
+import java.util.Map;
+
 import javax.servlet.http.HttpSession;
 
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurerAdapter;
@@ -64,7 +69,7 @@ public class ObtainTokenController extends WebMvcConfigurerAdapter
 			if(getClientPublicKeyFromToken(session, appConfig))
 			{
  				model.addAttribute(SessionAttributes.APP_CONFIG, appConfig);
-				return WebPage.FINAL;
+				return WebPage.SUMMARY;
 			}
 		}
 		model.addAttribute(SessionAttributes.APP_CONFIG, appConfig);
@@ -97,4 +102,12 @@ public class ObtainTokenController extends WebMvcConfigurerAdapter
 		}
 		return true;
 	}
+	
+	//NOTE: Needed due to how page is called from another page 
+	@ModelAttribute("formsImpMap")
+	public Map<String,String> populateFormsMap() throws MalformedURLException, IOException 
+	{
+		return ObtainXFormController.populateFormsMap();
+	}
+	
 }

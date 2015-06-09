@@ -92,7 +92,7 @@ public class ObtainLogoController extends WebMvcConfigurerAdapter
        return WebPage.OBTAIN_XFORM;
     }
 	
-	//NONE: Needed due to how page is called from another page 
+	//NOTE: Needed due to how page is called from another page 
 	@ModelAttribute("formsImpMap")
 	public Map<String,String> populateFormsMap() throws MalformedURLException, IOException 
 	{

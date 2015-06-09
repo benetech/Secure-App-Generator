@@ -56,6 +56,8 @@ public class ObtainXFormController extends WebMvcConfigurerAdapter
 	private static final String XML_FILE_LOCATION = "bin/static/xFormToUse.xml";  //TODO this will be based on build directory for this session
 	private static final String XFORM_FILE_EXTENSION = ".xml";
 	private static final String XFORMS_DEFAULT_DIRECTORY = "bin/static/xforms";
+	private static final int NO_PATH_SEPARATOR_FOUND = -1;
+	private static final char PATH_SEPARATOR = '/';
 
 	@RequestMapping(value=WebPage.OBTAIN_XFORM, method=RequestMethod.GET)
     public String directError(HttpSession session, Model model) 
@@ -68,7 +70,7 @@ public class ObtainXFormController extends WebMvcConfigurerAdapter
     public String goBack(HttpSession session, Model model) 
     {
 		AppConfiguration config = (AppConfiguration) session.getAttribute(SessionAttributes.APP_CONFIG);
-		model.addAttribute("appConfig", config);
+		model.addAttribute(SessionAttributes.APP_CONFIG, config);
 		return WebPage.OBTAIN_LOGO;
     }
 
@@ -78,12 +80,13 @@ public class ObtainXFormController extends WebMvcConfigurerAdapter
 		Path xFormBuildPath = Paths.get(XML_FILE_LOCATION);
 		if (file.isEmpty()) 
         {
-             if(!copyXFormsFileSelectedToBuildDirectory(session, formName))
-            		return WebPage.ERROR; 
+			if(!copyXFormsFileSelectedToBuildDirectory(session, formName))
+				return WebPage.ERROR; 
 
-             AppConfiguration config = (AppConfiguration)session.getAttribute(SessionAttributes.APP_CONFIG);
-            config.setAppXFormLocation(xFormBuildPath.toString()); //TODO fix file location
-     		session.setAttribute(SessionAttributes.APP_CONFIG, config);
+            AppConfiguration config = (AppConfiguration)session.getAttribute(SessionAttributes.APP_CONFIG);
+			config.setAppXFormLocation(xFormBuildPath.toString()); //TODO fix file location
+			config.setAppXFormName(getFormNameOnly(formName));
+			session.setAttribute(SessionAttributes.APP_CONFIG, config);
         }
         else
         {
@@ -96,7 +99,9 @@ public class ObtainXFormController extends WebMvcConfigurerAdapter
                 isValidXForm(xFormBuildPath);
  
                 AppConfiguration config = (AppConfiguration)session.getAttribute(SessionAttributes.APP_CONFIG);
-        			config.setAppXFormLocation(xFormBuildPath.getFileName().toString()); 
+        			String uploadedFormName = xFormBuildPath.getFileName().toString();
+				config.setAppXFormLocation(uploadedFormName); 
+        			config.setAppXFormName(getFormNameOnly(uploadedFormName));
         			session.setAttribute(SessionAttributes.APP_CONFIG, config);
             } 
             catch (Exception e) 
@@ -113,15 +118,15 @@ public class ObtainXFormController extends WebMvcConfigurerAdapter
             }
         } 
 		model.addAttribute(SessionAttributes.APP_CONFIG, appConfig);
-       return WebPage.OBTAIN_CLIENT_TOKEN;
+		return WebPage.OBTAIN_CLIENT_TOKEN;
     }
 
 	private void isValidXForm(Path fileLocation)
 	{
+		//TODO load XML file, then import into JavaRosa for validation
 	}
 
-	public String returnErrorMessage(Model model, AppConfiguration appConfig,
-			String errorMsg)
+	public String returnErrorMessage(Model model, AppConfiguration appConfig, String errorMsg)
 	{
 		appConfig.setAppXFormError(errorMsg);
 		model.addAttribute(SessionAttributes.APP_CONFIG, appConfig);
@@ -161,10 +166,20 @@ public class ObtainXFormController extends WebMvcConfigurerAdapter
 	{
 		String formName = file.getName();
 		if(formName.toLowerCase().endsWith(XFORM_FILE_EXTENSION))
-		{
-			int fileNameLengthWithoutXmlExtension = formName.length()-XFORM_FILE_EXTENSION.length();
-			formsImpMap.put(formName.substring(0, fileNameLengthWithoutXmlExtension), file.getAbsolutePath());
-		}		
+			formsImpMap.put(getFormNameOnly(formName), file.getAbsolutePath());
+	}
+
+	private static String getFormNameOnly(String formName)
+	{
+		int startPosition;
+		int startOfFileName = formName.lastIndexOf(PATH_SEPARATOR);
+		if(startOfFileName == NO_PATH_SEPARATOR_FOUND)
+			startPosition = 0;
+		else
+			startPosition = startOfFileName + 1;
+		
+		int fileNameLengthWithoutXmlExtension = formName.length()-XFORM_FILE_EXTENSION.length();
+		return formName.substring(startPosition, fileNameLengthWithoutXmlExtension);
 	}
 
 }
