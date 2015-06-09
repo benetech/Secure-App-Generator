@@ -38,6 +38,9 @@ public class AppConfiguration
 	private String clientTokenError;
 	private String clientPublicKey;
 	private String clientPublicCode;
+	private String serverName;
+	private String serverIP;
+	private String serverPublicCode;
 	private String apkLink;
 	
 	public void setAppName(String appName)
@@ -164,6 +167,36 @@ public class AppConfiguration
 	public void setApkLink(String apkLink)
 	{
 		this.apkLink = apkLink;
+	}
+
+	public String getServerName()
+	{
+		return serverName;
+	}
+
+	public void setServerName(String serverName)
+	{
+		this.serverName = serverName;
+	}
+
+	public String getServerIP()
+	{
+		return serverIP;
+	}
+
+	public void setServerIP(String serverIP)
+	{
+		this.serverIP = serverIP;
+	}
+
+	public String getServerPublicCode()
+	{
+		return serverPublicCode;
+	}
+
+	public void setServerPublicCode(String serverPublicCode)
+	{
+		this.serverPublicCode = serverPublicCode;
 	}
 
 }

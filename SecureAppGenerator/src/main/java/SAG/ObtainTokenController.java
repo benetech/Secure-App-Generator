@@ -71,6 +71,7 @@ public class ObtainTokenController extends WebMvcConfigurerAdapter
 		{
 			if(getClientPublicKeyFromToken(session, appConfig))
 			{
+				updateServerConfiguration(session);
  				model.addAttribute(SessionAttributes.APP_CONFIG, appConfig);
 				return WebPage.SUMMARY;
 			}
@@ -78,6 +79,18 @@ public class ObtainTokenController extends WebMvcConfigurerAdapter
 		model.addAttribute(SessionAttributes.APP_CONFIG, appConfig);
 		return WebPage.OBTAIN_CLIENT_TOKEN;
     }
+
+	private void updateServerConfiguration(HttpSession session)
+	{
+        AppConfiguration config = (AppConfiguration)session.getAttribute(SessionAttributes.APP_CONFIG);
+		if(ServerConstants.usingRealServer())
+			config.setServerName("SL1 IE");
+		else
+			config.setServerName("SL1 Development");
+		config.setServerIP(ServerConstants.getCurrentServerIp());
+		config.setServerPublicCode(ServerConstants.getCurrentSeverKey());
+		session.setAttribute(SessionAttributes.APP_CONFIG, config);
+	}
 
 	// TODO add unit tests
 	private boolean getClientPublicKeyFromToken(HttpSession session, AppConfiguration appConfig)

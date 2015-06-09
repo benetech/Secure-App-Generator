@@ -18,24 +18,31 @@
      	<div class="sub_title">
      		powered by<img src="../images/MartusLogoWhite.png" alt="Martus"/>
 		</div>
+     	<div class="page_title">
+     		<h1>Verify all information is correct and that the Public Code matches the contact you wish to send your records before building your App.</h1>
+ 		</div>
 		
     		 <div class="info_area_3">
              <table>
 	                <tr>
- 	                    <td>Name:</td>
+ 	                    <td>App's Name:</td>
 	   					<td th:text="${session.appConfig.appName}"></td>
 	                </tr>
 	                <tr>
- 	                    <td>Logo:</td>
+ 	                    <td>App's Logo:</td>
 	   					<td><img class="summary_logo_size" th:src="${session.appConfig.appIconLocation}" role="presentation" alt=""/></td>
 	                </tr>
 	                <tr>
- 	                    <td>XForm:</td>
+ 	                    <td>XForm To Use:</td>
 	   					<td th:text="${session.appConfig.appXFormName}"></td>
 	                </tr>
 	                <tr>
- 	                    <td>Public Code:</td>
+ 	                    <td>Receiving Contact's Public Code:</td>
 	   					<td th:text="${session.appConfig.clientPublicCode}"></td>
+	                </tr>
+	                <tr>
+ 	                    <td>Server being used:</td>
+	   					<td th:text="${session.appConfig.serverName}"></td>
 	                </tr>
             </table>
 		</div>
