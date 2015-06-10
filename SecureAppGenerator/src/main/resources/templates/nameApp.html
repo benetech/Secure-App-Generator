@@ -7,16 +7,18 @@
      		 href="/css/main.css" th:href="@{../css/main.css}" />
  	</head>
 	<body>
-
       	<img src="/images/cellphone.png" alt="Android Cellphone"/>
 	   	<div class="cellphone_logo"><img class="cellphone_logo_size" th:src="${session.appConfig.appIconLocation}" role="presentation" alt=""/></div>
 	   	<div class="cellphone_title" th:text="${session.appConfig.appName}"></div>
- 
-		<div class="cellphone_center"><p/>Secure Data Collection<p>Customized for your projects</p></div>
 
-     	<div class="main_title">secureApp generator</div>
-     	<div class="sub_title">powered by<img  src="../images/MartusLogoWhite.png" alt="Martus"/></div>
-		
+		<div class="cellphone_center_title" align="center"><p/>Secure Data Collection</div>
+  		<div class="cellphone_center_data" align="center"><p/>Customized for your projects</div>
+     	<div class="main_title">
+     		<b>secureApp</b> Generator
+		</div>
+     	<div class="sub_title" >
+     		powered by<img  src="../images/MartusLogoWhite.png" alt="Martus" align="top"/>
+		</div>
  
      	<div class="page_title">
      		<h1>Name Your Custom App!</h1>

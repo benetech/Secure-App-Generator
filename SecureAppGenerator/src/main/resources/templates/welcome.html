@@ -7,21 +7,21 @@
      		 href="/css/main.css" th:href="@{../css/main.css}" />
  	</head>
 	<body>
-  		
       	<img src="/images/cellphone.png" alt="Android Cellphone"/>
 	   	<div class="cellphone_logo"><img class="cellphone_logo_size" th:src="${session.appConfig.appIconLocation}" role="presentation" alt=""/></div>
 	   	<div class="cellphone_title" th:text="${session.appConfig.appName}"></div>
 
-		<div class="cellphone_center"><p/>Secure Data Collection<p>Customized for your projects</p></div>
+		<div class="cellphone_center_title" align="center"><p/>Secure Data Collection</div>
+  		<div class="cellphone_center_data" align="center"><p/>Customized for your projects</div>
      	<div class="main_title">
-     		secureApp generator
+     		<b>secureApp</b> Generator
 		</div>
-     	<div class="sub_title">
-     		powered by<img  src="../images/MartusLogoWhite.png" alt="Martus"/>
+     	<div class="sub_title" >
+     		powered by<img  src="../images/MartusLogoWhite.png" alt="Martus" align="top"/>
 		</div>
 		
-     	<div class="info_area_1">
-     		Create a custom app for your project
+     	<div class="info_area_1" align="center">
+     		Create a custom app for your project with
      		<p>quick and easy installation for your field team!</p>
      		<p>No need for complicated setup or configuration!</p>
 		</div>
@@ -34,7 +34,7 @@
      		<ul>
 	     		<li>Add your project name and logo</li>
 	     		<li>Specify the forms your field team can use</li>
-	     		<li>Ensure they always use Tor</li>
+	     		<li>Choose who receives your data</li>
 	     	</ul>
 		</div>
 			

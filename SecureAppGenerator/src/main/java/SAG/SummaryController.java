@@ -105,6 +105,7 @@ public class SummaryController extends WebMvcConfigurerAdapter
 		System.out.println("Building " + apkFileName);
 		Runtime rt = Runtime.getRuntime();
    		String gradleCommand = GRADLE_LOCATION + GRADLE_PARAMETERS + baseBuildDir + GRADLE_BUILD_COMMAND;
+		System.out.println(gradleCommand);
    		Process pr = rt.exec(gradleCommand);
    		pr.waitFor();
 		System.out.println("Finished Building " + apkFileName);
