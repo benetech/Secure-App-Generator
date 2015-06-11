@@ -47,15 +47,12 @@ public class SummaryController extends WebMvcConfigurerAdapter
 {
     private static final String DEBUG_APK_EXTENSION = "-debug.apk";
 	private static final String GRADLE_LOCATION = "/Users/charlesl/Dev/gradle-2.3/bin/gradle";
-	private static final String WEB_STATIC_DIRECTORY = "/Users/charlesl/EclipseMartus/Martus-Secure-App-Generator/SecureAppGenerator/bin/static/";
     private static final String GRADLE_PARAMETERS = " -p ";
 	private static final String GRADLE_BUILD_COMMAND = " build";
 	private static final String APK_LOCAL_FILE_DIRECTORY = "/build/outputs/apk/";
 	private static final String ORIGINAL_BUILD_DIRECTORY = "/Users/charlesl/EclipseMartus/martus-android/secure-app-vital-voices"; 
 	private static final String MAIN_DIRECTORY = "/Users/charlesl/SAG";
 	private static final String MAIN_BUILD_DIRECTORY = MAIN_DIRECTORY + "/Build";
-	private static final String APK_RELATIVE_DOWNLOADS_DIRECTORY = "Downloads/";
-	private static final String APK_LOCAL_DOWNLOADS_DIRECTORY = WEB_STATIC_DIRECTORY + APK_RELATIVE_DOWNLOADS_DIRECTORY;
     private static final String GRADLE_SETTINGS = MAIN_BUILD_DIRECTORY + "/settings.gradle";
 	private static final int EXIT_VALUE_GRADLE_SUCCESS = 0;
 
@@ -145,12 +142,15 @@ public class SummaryController extends WebMvcConfigurerAdapter
 	public void copyApkToDownloads(HttpSession session, File apkFileToMove, String apkFinalName) throws IOException
 	{
 		Path source = apkFileToMove.toPath();
-		String finalApkBuildFile = APK_LOCAL_DOWNLOADS_DIRECTORY + apkFinalName;
-		Path target = new File(finalApkBuildFile).toPath();
-		Files.move(source, target, StandardCopyOption.REPLACE_EXISTING);
+		String finalApkBuildFile = SecureAppGeneratorApplication.APK_LOCAL_DOWNLOADS_DIRECTORY + apkFinalName;
+		File targetFile = new File(finalApkBuildFile);
+		Path target = targetFile.toPath();
+		if(targetFile.exists())
+			throw new IOException("This build already exists.");
+		Files.move(source, target, StandardCopyOption.ATOMIC_MOVE);
 
 		AppConfiguration config = (AppConfiguration)session.getAttribute(SessionAttributes.APP_CONFIG);
-		String finalApkFileRelativeLocation = APK_RELATIVE_DOWNLOADS_DIRECTORY + apkFinalName;
+		String finalApkFileRelativeLocation = SecureAppGeneratorApplication.APK_RELATIVE_DOWNLOADS_DIRECTORY + apkFinalName;
 		config.setApkLink(finalApkFileRelativeLocation);
 		session.setAttribute(SessionAttributes.APP_CONFIG, config);
 	}
@@ -170,7 +170,7 @@ public class SummaryController extends WebMvcConfigurerAdapter
 			throw new IOException("Random build directory exists?");
 		if(!baseBuildDir.mkdirs())
 			throw new IOException("Unable to create directories:" + baseBuildDir.getAbsolutePath());
-		File downloadsDirectory = new File(APK_LOCAL_DOWNLOADS_DIRECTORY);
+		File downloadsDirectory = new File(SecureAppGeneratorApplication.APK_LOCAL_DOWNLOADS_DIRECTORY);
 		if(!downloadsDirectory.exists())
 			if(!downloadsDirectory.mkdir())
 				throw new IOException("Unable to create downloads directory:" + downloadsDirectory.getAbsolutePath());
