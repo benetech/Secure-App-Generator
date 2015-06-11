@@ -145,6 +145,18 @@ body {
     font-size: 20px;
   }
   
+  .info_area_final {
+    position: absolute;
+    top: 350px;
+    left: 450px;
+    padding: 4px;
+    background-color: #3C3D3C;
+    color: #6ECDE4;
+	font-family: 'Arial Narrow', Arial, sans-serif;
+    font-weight: normal;
+    font-size: 30px;
+  }
+  
 .info_area_summary {
     position: absolute;
     top: 250px;
@@ -167,6 +179,25 @@ body {
 	width: 40px;
 }
 
+/* unvisited link */
+a.download_link:link {
+    color: #6ECDE4;
+}
+
+/* visited link */
+a.download_link:visited {
+    color: white;
+}
+
+/* mouse over link */
+a.download_link:hover {
+    color: lightgray;
+}
+
+/* selected link */
+a.download_link:active {
+    color: #FF00FF;
+}
 .button_start{
     position: absolute;
     top: 500px;

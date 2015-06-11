@@ -20,11 +20,14 @@
      		powered by<img  src="../images/MartusLogoWhite.png" alt="Martus" align="top"/>
 		</div>
 		
-    		 <div class="info_area_3">
+    		 <div class="info_area_final">
               <table>
 	                <tr>
- 	                    <td>Here is a link to your app:</td>
-	   					<td th:text="${session.appConfig.apkLink}"></td>
+ 	                    <td>Here is a link to download your app:</td>
+	                    <td class="table_column_spacer"/>
+	   					<td>
+	   						<a class="download_link" th:href="@{${session.appConfig.apkLink}}" th:text="${session.appConfig.apkName}">Link</a>
+	   					</td>
 	                </tr>
             </table>
 		</div>
