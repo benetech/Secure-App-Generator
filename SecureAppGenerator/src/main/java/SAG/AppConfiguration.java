@@ -40,7 +40,7 @@ public class AppConfiguration
 	private String clientPublicCode;
 	private String serverName;
 	private String serverIP;
-	private String serverPublicCode;
+	private String serverPublicKey;
 	private String apkLink;
 	private String apkName;
 	private int apkVersionMajor;
@@ -194,14 +194,14 @@ public class AppConfiguration
 		this.serverIP = serverIP;
 	}
 
-	public String getServerPublicCode()
+	public String getServerPublicKey()
 	{
-		return serverPublicCode;
+		return serverPublicKey;
 	}
 
-	public void setServerPublicCode(String serverPublicCode)
+	public void setServerPublicKey(String serverPublicKey)
 	{
-		this.serverPublicCode = serverPublicCode;
+		this.serverPublicKey = serverPublicKey;
 	}
 
 	public String getApkName()

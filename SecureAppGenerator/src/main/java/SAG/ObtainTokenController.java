@@ -186,7 +186,7 @@ public class ObtainTokenController extends WebMvcConfigurerAdapter
 		else
 			config.setServerName(SL1_DEVELOPMENT_NAME);
 		config.setServerIP(ServerConstants.getCurrentServerIp());
-		config.setServerPublicCode(ServerConstants.getCurrentSeverKey());
+		config.setServerPublicKey(ServerConstants.getCurrentSeverKey());
 		session.setAttribute(SessionAttributes.APP_CONFIG, config);
 	}
 
