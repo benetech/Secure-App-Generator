@@ -13,12 +13,12 @@ function showAlert()
 
 function showImage()
 {
-	this.document.getElementById("progressBar").style.display = 'block';
+//	this.document.getElementById("progressBar").style.display = 'block';
 	this.document.getElementById("progressArea").innerHTML = "Building!";
 	this.document.body.style.cursor = 'wait';
-	setTimeout(function(){
-		alert('Hello from JavaScript!');
-	}, 2000);	
+//	setTimeout(function(){
+//		alert('Hello from JavaScript!');
+//	}, 2000);	
 
 	}
 
