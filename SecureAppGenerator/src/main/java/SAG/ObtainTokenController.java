@@ -26,6 +26,7 @@ Boston, MA 02111-1307, USA.
 package SAG;
 
 import java.io.File;
+import java.io.FileOutputStream;
 import java.io.IOException;
 import java.net.MalformedURLException;
 import java.util.ArrayList;
@@ -208,8 +209,19 @@ public class ObtainTokenController extends WebMvcConfigurerAdapter
  			MartusSecurity security = new MartusSecurity();
  			ClientSideNetworkGateway gateway = new ClientSideNetworkGateway(createXmlRpcNetworkInterfaceHandler());
 			File keyPair = new File(SAG_KEYPAIR_LOCATION);
-			security.readKeyPair(keyPair, SAG_KEYPAIR_PASSWORD.toCharArray());
- 			
+			if(keyPair.exists())
+			{
+				security.readKeyPair(keyPair, SAG_KEYPAIR_PASSWORD.toCharArray());
+			}
+			else
+			{
+				System.out.println("Creating SAG Keypair");
+				security.createKeyPair();
+				FileOutputStream outputStream = new FileOutputStream(keyPair);
+				security.writeKeyPair(outputStream, SAG_KEYPAIR_PASSWORD.toCharArray());
+				outputStream.flush();
+				outputStream.close();
+			}
  			String tokenString = appConfig.getClientToken();
 			MartusAccountAccessToken accessToken = new MartusAccountAccessToken(tokenString);
  			NetworkResponse response = gateway.getMartusAccountIdFromAccessToken(security, accessToken);
