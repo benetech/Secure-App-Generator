@@ -2,6 +2,15 @@ body {
     background-color: #3C3D3C;
 }
 
+form{
+    display:inline-block;
+}
+
+.cellphone{
+	position: absolute;
+	top: 7px;
+	left: 7px;
+}
 .cellphone_logo {
     position: absolute;
     top: 101px;

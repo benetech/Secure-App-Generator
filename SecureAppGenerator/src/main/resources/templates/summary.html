@@ -4,10 +4,10 @@
 	    <title>Secure App Generator</title> 
 	    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
   		  <link rel="stylesheet" type="text/css" media="all"  
-     		 href="/css/main.css" th:href="@{../css/main.css}" />
+     		 th:href="@{../css/main.css}" />
  	</head>
 	<body>
-      	<img src="/images/cellphone.png" alt="Android Cellphone"/>
+      	<img class="cellphone" src="/images/cellphone.png" alt="Android Cellphone"/>
 	   	<div class="cellphone_logo"><img class="cellphone_logo_size" th:src="${session.appConfig.appIconLocation}" role="presentation" alt=""/></div>
 	   	<div class="cellphone_title" th:text="${session.appConfig.appName}"></div>
 
@@ -19,7 +19,7 @@
      	<div class="sub_title" >
      		powered by<img  src="../images/MartusLogoWhite.png" alt="Martus" align="top"/>
 		</div>
-     	<div class="summary_title">
+     	<div id="progressArea" class="summary_title">
      		Verify all information is correct and that the Public Code matches the contact you wish to send your records before building your App.
  		</div>
 		
@@ -72,9 +72,13 @@
 		<form method="POST" th:action="@{/summaryPrevious}">
 			<input class="button_previous" name="previous" type="submit" value="&lt; Back"/>
 		</form>
-		<form method="POST" action="/summaryNext">
-			<input class="button_next" name="next" type="submit" value="BUILD APP &gt;"/>
+		<form id="buildApp" name="buildApp" method="POST" action="/summaryNext">
+			<input class="button_next" name="next" type="submit" value="BUILD APP &gt;"  onclick="showImage()"/>
 		</form>
-	<script src="./js/tota11y.min.js"></script>	
+		<div class ="info_area_3" id="progressBar" style="display:none;"><img src="../images/MartusLogoWhite.png" /></div>
+		<button class ="info_area_2" onClick="showImage()">Click me</button>
+
+		<script src="./js/progress.js"></script>	
+		<script src="./js/tota11y.min.js"></script>	
  	</body>
 </html>

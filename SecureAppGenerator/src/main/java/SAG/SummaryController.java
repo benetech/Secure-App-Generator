@@ -120,7 +120,7 @@ public class SummaryController extends WebMvcConfigurerAdapter
 	   		throw new IOException("Error creating APK");
 
    		String tempApkBuildFileDirectory = baseBuildDir.getAbsolutePath() + APK_LOCAL_FILE_DIRECTORY;
-		String apkTempReleaseFileName = baseBuildDir.getName() + DEBUG_APK_EXTENSION;
+		String apkTempReleaseFileName = "secureApp-0.0.15" + DEBUG_APK_EXTENSION;//FIXME
 		File appFileCreated = new File(tempApkBuildFileDirectory, apkTempReleaseFileName);
 		return appFileCreated;
 	}
