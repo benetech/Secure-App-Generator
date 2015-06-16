@@ -27,8 +27,10 @@ package SAG;
 
 import java.io.BufferedWriter;
 import java.io.File;
+import java.io.FileOutputStream;
 import java.io.FileWriter;
 import java.io.IOException;
+import java.io.OutputStreamWriter;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.StandardCopyOption;
@@ -45,7 +47,11 @@ import org.springframework.web.servlet.config.annotation.WebMvcConfigurerAdapter
 @Controller
 public class SummaryController extends WebMvcConfigurerAdapter
 {
-    private static final String DEBUG_APK_EXTENSION = "-debug.apk";
+    private static final String XML_DESKTOP_PUBLIC_KEY = "public_key_desktop";
+	private static final String XML_MARTUS_SERVER_PUBLIC_KEY = "martus_server_public_key";
+	private static final String XML_MARTUS_SERVER_IP = "martus_server_ip";
+	private static final String XML_APP_NAME = "app_name";
+	private static final String DEBUG_APK_EXTENSION = "-debug.apk";
 	private static final String GRADLE_LOCATION = "/Users/charlesl/Dev/gradle-2.3/bin/gradle";
     private static final String GRADLE_PARAMETERS = " -p ";
 	private static final String GRADLE_BUILD_COMMAND = " build";
@@ -54,6 +60,7 @@ public class SummaryController extends WebMvcConfigurerAdapter
 	private static final String MAIN_DIRECTORY = "/Users/charlesl/SAG";
 	private static final String MAIN_BUILD_DIRECTORY = MAIN_DIRECTORY + "/Build";
     private static final String GRADLE_SETTINGS = MAIN_BUILD_DIRECTORY + "/settings.gradle";
+    private static final String APK_RESOURCE_FILE_LOCAL = "/res/values/non-traslatable-auto-generated-resources.xml";
 	private static final int EXIT_VALUE_GRADLE_SUCCESS = 0;
 
 	@RequestMapping(value=WebPage.SUMMARY, method=RequestMethod.GET)
@@ -79,6 +86,7 @@ public class SummaryController extends WebMvcConfigurerAdapter
 			baseBuildDir = getSessionBuildDirectory();
 			copyDefaultBuildFilesToStagingArea(baseBuildDir);
 			AppConfiguration config = (AppConfiguration)session.getAttribute(SessionAttributes.APP_CONFIG);
+			updateApkSettings(baseBuildDir, config);
 			File apkCreated = buildApk(baseBuildDir, config.getApkName());
 			copyApkToDownloads(session, apkCreated, config.getApkName());
 			model.addAttribute(SessionAttributes.APP_CONFIG, appConfig);
@@ -103,6 +111,33 @@ public class SummaryController extends WebMvcConfigurerAdapter
 			}			
 		}
     }
+
+	private void updateApkSettings(File baseBuildDir, AppConfiguration config) throws IOException
+	{
+		StringBuilder data = new StringBuilder("<?xml version=\"1.0\" encoding=\"utf-8\"?>\n");
+		data.append("<resources>\n");
+		appendKeyValue(data, XML_APP_NAME, config.getAppName());
+		appendKeyValue(data, XML_MARTUS_SERVER_IP, config.getServerIP());
+		appendKeyValue(data, XML_MARTUS_SERVER_PUBLIC_KEY, config.getServerPublicKey());
+		appendKeyValue(data, XML_DESKTOP_PUBLIC_KEY, config.getClientPublicKey());
+		data.append("</resources>\n");
+
+		File apkResourseFile = new File(baseBuildDir, APK_RESOURCE_FILE_LOCAL);
+  		FileOutputStream fileOutputStream = new FileOutputStream(apkResourseFile);
+		BufferedWriter writer = new BufferedWriter(new OutputStreamWriter(fileOutputStream,"UTF-8"));       
+   		writer.write(data.toString());
+   		writer.flush();
+   		writer.close();
+ 	}
+
+	private void appendKeyValue(StringBuilder data, String key, String value)
+	{
+		data.append("<string name=\"");
+		data.append(key);
+		data.append("\">");
+		data.append(value);
+		data.append("</string>\n");
+	}
 
 	private File buildApk(File baseBuildDir, String apkFileName) throws IOException, InterruptedException
 	{
@@ -136,7 +171,6 @@ public class SummaryController extends WebMvcConfigurerAdapter
         bufferWritter.write(data.toString());
         bufferWritter.flush();
         bufferWritter.close();
-
  	}
 
 	public void copyApkToDownloads(HttpSession session, File apkFileToMove, String apkFinalName) throws IOException
