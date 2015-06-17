@@ -75,7 +75,7 @@ public class ObtainXFormController extends WebMvcConfigurerAdapter
     }
 
 	@RequestMapping(value=WebPage.OBTAIN_XFORM_NEXT, method=RequestMethod.POST)
-    public String retrieveLogo(HttpSession session, @RequestParam("file") MultipartFile file, @RequestParam("selectedForm") String formName, Model model, AppConfiguration appConfig)
+    public String retrieveXForm(HttpSession session, @RequestParam("file") MultipartFile file, @RequestParam("selectedForm") String formName, Model model, AppConfiguration appConfig)
     {
 		Path xFormBuildPath = Paths.get(XML_FILE_LOCATION);
 		if (file.isEmpty()) 
@@ -84,7 +84,7 @@ public class ObtainXFormController extends WebMvcConfigurerAdapter
 				return WebPage.ERROR; 
 
             AppConfiguration config = (AppConfiguration)session.getAttribute(SessionAttributes.APP_CONFIG);
-			config.setAppXFormLocation(xFormBuildPath.toString()); //TODO fix file location
+			config.setAppXFormLocation(xFormBuildPath.getFileName().toString());
 			config.setAppXFormName(getFormNameOnly(formName));
 			session.setAttribute(SessionAttributes.APP_CONFIG, config);
         }
