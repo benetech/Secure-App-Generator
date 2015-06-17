@@ -47,7 +47,8 @@ import org.springframework.web.servlet.config.annotation.WebMvcConfigurerAdapter
 @Controller
 public class SummaryController extends WebMvcConfigurerAdapter
 {
-    private static final String XML_DESKTOP_PUBLIC_KEY = "public_key_desktop";
+    private static final String LOGO_NAME_PNG = "ic_launcher.png";
+	private static final String XML_DESKTOP_PUBLIC_KEY = "public_key_desktop";
 	private static final String XML_MARTUS_SERVER_PUBLIC_KEY = "martus_server_public_key";
 	private static final String XML_MARTUS_SERVER_IP = "martus_server_ip";
 	private static final String XML_APP_NAME = "app_name";
@@ -61,7 +62,13 @@ public class SummaryController extends WebMvcConfigurerAdapter
 	private static final String MAIN_BUILD_DIRECTORY = MAIN_DIRECTORY + "/Build";
     private static final String GRADLE_SETTINGS = MAIN_BUILD_DIRECTORY + "/settings.gradle";
     private static final String APK_RESOURCE_FILE_LOCAL = "/res/values/non-traslatable-auto-generated-resources.xml";
-	private static final int EXIT_VALUE_GRADLE_SUCCESS = 0;
+    private static final String APK_HDPI_FILE_LOCAL = "/res/drawable-hdpi/";
+    private static final String APK_MDPI_FILE_LOCAL = "/res/drawable-mdpi/";
+    private static final String APK_NODPI_FILE_LOCAL = "/res/drawable-nodpi/";
+    private static final String APK_XHDPI_FILE_LOCAL = "/res/drawable-xhdpi/";
+    private static final String APK_XXHDPI_FILE_LOCAL = "/res/drawable-xxhdpi/";
+    private static final String APK_XFORM_FILE_LOCAL = "/assets/xforms/sample.xml";
+    private static final int EXIT_VALUE_GRADLE_SUCCESS = 0;
 
 	@RequestMapping(value=WebPage.SUMMARY, method=RequestMethod.GET)
     public String directError(HttpSession session, Model model) 
@@ -87,6 +94,8 @@ public class SummaryController extends WebMvcConfigurerAdapter
 			copyDefaultBuildFilesToStagingArea(baseBuildDir);
 			AppConfiguration config = (AppConfiguration)session.getAttribute(SessionAttributes.APP_CONFIG);
 			updateApkSettings(baseBuildDir, config);
+			copyIconToApkBuild(baseBuildDir, config.getAppIconLocation());
+			copyFormToApkBuild(baseBuildDir, config.getAppXFormLocation());
 			File apkCreated = buildApk(baseBuildDir, config.getApkName());
 			copyApkToDownloads(session, apkCreated, config.getApkName());
 			model.addAttribute(SessionAttributes.APP_CONFIG, appConfig);
@@ -111,6 +120,29 @@ public class SummaryController extends WebMvcConfigurerAdapter
 			}			
 		}
     }
+
+	private void copyFormToApkBuild(File baseBuildDir, String appXFormLocation) throws IOException
+	{
+		File source = new File(SecureAppGeneratorApplication.WEB_STATIC_DIRECTORY, appXFormLocation);
+		File destination = new File(baseBuildDir, APK_XFORM_FILE_LOCAL);
+		SagFileUtils.copy(source, destination);
+	}
+
+	private void copyIconToApkBuild(File baseBuildDir, String appIconLocation) throws IOException
+	{
+		//TODO adjust resolution
+		File source = new File(SecureAppGeneratorApplication.WEB_STATIC_DIRECTORY, appIconLocation);
+		File destination = new File(baseBuildDir, APK_NODPI_FILE_LOCAL + LOGO_NAME_PNG);
+		SagFileUtils.copy(source, destination);
+		destination = new File(baseBuildDir, APK_MDPI_FILE_LOCAL + LOGO_NAME_PNG);
+		SagFileUtils.copy(source, destination);
+		destination = new File(baseBuildDir, APK_HDPI_FILE_LOCAL + LOGO_NAME_PNG);
+		SagFileUtils.copy(source, destination);
+		destination = new File(baseBuildDir, APK_XHDPI_FILE_LOCAL + LOGO_NAME_PNG);
+		SagFileUtils.copy(source, destination);
+		destination = new File(baseBuildDir, APK_XXHDPI_FILE_LOCAL + LOGO_NAME_PNG);
+		SagFileUtils.copy(source, destination);
+	}
 
 	private void updateApkSettings(File baseBuildDir, AppConfiguration config) throws IOException
 	{
