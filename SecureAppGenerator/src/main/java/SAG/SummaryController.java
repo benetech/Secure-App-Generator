@@ -34,6 +34,8 @@ import java.io.OutputStreamWriter;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.StandardCopyOption;
+import java.util.Date;
+import java.util.concurrent.TimeUnit;
 
 import javax.servlet.http.HttpSession;
 
@@ -47,6 +49,14 @@ import org.springframework.web.servlet.config.annotation.WebMvcConfigurerAdapter
 @Controller
 public class SummaryController extends WebMvcConfigurerAdapter
 {
+	public static final String ORIGINAL_BUILD_DIRECTORY = "/Users/charlesl/EclipseMartus/martus-android/secure-app-vital-voices"; 
+    public static final String GRADLE_GENERATED_SETTINGS_LOCAL = "/generated.build.gradle";
+    public static final String VERSION_BUILD_XML = "versionBuild";
+    public static final String VERSION_MINOR_XML = "versionMinor";
+    public static final String VERSION_MAJOR_XML = "versionMajor";
+
+	private static final String APP_NAME_XML = "appName";
+	private static final String VERSION_SAG_BUILD_XML = "versionSagBuild";
     private static final String LOGO_NAME_PNG = "ic_launcher.png";
 	private static final String XML_DESKTOP_PUBLIC_KEY = "public_key_desktop";
 	private static final String XML_MARTUS_SERVER_PUBLIC_KEY = "martus_server_public_key";
@@ -56,11 +66,9 @@ public class SummaryController extends WebMvcConfigurerAdapter
     private static final String GRADLE_PARAMETERS = " -p ";
 	private static final String GRADLE_BUILD_COMMAND = " build";
 	private static final String APK_LOCAL_FILE_DIRECTORY = "/build/outputs/apk/";
-	private static final String ORIGINAL_BUILD_DIRECTORY = "/Users/charlesl/EclipseMartus/martus-android/secure-app-vital-voices"; 
 	private static final String MAIN_DIRECTORY = "/Users/charlesl/SAG";
 	private static final String MAIN_BUILD_DIRECTORY = MAIN_DIRECTORY + "/Build";
     private static final String GRADLE_SETTINGS = MAIN_BUILD_DIRECTORY + "/settings.gradle";
-    private static final String GRADLE_GENERATED_SETTINGS_LOCAL = "/generated.build.gradle";
     private static final String APK_RESOURCE_FILE_LOCAL = "/res/values/non-traslatable-auto-generated-resources.xml";
     private static final String APK_HDPI_FILE_LOCAL = "/res/drawable-hdpi/";
     private static final String APK_MDPI_FILE_LOCAL = "/res/drawable-mdpi/";
@@ -148,11 +156,11 @@ public class SummaryController extends WebMvcConfigurerAdapter
 	private void updateGradleSettings(File baseBuildDir, AppConfiguration config) throws IOException
 	{
 		StringBuilder data = new StringBuilder("");
-		appendGradleValue(data, "versionMajor", config.getApkVersionMajor());
-		appendGradleValue(data, "versionMinor", config.getApkVersionMinor());
-		appendGradleValue(data, "versionBuild", config.getApkVersionBuild());
-		appendGradleValue(data, "versionSagBuild", config.getApkSagVersionBuild());
-		appendGradleValue(data, "appName", config.getAppName());
+		appendGradleValue(data, VERSION_MAJOR_XML, config.getApkVersionMajor());
+		appendGradleValue(data, VERSION_MINOR_XML, config.getApkVersionMinor());
+		appendGradleValue(data, VERSION_BUILD_XML, config.getApkVersionBuild());
+		appendGradleValue(data, VERSION_SAG_BUILD_XML, config.getApkSagVersionBuild());
+		appendGradleValue(data, APP_NAME_XML, config.getAppName());
 
 		File apkResourseFile = new File(baseBuildDir, GRADLE_GENERATED_SETTINGS_LOCAL);
   		FileOutputStream fileOutputStream = new FileOutputStream(apkResourseFile);
@@ -161,7 +169,7 @@ public class SummaryController extends WebMvcConfigurerAdapter
    		writer.flush();
    		writer.close();
  	}
-	
+		
 	private void updateApkSettings(File baseBuildDir, AppConfiguration config) throws IOException
 	{
 		StringBuilder data = new StringBuilder("<?xml version=\"1.0\" encoding=\"utf-8\"?>\n");
@@ -205,9 +213,18 @@ public class SummaryController extends WebMvcConfigurerAdapter
 		addBaseBuildDirToGradleSettings(baseBuildDir);
    		String gradleCommand = GRADLE_LOCATION + GRADLE_PARAMETERS + baseBuildDir + GRADLE_BUILD_COMMAND;
 		System.out.println(gradleCommand);
+		long startTime = System.currentTimeMillis();
    		Process pr = rt.exec(gradleCommand);
-   		pr.waitFor();
-		System.out.println("Finished Building.");
+    		pr.waitFor();
+  		long endTime = System.currentTimeMillis();
+   		long buildTime = endTime-startTime;
+   		String timeToBuild = String.format("%02d:%02d", 
+   			    TimeUnit.MILLISECONDS.toMinutes(buildTime) - 
+   			    TimeUnit.HOURS.toMinutes(TimeUnit.MILLISECONDS.toHours(buildTime)),
+   			    TimeUnit.MILLISECONDS.toSeconds(buildTime) - 
+   			    TimeUnit.MINUTES.toSeconds(TimeUnit.MILLISECONDS.toMinutes(buildTime)));
+
+		System.out.println("Build took:" + timeToBuild);
  
 		int returnCode = pr.exitValue();
    		if(returnCode != EXIT_VALUE_GRADLE_SUCCESS)

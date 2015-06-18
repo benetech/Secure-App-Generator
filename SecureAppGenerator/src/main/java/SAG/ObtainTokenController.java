@@ -27,11 +27,14 @@ package SAG;
 
 import java.io.File;
 import java.io.FileOutputStream;
+import java.io.FileReader;
 import java.io.IOException;
 import java.net.MalformedURLException;
+import java.nio.file.Files;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Iterator;
+import java.util.List;
 import java.util.Map;
 import java.util.Vector;
 
@@ -109,41 +112,39 @@ public class ObtainTokenController extends WebMvcConfigurerAdapter
 		return WebPage.OBTAIN_CLIENT_TOKEN;
     }
 
-	private void updateApkVersionInfoAndName(HttpSession session)
+	private void updateApkVersionInfoAndName(HttpSession session) throws IOException
 	{
         AppConfiguration config = (AppConfiguration)session.getAttribute(SessionAttributes.APP_CONFIG);
- 
-        String majorVersionNumber = getMajorVersionNumber();
-        config.setApkVersionMajor(majorVersionNumber);
-       
-        String minorVersionNumber = getMinorVersionNumber();
-        config.setApkVersionMinor(minorVersionNumber);
-        
-        String buildVersionNumber = getBuildVersionNumber();
-        config.setApkVersionBuild(buildVersionNumber);
-
+        getBuildVersionFromGeneratedSettingsFile(config);
         String uniqueBuildNumber = getUniqueBuildNumber(config.getApkName());
         config.setApkSagVersionBuild(uniqueBuildNumber);
-        
  		session.setAttribute(SessionAttributes.APP_CONFIG, config);
 	}
 
-	private String getMajorVersionNumber()
+	public static void getBuildVersionFromGeneratedSettingsFile(AppConfiguration config) throws IOException
 	{
-		//TODO get real Major Version # from Build configuration
-		return "1";
+		File apkResourseFile = new File(SummaryController.ORIGINAL_BUILD_DIRECTORY, SummaryController.GRADLE_GENERATED_SETTINGS_LOCAL);
+		List<String> lines = Files.readAllLines(apkResourseFile.toPath());
+		for (Iterator<String> iterator = lines.iterator(); iterator.hasNext();)
+		{
+			String currentLine = iterator.next();
+			if(currentLine.contains(SummaryController.VERSION_MAJOR_XML))
+		        config.setApkVersionMajor(extractVersionInformationFromLine(currentLine));
+			if(currentLine.contains(SummaryController.VERSION_MINOR_XML))
+		        config.setApkVersionMinor(extractVersionInformationFromLine(currentLine));
+			if(currentLine.contains(SummaryController.VERSION_BUILD_XML))
+		        config.setApkVersionBuild(extractVersionInformationFromLine(currentLine));
+		}
 	}
-
-	private String getMinorVersionNumber()
+	
+	
+	private static String extractVersionInformationFromLine(String currentLine)
 	{
-		//TODO get real Minor Version # from Build configuration
-		return "2";
-	}
-
-	private String getBuildVersionNumber()
-	{
-		//TODO get real Minor Version # from Build configuration
-		return "3";
+		//Line prototype: project.ext.set("versionMajor", "0") 
+		String[] data = currentLine.split("\"");
+		if(data.length < 4)
+			return "0";
+		return data[3];
 	}
 
 	private String getUniqueBuildNumber(String apkNameWithNoSagBuild)
