@@ -52,7 +52,6 @@ public class SummaryController extends WebMvcConfigurerAdapter
 	private static final String XML_MARTUS_SERVER_PUBLIC_KEY = "martus_server_public_key";
 	private static final String XML_MARTUS_SERVER_IP = "martus_server_ip";
 	private static final String XML_APP_NAME = "app_name";
-	private static final String DEBUG_APK_EXTENSION = "-debug.apk";
 	private static final String GRADLE_LOCATION = "/Users/charlesl/Dev/gradle-2.3/bin/gradle";
     private static final String GRADLE_PARAMETERS = " -p ";
 	private static final String GRADLE_BUILD_COMMAND = " build";
@@ -61,6 +60,7 @@ public class SummaryController extends WebMvcConfigurerAdapter
 	private static final String MAIN_DIRECTORY = "/Users/charlesl/SAG";
 	private static final String MAIN_BUILD_DIRECTORY = MAIN_DIRECTORY + "/Build";
     private static final String GRADLE_SETTINGS = MAIN_BUILD_DIRECTORY + "/settings.gradle";
+    private static final String GRADLE_GENERATED_SETTINGS_LOCAL = "/generated.build.gradle";
     private static final String APK_RESOURCE_FILE_LOCAL = "/res/values/non-traslatable-auto-generated-resources.xml";
     private static final String APK_HDPI_FILE_LOCAL = "/res/drawable-hdpi/";
     private static final String APK_MDPI_FILE_LOCAL = "/res/drawable-mdpi/";
@@ -94,9 +94,10 @@ public class SummaryController extends WebMvcConfigurerAdapter
 			copyDefaultBuildFilesToStagingArea(baseBuildDir);
 			AppConfiguration config = (AppConfiguration)session.getAttribute(SessionAttributes.APP_CONFIG);
 			updateApkSettings(baseBuildDir, config);
+			updateGradleSettings(baseBuildDir, config);
 			copyIconToApkBuild(baseBuildDir, config.getAppIconLocation());
 			copyFormToApkBuild(baseBuildDir, config.getAppXFormLocation());
-			File apkCreated = buildApk(baseBuildDir, config.getApkName());
+			File apkCreated = buildApk(baseBuildDir, config);
 			copyApkToDownloads(session, apkCreated, config.getApkName());
 			model.addAttribute(SessionAttributes.APP_CONFIG, appConfig);
 			return WebPage.FINAL;
@@ -144,6 +145,23 @@ public class SummaryController extends WebMvcConfigurerAdapter
 		SagFileUtils.copy(source, destination);
 	}
 
+	private void updateGradleSettings(File baseBuildDir, AppConfiguration config) throws IOException
+	{
+		StringBuilder data = new StringBuilder("");
+		appendGradleValue(data, "versionMajor", config.getApkVersionMajor());
+		appendGradleValue(data, "versionMinor", config.getApkVersionMinor());
+		appendGradleValue(data, "versionBuild", config.getApkVersionBuild());
+		appendGradleValue(data, "versionSagBuild", config.getApkSagVersionBuild());
+		appendGradleValue(data, "appName", config.getAppName());
+
+		File apkResourseFile = new File(baseBuildDir, GRADLE_GENERATED_SETTINGS_LOCAL);
+  		FileOutputStream fileOutputStream = new FileOutputStream(apkResourseFile);
+		BufferedWriter writer = new BufferedWriter(new OutputStreamWriter(fileOutputStream,"UTF-8"));       
+   		writer.write(data.toString());
+   		writer.flush();
+   		writer.close();
+ 	}
+	
 	private void updateApkSettings(File baseBuildDir, AppConfiguration config) throws IOException
 	{
 		StringBuilder data = new StringBuilder("<?xml version=\"1.0\" encoding=\"utf-8\"?>\n");
@@ -171,24 +189,32 @@ public class SummaryController extends WebMvcConfigurerAdapter
 		data.append("</string>\n");
 	}
 
-	private File buildApk(File baseBuildDir, String apkFileName) throws IOException, InterruptedException
+	private void appendGradleValue(StringBuilder data, String key, String value)
 	{
-		System.out.println("Building " + apkFileName);
+		data.append("project.ext.set(\"");
+		data.append(key);
+		data.append("\", \"");
+		data.append(value);
+		data.append("\")\n");
+	}
+
+	private File buildApk(File baseBuildDir, AppConfiguration config) throws IOException, InterruptedException
+	{
+		System.out.println("Building " + config.getApkName());
 		Runtime rt = Runtime.getRuntime();
 		addBaseBuildDirToGradleSettings(baseBuildDir);
    		String gradleCommand = GRADLE_LOCATION + GRADLE_PARAMETERS + baseBuildDir + GRADLE_BUILD_COMMAND;
 		System.out.println(gradleCommand);
    		Process pr = rt.exec(gradleCommand);
    		pr.waitFor();
-		System.out.println("Finished Building " + apkFileName);
+		System.out.println("Finished Building.");
  
 		int returnCode = pr.exitValue();
    		if(returnCode != EXIT_VALUE_GRADLE_SUCCESS)
 	   		throw new IOException("Error creating APK");
 
    		String tempApkBuildFileDirectory = baseBuildDir.getAbsolutePath() + APK_LOCAL_FILE_DIRECTORY;
-		String apkTempReleaseFileName = "secureApp-0.0.17" + DEBUG_APK_EXTENSION;//FIXME
-		File appFileCreated = new File(tempApkBuildFileDirectory, apkTempReleaseFileName);
+		File appFileCreated = new File(tempApkBuildFileDirectory, config.getGradleApkRawBuildFileName());
 		return appFileCreated;
 	}
 

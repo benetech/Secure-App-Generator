@@ -27,6 +27,13 @@ package SAG;
 
 public class AppConfiguration
 {
+	private static final char DASH_CHAR = '-';
+	private static final String APK_EXTENSION = ".apk";
+	private static final String DEBUG_APK_EXTENSION = "-debug" + APK_EXTENSION;
+	private static final char DOT_CHAR = '.';
+	private static final char UNDERSCORE_CHAR = '_';
+	private static final char SPACE_CHAR = ' ';
+	
 	private String appName;
 	private String appNameError;
 	private String appIconLocation;
@@ -42,10 +49,10 @@ public class AppConfiguration
 	private String serverIP;
 	private String serverPublicKey;
 	private String apkLink;
-	private String apkName;
-	private int apkVersionMajor;
-	private int apkVersionMinor;
-	private int apkVersionBuild;
+	private String apkVersionMajor = "0";
+	private String apkVersionMinor = "0";
+	private String apkVersionBuild = "0";
+	private String apkSagVersionBuild = "0";
 	private String apkBuildError;
 	
 	public void setAppName(String appName)
@@ -204,44 +211,44 @@ public class AppConfiguration
 		this.serverPublicKey = serverPublicKey;
 	}
 
-	public String getApkName()
-	{
-		return apkName;
-	}
-
-	public void setApkName(String apkName)
-	{
-		this.apkName = apkName;
-	}
-
-	public int getApkVersionMajor()
+	public String getApkVersionMajor()
 	{
 		return apkVersionMajor;
 	}
 
-	public void setApkVersionMajor(int apkVersionMajor)
+	public void setApkVersionMajor(String apkVersionMajor)
 	{
 		this.apkVersionMajor = apkVersionMajor;
 	}
 
-	public int getApkVersionMinor()
+	public String getApkVersionMinor()
 	{
 		return apkVersionMinor;
 	}
 
-	public void setApkVersionMinor(int apkVersionMinor)
+	public void setApkVersionMinor(String apkVersionMinor)
 	{
 		this.apkVersionMinor = apkVersionMinor;
 	}
 
-	public int getApkVersionBuild()
+	public String getApkVersionBuild()
 	{
 		return apkVersionBuild;
 	}
 
-	public void setApkVersionBuild(int apkVersionBuild)
+	public void setApkVersionBuild(String apkVersionBuild)
 	{
 		this.apkVersionBuild = apkVersionBuild;
+	}
+
+	public String getApkSagVersionBuild()
+	{
+		return apkSagVersionBuild;
+	}
+
+	public void setApkSagVersionBuild(String apkSagVersionBuild)
+	{
+		this.apkSagVersionBuild = apkSagVersionBuild;
 	}
 
 	public String getApkBuildError()
@@ -252,6 +259,37 @@ public class AppConfiguration
 	public void setApkBuildError(String apkBuildError)
 	{
 		this.apkBuildError = apkBuildError;
+	}
+	
+	public String getApkVersionNumberFull()
+	{
+		StringBuilder versionNumber = new StringBuilder(apkVersionMajor);
+		versionNumber.append(DOT_CHAR);
+		versionNumber.append(apkVersionMinor);
+		versionNumber.append(DOT_CHAR);
+		versionNumber.append(apkVersionBuild);
+		versionNumber.append(DOT_CHAR);
+		versionNumber.append(apkSagVersionBuild);
+		return versionNumber.toString();
+	}
+
+	public String getGradleApkRawBuildFileName()
+	{
+		StringBuilder totalFileName = new StringBuilder(appName);
+		totalFileName.append(DASH_CHAR);
+		totalFileName.append(getApkVersionNumberFull());
+		totalFileName.append(DEBUG_APK_EXTENSION);
+		return totalFileName.toString();
+	}
+
+	public String getApkName()
+	{
+        String appNameWithoutSpaces = appName.replace(SPACE_CHAR, UNDERSCORE_CHAR);
+        StringBuilder apkName = new StringBuilder(appNameWithoutSpaces);
+        apkName.append(DASH_CHAR);
+		apkName.append(getApkVersionNumberFull());
+        apkName.append(APK_EXTENSION);
+		return apkName.toString();
 	}
 
 }
