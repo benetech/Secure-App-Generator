@@ -70,6 +70,12 @@ form{
 	font-family: 'Arial', Arial, sans-serif;
     font-size: 16px;
   }
+  
+.progress_location{
+    position: absolute;
+    top: 175px;
+    left: -112px;
+}
 
 .main_title {
     position: absolute;
@@ -116,6 +122,13 @@ form{
 	font-family: 'Arial Narrow', Arial, sans-serif;
     font-weight: normal;
   }
+  
+.ProgressCircleInfo{
+    font-size: 24px;
+    color: yellow;
+   font-weight: bold;
+    
+}
   
 .info_area_1 {
     position: absolute;

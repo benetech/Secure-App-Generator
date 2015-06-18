@@ -11,8 +11,8 @@
 	   	<div class="cellphone_logo"><img class="cellphone_logo_size" th:src="${session.appConfig.appIconLocation}" role="presentation" alt=""/></div>
 	   	<div class="cellphone_title" th:text="${session.appConfig.appName}"></div>
 
-		<div class="cellphone_center_title" align="center"><p/>Secure Data Collection</div>
-  		<div class="cellphone_center_data" align="center"><p/>Customized for your projects</div>
+		<div id="cellphone_center_title" class="cellphone_center_title" align="center"><p/>Secure Data Collection</div>
+  		<div id="cellphone_center_data" class="cellphone_center_data" align="center"><p/>Customized for your projects</div>
      	<div class="main_title">
      		<b>secureApp</b> Generator
 		</div>
@@ -72,13 +72,15 @@
 		<form method="POST" th:action="@{/summaryPrevious}">
 			<input class="button_previous" id="previous" name="previous" type="submit" value="&lt; Back"/>
 		</form>
+
+	    <canvas class="progress_location" id="ProgressArea" width="400" height="350"></canvas> 
+ 
 		<form id="buildApp" name="buildApp" method="POST" action="/summaryNext">
-			<input class="button_next" id="next" name="next" type="submit" value="BUILD APP &gt;"  onclick="startNewTimer()"/>
+			<input class="button_next" id="next" name="next" type="submit" value="BUILD APP &gt;"  onclick="showProgress('Building App')"/>
 		</form>
 
-		<div class ="info_area_3" id="progressBar" style="display:none;"><img src="../images/MartusLogoWhite.png" /></div>
-
-		<script src="./js/progress.js"></script>	
+  		<script src="./js/ProgressCircle.js"></script>	
+ 		<script src="./js/progress.js"></script>	
 		<script src="./js/tota11y.min.js"></script>	
  	</body>
 </html>
