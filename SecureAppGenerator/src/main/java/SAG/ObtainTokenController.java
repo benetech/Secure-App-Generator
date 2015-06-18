@@ -149,7 +149,7 @@ public class ObtainTokenController extends WebMvcConfigurerAdapter
 
 	private String getUniqueBuildNumber(String apkNameWithNoSagBuild)
 	{
-		String partialApkName = apkNameWithNoSagBuild.substring(0, apkNameWithNoSagBuild.length()-5);
+		String partialApkName = apkNameWithNoSagBuild.substring(0, apkNameWithNoSagBuild.length()-5).toLowerCase();
 		int greatestBuildNumberFound = 0;
 		File apkDownloadDirectory = new File(SecureAppGeneratorApplication.APK_LOCAL_DOWNLOADS_DIRECTORY);
 		if(apkDownloadDirectory.exists())
@@ -158,7 +158,7 @@ public class ObtainTokenController extends WebMvcConfigurerAdapter
 			for (Iterator<File> iterator = files.iterator(); iterator.hasNext();)
 			{
 				File currentApk = (File) iterator.next();
-				String currentApkName = currentApk.getName();
+				String currentApkName = currentApk.getName().toLowerCase();
 				if(currentApkName.startsWith(partialApkName))
 				{
 					int buildStartPos = partialApkName.length();
