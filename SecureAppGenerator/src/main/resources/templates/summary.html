@@ -70,13 +70,13 @@
              </table>
 		</div>
 		<form method="POST" th:action="@{/summaryPrevious}">
-			<input class="button_previous" name="previous" type="submit" value="&lt; Back"/>
+			<input class="button_previous" id="previous" name="previous" type="submit" value="&lt; Back"/>
 		</form>
 		<form id="buildApp" name="buildApp" method="POST" action="/summaryNext">
-			<input class="button_next" name="next" type="submit" value="BUILD APP &gt;"  onclick="showImage()"/>
+			<input class="button_next" id="next" name="next" type="submit" value="BUILD APP &gt;"  onclick="startNewTimer()"/>
 		</form>
+
 		<div class ="info_area_3" id="progressBar" style="display:none;"><img src="../images/MartusLogoWhite.png" /></div>
-		<button class ="info_area_2" onClick="showImage()">Click me</button>
 
 		<script src="./js/progress.js"></script>	
 		<script src="./js/tota11y.min.js"></script>	

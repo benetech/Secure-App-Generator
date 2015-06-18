@@ -1,26 +1,17 @@
-function showProgress() {
-    	  this.document.myform.next.innerHTML = 'Building';
-    	  return true;
-    	}
-
-
 function showAlert()
-	 	{
-	this.document.body.style.cursor = 'wait';
-		this.document.getElementById("progressArea").innerHTML = "Building!";
-			alert('Hello from JavaScript!');
-	 	}
+{
+	alert('Hello from JavaScript!');
+}
 
-function showImage()
+function showBuildingProgressBar()
 {
 //	this.document.getElementById("progressBar").style.display = 'block';
-	this.document.getElementById("progressArea").innerHTML = "Building!";
+	this.document.getElementById("next").disabled = true;
+	this.document.getElementById("next").style.visibility = "hidden";
+	this.document.getElementById("previous").disabled = true;
+	this.document.getElementById("previous").style.visibility = "hidden";
 	this.document.body.style.cursor = 'wait';
-//	setTimeout(function(){
-//		alert('Hello from JavaScript!');
-//	}, 2000);	
-
-	}
+}
 
 function startTimer(duration, display) {
     var timer = duration, minutes, seconds;
@@ -31,7 +22,7 @@ function startTimer(duration, display) {
         minutes = minutes < 10 ? "0" + minutes : minutes;
         seconds = seconds < 10 ? "0" + seconds : seconds;
 
-        display.textContent = minutes + ":" + seconds;
+        display.textContent = "Building APK: " + minutes + ":" + seconds;
 
         if (--timer < 0) {
             timer = duration;
@@ -40,7 +31,9 @@ function startTimer(duration, display) {
 }
 
 function startNewTimer() {
+	showBuildingProgressBar();
+	
     var twoMinutes = 60 * 2,
-        display = this.document.getElementById("progressArea");
+    		display = this.document.getElementById("progressArea");
     startTimer(twoMinutes, display);
 };
