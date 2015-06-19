@@ -97,6 +97,8 @@ function showProgress(buildText)
 	    	return percentComplete;},
 	    	infoListener: function() {return buildText;},// (Optional)	    	
 	 }); 		
-	circle.start(1200); 	
+	circle.start(1200); 
+	this.document.forms["buildApp"].submit();
+	return true;
 }
 
