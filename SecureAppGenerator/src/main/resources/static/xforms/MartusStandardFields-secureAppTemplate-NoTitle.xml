@@ -1,0 +1,286 @@
+<?xml version="1.0"?>
+<h:html xmlns="http://www.w3.org/2002/xforms"
+    xmlns:h="http://www.w3.org/1999/xhtml"
+    xmlns:ev="http://www.w3.org/2001/xml-events"
+    xmlns:xsd="http://www.w3.org/2001/XMLSchema"
+    xmlns:jr="http://openrosa.org/javarosa"
+    >
+    <h:head>
+        <h:title>Martus Standard Fields</h:title>
+        <model>
+            <instance>
+				<martus_standard_fields id="martus_standard_fields">
+					<language/>
+					<author/>
+					<organization/>
+					<location/>
+					<keywords/>
+					<eventdate/>
+					<summary/>
+					<publicinfo/>
+					<today/>
+				</martus_standard_fields>
+            </instance>
+			
+			  <bind nodeset="/martus_standard_fields/language" required="false()" type="select1"/>
+			  <bind nodeset="/martus_standard_fields/author" required="false()" type="string"/>
+			  <bind nodeset="/martus_standard_fields/organization" required="false()" type="string"/>
+			  <bind nodeset="/martus_standard_fields/location" required="false()" type="string"/>
+			  <bind nodeset="/martus_standard_fields/keywords" required="false()" type="string"/>
+			  <bind nodeset="/martus_standard_fields/eventdate" required="false()" type="date" constraint=". >= date('1900-01-01')" jr:constraintMsg="The date you entered is not within the accepted date range."/>
+			  <bind nodeset="/martus_standard_fields/summary" required="false()" type="string"/>
+			  <bind nodeset="/martus_standard_fields/publicinfo" required="false()" type="string"/>
+			  <bind nodeset="/martus_standard_fields/today" type="date" jr:preload="date" jr:preloadParams="today"/>            
+			  
+        </model>
+    </h:head>
+
+    <h:body>
+
+		<group appearance="field-list">
+			<label>Standard Fields</label>
+			
+			<select1 appearance="minimal" ref="/martus_standard_fields/language">
+				<label>Language</label>
+				  <item>
+					<label>- Other -</label>
+					<value>language_1</value>
+				  </item>
+				  <item>
+					<label>English</label>
+					<value>language_2</value>
+				  </item>
+				  <item>
+					<label>Arabic</label>
+					<value>language_3</value>
+				  </item>
+				  <item>
+					<label>Armenian</label>
+					<value>language_4</value>
+				  </item>
+				  <item>
+					<label>Azerbaijani</label>
+					<value>language_5</value>
+				  </item>
+				  <item>
+					<label>Bulgarian</label>
+					<value>language_6</value>
+				  </item>
+				  <item>
+					<label>Bengali, Bangla</label>
+					<value>language_7</value>
+				  </item>
+				  <item>
+					<label>Burmese</label>
+					<value>language_8</value>
+				  </item>
+				  <item>
+					<label>Chinese</label>
+					<value>language_9</value>
+				  </item>
+				  <item>
+					<label>Dutch</label>
+					<value>language_10</value>
+				  </item>
+				  <item>
+					<label>Esperanto</label>
+					<value>language_11</value>
+				  </item>
+				  <item>
+					<label>Farsi/Dari</label>
+					<value>language_12</value>
+				  </item>
+				  <item>
+					<label>French</label>
+					<value>language_13</value>
+				  </item>
+				  <item>
+					<label>German</label>
+					<value>language_14</value>
+				  </item>
+				  <item>
+					<label>Gujarati</label>
+					<value>language_15</value>
+				  </item>
+				  <item>
+					<label>Hausa</label>
+					<value>language_16</value>
+				  </item>
+				  <item>
+					<label>Hebrew</label>
+					<value>language_17</value>
+				  </item>
+				  <item>
+					<label>Hindi</label>
+					<value>language_18</value>
+				  </item>
+				  <item>
+					<label>Hungarian</label>
+					<value>language_19</value>
+				  </item>
+				  <item>
+					<label>Italian</label>
+					<value>language_20</value>
+				  </item>
+				  <item>
+					<label>Japanese</label>
+					<value>language_21</value>
+				  </item>
+				  <item>
+					<label>Javanese</label>
+					<value>language_22</value>
+				  </item>
+				  <item>
+					<label>Kannada</label>
+					<value>language_23</value>
+				  </item>
+				  <item>
+					<label>Kazakh</label>
+					<value>language_24</value>
+				  </item>
+				  <item>
+					<label>Khmer</label>
+					<value>language_25</value>
+				  </item>
+				  <item>
+					<label>Kirghiz</label>
+					<value>language_26</value>
+				  </item>
+				  <item>
+					<label>Korean</label>
+					<value>language_27</value>
+				  </item>
+				  <item>
+					<label>Kurdish</label>
+					<value>language_28</value>
+				  </item>
+				  <item>
+					<label>Malayalam</label>
+					<value>language_29</value>
+				  </item>
+				  <item>
+					<label>Marathi</label>
+					<value>language_30</value>
+				  </item>
+				  <item>
+					<label>Nepali</label>
+					<value>language_31</value>
+				  </item>
+				  <item>
+					<label>Oriya</label>
+					<value>language_32</value>
+				  </item>
+				  <item>
+					<label>Panjabi</label>
+					<value>language_33</value>
+				  </item>
+				  <item>
+					<label>Pashto, Pushto</label>
+					<value>language_34</value>
+				  </item>
+				  <item>
+					<label>Polish</label>
+					<value>language_35</value>
+				  </item>
+				  <item>
+					<label>Portuguese</label>
+					<value>language_36</value>
+				  </item>
+				  <item>
+					<label>Romanian</label>
+					<value>language_37</value>
+				  </item>
+				  <item>
+					<label>Russian</label>
+					<value>language_38</value>
+				  </item>
+				  <item>
+					<label>Serbian</label>
+					<value>language_39</value>
+				  </item>
+				  <item>
+					<label>Sindhi</label>
+					<value>language_40</value>
+				  </item>
+				  <item>
+					<label>Sinhalese</label>
+					<value>language_41</value>
+				  </item>
+				  <item>
+					<label>Spanish</label>
+					<value>language_42</value>
+				  </item>
+				  <item>
+					<label>Tamil</label>
+					<value>language_43</value>
+				  </item>
+				  <item>
+					<label>Tajik</label>
+					<value>language_44</value>
+				  </item>
+				  <item>
+					<label>Telugu</label>
+					<value>language_45</value>
+				  </item>
+				  <item>
+					<label>Thai</label>
+					<value>language_46</value>
+				  </item>
+				  <item>
+					<label>Turkish</label>
+					<value>language_47</value>
+				  </item>
+				  <item>
+					<label>Turkmen</label>
+					<value>language_48</value>
+				  </item>
+				  <item>
+					<label>Ukranian</label>
+					<value>language_49</value>
+				  </item>
+				  <item>
+					<label>Urdu</label>
+					<value>language_50</value>
+				  </item>
+				  <item>
+					<label>Uzbek</label>
+					<value>language_51</value>
+				  </item>
+				  <item>
+					<label>Vietnamese</label>
+					<value>language_52</value>
+				  </item>
+			</select1>
+
+			<input ref="/martus_standard_fields/author">
+				<label>Author</label>
+			</input>
+			
+			<input ref="/martus_standard_fields/organization">
+				<label>Organization</label>
+			</input>
+			
+			<input ref="/martus_standard_fields/location">
+				<label>Location</label>
+			</input>
+
+			<input ref="/martus_standard_fields/keywords">
+				<label>Keywords</label>
+			</input>
+			
+			<input ref="/martus_standard_fields/eventdate">
+				<label>Date of Event</label>
+			</input>
+			
+			<input appearance="multiline" ref="/martus_standard_fields/summary">
+				<label>Summary</label>
+			</input>
+			
+			<input appearance="multiline" ref="/martus_standard_fields/publicinfo">
+				<label>Additional Information</label>
+			</input>
+			
+		</group>
+		
+    </h:body>
+</h:html>
