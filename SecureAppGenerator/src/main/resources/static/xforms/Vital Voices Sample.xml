@@ -30,7 +30,6 @@
                         <region1Cities/>
                         <region2Cities/>
                         <region3Cities/>
-                        <country/>
                     </cascading_select_regions>
                 </nm>
             </instance>
@@ -52,10 +51,6 @@
             <bind nodeset="/nm/cascading_select_regions/region1Cities" relevant="/nm/cascading_select_regions/regions='region1'" type="select1"/>
             <bind nodeset="/nm/cascading_select_regions/region2Cities" relevant="/nm/cascading_select_regions/regions='region2'" type="select1"/>
             <bind nodeset="/nm/cascading_select_regions/region3Cities" relevant="/nm/cascading_select_regions/regions='region3'" type="select1"/>
-            <bind nodeset="/nm/cascading_select_regions/country" calculate=
-                            "if(/nm/cascading_select_regions/regions='region1', /nm/cascading_select_regions/region1Cities,
-                             if(/nm/cascading_select_regions/regions='region2', /nm/cascading_select_regions/region2Cities,
-                             if(/nm/cascading_select_regions/regions='region3', /nm/cascading_select_regions/region3Cities, 'ERROR')))" type="string"/>
         </model>
     </h:head>
 
@@ -150,8 +145,8 @@
             </select>
         </group>
 
-        <group>
-            <label>Section 5 (Multi Select)</label>
+        <!--<group>
+            <label>Section 5 (Multi-level Drop down)</label>
             <select1 ref="/nm/cascading_select_regions/regions" appearance="minimal">
                 <label>Choose your region:</label>
                 <item>
@@ -200,10 +195,10 @@
                     <value>city6</value>
                 </item>
             </select1>
-        </group>
+        </group>-->
 
         <group>
-            <label>Section 6 (Repeating group of fields)</label>
+            <label>Section 5 (Repeating group of fields)</label>
             <repeat nodeset="/nm/victim_information">
                 <input ref="victimFirstName">
                     <label>Victim first name</label>
