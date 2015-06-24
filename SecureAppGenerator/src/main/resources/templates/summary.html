@@ -9,21 +9,21 @@
 	<body>
       	<img class="cellphone" src="/images/cellphone.png" alt="Android Cellphone"/>
 	   	<div class="cellphone_logo"><img class="cellphone_logo_size" th:src="${session.appConfig.appIconLocation}" role="presentation" alt=""/></div>
-	   	<div class="cellphone_title" th:text="${session.appConfig.appName}"></div>
+	   	<div class="textFont cellphone_title" th:text="${session.appConfig.appName}"></div>
 
-		<div id="cellphone_center_title" class="cellphone_center_title" align="center"><p/>Secure Data Collection</div>
-  		<div id="cellphone_center_data" class="cellphone_center_data" align="center"><p/>Customized for your projects</div>
-     	<div class="main_title">
+		<div class="textFont cellphone_center_title" id="cellphone_center_title" align="center"><p/>Secure Data Collection</div>
+  		<div class="textFont cellphone_center_data" id="cellphone_center_data" align="center"><p/>Customized for your projects</div>
+     	<div class="textFont main_title">
      		<b>secureApp</b> Generator
 		</div>
-     	<div class="sub_title" >
+     	<div class="textFont sub_title" >
      		powered by<img  src="../images/MartusLogoWhite.png" alt="Martus" align="top"/>
 		</div>
-     	<div id="progressArea" class="summary_title">
+     	<div class="textFont summary_title" id="progressArea" >
      		Verify all information is correct and that the Public Code matches the contact you wish to send your records before building your App.
  		</div>
 		
-    		 <div class="info_area_summary">
+    		 <div class="textFont info_area_summary">
              <table>
 	                <tr>
  	                    <td>App's Name:</td>
@@ -64,19 +64,19 @@
 	                		<td/>
  	                    <td class="table_column_spacer"/>
 	                    	<td>
-	                    		<span class="error_msg" th:if="${appConfig.apkBuildError != null}" th:text="${appConfig.apkBuildError}">Errors</span>
+	                    		<span class="textFont error_msg" th:if="${appConfig.apkBuildError != null}" th:text="${appConfig.apkBuildError}">Errors</span>
 	                    	</td>
 	                </tr>
              </table>
 		</div>
 		<form method="POST" th:action="@{/summaryPrevious}">
-			<input class="button_previous" id="previous" name="previous" type="submit" value="&lt; Back"/>
+			<input class="textFont button_previous" id="previous" name="previous" type="submit" value="&lt; Back"/>
 		</form>
 
 	    <canvas class="progress_location" id="ProgressArea" width="400" height="350"></canvas> 
  
 		<form id="buildApp" name="buildApp" method="POST" action="/summaryNext">
-			<button class="button_next" id="next" name="next" onclick="showProgress('Building App')">BUILD APP &gt;</button>
+			<button class="textFont button_next" id="next" name="next" onclick="showProgress('Building App')">BUILD APP &gt;</button>
 		</form>
 
   		<script src="./js/ProgressCircle.js"></script>	

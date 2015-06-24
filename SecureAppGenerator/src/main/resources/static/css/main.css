@@ -6,6 +6,12 @@ form{
     display:inline-block;
 }
 
+.textFont {
+    background-color: #3C3D3C;
+	font-family: 'Arial Narrow', Arial, sans-serif;
+    font-weight: normal;
+}
+
 .cellphone{
 	position: absolute;
 	top: 7px;
@@ -38,9 +44,7 @@ form{
     width: 211px;
     height: 32px;
     padding: 3px;
-    background-color: #3C3D3C;
     color: #6ECDE4;
-	font-family: 'Arial Narrow', Arial, sans-serif;
     font-weight: bold;
     font-size: 24px;
   }
@@ -54,7 +58,6 @@ form{
     padding: 4px;
     background-color: #4D4D4D;
     color: yellow;
-	font-family: 'Arial', Arial, sans-serif;
     font-size: 48px;
   }
 
@@ -67,7 +70,6 @@ form{
     padding: 4px;
     background-color: #4D4D4D;
     color: yellow;
-	font-family: 'Arial', Arial, sans-serif;
     font-size: 16px;
   }
   
@@ -82,9 +84,7 @@ form{
     top: 50px;
     left: 450px;
     padding: 4px;
-    background-color: #3C3D3C;
     color: white;
-	font-family: 'Arial Narrow', Arial, sans-serif;
     font-size: 50px;
   }
   
@@ -93,10 +93,7 @@ form{
     top: 125px;
     left: 550px;
     padding: 4px;
-    background-color: #3C3D3C;
     color: #6ECDE4; 
- 	font-family: 'Arial Narrow', Arial, sans-serif;
-    font-weight: normal;
     font-size: 24px;
   }
   
@@ -105,11 +102,8 @@ form{
     top: 175px;
     left: 450px;
     padding: 4px;
-    background-color: #3C3D3C;
     font-size: 24px;
     color: lightgray;
-	font-family: 'Arial Narrow', Arial, sans-serif;
-    font-weight: normal;
   }
 
 .page_title {
@@ -117,10 +111,7 @@ form{
     top: 250px;
     left: 450px;
     padding: 4px;
-    background-color: #3C3D3C;
     color: lightgray;
-	font-family: 'Arial Narrow', Arial, sans-serif;
-    font-weight: normal;
   }
   
 .ProgressCircleInfo{
@@ -135,10 +126,7 @@ form{
     top: 200px;
     left: 475px;
     padding: 4px;
-    background-color: #3C3D3C;
     color: white;
-	font-family: 'Arial Narrow', Arial, sans-serif;
-    font-weight: normal;
     font-size: 20px;
   }
   
@@ -148,10 +136,7 @@ form{
     top: 375px;
     left: 375px;
     padding: 4px;
-    background-color: #3C3D3C;
     color: white;
-	font-family: 'Arial Narrow', Arial, sans-serif;
-    font-weight: normal;
     font-size: 20px;
   }
   
@@ -160,10 +145,7 @@ form{
     top: 350px;
     left: 450px;
     padding: 4px;
-    background-color: #3C3D3C;
     color: #6ECDE4;
-	font-family: 'Arial Narrow', Arial, sans-serif;
-    font-weight: normal;
     font-size: 20px;
   }
   
@@ -172,10 +154,7 @@ form{
     top: 350px;
     left: 450px;
     padding: 4px;
-    background-color: #3C3D3C;
     color: #6ECDE4;
-	font-family: 'Arial Narrow', Arial, sans-serif;
-    font-weight: normal;
     font-size: 30px;
   }
   
@@ -184,17 +163,12 @@ form{
     top: 250px;
     left: 450px;
     padding: 4px;
-    background-color: #3C3D3C;
     color: #6ECDE4;
-	font-family: 'Arial Narrow', Arial, sans-serif;
-    font-weight: normal;
     font-size: 20px;
   }
   
 .error_msg{
 	color: red;
-	font-family: 'Arial Narrow', Arial, sans-serif;
-    font-weight: normal;
 }
 
 .table_column_spacer{
@@ -226,7 +200,6 @@ a.download_link:active {
     right: 100px;
 	background-color: yellow;
     color: Black;
-	font-family: 'Arial Narrow', Arial, sans-serif;
     font-size: 36px;
 }
 
@@ -236,7 +209,6 @@ a.download_link:active {
     left: 400px;
 	background-color: gray;
     color: Black;
-	font-family: 'Arial Narrow', Arial, sans-serif;
     font-size: 36px;
 }
 
@@ -246,13 +218,11 @@ a.download_link:active {
     right: 100px;
 	background-color: yellow;
     color: Black;
-	font-family: 'Arial Narrow', Arial, sans-serif;
     font-size: 36px;
 }  
 
 
 .button_upload{
     color: #6ECDE4;
-	font-family: 'Arial Narrow', Arial, sans-serif;
     font-size: 20px;
 }  
