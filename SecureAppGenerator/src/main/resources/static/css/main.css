@@ -7,7 +7,7 @@ form{
 }
 
 .textFont {
-    background-color: #3C3D3C;
+	background-color: transparent;
 	font-family: 'Arial Narrow', Arial, sans-serif;
     font-weight: normal;
 }
@@ -32,6 +32,62 @@ form{
 	max-width: 33px;
 }
 
+.progressBarLocation {
+    position: absolute;
+    top: 10px;
+    left: 350px;
+	width: 700px;    
+}
+
+.progressStep1Location {
+    position: absolute;
+	top: 28px;
+    left: 370px;
+    width: 100px;    
+}
+.progressStep2Location {
+   position: absolute;
+	top: 28px;
+    left: 530px;
+    width: 100px;    
+}
+
+.progressStep3Location {
+   position: absolute;
+	top: 28px;
+    left: 670px;
+    width: 100px;    
+}
+
+.progressStep4Location {
+   position: absolute;
+	top: 28px;
+    left: 812px;
+    width: 100px;    
+}
+
+.progressStep5Location {
+   position: absolute;
+	top: 28px;
+    left: 955px;
+    width: 100px;    
+}
+
+.progressBarStepActive {
+    color: yellow;
+    font-size: 22px;  
+}
+
+.progressBarStepInactive {
+    color: lightgray;
+    font-size: 22px;
+}
+
+.progressBarStepComplete {
+	color: black;
+    font-size: 22px;
+}
+
 .summary_logo_size {
 	max-height: 70px;
 	max-width: 70px;
@@ -45,6 +101,7 @@ form{
     height: 32px;
     padding: 3px;
     color: #6ECDE4;
+    background-color: #3C3D3C;
     font-weight: bold;
     font-size: 24px;
   }
@@ -81,7 +138,7 @@ form{
 
 .main_title {
     position: absolute;
-    top: 50px;
+    top: 80px;
     left: 450px;
     padding: 4px;
     color: white;
@@ -90,7 +147,7 @@ form{
   
 .sub_title {
     position: absolute;
-    top: 125px;
+    top: 150px;
     left: 550px;
     padding: 4px;
     color: #6ECDE4; 
@@ -99,7 +156,7 @@ form{
   
 .summary_title {
     position: absolute;
-    top: 175px;
+    top: 190px;
     left: 450px;
     padding: 4px;
     font-size: 24px;

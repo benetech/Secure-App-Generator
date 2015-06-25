@@ -7,6 +7,13 @@
      		 href="/css/main.css" th:href="@{../css/main.css}" />
  	</head>
 	<body>
+	    <img class="progressBarLocation" src="/images/Step1line.png" role="presentation" alt=""/>
+		<div class="textFont progressStep1Location progressBarStepActive" align="center">Name</div>
+ 		<div class="textFont progressStep2Location progressBarStepInactive" align="center">Logo</div>
+		<div class="textFont progressStep3Location progressBarStepInactive" align="center">Form</div>
+		<div class="textFont progressStep4Location progressBarStepInactive" align="center">Contact</div>
+		<div class="textFont progressStep5Location progressBarStepInactive" align="center">Build</div>
+ 
       	<img class="cellphone" src="/images/cellphone.png" alt="Android Cellphone"/>
 	   	<div class="cellphone_logo"><img class="cellphone_logo_size" th:src="${session.appConfig.appIconLocation}" role="presentation" alt=""/></div>
 	   	<div class="textFont cellphone_title" th:text="${session.appConfig.appName}"></div>
