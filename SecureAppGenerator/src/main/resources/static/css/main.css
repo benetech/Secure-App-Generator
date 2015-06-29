@@ -12,6 +12,14 @@ form{
     font-weight: normal;
 }
 
+.ProgressCircleInfo{
+    font-size: 24px;
+ 	font-family: 'Arial Narrow', Arial, sans-serif;
+    color: yellow;
+    font-weight: bold;
+}
+
+
 .cellphone{
 	position: absolute;
 	top: 7px;
@@ -74,14 +82,10 @@ form{
 }
 
 .progressBarStepActive {
-    color: yellow;
+    color: black;
+    font-weight: bold;
     font-size: 22px;  
-     text-shadow:
-    		-1px -1px 0 #000,
-   		 1px -1px 0 #000,
-   		 -1px 1px 0 #000,
-   		 1px 1px 0 #000;  
-}
+ }
 
 .progressBarStepInactive {
     color: lightgray;
@@ -175,14 +179,7 @@ form{
     padding: 4px;
     color: lightgray;
   }
-  
-.ProgressCircleInfo{
-    font-size: 24px;
-    color: yellow;
-   font-weight: bold;
     
-}
-  
 .info_area_1 {
     position: absolute;
     top: 200px;
