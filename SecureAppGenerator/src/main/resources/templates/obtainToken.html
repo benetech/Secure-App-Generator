@@ -28,7 +28,7 @@
 		</div>
 		
       	<div class="textFont page_title">
-     		<h1>Enter Contact's Token</h1>
+     		<h1>Enter Martus Desktop account token</h1>
  		</div>
    	
 		<form method="POST" th:action="@{/obtainTokenPrevious}">
@@ -45,14 +45,14 @@
                     			</label>
 						</td>
 	                    <td>
-	    	                    	<input type="text" th:field="*{clientToken}" autofocus="true"/>
+	    	                    	<input type="text" th:field="*{clientToken}" autofocus="true" title="Tokens can be found under the Account Information screen in Martus."/>
 	                    	</td>
 	                    <td>
 	                    		<span class="textFont error_msg" th:if="*{clientTokenError != null}" th:text="*{clientTokenError}">Errors</span>
 	                    	</td>
 	                </tr>
                 </table>
-  				Get the receiving party's public key from the token given.
+  				The Martus Desktop account will receive data sent from anyone who runs your app.
  			</div>
 			<input class="textFont button_next" name="next" type="submit" value="Continue &gt;"/>
 		</form>
