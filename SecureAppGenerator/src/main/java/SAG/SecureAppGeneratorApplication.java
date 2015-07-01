@@ -10,16 +10,23 @@ import javax.servlet.http.HttpSession;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
+import org.springframework.boot.builder.SpringApplicationBuilder;
+import org.springframework.boot.context.web.SpringBootServletInitializer;
 import org.springframework.web.multipart.MultipartFile;
 
 @SpringBootApplication
-public class SecureAppGeneratorApplication 
+public class SecureAppGeneratorApplication extends SpringBootServletInitializer 
 {
 	private static final String APP_DEFAULT_NAME = "My App";
 	private static final String DEFAULT_APP_ICON_LOCATION = "images/Martus-swoosh-30x30.png";//TODO fix the location for server
 	public static final String APK_RELATIVE_DOWNLOADS_DIRECTORY = "Downloads/";
 	public static final String WEB_STATIC_DIRECTORY = "/Users/charlesl/EclipseMartus/Martus-Secure-App-Generator/SecureAppGenerator/bin/static/";
 	public static final String APK_LOCAL_DOWNLOADS_DIRECTORY = WEB_STATIC_DIRECTORY + APK_RELATIVE_DOWNLOADS_DIRECTORY;
+
+    @Override
+    protected SpringApplicationBuilder configure(SpringApplicationBuilder application) {
+        return application.sources(SecureAppGeneratorApplication.class);
+    }
 
 	public static void main(String[] args) 
     {

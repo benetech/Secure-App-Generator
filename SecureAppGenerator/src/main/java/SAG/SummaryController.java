@@ -62,7 +62,7 @@ public class SummaryController extends WebMvcConfigurerAdapter
 	private static final String XML_MARTUS_SERVER_PUBLIC_KEY = "martus_server_public_key";
 	private static final String XML_MARTUS_SERVER_IP = "martus_server_ip";
 	private static final String XML_APP_NAME = "app_name";
-	private static final String GRADLE_LOCATION = "/Users/charlesl/Dev/gradle-2.3/bin/gradle";
+	private static final String GRADLE_LOCATION = "/Users/charlesl/Dev/gradle-2.4/bin/gradle";
     private static final String GRADLE_PARAMETERS = " -p ";
 	private static final String GRADLE_BUILD_COMMAND = " build";
 	private static final String APK_LOCAL_FILE_DIRECTORY = "/build/outputs/apk/";
@@ -224,12 +224,16 @@ public class SummaryController extends WebMvcConfigurerAdapter
    			    TimeUnit.MILLISECONDS.toSeconds(buildTime) - 
    			    TimeUnit.MINUTES.toSeconds(TimeUnit.MILLISECONDS.toMinutes(buildTime)));
 
-		System.out.println("Build took:" + timeToBuild);
- 
-		int returnCode = pr.exitValue();
-   		if(returnCode != EXIT_VALUE_GRADLE_SUCCESS)
+   		int returnCode = pr.exitValue();
+   		if(returnCode == EXIT_VALUE_GRADLE_SUCCESS)
+   		{
+   			System.out.println("Build succeeded:" + timeToBuild);
+    		}
+   		else
+   		{
+   			System.out.println("Build ERROR:" + returnCode);
 	   		throw new IOException("Error creating APK");
-
+   		}
    		String tempApkBuildFileDirectory = baseBuildDir.getAbsolutePath() + APK_LOCAL_FILE_DIRECTORY;
 		File appFileCreated = new File(tempApkBuildFileDirectory, config.getGradleApkRawBuildFileName());
 		return appFileCreated;
