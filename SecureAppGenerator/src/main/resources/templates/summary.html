@@ -15,7 +15,7 @@
 		<div class="textFont progressStep5Location progressBarStepActive" align="center">Build</div>
  
       	<img class="cellphone" src="/images/cellphone.png" alt="Android Cellphone"/>
-	   	<div class="cellphone_logo"><img class="cellphone_logo_size" th:src="${session.appConfig.appIconLocation}" role="presentation" alt=""/></div>
+	   	<div class="cellphone_logo"><img class="cellphone_logo_size" th:src="${session.appConfig.appIconBase64Data}" role="presentation" alt=""/></div>
 	   	<div class="textFont cellphone_title" th:text="${session.appConfig.appName}"></div>
 
 		<div class="textFont cellphone_center_title" id="cellphone_center_title" align="center"><p/>Secure Data Collection</div>
@@ -40,7 +40,7 @@
 	                <tr>
  	                    <td>App's Logo:</td>
  	                    <td class="table_column_spacer"/>
-	   					<td><img class="summary_logo_size" th:src="${session.appConfig.appIconLocation}" alt="image of logo to use in app"/></td>
+	   					<td><img class="summary_logo_size" th:src="${session.appConfig.appIconBase64Data}" alt="image of logo to use in app"/></td>
 	                </tr>
 	                <tr>
  	                    <td>XForm To Use:</td>

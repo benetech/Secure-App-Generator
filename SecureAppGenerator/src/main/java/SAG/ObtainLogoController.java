@@ -25,6 +25,7 @@ Boston, MA 02111-1307, USA.
 
 package SAG;
 
+import java.io.File;
 import java.io.IOException;
 import java.net.MalformedURLException;
 import java.util.Map;
@@ -43,9 +44,9 @@ import org.springframework.web.servlet.config.annotation.WebMvcConfigurerAdapter
 @Controller
 public class ObtainLogoController extends WebMvcConfigurerAdapter
 {
-	
-	private static final String LOGO_FILE_LOCATION = "bin/static/myCompanyLogo.png";  //TODO this will be based on build directory for this session
+	private static final String LOGO_FILE_NAME = "companyLogo";  
 	private static final String IMAGE_PNG = "image/png";
+	private static final String PNG_EXT = ".png";
 
 	@RequestMapping(value=WebPage.OBTAIN_LOGO, method=RequestMethod.GET)
     public String directError(HttpSession session, Model model) 
@@ -66,20 +67,25 @@ public class ObtainLogoController extends WebMvcConfigurerAdapter
     public String retrieveLogo(HttpSession session, @RequestParam("file") MultipartFile file, Model model, AppConfiguration appConfig)
     {
         if (!file.isEmpty()) 
-        {
+         {
             try 
             {
+            	
+            		//String dataRootDirectory = System.getenv(SecureAppGeneratorApplication.SAG_DATA_DIR_ENV);
+            		File tempIconLocation = File.createTempFile(LOGO_FILE_NAME, PNG_EXT);
+            		tempIconLocation.deleteOnExit();
             		if(!file.getContentType().contains(IMAGE_PNG))
             		{
             			appConfig.setAppIconError("Error: Image type must be png.");
             			model.addAttribute(SessionAttributes.APP_CONFIG, appConfig);
          			return WebPage.OBTAIN_LOGO; 
             		}
-            		
-            		SecureAppGeneratorApplication.saveMultiPartFileToLocation(file, LOGO_FILE_LOCATION);
-
+             	
+            		SecureAppGeneratorApplication.saveMultiPartFileToLocation(file, tempIconLocation);
             		AppConfiguration config = (AppConfiguration)session.getAttribute(SessionAttributes.APP_CONFIG);
-            		config.setAppIconLocation("myCompanyLogo.png"); //TODO fix file location
+            		config.setAppIconLocalFileLocation(tempIconLocation.getAbsolutePath());
+            		System.out.println(tempIconLocation.getAbsolutePath());
+            		config.setAppIconBase64Data(SecureAppGeneratorApplication.getBase64DataFromFile(tempIconLocation.getAbsoluteFile()));
             		session.setAttribute(SessionAttributes.APP_CONFIG, config);
             } 
             catch (Exception e) 

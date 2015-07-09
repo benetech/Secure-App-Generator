@@ -79,7 +79,7 @@ public class ObtainTokenController extends WebMvcConfigurerAdapter
     }
 
 	@RequestMapping(value=WebPage.OBTAIN_CLIENT_TOKEN_PREVIOUS, method=RequestMethod.POST)
-    public String goBack(HttpSession session, Model model, AppConfiguration appConfig) 
+    public String goBack(HttpSession session, Model model, AppConfiguration appConfig)
     {
 		model.addAttribute(SessionAttributes.APP_CONFIG, appConfig);
        return WebPage.OBTAIN_XFORM;

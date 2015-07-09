@@ -103,7 +103,7 @@ public class SummaryController extends WebMvcConfigurerAdapter
 			AppConfiguration config = (AppConfiguration)session.getAttribute(SessionAttributes.APP_CONFIG);
 			updateApkSettings(baseBuildDir, config);
 			updateGradleSettings(baseBuildDir, config);
-			copyIconToApkBuild(baseBuildDir, config.getAppIconLocation());
+			copyIconToApkBuild(baseBuildDir, config.getAppIconLocalFileLocation());
 			copyFormToApkBuild(baseBuildDir, config.getAppXFormLocation());
 			File apkCreated = buildApk(baseBuildDir, config);
 			copyApkToDownloads(session, apkCreated, config.getApkName());
@@ -132,7 +132,7 @@ public class SummaryController extends WebMvcConfigurerAdapter
 
 	private void copyFormToApkBuild(File baseBuildDir, String appXFormLocation) throws IOException
 	{
-		File source = new File(SecureAppGeneratorApplication.WEB_STATIC_DIRECTORY, appXFormLocation);
+		File source = new File(SecureAppGeneratorApplication.getStaticWebDirectory(), appXFormLocation);
 		File destination = new File(baseBuildDir, APK_XFORM_FILE_LOCAL);
 		SagFileUtils.copy(source, destination);
 	}
@@ -140,7 +140,7 @@ public class SummaryController extends WebMvcConfigurerAdapter
 	private void copyIconToApkBuild(File baseBuildDir, String appIconLocation) throws IOException
 	{
 		//TODO adjust resolution
-		File source = new File(SecureAppGeneratorApplication.WEB_STATIC_DIRECTORY, appIconLocation);
+		File source = new File(appIconLocation);
 		File destination = new File(baseBuildDir, APK_NODPI_FILE_LOCAL + LOGO_NAME_PNG);
 		SagFileUtils.copy(source, destination);
 		destination = new File(baseBuildDir, APK_MDPI_FILE_LOCAL + LOGO_NAME_PNG);

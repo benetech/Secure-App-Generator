@@ -67,9 +67,10 @@ public class ObtainXFormController extends WebMvcConfigurerAdapter
     }
 
 	@RequestMapping(value=WebPage.OBTAIN_XFORM_PREVIOUS, method=RequestMethod.POST)
-    public String goBack(HttpSession session, Model model) 
+    public String goBack(HttpSession session, Model model) throws Exception 
     {
 		AppConfiguration config = (AppConfiguration) session.getAttribute(SessionAttributes.APP_CONFIG);
+		SecureAppGeneratorApplication.setDefaultIconForSession(session, config);
 		model.addAttribute(SessionAttributes.APP_CONFIG, config);
 		return WebPage.OBTAIN_LOGO;
     }
@@ -94,7 +95,7 @@ public class ObtainXFormController extends WebMvcConfigurerAdapter
             {
             		if(!file.getContentType().contains(XML_TYPE))
              		return returnErrorMessage(model, appConfig, "Error: Xform must be of type xml."); 
-            		SecureAppGeneratorApplication.saveMultiPartFileToLocation(file, xFormBuildPath.toString());
+            		SecureAppGeneratorApplication.saveMultiPartFileToLocation(file, xFormBuildPath.toFile());
   
                 isValidXForm(xFormBuildPath);
  

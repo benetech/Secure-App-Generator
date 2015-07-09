@@ -37,14 +37,14 @@ import org.springframework.web.bind.annotation.RequestMethod;
 public class WelcomePageController
 {
 	@RequestMapping({"/"})
-	String index(HttpSession session) 
+	String index(HttpSession session) throws Exception 
 	{
 		SecureAppGeneratorApplication.setInvalidResults(session);
 		setupDefaultSessionAttributes(session);
 	    return WebPage.WELCOME;
 	}
 
-	public void setupDefaultSessionAttributes(HttpSession session)
+	public void setupDefaultSessionAttributes(HttpSession session) throws Exception
 	{
 		AppConfiguration defaultConfig = new AppConfiguration();
 		SecureAppGeneratorApplication.setDefaultIconForSession(session, defaultConfig);

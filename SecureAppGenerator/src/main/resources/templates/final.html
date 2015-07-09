@@ -8,7 +8,7 @@
  	</head>
 	<body>
       	<img class="cellphone" src="/images/cellphone.png" alt="Android Cellphone"/>
-	   	<div class="cellphone_logo"><img class="cellphone_logo_size" th:src="${session.appConfig.appIconLocation}" role="presentation" alt=""/></div>
+	   	<div class="cellphone_logo"><img class="cellphone_logo_size" th:src="${session.appConfig.appIconBase64Data}" role="presentation" alt=""/></div>
 	   	<div class="textFont cellphone_title" th:text="${session.appConfig.appName}"></div>
 
 		<div class="textFont cellphone_center_title" align="center"><p/>App Built!</div>

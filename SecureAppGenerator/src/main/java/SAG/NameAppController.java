@@ -53,7 +53,7 @@ public class NameAppController extends WebMvcConfigurerAdapter
 	
 	@RequestMapping(value=WebPage.NAME_APP_NEXT, method=RequestMethod.POST)
 	
-	public String nextPage(HttpSession session, Model model, AppConfiguration appConfig) 
+	public String nextPage(HttpSession session, Model model, AppConfiguration appConfig) throws Exception 
     {
 		SecureAppGeneratorApplication.setDefaultIconForSession(session, appConfig);
 		if (!validateAppName(appConfig)) 

@@ -37,6 +37,8 @@ public class AppConfiguration
 	private String appName;
 	private String appNameError;
 	private String appIconLocation;
+	private String appIconLocalFileLocation;
+	private String appIconBase64Data;
 	private String appIconError;
 	private String appXFormName;
 	private String appXFormLocation;
@@ -290,6 +292,26 @@ public class AppConfiguration
 		apkName.append(getApkVersionNumberFull());
         apkName.append(APK_EXTENSION);
 		return apkName.toString();
+	}
+
+	public String getAppIconBase64Data()
+	{
+		return appIconBase64Data;
+	}
+
+	public void setAppIconBase64Data(String appIconBase64Data)
+	{
+		this.appIconBase64Data = appIconBase64Data;
+	}
+
+	public String getAppIconLocalFileLocation()
+	{
+		return appIconLocalFileLocation;
+	}
+
+	public void setAppIconLocalFileLocation(String appIconLocalFileLocation)
+	{
+		this.appIconLocalFileLocation = appIconLocalFileLocation;
 	}
 
 }
