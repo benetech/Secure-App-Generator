@@ -1,2 +1,2 @@
-# Martus-Secure-App-Generator
-Martus Web based Front end to creating custom Martus Secure App Android APK's.
+# Secure-App-Generator
+Web based Front end to creating custom Secure App Android APK's.
