@@ -53,9 +53,9 @@ import org.springframework.web.servlet.config.annotation.WebMvcConfigurerAdapter
 public class ObtainXFormController extends WebMvcConfigurerAdapter
 {
 	private static final String XML_TYPE = "xml";
-	private static final String XML_FILE_LOCATION = "bin/static/xFormToUse.xml";  //TODO this will be based on build directory for this session
+	private static final String XML_FILE_LOCATION = SecureAppGeneratorApplication.getStaticWebDirectory() + "/xFormToUse.xml";  //TODO this will be based on build directory for this session
 	private static final String XFORM_FILE_EXTENSION = ".xml";
-	private static final String XFORMS_DEFAULT_DIRECTORY = "bin/static/xforms";
+	private static final String XFORMS_DEFAULT_DIRECTORY = SecureAppGeneratorApplication.getStaticWebDirectory() + "/xforms";
 	private static final int NO_PATH_SEPARATOR_FOUND = -1;
 	private static final char PATH_SEPARATOR = '/';
 

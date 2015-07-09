@@ -25,8 +25,8 @@ import org.springframework.web.multipart.MultipartFile;
 public class SecureAppGeneratorApplication extends SpringBootServletInitializer 
 {
 	private static final String APP_DEFAULT_NAME = "My App";
-	private static final String DEFAULT_APP_ICON_LOCATION = "images/Martus-swoosh-30x30.png";//TODO fix the location for server
-	public static final String APK_RELATIVE_DOWNLOADS_DIRECTORY = "Downloads/";
+	private static final String DEFAULT_APP_ICON_LOCATION = "/images/Martus-swoosh-30x30.png";//TODO fix the location for server
+	public static final String APK_RELATIVE_DOWNLOADS_DIRECTORY = "/Downloads/";
 	public static final String APK_LOCAL_DOWNLOADS_DIRECTORY = getStaticWebDirectory() + APK_RELATIVE_DOWNLOADS_DIRECTORY;
 	public static final String ICON_LOCAL_File = getStaticWebDirectory() + DEFAULT_APP_ICON_LOCATION;
 	public static final String SAG_DATA_DIR_ENV = "SAG_DATA_DIR";
