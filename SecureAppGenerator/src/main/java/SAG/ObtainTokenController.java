@@ -27,7 +27,6 @@ package SAG;
 
 import java.io.File;
 import java.io.FileOutputStream;
-import java.io.FileReader;
 import java.io.IOException;
 import java.net.MalformedURLException;
 import java.nio.file.Files;
@@ -70,7 +69,7 @@ public class ObtainTokenController extends WebMvcConfigurerAdapter
 	private static final String SL1_IE_NAME = "SL1 IE";
 	public static final String DESKTOP_PUBLIC_KEY = "MIIBojANBgkqhkiG9w0BAQEFAAOCAY8AMIIBigKCAYEAhToihLM3R540behcXLDKSHXjhiRsL3oQdyWeUfphpYXIQydfPny40zoFoznC3YwM8Jykf9ToQstO1k74SYwRuIEEdtews6ETV7U8sDz5IZnjOOg4xtBIEAAtFkO23oG429i1scOFI9L9p8xkhVePeZZ4CNHBXztYDcKVcqn+cEn8aTqBZ0sdcOUkZlMlfR628GhhCekS1lm0t6CSdRWKyqvGRJ6RbROep16ATZdriaJiPyVKMy1y/mAIoz/rRIOCUphnDTQjlKox6sQ6EaWykLCn0oY8KAR87Rar0OY09fuEn2KkP3gdhzVmmITFrGTFi37kzGDfCjJ8tn86G2D8KvAyiDdi8OlgSpDqI/G1MzPB04vrQa/HRcAwT1W7qmd0pKwu+GmQ+o9j1oiOpvFrK48TedZbI9fUWqXfuNSvS1pukfJ+svAPLlo+rBCT6F0hoGYgSFWUzRiiZuKZR4au51tqxhU4Qk7PDcFe/kx3TrtJKYLkLM1jQgT0ERdtlPZ9AgMBAAE=";
 	private static final String SAG_KEYPAIR_LOCATION = SecureAppGeneratorApplication.getStaticWebDirectory() + "/keys/sagKeyPair.dat"; 
-	private static final String SAG_KEYPAIR_PASSWORD = "$$SaGPassword";
+	private static final String SAG_KEYPAIR_PASSWORD = "12SaGPassword";
 	@RequestMapping(value=WebPage.OBTAIN_CLIENT_TOKEN, method=RequestMethod.GET)
     public String directError(HttpSession session, Model model) 
     {
@@ -207,7 +206,9 @@ public class ObtainTokenController extends WebMvcConfigurerAdapter
 			File keyPair = new File(SAG_KEYPAIR_LOCATION);
 			if(keyPair.exists())
 			{
+				System.out.println("reading keypair: " + SAG_KEYPAIR_LOCATION);
 				security.readKeyPair(keyPair, SAG_KEYPAIR_PASSWORD.toCharArray());
+				System.out.println("read keypair");
 			}
 			else
 			{
@@ -218,7 +219,7 @@ public class ObtainTokenController extends WebMvcConfigurerAdapter
 				outputStream.flush();
 				outputStream.close();
 			}
- 			String tokenString = appConfig.getClientToken();
+			String tokenString = appConfig.getClientToken();
 			MartusAccountAccessToken accessToken = new MartusAccountAccessToken(tokenString);
  			NetworkResponse response = gateway.getMartusAccountIdFromAccessToken(security, accessToken);
  			if(response.getResultCode().equals(NetworkInterfaceConstants.NO_TOKEN_AVAILABLE))
@@ -230,7 +231,7 @@ public class ObtainTokenController extends WebMvcConfigurerAdapter
  			if(!response.getResultCode().equals(NetworkInterfaceConstants.OK))
  				throw new ServerNotAvailableException();
  						
- 			Vector singleAccountId = response.getResultVector();
+ 			Vector<String> singleAccountId = response.getResultVector();
  			if(singleAccountId.size() != 1)
  				throw new TokenNotFoundException();
  			String AccountId = (String)singleAccountId.get(0);

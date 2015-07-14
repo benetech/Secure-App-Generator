@@ -33,7 +33,7 @@ repositories {
 
 dependencies {
     providedRuntime 'org.springframework.boot:spring-boot-starter-tomcat'
-    compile files('/Users/charlesl/EclipseMartus/Martus-Secure-App-Generator/SecureAppGenerator/thirdparty/martus-api-46.jar')
+    compile files('/Users/charlesl/EclipseMartus/Martus-Secure-App-Generator/SecureAppGenerator/thirdparty/martus-api-52.jar')
     compile files('/Users/charlesl/EclipseMartus/martus-thirdparty/libext/BouncyCastle/bin/bcprov-jdk15on-148.jar')
     compile files('/Users/charlesl/EclipseMartus/martus-thirdparty/common/XMLRPC/bin/commons-logging-1.1.jar')
     compile files('/Users/charlesl/EclipseMartus/Martus-Secure-App-Generator/SecureAppGenerator/thirdparty/JavaRosa/bin/javarosa-libraries.jar')

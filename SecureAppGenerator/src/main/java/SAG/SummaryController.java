@@ -57,14 +57,14 @@ public class SummaryController extends WebMvcConfigurerAdapter
 
 	private static final String APP_NAME_XML = "appName";
 	private static final String VERSION_SAG_BUILD_XML = "versionSagBuild";
-    private static final String LOGO_NAME_PNG = "ic_launcher.png";
+    private static final String LOGO_NAME_PNG = "ic_launcher_secure_app.png";
 	private static final String XML_DESKTOP_PUBLIC_KEY = "public_key_desktop";
 	private static final String XML_MARTUS_SERVER_PUBLIC_KEY = "martus_server_public_key";
 	private static final String XML_MARTUS_SERVER_IP = "martus_server_ip";
 	private static final String XML_APP_NAME = "app_name";
 	private static final String GRADLE_LOCATION = "/Users/charlesl/Dev/gradle-2.4/bin/gradle";
     private static final String GRADLE_PARAMETERS = " -p ";
-	private static final String GRADLE_BUILD_COMMAND = " build";
+	private static final String GRADLE_BUILD_COMMAND = " assembledebug";
 	private static final String APK_LOCAL_FILE_DIRECTORY = "/build/outputs/apk/";
 	private static final String MAIN_DIRECTORY = "/Users/charlesl/SAG";
 	private static final String MAIN_BUILD_DIRECTORY = MAIN_DIRECTORY + "/Build";

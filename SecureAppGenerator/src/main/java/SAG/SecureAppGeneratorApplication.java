@@ -78,6 +78,12 @@ public class SecureAppGeneratorApplication extends SpringBootServletInitializer
 			return new File("/static");
 		}
 	}
+	
+	static String getDataDirectory()
+	{
+   		String dataRootDirectory = System.getenv(SecureAppGeneratorApplication.SAG_DATA_DIR_ENV);
+   		return dataRootDirectory;
+	}
 
 	static void setSessionFromConfig(HttpSession session, AppConfiguration config)
 	{
