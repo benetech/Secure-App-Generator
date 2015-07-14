@@ -67,7 +67,8 @@ public class ObtainTokenController extends WebMvcConfigurerAdapter
 {
 	private static final String SL1_DEVELOPMENT_NAME = "SL1 Development";
 	private static final String SL1_IE_NAME = "SL1 IE";
-	private static final String SAG_KEYPAIR_LOCATION = SecureAppGeneratorApplication.getStaticWebDirectory() + "/keys/sagKeyPair.dat"; 
+	private static final String SAG_KEYPAIR_DIRECTORY = SecureAppGeneratorApplication.getStaticWebDirectory() + "/keys";
+	private static final String SAG_KEYPAIR_FILE = "sagKeyPair.dat";
 	private static final String SAG_KEYPAIR_PASSWORD = "12SaGPassword";
 	@RequestMapping(value=WebPage.OBTAIN_CLIENT_TOKEN, method=RequestMethod.GET)
     public String directError(HttpSession session, Model model) 
@@ -202,16 +203,20 @@ public class ObtainTokenController extends WebMvcConfigurerAdapter
  			//TODO do this once not ever time this page gets displayed
  			MartusSecurity security = new MartusSecurity();
  			ClientSideNetworkGateway gateway = new ClientSideNetworkGateway(createXmlRpcNetworkInterfaceHandler());
-			File keyPair = new File(SAG_KEYPAIR_LOCATION);
+ 			
+ 			File keyPair = new File(SAG_KEYPAIR_DIRECTORY, SAG_KEYPAIR_FILE);
 			if(keyPair.exists())
 			{
-				System.out.println("reading keypair: " + SAG_KEYPAIR_LOCATION);
+				System.out.println("reading keypair: " + SAG_KEYPAIR_DIRECTORY);
 				security.readKeyPair(keyPair, SAG_KEYPAIR_PASSWORD.toCharArray());
 				System.out.println("read keypair");
 			}
 			else
 			{
 				System.out.println("Creating SAG Keypair");
+				File keyPairDir = new File(SAG_KEYPAIR_DIRECTORY);
+				if(!keyPairDir.exists())
+					keyPairDir.mkdirs();
 				security.createKeyPair();
 				FileOutputStream outputStream = new FileOutputStream(keyPair);
 				security.writeKeyPair(outputStream, SAG_KEYPAIR_PASSWORD.toCharArray());
