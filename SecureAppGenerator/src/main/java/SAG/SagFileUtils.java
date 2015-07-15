@@ -40,6 +40,7 @@ public class SagFileUtils
 	{
 	    if (sourceLocation.isDirectory()) 
 	    {
+	    		
 	        copyDirectory(sourceLocation, targetLocation);
 	    } 
 	    else 
@@ -53,6 +54,8 @@ public class SagFileUtils
 	    if (!target.exists()) 
 	    {
 	        target.mkdir();
+	        if(!target.exists())
+	        		System.out.println("ERROR: unable to create directory");
 	    }
 
 	    for (String f : source.list()) 
@@ -63,7 +66,9 @@ public class SagFileUtils
 
 	static private void copyFile(File source, File target) throws IOException 
 	{        
-	    try (
+	    if(source.isHidden())
+	    		return;
+		try (
 	            InputStream in = new FileInputStream(source);
 	            OutputStream out = new FileOutputStream(target)
 	    ) 
