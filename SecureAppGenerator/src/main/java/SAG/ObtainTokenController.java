@@ -122,7 +122,7 @@ public class ObtainTokenController extends WebMvcConfigurerAdapter
 
 	public static void getBuildVersionFromGeneratedSettingsFile(AppConfiguration config) throws IOException
 	{
-		File apkResourseFile = new File(SummaryController.ORIGINAL_BUILD_DIRECTORY, SummaryController.GRADLE_GENERATED_SETTINGS_LOCAL);
+		File apkResourseFile = new File(SecureAppGeneratorApplication.getOriginalBuildDirectory(), SummaryController.GRADLE_GENERATED_SETTINGS_LOCAL);
 		List<String> lines = Files.readAllLines(apkResourseFile.toPath());
 		for (Iterator<String> iterator = lines.iterator(); iterator.hasNext();)
 		{
@@ -135,7 +135,6 @@ public class ObtainTokenController extends WebMvcConfigurerAdapter
 		        config.setApkVersionBuild(extractVersionInformationFromLine(currentLine));
 		}
 	}
-	
 	
 	private static String extractVersionInformationFromLine(String currentLine)
 	{
@@ -150,7 +149,7 @@ public class ObtainTokenController extends WebMvcConfigurerAdapter
 	{
 		String partialApkName = apkNameWithNoSagBuild.substring(0, apkNameWithNoSagBuild.length()-5).toLowerCase();
 		int greatestBuildNumberFound = 0;
-		File apkDownloadDirectory = new File(SecureAppGeneratorApplication.APK_LOCAL_DOWNLOADS_DIRECTORY);
+		File apkDownloadDirectory = new File(SecureAppGeneratorApplication.getDownloadsDirectory());
 		if(apkDownloadDirectory.exists())
 		{
 			ArrayList<File> files = new ArrayList<File>(Arrays.asList(apkDownloadDirectory.listFiles()));

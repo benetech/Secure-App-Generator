@@ -25,11 +25,14 @@ import org.springframework.web.multipart.MultipartFile;
 public class SecureAppGeneratorApplication extends SpringBootServletInitializer 
 {
 	private static final String APP_DEFAULT_NAME = "My App";
-	private static final String DEFAULT_APP_ICON_LOCATION = "/images/Martus-swoosh-30x30.png";//TODO fix the location for server
-	public static final String APK_RELATIVE_DOWNLOADS_DIRECTORY = "/Downloads/";
-	public static final String APK_LOCAL_DOWNLOADS_DIRECTORY = getStaticWebDirectory() + APK_RELATIVE_DOWNLOADS_DIRECTORY;
+	private static final String APK_DOWNLOADS_DIRECTORY = "/Downloads";
+	private static final String MASTER_SA_BUILD_DIRECTORY = "/SecureAppMaster/"; 
+	private static final String DEFAULT_APP_ICON_LOCATION = "/images/Martus-swoosh-30x30.png";
+	private static final String GRADLE_LOCATION = "/gradle-2.4/bin/gradle";
+
 	public static final String ICON_LOCAL_File = getStaticWebDirectory() + DEFAULT_APP_ICON_LOCATION;
 	public static final String SAG_DATA_DIR_ENV = "SAG_DATA_DIR";
+
 
     @Override
     protected SpringApplicationBuilder configure(SpringApplicationBuilder application) {
@@ -82,9 +85,27 @@ public class SecureAppGeneratorApplication extends SpringBootServletInitializer
 	static String getDataDirectory()
 	{
    		String dataRootDirectory = System.getenv(SecureAppGeneratorApplication.SAG_DATA_DIR_ENV);
+   		System.out.println("Data Dir:"+dataRootDirectory);
    		return dataRootDirectory;
 	}
 
+	static String getOriginalBuildDirectory()
+	{
+		return (new File(getDataDirectory(),MASTER_SA_BUILD_DIRECTORY)).getAbsolutePath();
+	}
+	
+	static String getGadleDirectory()
+	{
+		return (new File(getDataDirectory(),GRADLE_LOCATION)).getAbsolutePath();
+
+	}
+	
+	static String getDownloadsDirectory()
+	{
+		return (new File(getDataDirectory(),APK_DOWNLOADS_DIRECTORY)).getAbsolutePath();
+	}
+
+	
 	static void setSessionFromConfig(HttpSession session, AppConfiguration config)
 	{
 		AppConfiguration sessionConfig = new AppConfiguration();
@@ -119,4 +140,5 @@ public class SecureAppGeneratorApplication extends SpringBootServletInitializer
 		byte[] data = Files.readAllBytes(file.toPath());
 		return convertToBase64BySingleBytes(data);
 	}
+
 }
