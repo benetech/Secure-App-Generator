@@ -25,18 +25,18 @@ Boston, MA 02111-1307, USA.
 
 package SAG;
 
+import java.io.BufferedReader;
 import java.io.BufferedWriter;
 import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
+import java.io.InputStreamReader;
 import java.io.OutputStreamWriter;
-import java.nio.file.Files;
-import java.nio.file.Path;
-import java.nio.file.StandardCopyOption;
 import java.util.concurrent.TimeUnit;
 
 import javax.servlet.http.HttpSession;
 
+import org.apache.commons.io.FileUtils;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -57,6 +57,7 @@ public class SummaryController extends WebMvcConfigurerAdapter
 	private static final String XML_MARTUS_SERVER_PUBLIC_KEY = "martus_server_public_key";
 	private static final String XML_MARTUS_SERVER_IP = "martus_server_ip";
 	private static final String XML_APP_NAME = "app_name";
+	private static final String GRADLE_EXE = "/bin/gradle";
     private static final String GRADLE_PARAMETERS = " -p ";
 	private static final String GRADLE_BUILD_COMMAND = " assembledebug";
 	private static final String APK_LOCAL_FILE_DIRECTORY = "/build/outputs/apk/";
@@ -209,13 +210,24 @@ public class SummaryController extends WebMvcConfigurerAdapter
 
 	private File buildApk(File baseBuildDir, AppConfiguration config) throws IOException, InterruptedException
 	{
-		System.out.println("Building " + config.getApkName());
+		System.out.println("Info: Building " + config.getApkName());
 		Runtime rt = Runtime.getRuntime();
-   		String gradleCommand = SecureAppGeneratorApplication.getGadleDirectory() + GRADLE_PARAMETERS + baseBuildDir + GRADLE_BUILD_COMMAND;
+   		String gradleCommand = SecureAppGeneratorApplication.getGadleDirectory() + GRADLE_EXE + GRADLE_PARAMETERS + baseBuildDir + GRADLE_BUILD_COMMAND;
 		System.out.println(gradleCommand);
 		long startTime = System.currentTimeMillis();
-   		Process pr = rt.exec(gradleCommand);
-    		pr.waitFor();
+ 
+		String line;
+		System.out.println("Starting exec");
+		Process p = rt.exec(gradleCommand);
+		System.out.println("Now displaying output from exec.");
+		BufferedReader input = new BufferedReader(new InputStreamReader(p.getInputStream()));
+		while ((line = input.readLine()) != null) 
+		{
+		    System.out.println(line);
+		}
+		System.out.println("Done with exec");
+		input.close();		
+    		p.waitFor();
   		long endTime = System.currentTimeMillis();
    		long buildTime = endTime-startTime;
    		String timeToBuild = String.format("%02d:%02d", 
@@ -224,7 +236,7 @@ public class SummaryController extends WebMvcConfigurerAdapter
    			    TimeUnit.MILLISECONDS.toSeconds(buildTime) - 
    			    TimeUnit.MINUTES.toSeconds(TimeUnit.MILLISECONDS.toMinutes(buildTime)));
 
-   		int returnCode = pr.exitValue();
+   		int returnCode = p.exitValue();
    		if(returnCode == EXIT_VALUE_GRADLE_SUCCESS)
    		{
    			System.out.println("Build succeeded:" + timeToBuild);
@@ -241,12 +253,10 @@ public class SummaryController extends WebMvcConfigurerAdapter
 
 	public void copyApkToDownloads(HttpSession session, File apkFileToMove, String apkFinalName) throws IOException
 	{
-		Path source = apkFileToMove.toPath();
 		File targetFile = new File(SecureAppGeneratorApplication.getDownloadsDirectory(), apkFinalName);
-		Path target = targetFile.toPath();
 		if(targetFile.exists())
 			throw new IOException("This build already exists.");
-		Files.move(source, target, StandardCopyOption.ATOMIC_MOVE);
+		FileUtils.copyFile(apkFileToMove, targetFile);
 
 		AppConfiguration config = (AppConfiguration)session.getAttribute(SessionAttributes.APP_CONFIG);
 		String finalApkFileRelativeLocation = new File(SecureAppGeneratorApplication.getDownloadsDirectory(), apkFinalName).getAbsolutePath();

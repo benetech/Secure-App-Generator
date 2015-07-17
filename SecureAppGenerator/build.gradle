@@ -43,7 +43,8 @@ dependencies {
     compile("org.springframework.boot:spring-boot-starter-thymeleaf")
     compile("org.springframework.boot:spring-boot-starter-web")
     testCompile("org.springframework.boot:spring-boot-starter-test") 
-}
+    compile group: 'commons-io', name: 'commons-io', version: '2.4'
+   }
 
 eclipse {
     classpath {
