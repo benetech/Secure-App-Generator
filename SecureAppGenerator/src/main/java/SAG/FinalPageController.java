@@ -25,21 +25,43 @@ Boston, MA 02111-1307, USA.
 
 package SAG;
 
+import java.io.File;
+
 import javax.servlet.http.HttpSession;
 
+import org.springframework.core.io.FileSystemResource;
+import org.springframework.http.MediaType;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurerAdapter;
 
 @Controller
 public class FinalPageController extends WebMvcConfigurerAdapter
 {
+	@RequestMapping(value = "/downloads/{file_name}.{ext}", method = RequestMethod.GET, produces = MediaType.APPLICATION_OCTET_STREAM_VALUE)
+	@ResponseBody
+	public FileSystemResource getFile(@PathVariable("file_name") String fileName, @PathVariable("ext") String extension) 
+	{
+		String fileWithExtension = fileName + "." + extension;
+	    FileSystemResource fileSystemResource = new FileSystemResource(getFileFor(fileWithExtension));
+	    return fileSystemResource; 
+	}
+
 	@RequestMapping(value=WebPage.FINAL, method=RequestMethod.GET)
     public String directError(HttpSession session, Model model) 
     {
 		SecureAppGeneratorApplication.setInvalidResults(session);
         return WebPage.ERROR;
     }
+
+	private File getFileFor(String fileName)
+	{
+		System.out.println("Request to download :" + fileName);
+		return new File(SecureAppGeneratorApplication.getDownloadsDirectory(), fileName);
+	}
+	
 }
