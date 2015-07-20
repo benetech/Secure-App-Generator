@@ -27,6 +27,7 @@ package SAG;
 
 import java.io.File;
 
+import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 import org.springframework.core.io.FileSystemResource;
@@ -42,12 +43,15 @@ import org.springframework.web.servlet.config.annotation.WebMvcConfigurerAdapter
 @Controller
 public class FinalPageController extends WebMvcConfigurerAdapter
 {
-	@RequestMapping(value = "/downloads/{file_name}.{ext}", method = RequestMethod.GET, produces = MediaType.APPLICATION_OCTET_STREAM_VALUE)
+	@RequestMapping(value = "/downloads/{file_name}.{ext}", method = RequestMethod.GET)
 	@ResponseBody
-	public FileSystemResource getFile(@PathVariable("file_name") String fileName, @PathVariable("ext") String extension) 
+	public FileSystemResource getFile(HttpServletResponse response, @PathVariable( "file_name") String fileName, @PathVariable("ext") String extension) 
 	{
 		String fileWithExtension = fileName + "." + extension;
-	    FileSystemResource fileSystemResource = new FileSystemResource(getFileFor(fileWithExtension));
+		response.setHeader("Content-Disposition", "attachment;filename=" + fileWithExtension );		
+        response.setContentType(MediaType.APPLICATION_OCTET_STREAM_VALUE);
+        
+        FileSystemResource fileSystemResource = new FileSystemResource(getFileFor(fileWithExtension));
 	    return fileSystemResource; 
 	}
 
