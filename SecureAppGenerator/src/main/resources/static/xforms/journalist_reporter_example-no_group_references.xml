@@ -1,0 +1,415 @@
+<?xml version="1.0"?>
+<h:html xmlns="http://www.w3.org/2002/xforms"
+    xmlns:h="http://www.w3.org/1999/xhtml"
+    xmlns:ev="http://www.w3.org/2001/xml-events"
+    xmlns:xsd="http://www.w3.org/2001/XMLSchema"
+    xmlns:jr="http://openrosa.org/javarosa"
+    >
+  <h:head>
+    <h:title>Journalist/Reporter example</h:title>
+    <model>
+      <instance>
+        <journalist_reporter_example id="journalist_reporter_example">
+          <language/>
+          <assignment/>
+          <SourceTitle/>
+          <SourceAffiliation/>
+          <SourcePRContact/>
+          <SourceContactInfo/>
+          <SocialMediaCoordinates/>
+          <InterviewDate/>
+          <InterviewLocation/>
+          <Anonymous>Not Specified</Anonymous>
+          
+            <MessageStories/>
+            <MessageHQ/>
+			
+            <StoryInformationGrid>
+              <StoryTitle/>
+              <StoryDate/>
+              <StoryTopic/>
+              <StoryMediaOutlet/>
+              <StoryContactInfo/>
+              <StoryEditorName/>
+              <StoryEditorTitle/>
+              <StoryEditorContactInfo/>
+            </StoryInformationGrid>
+          
+          <InterviewNotes/>
+          
+            <DraftsNote/>
+            <Drafts/>
+            <EditorsComments/>
+            <FinalDraft/>
+          
+          
+            <MessageAttachments/>
+            <BackgroundInformation/>
+            <PublishedInformation/>
+          
+          <today/>
+          <meta>
+            <instanceID/>
+          </meta>
+        </journalist_reporter_example>
+      </instance>
+
+	  <bind nodeset="/journalist_reporter_example/language" required="false()" type="select1"/>
+      <bind nodeset="/journalist_reporter_example/assignment" required="false()" type="string"/>
+      <bind nodeset="/journalist_reporter_example/SourceTitle" required="false()" type="string"/>
+      <bind nodeset="/journalist_reporter_example/SourceAffiliation" required="false()" type="string"/>
+      <bind nodeset="/journalist_reporter_example/SourcePRContact" required="false()" type="string"/>
+      <bind nodeset="/journalist_reporter_example/SourceContactInfo" required="false()" type="string"/>
+      <bind nodeset="/journalist_reporter_example/SocialMediaCoordinates" required="false()" type="string"/>
+      <bind nodeset="/journalist_reporter_example/InterviewDate" required="false()" type="date" constraint=". >= date('1900-01-01')" jr:constraintMsg="The date you entered is not within the accepted date range."/>
+      <bind nodeset="/journalist_reporter_example/InterviewLocation" required="false()" type="string"/>
+      <bind nodeset="/journalist_reporter_example/Anonymous" required="true()" type="select1"/>
+      <bind nodeset="/journalist_reporter_example/MessageStories" readonly="true()" type="string"/>
+      <bind nodeset="/journalist_reporter_example/MessageHQ" readonly="true()" type="string"/>
+      <bind nodeset="/journalist_reporter_example/StoryInformationGrid/StoryTitle" required="false()" type="string"/>
+      <bind constraint=". >= date('1900-01-01')" jr:constraintMsg="The date you entered is not within the accepted date range." nodeset="/journalist_reporter_example/StoryInformationGrid/StoryDate" required="false()" type="date"/>
+      <bind nodeset="/journalist_reporter_example/StoryInformationGrid/StoryTopic" required="false()" type="string"/>
+      <bind nodeset="/journalist_reporter_example/StoryInformationGrid/StoryMediaOutlet" required="false()" type="string"/>
+      <bind nodeset="/journalist_reporter_example/StoryInformationGrid/StoryContactInfo" required="false()" type="string"/>
+      <bind nodeset="/journalist_reporter_example/StoryInformationGrid/StoryEditorName" required="false()" type="string"/>
+      <bind nodeset="/journalist_reporter_example/StoryInformationGrid/StoryEditorTitle" required="false()" type="string"/>
+      <bind nodeset="/journalist_reporter_example/StoryInformationGrid/StoryEditorContactInfo" required="false()" type="string"/>
+      <bind nodeset="/journalist_reporter_example/InterviewNotes" required="false()" type="string"/>
+      <bind nodeset="/journalist_reporter_example/DraftsNote" readonly="true()" type="string"/>
+      <bind nodeset="/journalist_reporter_example/Drafts" required="false()" type="string"/>
+      <bind nodeset="/journalist_reporter_example/EditorsComments" type="string"/>
+      <bind nodeset="/journalist_reporter_example/FinalDraft" type="string"/>
+      <bind nodeset="/journalist_reporter_example/MessageAttachments" readonly="true()" type="string"/>
+      <bind nodeset="/journalist_reporter_example/BackgroundInformation" required="false()" type="string"/>
+      <bind nodeset="/journalist_reporter_example/PublishedInformation" required="false()" type="string"/>
+      <bind jr:preload="date" jr:preloadParams="today" nodeset="/journalist_reporter_example/today" type="date"/>
+      <bind calculate="concat('uuid:', uuid())" nodeset="/journalist_reporter_example/meta/instanceID" readonly="true()" type="string"/>
+    </model>
+  </h:head>
+  <h:body>
+	<group appearance="field-list">
+      <label>General Information</label>
+		<select1 appearance="minimal" ref="/journalist_reporter_example/language">
+		  <label>Language</label>
+		  <item>
+			<label>- Other -</label>
+			<value>language_1</value>
+		  </item>
+		  <item>
+			<label>English</label>
+			<value>language_2</value>
+		  </item>
+		  <item>
+			<label>Arabic</label>
+			<value>language_3</value>
+		  </item>
+		  <item>
+			<label>Armenian</label>
+			<value>language_4</value>
+		  </item>
+		  <item>
+			<label>Azerbaijani</label>
+			<value>language_5</value>
+		  </item>
+		  <item>
+			<label>Bulgarian</label>
+			<value>language_6</value>
+		  </item>
+		  <item>
+			<label>Bengali, Bangla</label>
+			<value>language_7</value>
+		  </item>
+		  <item>
+			<label>Burmese</label>
+			<value>language_8</value>
+		  </item>
+		  <item>
+			<label>Chinese</label>
+			<value>language_9</value>
+		  </item>
+		  <item>
+			<label>Dutch</label>
+			<value>language_10</value>
+		  </item>
+		  <item>
+			<label>Esperanto</label>
+			<value>language_11</value>
+		  </item>
+		  <item>
+			<label>Farsi/Dari</label>
+			<value>language_12</value>
+		  </item>
+		  <item>
+			<label>French</label>
+			<value>language_13</value>
+		  </item>
+		  <item>
+			<label>German</label>
+			<value>language_14</value>
+		  </item>
+		  <item>
+			<label>Gujarati</label>
+			<value>language_15</value>
+		  </item>
+		  <item>
+			<label>Hausa</label>
+			<value>language_16</value>
+		  </item>
+		  <item>
+			<label>Hebrew</label>
+			<value>language_17</value>
+		  </item>
+		  <item>
+			<label>Hindi</label>
+			<value>language_18</value>
+		  </item>
+		  <item>
+			<label>Hungarian</label>
+			<value>language_19</value>
+		  </item>
+		  <item>
+			<label>Italian</label>
+			<value>language_20</value>
+		  </item>
+		  <item>
+			<label>Japanese</label>
+			<value>language_21</value>
+		  </item>
+		  <item>
+			<label>Javanese</label>
+			<value>language_22</value>
+		  </item>
+		  <item>
+			<label>Kannada</label>
+			<value>language_23</value>
+		  </item>
+		  <item>
+			<label>Kazakh</label>
+			<value>language_24</value>
+		  </item>
+		  <item>
+			<label>Khmer</label>
+			<value>language_25</value>
+		  </item>
+		  <item>
+			<label>Kirghiz</label>
+			<value>language_26</value>
+		  </item>
+		  <item>
+			<label>Korean</label>
+			<value>language_27</value>
+		  </item>
+		  <item>
+			<label>Kurdish</label>
+			<value>language_28</value>
+		  </item>
+		  <item>
+			<label>Malayalam</label>
+			<value>language_29</value>
+		  </item>
+		  <item>
+			<label>Marathi</label>
+			<value>language_30</value>
+		  </item>
+		  <item>
+			<label>Nepali</label>
+			<value>language_31</value>
+		  </item>
+		  <item>
+			<label>Oriya</label>
+			<value>language_32</value>
+		  </item>
+		  <item>
+			<label>Panjabi</label>
+			<value>language_33</value>
+		  </item>
+		  <item>
+			<label>Pashto, Pushto</label>
+			<value>language_34</value>
+		  </item>
+		  <item>
+			<label>Polish</label>
+			<value>language_35</value>
+		  </item>
+		  <item>
+			<label>Portuguese</label>
+			<value>language_36</value>
+		  </item>
+		  <item>
+			<label>Romanian</label>
+			<value>language_37</value>
+		  </item>
+		  <item>
+			<label>Russian</label>
+			<value>language_38</value>
+		  </item>
+		  <item>
+			<label>Serbian</label>
+			<value>language_39</value>
+		  </item>
+		  <item>
+			<label>Sindhi</label>
+			<value>language_40</value>
+		  </item>
+		  <item>
+			<label>Sinhalese</label>
+			<value>language_41</value>
+		  </item>
+		  <item>
+			<label>Spanish</label>
+			<value>language_42</value>
+		  </item>
+		  <item>
+			<label>Tamil</label>
+			<value>language_43</value>
+		  </item>
+		  <item>
+			<label>Tajik</label>
+			<value>language_44</value>
+		  </item>
+		  <item>
+			<label>Telugu</label>
+			<value>language_45</value>
+		  </item>
+		  <item>
+			<label>Thai</label>
+			<value>language_46</value>
+		  </item>
+		  <item>
+			<label>Turkish</label>
+			<value>language_47</value>
+		  </item>
+		  <item>
+			<label>Turkmen</label>
+			<value>language_48</value>
+		  </item>
+		  <item>
+			<label>Ukranian</label>
+			<value>language_49</value>
+		  </item>
+		  <item>
+			<label>Urdu</label>
+			<value>language_50</value>
+		  </item>
+		  <item>
+			<label>Uzbek</label>
+			<value>language_51</value>
+		  </item>
+		  <item>
+			<label>Vietnamese</label>
+			<value>language_52</value>
+		  </item>
+		</select1>
+		<input ref="/journalist_reporter_example/assignment">
+		  <label>Assignment</label>
+		</input>
+		<input ref="/journalist_reporter_example/SourceTitle">
+		  <label>Source Title</label>
+		</input>
+		<input ref="/journalist_reporter_example/SourceAffiliation">
+		  <label>Source Company/Organization/Affiliation</label>
+		</input>
+		<input ref="/journalist_reporter_example/SourcePRContact">
+		  <label>Source PR Contact</label>
+		</input>
+		<input ref="/journalist_reporter_example/SourceContactInfo">
+		  <label>Source Contact Information</label>
+		</input>
+		<input ref="/journalist_reporter_example/SocialMediaCoordinates">
+		  <label>Source Social Media Coordinates</label>
+		</input>
+		<input ref="/journalist_reporter_example/InterviewDate">
+		  <label>Date of Interview</label>
+		</input>
+		<input ref="/journalist_reporter_example/InterviewLocation">
+		  <label>Location of Interview</label>
+		</input>
+		<select1 appearance="minimal" ref="/journalist_reporter_example/Anonymous">
+		  <label>Does interviewee wish to remain anonymous?</label>
+		  <item>
+			<label>Yes</label>
+			<value>anonymous_1</value>
+		  </item>
+		  <item>
+			<label>No</label>
+			<value>anonymous_2</value>
+		  </item>
+		  <item>
+			<label>Not Specified</label>
+			<value>anonymous_3</value>
+		  </item>
+		</select1>
+	</group>	
+
+  
+    <group>
+     	<label>Story Information</label>
+      <input ref="/journalist_reporter_example/MessageStories">
+        <label>Stories Note</label>
+        <hint>List information about each story this research might be used for in the table below.</hint>
+      </input>
+      <input ref="/journalist_reporter_example/MessageHQ">
+        <label>Editors Note</label>
+        <hint>Set up each Editor you would like to securely share this information with as a Martus Contact.</hint>
+      </input>
+        <repeat nodeset="/journalist_reporter_example/StoryInformationGrid">
+           <input ref="/journalist_reporter_example/StoryInformationGrid/StoryTitle">
+            <label>Story Title</label>
+          </input>
+          <input ref="/journalist_reporter_example/StoryInformationGrid/StoryDate">
+            <label>Story Date</label>
+          </input>
+          <input ref="/journalist_reporter_example/StoryInformationGrid/StoryTopic">
+            <label>Topic(s)/Keyword(s)</label>
+          </input>
+          <input ref="/journalist_reporter_example/StoryInformationGrid/StoryMediaOutlet">
+            <label>Media Outlet</label>
+          </input>
+          <input ref="/journalist_reporter_example/StoryInformationGrid/StoryContactInfo">
+            <label>Contact Info/URL</label>
+          </input>
+          <input ref="/journalist_reporter_example/StoryInformationGrid/StoryEditorName">
+            <label>Editor Name</label>
+          </input>
+          <input ref="/journalist_reporter_example/StoryInformationGrid/StoryEditorTitle">
+            <label>Editor Title</label>
+          </input>
+          <input ref="/journalist_reporter_example/StoryInformationGrid/StoryEditorContactInfo">
+            <label>Editor Contact Information</label>
+          </input>
+        </repeat>
+    </group>
+    <input appearance="multiline" ref="/journalist_reporter_example/InterviewNotes">
+      <label>Interview Notes</label>
+    </input>
+    <group>
+      <label>Drafts Section</label>
+      <input ref="/journalist_reporter_example/DraftsNote">
+        <label>Drafts Note</label>
+        <hint>In addition to entering notes in the "Editor's comments" field (please indicate Editor name at beginning of notes), editors can use [brackets], (parentheses), or other characters when adding or making changes to the text in the Drafts field below. nnIdeal</hint>
+      </input>
+      <input appearance="multiline" ref="/journalist_reporter_example/Drafts">
+        <label>Draft(s)</label>
+      </input>
+      <input appearance="multiline" ref="/journalist_reporter_example/EditorsComments">
+        <label>Editor's Comments</label>
+      </input>
+      <input appearance="multiline" ref="/journalist_reporter_example/FinalDraft">
+        <label>Final Draft</label>
+      </input>
+    </group>
+    <group>
+      <label>Attachments Section</label>
+      <input ref="/journalist_reporter_example/MessageAttachments">
+        <label>Attachments Note</label>
+        <hint>Select the Add Attachment icon for this record on the Existing Records screen to attach supplementary files such as photos, audio or video material, or a published story file. Please indicate which type(s) of attachment(s) are included below.</hint>
+      </input>
+      <trigger ref="/journalist_reporter_example/BackgroundInformation">
+        <label>Attachments contain background information.</label>
+      </trigger>
+      <trigger ref="/journalist_reporter_example/PublishedInformation">
+        <label>Attachments contain published information.</label>
+      </trigger>
+    </group>
+  </h:body>
+</h:html>
