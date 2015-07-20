@@ -94,7 +94,7 @@ public class SummaryController extends WebMvcConfigurerAdapter
 		try
 		{
 			createDownloadDirectoryIfItDoesntExist();
-			secureAppBuildDir = getSecureAppBuildDirectory();
+			secureAppBuildDir = configureSecureAppBuildDirectory();
 			AppConfiguration config = (AppConfiguration)session.getAttribute(SessionAttributes.APP_CONFIG);
 			updateApkSettings(secureAppBuildDir, config);
 			updateGradleSettings(secureAppBuildDir, config);
@@ -125,7 +125,7 @@ public class SummaryController extends WebMvcConfigurerAdapter
 		}
     }
 
-	private File getSecureAppBuildDirectory() throws IOException
+	private File configureSecureAppBuildDirectory() throws IOException
 	{
 		File baseBuildDir = getSessionBuildDirectory();
 		copyDefaultBuildFilesToStagingArea(baseBuildDir);
@@ -136,7 +136,7 @@ public class SummaryController extends WebMvcConfigurerAdapter
 	{
 		File source = new File(SecureAppGeneratorApplication.getStaticWebDirectory(), appXFormLocation);
 		File destination = new File(baseBuildDir, APK_XFORM_FILE_LOCAL);
-		SagFileUtils.copy(source, destination);
+		FileUtils.copyFile(source, destination);
 	}
 
 	private void copyIconToApkBuild(File baseBuildDir, String appIconLocation) throws IOException
@@ -144,15 +144,15 @@ public class SummaryController extends WebMvcConfigurerAdapter
 		//TODO adjust resolution
 		File source = new File(appIconLocation);
 		File destination = new File(baseBuildDir, APK_NODPI_FILE_LOCAL + LOGO_NAME_PNG);
-		SagFileUtils.copy(source, destination);
+		FileUtils.copyFile(source, destination);
 		destination = new File(baseBuildDir, APK_MDPI_FILE_LOCAL + LOGO_NAME_PNG);
-		SagFileUtils.copy(source, destination);
+		FileUtils.copyFile(source, destination);
 		destination = new File(baseBuildDir, APK_HDPI_FILE_LOCAL + LOGO_NAME_PNG);
-		SagFileUtils.copy(source, destination);
+		FileUtils.copyFile(source, destination);
 		destination = new File(baseBuildDir, APK_XHDPI_FILE_LOCAL + LOGO_NAME_PNG);
-		SagFileUtils.copy(source, destination);
+		FileUtils.copyFile(source, destination);
 		destination = new File(baseBuildDir, APK_XXHDPI_FILE_LOCAL + LOGO_NAME_PNG);
-		SagFileUtils.copy(source, destination);
+		FileUtils.copyFile(source, destination);
 	}
 
 	private void updateGradleSettings(File baseBuildDir, AppConfiguration config) throws IOException
@@ -267,8 +267,7 @@ public class SummaryController extends WebMvcConfigurerAdapter
 	private void copyDefaultBuildFilesToStagingArea(File baseBuildDir) throws IOException
 	{
 		File source = new File(SecureAppGeneratorApplication.getOriginalBuildDirectory());
-		//TODO we may want to invoke OS level call to do this instead.
-		SagFileUtils.copy(source, baseBuildDir);
+		FileUtils.copyDirectory(source, baseBuildDir);
 	}
 
 	public File getSessionBuildDirectory() throws IOException
