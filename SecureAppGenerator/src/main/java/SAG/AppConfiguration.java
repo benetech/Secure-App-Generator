@@ -50,7 +50,6 @@ public class AppConfiguration
 	private String serverName;
 	private String serverIP;
 	private String serverPublicKey;
-	private String apkLink;
 	private String apkVersionMajor = "0";
 	private String apkVersionMinor = "0";
 	private String apkVersionBuild = "0";
@@ -173,16 +172,6 @@ public class AppConfiguration
 		this.clientPublicCode = clientPublicCode;
 	}	
 	
-	public String getApkLink()
-	{
-		return apkLink;
-	}
-
-	public void setApkLink(String apkLink)
-	{
-		this.apkLink = apkLink;
-	}
-
 	public String getServerName()
 	{
 		return serverName;

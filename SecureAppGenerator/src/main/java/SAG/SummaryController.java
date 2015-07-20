@@ -257,11 +257,6 @@ public class SummaryController extends WebMvcConfigurerAdapter
 		if(targetFile.exists())
 			throw new IOException("This build already exists.");
 		FileUtils.copyFile(apkFileToMove, targetFile);
-
-		AppConfiguration config = (AppConfiguration)session.getAttribute(SessionAttributes.APP_CONFIG);
-		String finalApkFileRelativeLocation = new File(SecureAppGeneratorApplication.getDownloadsDirectory(), apkFinalName).getAbsolutePath();
-		config.setApkLink(finalApkFileRelativeLocation);
-		session.setAttribute(SessionAttributes.APP_CONFIG, config);
 	}
 	
 	private void copyDefaultBuildFilesToStagingArea(File baseBuildDir) throws IOException
