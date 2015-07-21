@@ -115,12 +115,13 @@ public class SummaryController extends WebMvcConfigurerAdapter
 		}
 		finally
 		{
-//			try
+	//		try
 			{
-//				if(baseBuildDir != null)
-	//				FileUtils.deleteDirectory(baseBuildDir);
+	//			TODO: add this back once tested on server.			
+	//			if(secureAppBuildDir != null)
+	//				FileUtils.deleteDirectory(secureAppBuildDir);
 			}
-//			catch (IOException e)
+	//		catch (IOException e)
 			{
 			}			
 		}
