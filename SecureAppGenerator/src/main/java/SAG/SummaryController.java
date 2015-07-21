@@ -222,7 +222,7 @@ public class SummaryController extends WebMvcConfigurerAdapter
 		BufferedReader input = new BufferedReader(new InputStreamReader(p.getInputStream()));
 		while ((line = input.readLine()) != null) 
 		{
-			Logger.log(line);
+			Logger.logVerbose(line);
 		}
 		input.close();		
     		p.waitFor();

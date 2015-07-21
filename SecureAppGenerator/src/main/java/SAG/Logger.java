@@ -29,4 +29,13 @@ import org.martus.common.MartusLogger;
 
 public class Logger extends MartusLogger
 {
+	private static final String VERBOSE_DEBUGGING_ON = "true";
+	private static final String DEBUG_VERBOSE_ENV = "SAG_DEBUG_VERBOSE";
+
+	public synchronized static void logVerbose(String text)
+	{
+  		String verbose = System.getenv(DEBUG_VERBOSE_ENV);
+  		if(verbose != null && verbose.equals(VERBOSE_DEBUGGING_ON))
+  			MartusLogger.log(text);
+	}
 }

@@ -71,7 +71,7 @@ public class SecureAppGeneratorApplication extends SpringBootServletInitializer
 		{
 			final PathMatchingResourcePatternResolver pmrpr = new PathMatchingResourcePatternResolver();
 			final File staticDir = pmrpr.getResource("classpath:static").getFile();
-			Logger.log("Static dir:"+staticDir.getAbsolutePath());
+			Logger.logVerbose("Static dir:"+staticDir.getAbsolutePath());
 			return staticDir;
 		}
 		catch (IOException e)
@@ -84,7 +84,7 @@ public class SecureAppGeneratorApplication extends SpringBootServletInitializer
 	static String getDataDirectory()
 	{
    		String dataRootDirectory = System.getenv(SecureAppGeneratorApplication.SAG_DATA_DIR_ENV);
-   		Logger.log("Data Dir:"+dataRootDirectory);
+   		Logger.logVerbose("Data Dir:"+dataRootDirectory);
    		return dataRootDirectory;
 	}
 
@@ -96,7 +96,7 @@ public class SecureAppGeneratorApplication extends SpringBootServletInitializer
 	static String getGadleDirectory()
 	{
    		String dataRootDirectory = System.getenv(SecureAppGeneratorApplication.GRADLE_HOME_ENV);
-   		Logger.log("Gradle Dir:"+dataRootDirectory);
+   		Logger.logVerbose("Gradle Dir:"+dataRootDirectory);
    		return dataRootDirectory;
 	}
 	
