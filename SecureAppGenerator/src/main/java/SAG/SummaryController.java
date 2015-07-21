@@ -37,6 +37,7 @@ import java.util.concurrent.TimeUnit;
 import javax.servlet.http.HttpSession;
 
 import org.apache.commons.io.FileUtils;
+import org.martus.common.MartusLogger;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -210,22 +211,19 @@ public class SummaryController extends WebMvcConfigurerAdapter
 
 	private File buildApk(File baseBuildDir, AppConfiguration config) throws IOException, InterruptedException
 	{
-		System.out.println("Info: Building " + config.getApkName());
+		MartusLogger.log("Building " + config.getApkName());
 		Runtime rt = Runtime.getRuntime();
    		String gradleCommand = SecureAppGeneratorApplication.getGadleDirectory() + GRADLE_EXE + GRADLE_PARAMETERS + baseBuildDir + GRADLE_BUILD_COMMAND;
-		System.out.println(gradleCommand);
+   		MartusLogger.log(gradleCommand);
 		long startTime = System.currentTimeMillis();
  
 		String line;
-		System.out.println("Starting exec");
 		Process p = rt.exec(gradleCommand);
-		System.out.println("Now displaying output from exec.");
 		BufferedReader input = new BufferedReader(new InputStreamReader(p.getInputStream()));
 		while ((line = input.readLine()) != null) 
 		{
-		    System.out.println(line);
+			MartusLogger.log(line);
 		}
-		System.out.println("Done with exec");
 		input.close();		
     		p.waitFor();
   		long endTime = System.currentTimeMillis();
@@ -239,11 +237,11 @@ public class SummaryController extends WebMvcConfigurerAdapter
    		int returnCode = p.exitValue();
    		if(returnCode == EXIT_VALUE_GRADLE_SUCCESS)
    		{
-   			System.out.println("Build succeeded:" + timeToBuild);
+   			MartusLogger.log("Build succeeded:" + timeToBuild);
     		}
    		else
    		{
-   			System.out.println("Build ERROR:" + returnCode);
+   			MartusLogger.logError("Build return code:" + returnCode);
 	   		throw new IOException("Error creating APK");
    		}
    		String tempApkBuildFileDirectory = baseBuildDir.getAbsolutePath() + APK_LOCAL_FILE_DIRECTORY;

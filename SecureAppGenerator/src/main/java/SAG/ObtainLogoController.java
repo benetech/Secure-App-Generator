@@ -84,7 +84,6 @@ public class ObtainLogoController extends WebMvcConfigurerAdapter
             		SecureAppGeneratorApplication.saveMultiPartFileToLocation(file, tempIconLocation);
             		AppConfiguration config = (AppConfiguration)session.getAttribute(SessionAttributes.APP_CONFIG);
             		config.setAppIconLocalFileLocation(tempIconLocation.getAbsolutePath());
-            		System.out.println(tempIconLocation.getAbsolutePath());
             		config.setAppIconBase64Data(SecureAppGeneratorApplication.getBase64DataFromFile(tempIconLocation.getAbsoluteFile()));
             		session.setAttribute(SessionAttributes.APP_CONFIG, config);
             } 

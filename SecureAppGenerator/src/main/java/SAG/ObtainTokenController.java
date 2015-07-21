@@ -45,6 +45,7 @@ import org.martus.common.Exceptions.ServerCallFailedException;
 import org.martus.common.Exceptions.ServerNotAvailableException;
 import org.martus.common.Exceptions.ServerNotCompatibleException;
 import org.martus.common.MartusAccountAccessToken;
+import org.martus.common.MartusLogger;
 import org.martus.common.MartusAccountAccessToken.TokenInvalidException;
 import org.martus.common.MartusAccountAccessToken.TokenNotFoundException;
 import org.martus.common.crypto.MartusCrypto;
@@ -206,13 +207,12 @@ public class ObtainTokenController extends WebMvcConfigurerAdapter
  			File keyPair = new File(SAG_KEYPAIR_DIRECTORY, SAG_KEYPAIR_FILE);
 			if(keyPair.exists())
 			{
-				System.out.println("reading keypair: " + SAG_KEYPAIR_DIRECTORY);
+				MartusLogger.log("reading keypair: " + SAG_KEYPAIR_DIRECTORY);
 				security.readKeyPair(keyPair, SAG_KEYPAIR_PASSWORD.toCharArray());
-				System.out.println("read keypair");
 			}
 			else
 			{
-				System.out.println("Creating SAG Keypair");
+				MartusLogger.log("Creating SAG Keypair");
 				File keyPairDir = new File(SAG_KEYPAIR_DIRECTORY);
 				if(!keyPairDir.exists())
 					keyPairDir.mkdirs();
