@@ -1,4 +1,4 @@
-package SAG;
+package org.benetech.secureapp.generator;
 
 import java.io.BufferedOutputStream;
 import java.io.File;

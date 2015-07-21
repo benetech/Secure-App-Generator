@@ -23,7 +23,7 @@ Boston, MA 02111-1307, USA.
 
 */
 
-package SAG;
+package org.benetech.secureapp.generator;
 
 public class ServerConstants {
     private static final String IP_FOR_SL1_IE_REAL = "54.72.26.74";
