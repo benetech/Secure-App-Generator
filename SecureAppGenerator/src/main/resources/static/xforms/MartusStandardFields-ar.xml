@@ -22,10 +22,13 @@
 					<today/>
 				</martus_standard_fields>
             </instance>
+			  <bind nodeset="/martus_standard_fields/title" required="false()" type="string"/>
 			  <bind nodeset="/martus_standard_fields/language" required="false()" type="select1"/>
+			  <bind nodeset="/martus_standard_fields/author" required="false()" type="string"/>
+			  <bind nodeset="/martus_standard_fields/organization" required="false()" type="string"/>
 			  <bind nodeset="/martus_standard_fields/location" required="false()" type="string"/>
 			  <bind nodeset="/martus_standard_fields/keywords" required="false()" type="string"/>
-			  <bind constraint=". >= date('1900')" jr:constraintMsg="The date you entered is not within the accepted date range." nodeset="/martus_standard_fields/eventdate" required="false()" type="date"/>
+			  <bind constraint=". &gt;= date('1900')" jr:constraintMsg="The date you entered is not within the accepted date range." nodeset="/martus_standard_fields/eventdate" required="false()" type="date"/>
 			  <bind nodeset="/martus_standard_fields/summary" required="false()" type="string"/>
 			  <bind nodeset="/martus_standard_fields/publicinfo" required="false()" type="string"/>
 			  <bind jr:preload="date" jr:preloadParams="today" nodeset="/martus_standard_fields/today" type="date"/>            <bind nodeset="/nm/cascading_select_regions/region3Cities" relevant="/nm/cascading_select_regions/regions='region3'" type="select1"/>
@@ -35,23 +38,23 @@
     <h:body>
 
 	<group appearance="field-list">
-	<label>Section 1</label>
+	<label>الجزء الأولى</label>
 
 	<input ref="/martus_standard_fields/title">
-		  <label>Title</label>
+		  <label>العنوان</label>
 		</input>
 		<select1 appearance="minimal" ref="/martus_standard_fields/language">
-		  <label>Language</label>
+		  <label>اللغة</label>
 			  <item>
 				<label>- Other -</label>
 				<value>language_1</value>
 			  </item>
 			  <item>
-				<label>English</label>
+				<label>الإنجليزية</label>
 				<value>language_2</value>
 			  </item>
 			  <item>
-				<label>Arabic</label>
+				<label>العربية</label>
 				<value>language_3</value>
 			  </item>
 			  <item>
@@ -91,11 +94,11 @@
 				<value>language_12</value>
 			  </item>
 			  <item>
-				<label>French</label>
+				<label>الفرنسية</label>
 				<value>language_13</value>
 			  </item>
 			  <item>
-				<label>German</label>
+				<label>الألمانية</label>
 				<value>language_14</value>
 			  </item>
 			  <item>
@@ -254,33 +257,33 @@
 	</group>
 			
 	<group appearance="field-list">
-	<label>Section 2</label>
+	<label>الجزء الثاني</label>
 
 			<input ref="/martus_standard_fields/author">
-		  <label>Author</label>
+		  <label>المؤلف</label>
 		</input>
 		<input ref="/martus_standard_fields/organization">
-		  <label>Organization</label>
+		  <label>المنظمة</label>
 		</input>
 		<input ref="/martus_standard_fields/location">
-		  <label>Location</label>
+		  <label>الموقع</label>
 		</input>
 	</group>
 		
 	<group appearance="field-list">
-	<label>Section 3</label>
+	<label>الجزء الثلاثي</label>
 
 		<input ref="/martus_standard_fields/keywords">
-		  <label>Keywords</label>
+		  <label>الكلمات المفتاحية</label>
 		</input>
 		<input ref="/martus_standard_fields/eventdate">
-		  <label>Date of Event</label>
+		  <label>تاريخ الحدث</label>
 		</input>
 		<input appearance="multiline" ref="/martus_standard_fields/summary">
-		  <label>Summary</label>
+		  <label>الملخص</label>
 		</input>
 		<input appearance="multiline" ref="/martus_standard_fields/publicinfo">
-		  <label>Additional Information</label>
+		  <label>المعلومات الإضافية</label>
 		</input>
 		</group>
 		

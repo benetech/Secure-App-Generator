@@ -10,7 +10,8 @@
     <model>
       <instance>
         <un_special_rapporteur id="un_special_rapporteur">
-          <language/>
+
+		<language/>
           <keywords/>
             
 			<ConfidentialityNote/>
@@ -89,78 +90,74 @@
             <SignatureReceived/>
 
           <today/>
-          <meta>
-            <instanceID/>
-          </meta>
         </un_special_rapporteur>
       </instance>
 	  
-      <bind nodeset="/un_special_rapporteur/language" required="false()" type="select1"/>
-      <bind nodeset="/un_special_rapporteur/keywords" required="false()" type="string"/>
+      <bind nodeset="/un_special_rapporteur/language" type="select1"/>
+      <bind nodeset="/un_special_rapporteur/keywords" type="string"/>
       <bind nodeset="/un_special_rapporteur/ConfidentialityNote" readonly="true()" type="string"/>
       <bind nodeset="/un_special_rapporteur/PersonInfo_Message" readonly="true()" type="string"/>
-      <bind nodeset="/un_special_rapporteur/PersonInfo_Section/PersonInfo_FirstName" required="false()" type="string"/>
-      <bind nodeset="/un_special_rapporteur/PersonInfo_Section/PersonInfo_LastName" required="false()" type="string"/>
-      <bind nodeset="/un_special_rapporteur/PersonInfo_Section/PersonInfo_OtherNames" required="false()" type="string"/>
-      <bind nodeset="/un_special_rapporteur/PersonInfo_Section/PersonInfo_Sex" required="false()" type="select1"/>
-      <bind nodeset="/un_special_rapporteur/PersonInfo_Section/PersonInfo_BirthDate" required="false()" type="date" constraint=". >= date('1900-01-01')" jr:constraintMsg="The date you entered is not within the accepted date range."/>
-      <bind nodeset="/un_special_rapporteur/PersonInfo_Section/PersonInfo_Age" required="false()" type="string"/>
-      <bind nodeset="/un_special_rapporteur/PersonInfo_Section/PersonInfo_Nationality" required="false()" type="string"/>
-      <bind nodeset="/un_special_rapporteur/PersonInfo_Section/PersonInfo_CivilStatus" required="false()" type="select1"/>
-      <bind nodeset="/un_special_rapporteur/PersonInfo_Section/PersonInfo_DocumentType" required="false()" type="string"/>
-      <bind nodeset="/un_special_rapporteur/PersonInfo_Section/PersonInfo_IDNumber" required="false()" type="string"/>
-      <bind nodeset="/un_special_rapporteur/PersonInfo_Section/PersonInfo_IDIssuedBy" required="false()" type="string"/>
-      <bind nodeset="/un_special_rapporteur/PersonInfo_Section/PersonInfo_IDIssueDate" required="false()" type="date" constraint=". >= date('1900-01-01')" jr:constraintMsg="The date you entered is not within the accepted date range."/>
-      <bind nodeset="/un_special_rapporteur/PersonInfo_Section/PersonInfo_Linkage" required="false()" type="string"/>
-      <bind nodeset="/un_special_rapporteur/PersonInfo_Section/PersonInfo_Address" required="false()" type="string"/>
-      <bind nodeset="/un_special_rapporteur/PersonInfo_Section/PersonInfo_MiscComments" required="false()" type="string"/>
+      <bind nodeset="/un_special_rapporteur/PersonInfo_Section/PersonInfo_FirstName" type="string"/>
+      <bind nodeset="/un_special_rapporteur/PersonInfo_Section/PersonInfo_LastName" type="string"/>
+      <bind nodeset="/un_special_rapporteur/PersonInfo_Section/PersonInfo_OtherNames" type="string"/>
+      <bind nodeset="/un_special_rapporteur/PersonInfo_Section/PersonInfo_Sex" type="select1"/>
+      <bind nodeset="/un_special_rapporteur/PersonInfo_Section/PersonInfo_BirthDate" type="date" constraint=". >= date('1900-01-01')" jr:constraintMsg="The date you entered is not within the accepted date range."/>
+      <bind nodeset="/un_special_rapporteur/PersonInfo_Section/PersonInfo_Age" type="string"/>
+      <bind nodeset="/un_special_rapporteur/PersonInfo_Section/PersonInfo_Nationality" type="string"/>
+      <bind nodeset="/un_special_rapporteur/PersonInfo_Section/PersonInfo_CivilStatus" type="select1"/>
+      <bind nodeset="/un_special_rapporteur/PersonInfo_Section/PersonInfo_DocumentType" type="string"/>
+      <bind nodeset="/un_special_rapporteur/PersonInfo_Section/PersonInfo_IDNumber" type="string"/>
+      <bind nodeset="/un_special_rapporteur/PersonInfo_Section/PersonInfo_IDIssuedBy" type="string"/>
+      <bind nodeset="/un_special_rapporteur/PersonInfo_Section/PersonInfo_IDIssueDate" type="date" constraint=". >= date('1900-01-01')" jr:constraintMsg="The date you entered is not within the accepted date range."/>
+      <bind nodeset="/un_special_rapporteur/PersonInfo_Section/PersonInfo_Linkage" type="string"/>
+      <bind nodeset="/un_special_rapporteur/PersonInfo_Section/PersonInfo_Address" type="string"/>
+      <bind nodeset="/un_special_rapporteur/PersonInfo_Section/PersonInfo_MiscComments" type="string"/>
       <bind nodeset="/un_special_rapporteur/ProfessionHistoryNote" readonly="true()" type="string"/>
-      <bind nodeset="/un_special_rapporteur/ProfessionalHistoryGrid/ProfessionalInfo_FirstName" required="false()" type="string"/>
-      <bind nodeset="/un_special_rapporteur/ProfessionalHistoryGrid/ProfessionalInfo_LastName" required="false()" type="string"/>
-      <bind nodeset="/un_special_rapporteur/ProfessionalHistoryGrid/ProfessionalInfo_Profession" required="false()" type="string"/>
-      <bind nodeset="/un_special_rapporteur/ProfessionalHistoryGrid/ProfessionalInfo_StartDate" required="false()" type="date" constraint=". >= date('1900-01-01')" jr:constraintMsg="The date you entered is not within the accepted date range."/>
-      <bind nodeset="/un_special_rapporteur/ProfessionalHistoryGrid/ProfessionalInfo_EndDate" required="false()" type="date" constraint=". >= date('1900-01-01')" jr:constraintMsg="The date you entered is not within the accepted date range."/>
-      <bind nodeset="/un_special_rapporteur/PersonComments" required="false()" type="string"/>
-      <bind nodeset="/un_special_rapporteur/IncidentDateStart" required="false()" type="date" constraint=". >= date('1900-01-01')" jr:constraintMsg="The date you entered is not within the accepted date range."/>
-      <bind nodeset="/un_special_rapporteur/IncidentDateEnd" required="false()" type="date" constraint=". >= date('1900-01-01')" jr:constraintMsg="The date you entered is not within the accepted date range."/>
-      <bind nodeset="/un_special_rapporteur/IncidentTime" required="false()" type="time"/>
-      <bind nodeset="/un_special_rapporteur/IncidentLocation" required="false()" type="string"/>
+      <bind nodeset="/un_special_rapporteur/ProfessionalHistoryGrid/ProfessionalInfo_FirstName" type="string"/>
+      <bind nodeset="/un_special_rapporteur/ProfessionalHistoryGrid/ProfessionalInfo_LastName" type="string"/>
+      <bind nodeset="/un_special_rapporteur/ProfessionalHistoryGrid/ProfessionalInfo_Profession" type="string"/>
+      <bind nodeset="/un_special_rapporteur/ProfessionalHistoryGrid/ProfessionalInfo_StartDate" type="date" constraint=". >= date('1900-01-01')" jr:constraintMsg="The date you entered is not within the accepted date range."/>
+      <bind nodeset="/un_special_rapporteur/ProfessionalHistoryGrid/ProfessionalInfo_EndDate" type="date" constraint=". >= date('1900-01-01')" jr:constraintMsg="The date you entered is not within the accepted date range."/>
+      <bind nodeset="/un_special_rapporteur/PersonComments" type="string"/>
+      <bind nodeset="/un_special_rapporteur/IncidentDateStart" type="date" constraint=". >= date('1900-01-01')" jr:constraintMsg="The date you entered is not within the accepted date range."/>
+      <bind nodeset="/un_special_rapporteur/IncidentDateEnd" type="date" constraint=". >= date('1900-01-01')" jr:constraintMsg="The date you entered is not within the accepted date range."/>
+      <bind nodeset="/un_special_rapporteur/IncidentTime" type="time"/>
+      <bind nodeset="/un_special_rapporteur/IncidentLocation" type="string"/>
       <bind nodeset="/un_special_rapporteur/Incidentmsg" readonly="true()" type="string"/>
-      <bind nodeset="/un_special_rapporteur/IncidentDescA" required="false()" type="string"/>
-      <bind nodeset="/un_special_rapporteur/IncidentDescB" required="false()" type="string"/>
-      <bind nodeset="/un_special_rapporteur/IncidentDescC" required="false()" type="string"/>
+      <bind nodeset="/un_special_rapporteur/IncidentDescA" type="string"/>
+      <bind nodeset="/un_special_rapporteur/IncidentDescB" type="string"/>
+      <bind nodeset="/un_special_rapporteur/IncidentDescC" type="string"/>
       <bind nodeset="/un_special_rapporteur/ForcesResponsibleMsg" readonly="true()" type="string"/>
-      <bind nodeset="/un_special_rapporteur/RespForcesA" required="false()" type="string"/>
-      <bind nodeset="/un_special_rapporteur/RespForcesB" required="false()" type="string"/>
-      <bind nodeset="/un_special_rapporteur/RespForcesC" required="false()" type="string"/>
+      <bind nodeset="/un_special_rapporteur/RespForcesA" type="string"/>
+      <bind nodeset="/un_special_rapporteur/RespForcesB" type="string"/>
+      <bind nodeset="/un_special_rapporteur/RespForcesC" type="string"/>
       <bind nodeset="/un_special_rapporteur/ComplaintsMsg" readonly="true()" type="string"/>
-      <bind nodeset="/un_special_rapporteur/ComplaintsGrid/Complaints_FiledDate" required="false()" type="date" constraint=". >= date('1900-01-01')" jr:constraintMsg="The date you entered is not within the accepted date range."/>
-      <bind nodeset="/un_special_rapporteur/ComplaintsGrid/Complaints_FiledBy" required="false()" type="string"/>
-      <bind nodeset="/un_special_rapporteur/ComplaintsGrid/Complaints_FiledOrganization" required="false()" type="string"/>
-      <bind nodeset="/un_special_rapporteur/OtherStepsTaken" required="false()" type="string"/>
+      <bind nodeset="/un_special_rapporteur/ComplaintsGrid/Complaints_FiledDate" type="date" constraint=". >= date('1900-01-01')" jr:constraintMsg="The date you entered is not within the accepted date range."/>
+      <bind nodeset="/un_special_rapporteur/ComplaintsGrid/Complaints_FiledBy" type="string"/>
+      <bind nodeset="/un_special_rapporteur/ComplaintsGrid/Complaints_FiledOrganization" type="string"/>
+      <bind nodeset="/un_special_rapporteur/OtherStepsTaken" type="string"/>
       <bind nodeset="/un_special_rapporteur/StepsMsg" readonly="true()" type="string"/>
-      <bind nodeset="/un_special_rapporteur/AuthoritiesStepsA" required="false()" type="string"/>
-      <bind nodeset="/un_special_rapporteur/AuthoritiesStepsB" required="false()" type="string"/>
-      <bind nodeset="/un_special_rapporteur/SubmitterFamilyName" required="false()" type="string"/>
-      <bind nodeset="/un_special_rapporteur/SubmitterFirstName" required="false()" type="string"/>
+      <bind nodeset="/un_special_rapporteur/AuthoritiesStepsA" type="string"/>
+      <bind nodeset="/un_special_rapporteur/AuthoritiesStepsB" type="string"/>
+      <bind nodeset="/un_special_rapporteur/SubmitterFamilyName" type="string"/>
+      <bind nodeset="/un_special_rapporteur/SubmitterFirstName" type="string"/>
       <bind nodeset="/un_special_rapporteur/OtherNameMsg2" readonly="true()" type="string"/>
-      <bind nodeset="/un_special_rapporteur/SubmitterOtherName" required="false()" type="string"/>
-      <bind nodeset="/un_special_rapporteur/SubmitterStatus" required="false()" type="select1"/>
-      <bind nodeset="/un_special_rapporteur/SpecifyOtherStatus" required="false()" type="string"/>
-      <bind nodeset="/un_special_rapporteur/SubmitterAddress" required="false()" type="string"/>
-      <bind nodeset="/un_special_rapporteur/SubmitterPhone" required="false()" type="string"/>
-      <bind nodeset="/un_special_rapporteur/SubmitterFax" required="false()" type="string"/>
-      <bind nodeset="/un_special_rapporteur/SubmitterEmail" required="false()" type="string"/>
+      <bind nodeset="/un_special_rapporteur/SubmitterOtherName" type="string"/>
+      <bind nodeset="/un_special_rapporteur/SubmitterStatus" type="select1"/>
+      <bind nodeset="/un_special_rapporteur/SpecifyOtherStatus" type="string"/>
+      <bind nodeset="/un_special_rapporteur/SubmitterAddress" type="string"/>
+      <bind nodeset="/un_special_rapporteur/SubmitterPhone" type="string"/>
+      <bind nodeset="/un_special_rapporteur/SubmitterFax" type="string"/>
+      <bind nodeset="/un_special_rapporteur/SubmitterEmail" type="string"/>
       <bind nodeset="/un_special_rapporteur/ConfidentialNote" readonly="true()" type="string"/>
-      <bind nodeset="/un_special_rapporteur/IDConfidential" required="false()" type="string"/>
-      <bind nodeset="/un_special_rapporteur/QuestionnaireDate" required="false()" type="date" constraint=". >= date('1900-01-01')" jr:constraintMsg="The date you entered is not within the accepted date range."/>
-      <bind nodeset="/un_special_rapporteur/SignatureReceived" required="false()" type="string"/>
-      <bind jr:preload="date" jr:preloadParams="today" nodeset="/un_special_rapporteur/today" type="date" constraint=". >= date('1900-01-01')" jr:constraintMsg="The date you entered is not within the accepted date range."/>
-      <bind calculate="concat('uuid:', uuid())" nodeset="/un_special_rapporteur/meta/instanceID" readonly="true()" type="string"/>
+      <bind nodeset="/un_special_rapporteur/IDConfidential" type="string"/>
+      <bind nodeset="/un_special_rapporteur/QuestionnaireDate" type="date" constraint=". >= date('1900-01-01')" jr:constraintMsg="The date you entered is not within the accepted date range."/>
+      <bind nodeset="/un_special_rapporteur/SignatureReceived" type="string"/>
+      <bind nodeset="/un_special_rapporteur/today" type="date" jr:preload="date" jr:preloadParams="today"/>
     </model>
   </h:head>
   <h:body>
-    <group appearance="field-list">
+    <group>
 	<label>General Information</label>
 		<select1 appearance="minimal" ref="/un_special_rapporteur/language">
 		  <label>Language</label>
@@ -386,9 +383,10 @@
         <label>Person Information Notes</label>
         <hint>If more than one person is concerned, please fill out separate rows in the table below for each person.nnIn Other Names column, please include any additional names that would be useful in distinguishing the person from others (e.g. nicknames, titles, Father’s names, etc).nnIf you are unsure of a person's Date of Birth, enter an Age range (e.g. 20 - 30) or description (e.g. child).</hint>
       </input>
-      <group ref="/un_special_rapporteur/PersonInfo_Section">
-        <label>Person Information</label>
-        <repeat nodeset="/un_special_rapporteur/PersonInfo_Section">
+	</group>
+	<group ref="/un_special_rapporteur/PersonInfo_Section">
+      <label>Person Information</label>
+      <repeat nodeset="/un_special_rapporteur/PersonInfo_Section">
           <input ref="/un_special_rapporteur/PersonInfo_Section/PersonInfo_FirstName">
             <label>First Name</label>
           </input>
@@ -475,35 +473,40 @@
             <label>Misc Comments (or "Other" values)</label>
           </input>
         </repeat>
-      </group>
-      <input ref="/un_special_rapporteur/ProfessionHistoryNote">
-        <label>Professional History Note</label>
-        <hint>If more than one person is concerned, please fill out separate rows in the table below for each person.nnIf a person had different professions at different times, please create separate rows for each profession.nnExamples of Profession/activity include: trade union, political, religious, humanitarian/solidarity/human rights, etc.</hint>
+	</group>
+    <group>
+      <label></label>	
+	  <input ref="/un_special_rapporteur/ProfessionHistoryNote">
+		<label>Professional History Note</label>
+        <hint>If more than one person is concerned, please fill out separate rows in the table below for each person.nnIf a person had different professions at different times, please create separate rows for each profession.Examples of Profession/activity include: trade union, political, religious, humanitarian/solidarity/human rights, etc.</hint>
       </input>
-      <group ref="/un_special_rapporteur/ProfessionalHistoryGrid">
-        <label>Professional History</label>
-        <repeat nodeset="/un_special_rapporteur/ProfessionalHistoryGrid">
-          <input ref="/un_special_rapporteur/ProfessionalHistoryGrid/ProfessionalInfo_FirstName">
+	</group>
+	<group ref="/un_special_rapporteur/ProfessionalHistoryGrid">
+      <label>Professional History</label>
+		<repeat nodeset="/un_special_rapporteur/ProfessionalHistoryGrid">
+			<input ref="/un_special_rapporteur/ProfessionalHistoryGrid/ProfessionalInfo_FirstName">
             <label>First Name</label>
           </input>
-          <input ref="/un_special_rapporteur/ProfessionalHistoryGrid/ProfessionalInfo_LastName">
+			<input ref="/un_special_rapporteur/ProfessionalHistoryGrid/ProfessionalInfo_LastName">
             <label>Last Name</label>
           </input>
-          <input ref="/un_special_rapporteur/ProfessionalHistoryGrid/ProfessionalInfo_Profession">
+			<input ref="/un_special_rapporteur/ProfessionalHistoryGrid/ProfessionalInfo_Profession">
             <label>Profession</label>
           </input>
-          <input ref="/un_special_rapporteur/ProfessionalHistoryGrid/ProfessionalInfo_StartDate">
+			<input ref="/un_special_rapporteur/ProfessionalHistoryGrid/ProfessionalInfo_StartDate">
             <label>Date of Employment (Start)</label>
           </input>
-          <input ref="/un_special_rapporteur/ProfessionalHistoryGrid/ProfessionalInfo_EndDate">
+			<input ref="/un_special_rapporteur/ProfessionalHistoryGrid/ProfessionalInfo_EndDate">
             <label>Date of Employment (End)</label>
           </input>
-        </repeat>
-      </group>
-      <input appearance="multiline" ref="/un_special_rapporteur/PersonComments">
-        <label>Comments on Person/Profession Information</label>
-      </input>
-    </group>
+		</repeat>
+	</group>
+	<group>
+	  <label></label>
+	  <input appearance="multiline" ref="/un_special_rapporteur/PersonComments">
+          <label>Comments on Person/Profession Information</label>
+	  </input>
+	</group>
     <group>
       <label>II. Information Regarding the Incident:</label>
       <input ref="/un_special_rapporteur/IncidentDateStart">
@@ -554,7 +557,8 @@
         <label>Note:</label>
         <hint>Indicate if complaints have been filed by (or on behalf of) the victim or his/her family</hint>
       </input>
-      <group ref="/un_special_rapporteur/ComplaintsGrid">
+    </group>
+	<group ref="/un_special_rapporteur/ComplaintsGrid">
         <label>Complaints</label>
         <repeat nodeset="/un_special_rapporteur/ComplaintsGrid">
           <input ref="/un_special_rapporteur/ComplaintsGrid/Complaints_FiledDate">
@@ -567,8 +571,10 @@
             <label>Filed with which organization/person</label>
           </input>
         </repeat>
-      </group>
-      <input appearance="multiline" ref="/un_special_rapporteur/OtherStepsTaken">
+    </group>
+    <group>
+	  <label></label>
+	  <input appearance="multiline" ref="/un_special_rapporteur/OtherStepsTaken">
         <label>Other steps taken by victim</label>
       </input>
     </group>
