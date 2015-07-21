@@ -25,17 +25,52 @@ Boston, MA 02111-1307, USA.
 
 package SAG;
 
+import javax.servlet.http.HttpSession;
+
 import org.martus.common.MartusLogger;
 
-public class Logger extends MartusLogger
+public class Logger
 {
 	private static final String VERBOSE_DEBUGGING_ON = "true";
 	private static final String DEBUG_VERBOSE_ENV = "SAG_DEBUG_VERBOSE";
 
-	public synchronized static void logVerbose(String text)
+	public static synchronized void logVerbose(HttpSession session, String text)
+	{
+		if(verboseLogging())
+			log(session, text);
+	}
+
+	public static synchronized void log(HttpSession session, String text)
+	{
+		MartusLogger.log(getMsgIncludingSessionIdIfPresent(session, text));
+	}
+
+	private static String getMsgIncludingSessionIdIfPresent(HttpSession session, String text)
+	{
+		if(session != null)
+			return session.getId() + " | " + text;
+		return text;
+	}
+
+	public static void logException(HttpSession session, Exception e)
+	{
+		logError(session, "Exception");
+		MartusLogger.logException(e);
+	}
+
+	public static synchronized void logError(HttpSession session, String errorMsg)
+	{
+		MartusLogger.logError(getMsgIncludingSessionIdIfPresent(session, errorMsg));
+	}
+
+	public static synchronized void logWarning(HttpSession session, String warningMsg)
+	{
+		MartusLogger.logWarning(getMsgIncludingSessionIdIfPresent(session, warningMsg));
+	}
+	
+	private static boolean verboseLogging()
 	{
   		String verbose = System.getenv(DEBUG_VERBOSE_ENV);
-  		if(verbose != null && verbose.toLowerCase().equals(VERBOSE_DEBUGGING_ON))
-  			MartusLogger.log(text);
+  		return(verbose != null && verbose.toLowerCase().equals(VERBOSE_DEBUGGING_ON));
 	}
 }

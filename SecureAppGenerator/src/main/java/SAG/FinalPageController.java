@@ -45,13 +45,13 @@ public class FinalPageController extends WebMvcConfigurerAdapter
 {
 	@RequestMapping(value = "/downloads/{file_name}.{ext}", method = RequestMethod.GET)
 	@ResponseBody
-	public FileSystemResource getFile(HttpServletResponse response, @PathVariable( "file_name") String fileName, @PathVariable("ext") String extension) 
+	public FileSystemResource getFile(HttpSession session, HttpServletResponse response, @PathVariable( "file_name") String fileName, @PathVariable("ext") String extension) 
 	{
 		String fileWithExtension = fileName + "." + extension;
 		response.setHeader("Content-Disposition", "attachment;filename=" + fileWithExtension );		
         response.setContentType(MediaType.APPLICATION_OCTET_STREAM_VALUE);
         
-        FileSystemResource fileSystemResource = new FileSystemResource(getFileFor(fileWithExtension));
+        FileSystemResource fileSystemResource = new FileSystemResource(getFileFor(session, fileWithExtension));
 	    return fileSystemResource; 
 	}
 
@@ -62,10 +62,9 @@ public class FinalPageController extends WebMvcConfigurerAdapter
         return WebPage.ERROR;
     }
 
-	private File getFileFor(String fileName)
+	private File getFileFor(HttpSession session, String fileName)
 	{
-		Logger.log("Request to download :" + fileName);
+		Logger.log(session, "Request to download :" + fileName);
 		return new File(SecureAppGeneratorApplication.getDownloadsDirectory(), fileName);
 	}
-	
 }

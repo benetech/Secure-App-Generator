@@ -73,11 +73,11 @@ public class ObtainLogoController extends WebMvcConfigurerAdapter
             	
             		//String dataRootDirectory = System.getenv(SecureAppGeneratorApplication.SAG_DATA_DIR_ENV);
             		File tempIconLocation = File.createTempFile(LOGO_FILE_NAME, PNG_EXT);
-               	Logger.logVerbose("Uploaded Icon Location" + tempIconLocation.getAbsolutePath());
+            		Logger.logVerbose(session, "Uploaded Icon Location" + tempIconLocation.getAbsolutePath());
                	tempIconLocation.deleteOnExit();
             		if(!file.getContentType().contains(IMAGE_PNG))
             		{
-            	      	Logger.log("Non-PNG Logo Image: " + file.getContentType());
+            			Logger.log(session, "Non-PNG Logo Image: " + file.getContentType());
             	      	appConfig.setAppIconError("Error: Image type must be png.");
             			model.addAttribute(SessionAttributes.APP_CONFIG, appConfig);
          			return WebPage.OBTAIN_LOGO; 
@@ -91,7 +91,7 @@ public class ObtainLogoController extends WebMvcConfigurerAdapter
             } 
             catch (Exception e) 
             {
-            		Logger.logException(e);
+            		Logger.logException(session, e);
             		SecureAppGeneratorApplication.setInvalidResults(session, "You failed to upload a file => " + e.getMessage());
                 return WebPage.ERROR;
             }

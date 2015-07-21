@@ -100,14 +100,14 @@ public class SummaryController extends WebMvcConfigurerAdapter
 			updateGradleSettings(secureAppBuildDir, config);
 			copyIconToApkBuild(secureAppBuildDir, config.getAppIconLocalFileLocation());
 			copyFormToApkBuild(secureAppBuildDir, config.getAppXFormLocation());
-			File apkCreated = buildApk(secureAppBuildDir, config);
+			File apkCreated = buildApk(session, secureAppBuildDir, config);
 			copyApkToDownloads(session, apkCreated, config.getApkName());
 			model.addAttribute(SessionAttributes.APP_CONFIG, appConfig);
 			return WebPage.FINAL;
 		}
 		catch (Exception e)
 		{
-			Logger.logException(e);
+			Logger.logException(session, e);
 			appConfig.setApkBuildError("Error: Unable to generate APK.");
 			model.addAttribute(SessionAttributes.APP_CONFIG, appConfig);
 			return WebPage.SUMMARY;
@@ -210,24 +210,24 @@ public class SummaryController extends WebMvcConfigurerAdapter
 		data.append("\")\n");
 	}
 
-	private File buildApk(File baseBuildDir, AppConfiguration config) throws IOException, InterruptedException
+	private File buildApk(HttpSession session, File baseBuildDir, AppConfiguration config) throws IOException, InterruptedException
 	{
-		Logger.log("Building " + config.getApkName());
+		Logger.log(session, "Building " + config.getApkName());
 		Runtime rt = Runtime.getRuntime();
    		String gradleCommand = SecureAppGeneratorApplication.getGadleDirectory() + GRADLE_EXE + GRADLE_PARAMETERS + baseBuildDir + GRADLE_BUILD_COMMAND;
-   		Logger.log(gradleCommand);
+   		Logger.log(session, gradleCommand);
 		long startTime = System.currentTimeMillis();
  
 		String line;
-		Logger.logVerbose("Starting exec");
+		Logger.logVerbose(session, "Starting exec");
 		Process p = rt.exec(gradleCommand);
-		Logger.logVerbose("Displaying output from exec.");
+		Logger.logVerbose(session, "Displaying output from exec.");
 		BufferedReader input = new BufferedReader(new InputStreamReader(p.getInputStream()));
 		while ((line = input.readLine()) != null) 
 		{
-			Logger.logVerbose(line);
+			Logger.logVerbose(session, line);
 		}
-		Logger.logVerbose("Finished exec output.");
+		Logger.logVerbose(session, "Finished exec output.");
 		input.close();		
     		p.waitFor();
   		long endTime = System.currentTimeMillis();
@@ -241,11 +241,11 @@ public class SummaryController extends WebMvcConfigurerAdapter
    		int returnCode = p.exitValue();
    		if(returnCode == EXIT_VALUE_GRADLE_SUCCESS)
    		{
-   			Logger.log("Build succeeded:" + timeToBuild);
+   			Logger.log(session, "Build succeeded:" + timeToBuild);
     		}
    		else
    		{
-   			Logger.logError("Build return code:" + returnCode);
+   			Logger.logError(session, "Build return code:" + returnCode);
 	   		throw new IOException("Error creating APK");
    		}
    		String tempApkBuildFileDirectory = baseBuildDir.getAbsolutePath() + APK_LOCAL_FILE_DIRECTORY;
@@ -282,12 +282,11 @@ public class SummaryController extends WebMvcConfigurerAdapter
 	}
 	
 	public static File getRandomDirectoryFile() throws IOException
-		{
-		    final File tempDir;
-		    tempDir = File.createTempFile("build", Long.toString(System.nanoTime()));
-		    tempDir.delete();
-		    tempDir.mkdirs();
-		    return tempDir;
-		}
-	
+	{
+	    final File tempDir;
+	    tempDir = File.createTempFile("build", Long.toString(System.nanoTime()));
+	    tempDir.delete();
+	    tempDir.mkdirs();
+	    return tempDir;
+	}
 }

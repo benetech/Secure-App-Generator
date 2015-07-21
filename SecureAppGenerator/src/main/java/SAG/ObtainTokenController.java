@@ -89,7 +89,7 @@ public class ObtainTokenController extends WebMvcConfigurerAdapter
 	
 	public String nextPage(HttpSession session, Model model, AppConfiguration appConfig) 
     {
-		if(isValidToken(appConfig)) 
+		if(isValidToken(session, appConfig)) 
 		{
 			try
 			{
@@ -103,7 +103,7 @@ public class ObtainTokenController extends WebMvcConfigurerAdapter
 			}
 			catch (Exception e)
 			{
-				Logger.logException(e);
+				Logger.logException(session, e);
 				appConfig.setClientTokenError("Error: Unable to retrieve token from server.");
 			}
 		}
@@ -205,13 +205,13 @@ public class ObtainTokenController extends WebMvcConfigurerAdapter
  			File keyPair = new File(SAG_KEYPAIR_DIRECTORY, SAG_KEYPAIR_FILE);
 			if(keyPair.exists())
 			{
-				Logger.logVerbose("reading keypair: " + SAG_KEYPAIR_DIRECTORY);
+				Logger.logVerbose(session, "reading keypair: " + SAG_KEYPAIR_DIRECTORY);
 				security.readKeyPair(keyPair, SAG_KEYPAIR_PASSWORD.toCharArray());
-				Logger.logVerbose("read keypair");
+				Logger.logVerbose(session, "read keypair");
 			}
 			else
 			{
-				Logger.log("Creating new SAG Keypair");
+				Logger.log(session, "Creating new SAG Keypair");
 				File keyPairDir = new File(SAG_KEYPAIR_DIRECTORY);
 				if(!keyPairDir.exists())
 					keyPairDir.mkdirs();
@@ -220,7 +220,7 @@ public class ObtainTokenController extends WebMvcConfigurerAdapter
 				security.writeKeyPair(outputStream, SAG_KEYPAIR_PASSWORD.toCharArray());
 				outputStream.flush();
 				outputStream.close();
-				Logger.log("Created Keypair");
+				Logger.log(session, "Created Keypair");
 			}
 			String tokenString = appConfig.getClientToken();
 			MartusAccountAccessToken accessToken = new MartusAccountAccessToken(tokenString);
@@ -233,7 +233,7 @@ public class ObtainTokenController extends WebMvcConfigurerAdapter
  				throw new ServerCallFailedException();
  			if(!response.getResultCode().equals(NetworkInterfaceConstants.OK))
  			{
- 				Logger.logError("Token Network returncode:" +response.getResultCode());
+ 				Logger.logError(session, "Token Network returncode:" +response.getResultCode());
  				throw new ServerNotAvailableException();
  			}
  			
@@ -246,7 +246,7 @@ public class ObtainTokenController extends WebMvcConfigurerAdapter
 		}
 		catch (CreateDigestException | CheckDigitInvalidException e)
 		{
-			Logger.logException(e);
+			Logger.logException(session, e);
 			appConfig.setClientTokenError("Error: Token not found.");
 			return false;
 		}
@@ -255,7 +255,7 @@ public class ObtainTokenController extends WebMvcConfigurerAdapter
 	}
 
 	//TODO add unit tests!
-	private boolean isValidToken(AppConfiguration appConfig)
+	private boolean isValidToken(HttpSession session, AppConfiguration appConfig)
 	{
 		String tokenString = appConfig.getClientToken().trim();
 		appConfig.setClientToken(tokenString);
@@ -265,7 +265,7 @@ public class ObtainTokenController extends WebMvcConfigurerAdapter
 		}
 		catch (TokenInvalidException e)
 		{
-			Logger.logError("Token invalid:" + tokenString);
+			Logger.logError(session, "Token invalid:" + tokenString);
 			appConfig.setClientTokenError("Error: Token is invalid");
 			return false;
 		}
@@ -278,5 +278,4 @@ public class ObtainTokenController extends WebMvcConfigurerAdapter
 	{
 		return ObtainXFormController.populateFormsMap();
 	}
-	
 }
