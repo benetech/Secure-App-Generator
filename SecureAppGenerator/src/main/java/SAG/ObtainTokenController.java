@@ -103,8 +103,8 @@ public class ObtainTokenController extends WebMvcConfigurerAdapter
 			}
 			catch (Exception e)
 			{
-				appConfig.setClientTokenError("Error: Unable to retrieve token from server.");
 				Logger.logException(e);
+				appConfig.setClientTokenError("Error: Unable to retrieve token from server.");
 			}
 		}
 		model.addAttribute(SessionAttributes.APP_CONFIG, appConfig);
@@ -195,7 +195,6 @@ public class ObtainTokenController extends WebMvcConfigurerAdapter
 	// TODO add unit tests
 	private boolean getClientPublicKeyFromToken(HttpSession session, AppConfiguration appConfig) throws Exception
 	{
-		//TODO get real key from Token server.
         AppConfiguration config = (AppConfiguration)session.getAttribute(SessionAttributes.APP_CONFIG);
  		try
 		{
@@ -206,12 +205,13 @@ public class ObtainTokenController extends WebMvcConfigurerAdapter
  			File keyPair = new File(SAG_KEYPAIR_DIRECTORY, SAG_KEYPAIR_FILE);
 			if(keyPair.exists())
 			{
-				Logger.log("reading keypair: " + SAG_KEYPAIR_DIRECTORY);
+				Logger.logVerbose("reading keypair: " + SAG_KEYPAIR_DIRECTORY);
 				security.readKeyPair(keyPair, SAG_KEYPAIR_PASSWORD.toCharArray());
+				Logger.logVerbose("read keypair");
 			}
 			else
 			{
-				Logger.log("Creating SAG Keypair");
+				Logger.log("Creating new SAG Keypair");
 				File keyPairDir = new File(SAG_KEYPAIR_DIRECTORY);
 				if(!keyPairDir.exists())
 					keyPairDir.mkdirs();
@@ -220,6 +220,7 @@ public class ObtainTokenController extends WebMvcConfigurerAdapter
 				security.writeKeyPair(outputStream, SAG_KEYPAIR_PASSWORD.toCharArray());
 				outputStream.flush();
 				outputStream.close();
+				Logger.log("Created Keypair");
 			}
 			String tokenString = appConfig.getClientToken();
 			MartusAccountAccessToken accessToken = new MartusAccountAccessToken(tokenString);
@@ -231,8 +232,11 @@ public class ObtainTokenController extends WebMvcConfigurerAdapter
  			if(response.getResultCode().equals(NetworkInterfaceConstants.SERVER_ERROR))
  				throw new ServerCallFailedException();
  			if(!response.getResultCode().equals(NetworkInterfaceConstants.OK))
+ 			{
+ 				Logger.logError("Token Network returncode:" +response.getResultCode());
  				throw new ServerNotAvailableException();
- 						
+ 			}
+ 			
  			Vector<String> singleAccountId = response.getResultVector();
  			if(singleAccountId.size() != 1)
  				throw new TokenNotFoundException();
@@ -242,6 +246,7 @@ public class ObtainTokenController extends WebMvcConfigurerAdapter
 		}
 		catch (CreateDigestException | CheckDigitInvalidException e)
 		{
+			Logger.logException(e);
 			appConfig.setClientTokenError("Error: Token not found.");
 			return false;
 		}
@@ -260,6 +265,7 @@ public class ObtainTokenController extends WebMvcConfigurerAdapter
 		}
 		catch (TokenInvalidException e)
 		{
+			Logger.logError("Token invalid:" + tokenString);
 			appConfig.setClientTokenError("Error: Token is invalid");
 			return false;
 		}

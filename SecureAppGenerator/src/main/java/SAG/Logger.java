@@ -35,7 +35,7 @@ public class Logger extends MartusLogger
 	public synchronized static void logVerbose(String text)
 	{
   		String verbose = System.getenv(DEBUG_VERBOSE_ENV);
-  		if(verbose != null && verbose.equals(VERBOSE_DEBUGGING_ON))
+  		if(verbose != null && verbose.toLowerCase().equals(VERBOSE_DEBUGGING_ON))
   			MartusLogger.log(text);
 	}
 }

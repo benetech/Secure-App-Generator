@@ -107,9 +107,9 @@ public class SummaryController extends WebMvcConfigurerAdapter
 		}
 		catch (Exception e)
 		{
+			Logger.logException(e);
 			appConfig.setApkBuildError("Error: Unable to generate APK.");
 			model.addAttribute(SessionAttributes.APP_CONFIG, appConfig);
-			Logger.logException(e);
 			return WebPage.SUMMARY;
 		}
 		finally
@@ -122,6 +122,7 @@ public class SummaryController extends WebMvcConfigurerAdapter
 			}
 	//		catch (IOException e)
 			{
+	//			Logger.logException(e);			
 			}			
 		}
     }
@@ -218,12 +219,15 @@ public class SummaryController extends WebMvcConfigurerAdapter
 		long startTime = System.currentTimeMillis();
  
 		String line;
+		Logger.logVerbose("Starting exec");
 		Process p = rt.exec(gradleCommand);
+		Logger.logVerbose("Displaying output from exec.");
 		BufferedReader input = new BufferedReader(new InputStreamReader(p.getInputStream()));
 		while ((line = input.readLine()) != null) 
 		{
 			Logger.logVerbose(line);
 		}
+		Logger.logVerbose("Finished exec output.");
 		input.close();		
     		p.waitFor();
   		long endTime = System.currentTimeMillis();
@@ -253,7 +257,7 @@ public class SummaryController extends WebMvcConfigurerAdapter
 	{
 		File targetFile = new File(SecureAppGeneratorApplication.getDownloadsDirectory(), apkFinalName);
 		if(targetFile.exists())
-			throw new IOException("This build already exists.");
+			throw new IOException("This build already exists?");
 		FileUtils.copyFile(apkFileToMove, targetFile);
 	}
 	
