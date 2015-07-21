@@ -94,7 +94,7 @@ public class SummaryController extends WebMvcConfigurerAdapter
 		try
 		{
 			createDownloadDirectoryIfItDoesntExist();
-			secureAppBuildDir = configureSecureAppBuildDirectory();
+			secureAppBuildDir = configureSecureAppBuildDirectory(session);
 			AppConfiguration config = (AppConfiguration)session.getAttribute(SessionAttributes.APP_CONFIG);
 			updateApkSettings(secureAppBuildDir, config);
 			updateGradleSettings(secureAppBuildDir, config);
@@ -127,10 +127,10 @@ public class SummaryController extends WebMvcConfigurerAdapter
 		}
     }
 
-	private File configureSecureAppBuildDirectory() throws IOException
+	private File configureSecureAppBuildDirectory(HttpSession session) throws IOException
 	{
 		File baseBuildDir = getSessionBuildDirectory();
-		copyDefaultBuildFilesToStagingArea(baseBuildDir);
+		copyDefaultBuildFilesToStagingArea(session, baseBuildDir);
 		return new File(baseBuildDir, SECURE_APP_PROJECT_DIRECTORY);
 	}
 
@@ -261,9 +261,10 @@ public class SummaryController extends WebMvcConfigurerAdapter
 		FileUtils.copyFile(apkFileToMove, targetFile);
 	}
 	
-	private void copyDefaultBuildFilesToStagingArea(File baseBuildDir) throws IOException
+	private void copyDefaultBuildFilesToStagingArea(HttpSession session, File baseBuildDir) throws IOException
 	{
 		File source = new File(SecureAppGeneratorApplication.getOriginalBuildDirectory());
+		Logger.log(session, "Copying Build directory, from:" + source.getAbsolutePath() + " to: "+ baseBuildDir.getAbsolutePath());
 		FileUtils.copyDirectory(source, baseBuildDir);
 	}
 
