@@ -105,7 +105,7 @@ public class ObtainTokenController extends WebMvcConfigurerAdapter
 			catch (Exception e)
 			{
 				appConfig.setClientTokenError("Error: Unable to retrieve token from server.");
-				e.printStackTrace();
+				MartusLogger.logException(e);
 			}
 		}
 		model.addAttribute(SessionAttributes.APP_CONFIG, appConfig);

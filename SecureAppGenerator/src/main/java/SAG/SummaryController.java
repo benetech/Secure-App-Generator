@@ -110,7 +110,7 @@ public class SummaryController extends WebMvcConfigurerAdapter
 		{
 			appConfig.setApkBuildError("Error: Unable to generate APK.");
 			model.addAttribute(SessionAttributes.APP_CONFIG, appConfig);
-			e.printStackTrace();
+			MartusLogger.logException(e);
 			return WebPage.SUMMARY;
 		}
 		finally

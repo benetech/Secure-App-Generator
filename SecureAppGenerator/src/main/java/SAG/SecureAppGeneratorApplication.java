@@ -77,7 +77,7 @@ public class SecureAppGeneratorApplication extends SpringBootServletInitializer
 		}
 		catch (IOException e)
 		{
-			e.printStackTrace();
+			MartusLogger.logException(e);
 			return new File("/static");
 		}
 	}
