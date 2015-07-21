@@ -37,7 +37,6 @@ import java.util.concurrent.TimeUnit;
 import javax.servlet.http.HttpSession;
 
 import org.apache.commons.io.FileUtils;
-import org.martus.common.MartusLogger;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -110,7 +109,7 @@ public class SummaryController extends WebMvcConfigurerAdapter
 		{
 			appConfig.setApkBuildError("Error: Unable to generate APK.");
 			model.addAttribute(SessionAttributes.APP_CONFIG, appConfig);
-			MartusLogger.logException(e);
+			Logger.logException(e);
 			return WebPage.SUMMARY;
 		}
 		finally
@@ -212,10 +211,10 @@ public class SummaryController extends WebMvcConfigurerAdapter
 
 	private File buildApk(File baseBuildDir, AppConfiguration config) throws IOException, InterruptedException
 	{
-		MartusLogger.log("Building " + config.getApkName());
+		Logger.log("Building " + config.getApkName());
 		Runtime rt = Runtime.getRuntime();
    		String gradleCommand = SecureAppGeneratorApplication.getGadleDirectory() + GRADLE_EXE + GRADLE_PARAMETERS + baseBuildDir + GRADLE_BUILD_COMMAND;
-   		MartusLogger.log(gradleCommand);
+   		Logger.log(gradleCommand);
 		long startTime = System.currentTimeMillis();
  
 		String line;
@@ -223,7 +222,7 @@ public class SummaryController extends WebMvcConfigurerAdapter
 		BufferedReader input = new BufferedReader(new InputStreamReader(p.getInputStream()));
 		while ((line = input.readLine()) != null) 
 		{
-			MartusLogger.log(line);
+			Logger.log(line);
 		}
 		input.close();		
     		p.waitFor();
@@ -238,11 +237,11 @@ public class SummaryController extends WebMvcConfigurerAdapter
    		int returnCode = p.exitValue();
    		if(returnCode == EXIT_VALUE_GRADLE_SUCCESS)
    		{
-   			MartusLogger.log("Build succeeded:" + timeToBuild);
+   			Logger.log("Build succeeded:" + timeToBuild);
     		}
    		else
    		{
-   			MartusLogger.logError("Build return code:" + returnCode);
+   			Logger.logError("Build return code:" + returnCode);
 	   		throw new IOException("Error creating APK");
    		}
    		String tempApkBuildFileDirectory = baseBuildDir.getAbsolutePath() + APK_LOCAL_FILE_DIRECTORY;

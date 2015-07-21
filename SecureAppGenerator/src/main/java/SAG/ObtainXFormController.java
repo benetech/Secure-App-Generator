@@ -40,7 +40,6 @@ import java.util.Map;
 
 import javax.servlet.http.HttpSession;
 
-import org.martus.common.MartusLogger;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.ModelAttribute;
@@ -114,7 +113,7 @@ public class ObtainXFormController extends WebMvcConfigurerAdapter
 				}
 				catch (IOException e1)
 				{
-					MartusLogger.logException(e1);
+					Logger.logException(e1);
 				}
             		return returnErrorMessage(model, appConfig, "Error: Xform Invalid."); 
             }

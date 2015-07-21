@@ -30,7 +30,6 @@ import java.io.File;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
-import org.martus.common.MartusLogger;
 import org.springframework.core.io.FileSystemResource;
 import org.springframework.http.MediaType;
 import org.springframework.stereotype.Controller;
@@ -65,7 +64,7 @@ public class FinalPageController extends WebMvcConfigurerAdapter
 
 	private File getFileFor(String fileName)
 	{
-		MartusLogger.log("Request to download :" + fileName);
+		Logger.log("Request to download :" + fileName);
 		return new File(SecureAppGeneratorApplication.getDownloadsDirectory(), fileName);
 	}
 	

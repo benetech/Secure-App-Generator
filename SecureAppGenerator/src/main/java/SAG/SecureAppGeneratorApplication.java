@@ -12,7 +12,6 @@ import java.nio.file.Files;
 import javax.servlet.http.HttpSession;
 
 import org.martus.common.Base64XmlOutputStream;
-import org.martus.common.MartusLogger;
 import org.martus.common.XmlWriterFilter;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
@@ -72,12 +71,12 @@ public class SecureAppGeneratorApplication extends SpringBootServletInitializer
 		{
 			final PathMatchingResourcePatternResolver pmrpr = new PathMatchingResourcePatternResolver();
 			final File staticDir = pmrpr.getResource("classpath:static").getFile();
-			MartusLogger.log("Static dir:"+staticDir.getAbsolutePath());
+			Logger.log("Static dir:"+staticDir.getAbsolutePath());
 			return staticDir;
 		}
 		catch (IOException e)
 		{
-			MartusLogger.logException(e);
+			Logger.logException(e);
 			return new File("/static");
 		}
 	}
@@ -85,7 +84,7 @@ public class SecureAppGeneratorApplication extends SpringBootServletInitializer
 	static String getDataDirectory()
 	{
    		String dataRootDirectory = System.getenv(SecureAppGeneratorApplication.SAG_DATA_DIR_ENV);
-   		MartusLogger.log("Data Dir:"+dataRootDirectory);
+   		Logger.log("Data Dir:"+dataRootDirectory);
    		return dataRootDirectory;
 	}
 
@@ -97,7 +96,7 @@ public class SecureAppGeneratorApplication extends SpringBootServletInitializer
 	static String getGadleDirectory()
 	{
    		String dataRootDirectory = System.getenv(SecureAppGeneratorApplication.GRADLE_HOME_ENV);
-   		MartusLogger.log("Gradle Dir:"+dataRootDirectory);
+   		Logger.log("Gradle Dir:"+dataRootDirectory);
    		return dataRootDirectory;
 	}
 	
