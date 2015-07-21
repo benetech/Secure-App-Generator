@@ -28,11 +28,9 @@ package SAG;
 import java.io.File;
 import java.io.IOException;
 import java.net.MalformedURLException;
-import java.nio.file.CopyOption;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
-import java.nio.file.StandardCopyOption;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashMap;
@@ -40,6 +38,7 @@ import java.util.Map;
 
 import javax.servlet.http.HttpSession;
 
+import org.apache.commons.io.FileUtils;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.ModelAttribute;
@@ -96,6 +95,7 @@ public class ObtainXFormController extends WebMvcConfigurerAdapter
             		if(!file.getContentType().contains(XML_TYPE))
              		return returnErrorMessage(model, appConfig, "Error: Xform must be of type xml."); 
             		SecureAppGeneratorApplication.saveMultiPartFileToLocation(file, xFormBuildPath.toFile());
+                Logger.logVerbose("Uploaded XFORM Location" + xFormBuildPath.toString());
   
                 isValidXForm(xFormBuildPath);
  
@@ -107,6 +107,7 @@ public class ObtainXFormController extends WebMvcConfigurerAdapter
             } 
             catch (Exception e) 
             {
+            		Logger.logException(e);
             		try
 				{
 					Files.delete(xFormBuildPath);
@@ -136,16 +137,16 @@ public class ObtainXFormController extends WebMvcConfigurerAdapter
 
 	public boolean copyXFormsFileSelectedToBuildDirectory(HttpSession session, String formName)
 	{
-		CopyOption[] options = new CopyOption[]{ StandardCopyOption.REPLACE_EXISTING, StandardCopyOption.COPY_ATTRIBUTES}; 
-		Path source = Paths.get(formName);
-		Path destination = Paths.get(XML_FILE_LOCATION);
+		File source = new File(formName);
+		File destination = new File(XML_FILE_LOCATION);
 		try
 		{
-			Files.copy(source, destination, options);
+			FileUtils.copyFile(source, destination);
 			return true;
 		}
 		catch (IOException e)
 		{
+			Logger.logException(e);
 			SecureAppGeneratorApplication.setInvalidResults(session, "Failed to copy file => " + e.getMessage());
 		    return false;
 		}
