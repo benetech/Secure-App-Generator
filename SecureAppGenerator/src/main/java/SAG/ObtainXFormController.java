@@ -93,7 +93,10 @@ public class ObtainXFormController extends WebMvcConfigurerAdapter
             try 
             {
             		if(!file.getContentType().contains(XML_TYPE))
+            		{
+            			Logger.log("Non-XML xForm: " + file.getContentType());
              		return returnErrorMessage(model, appConfig, "Error: Xform must be of type xml."); 
+            		}
             		SecureAppGeneratorApplication.saveMultiPartFileToLocation(file, xFormBuildPath.toFile());
                 Logger.logVerbose("Uploaded XFORM Location" + xFormBuildPath.toString());
   

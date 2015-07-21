@@ -77,7 +77,7 @@ public class ObtainLogoController extends WebMvcConfigurerAdapter
                	tempIconLocation.deleteOnExit();
             		if(!file.getContentType().contains(IMAGE_PNG))
             		{
-            	      	Logger.logVerbose("Non-PNG Image uploaded: " + tempIconLocation.getAbsolutePath());
+            	      	Logger.log("Non-PNG Logo Image: " + file.getContentType());
             	      	appConfig.setAppIconError("Error: Image type must be png.");
             			model.addAttribute(SessionAttributes.APP_CONFIG, appConfig);
          			return WebPage.OBTAIN_LOGO; 
