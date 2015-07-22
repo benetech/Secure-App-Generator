@@ -92,7 +92,6 @@ public class SummaryController extends WebMvcConfigurerAdapter
 		File secureAppBuildDir = null;
 		try
 		{
-			createDownloadDirectoryIfItDoesntExist();
 			secureAppBuildDir = configureSecureAppBuildDirectory(session);
 			AppConfiguration config = (AppConfiguration)session.getAttribute(SessionAttributes.APP_CONFIG);
 			updateApkSettings(secureAppBuildDir, config);
@@ -273,14 +272,6 @@ public class SummaryController extends WebMvcConfigurerAdapter
 		return baseBuildDir;
 	}
 
-	private void createDownloadDirectoryIfItDoesntExist() throws IOException
-	{
-		File downloadsDirectory = new File(SecureAppGeneratorApplication.getDownloadsDirectory());
-		if(!downloadsDirectory.exists())
-			if(!downloadsDirectory.mkdir())
-				throw new IOException("Unable to create downloads directory:" + downloadsDirectory.getAbsolutePath());
-	}
-	
 	public static File getRandomDirectoryFile() throws IOException
 	{
 	    final File tempDir;

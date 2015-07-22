@@ -30,7 +30,6 @@ public class SecureAppGeneratorApplication extends SpringBootServletInitializer
 	private static final String ICON_LOCAL_File = getStaticWebDirectory() + DEFAULT_APP_ICON_LOCATION;
 	private static final String GRADLE_HOME_ENV = "GRADLE_HOME";
 	public static final String SAG_DATA_DIR_ENV = "SAG_DATA_DIR";
-	public static final String APK_DOWNLOADS_DIRECTORY = "Downloads";
 
     @Override
     protected SpringApplicationBuilder configure(SpringApplicationBuilder application) {
@@ -98,12 +97,6 @@ public class SecureAppGeneratorApplication extends SpringBootServletInitializer
    		Logger.logVerbose(null, "Gradle Dir:"+dataRootDirectory);
    		return dataRootDirectory;
 	}
-	
-	static String getDownloadsDirectory()
-	{
-		return (new File(getDataDirectory(),APK_DOWNLOADS_DIRECTORY)).getAbsolutePath();
-	}
-
 	
 	static void setSessionFromConfig(HttpSession session, AppConfiguration config)
 	{
