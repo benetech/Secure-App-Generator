@@ -43,14 +43,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurerAdapter;
 
-import com.amazonaws.auth.BasicAWSCredentials;
-import com.amazonaws.services.s3.AmazonS3;
-import com.amazonaws.services.s3.AmazonS3Client;
-import com.amazonaws.services.s3.model.AccessControlList;
-import com.amazonaws.services.s3.model.GroupGrantee;
-import com.amazonaws.services.s3.model.Permission;
-import com.amazonaws.services.s3.model.PutObjectRequest;
-
 @Controller
 public class SummaryController extends WebMvcConfigurerAdapter
 {
@@ -80,10 +72,6 @@ public class SummaryController extends WebMvcConfigurerAdapter
     private static final String GRADLE_GENERATED_SETTINGS_FILE = "generated.build.gradle";
     public static final String GRADLE_GENERATED_SETTINGS_LOCAL = SECURE_APP_PROJECT_DIRECTORY + "/" + GRADLE_GENERATED_SETTINGS_FILE;
     private static final int EXIT_VALUE_GRADLE_SUCCESS = 0;
-	private static final String AMAZON_S3_DOWNLOAD_BUCKET_ENV = "S3_DOWNLOAD_BUCKET";
-	private static final String AMAZON_S3_KEY_ENV = "AWS_KEY";
-	private static final String AMAZON_S3_SECRET_ENV = "AWS_SECRET";
-	private static final String AMAZON_S3_BASE_DIR = "https://s3.amazonaws.com/";
 	@RequestMapping(value=WebPage.SUMMARY, method=RequestMethod.GET)
     public String directError(HttpSession session, Model model) 
     {
@@ -268,50 +256,10 @@ public class SummaryController extends WebMvcConfigurerAdapter
 	{
 		File finalFile = new File(apkFileToMove.getParent(), config.getApkName());
 		FileUtils.moveFile(apkFileToMove, finalFile);
-		uploadToAmazonS3(session, finalFile);
-		config.setApkURL(getApkUrl(session, finalFile));
+		String urlToApk = AmazonS3Utils.uploadToAmazonS3(session, finalFile);
+		config.setApkURL(urlToApk);
 	}
 	
-	private void uploadToAmazonS3(HttpSession session, File fileToUpload)
-	{
-        AmazonS3 s3client = new AmazonS3Client(new BasicAWSCredentials(getAwsKey(), getAwsSecret()));
-		String bucketName = getDownloadS3Bucket();
-		Logger.logVerbose(session, "S3BucketName = " + bucketName);
-		if(!s3client.doesBucketExist(bucketName))
-			Logger.logError(session, "Does not exist?  S3 Bucket :" + bucketName);
-
-		AccessControlList acl = new AccessControlList();
-		acl.grantPermission(GroupGrantee.AllUsers, Permission.Read);
-		s3client.putObject(new PutObjectRequest(bucketName, getAPKDownloadFilePath(fileToUpload),  fileToUpload).withAccessControlList(acl));
-	}
-
-	private String getAPKDownloadFilePath(File fileToUpload)
-	{
-		return SecureAppGeneratorApplication.APK_DOWNLOADS_DIRECTORY + "/" + fileToUpload.getName();
-	}
-
-	private String getApkUrl(HttpSession session, File file)
-	{
-		String apkURL = AMAZON_S3_BASE_DIR + getDownloadS3Bucket() + "/" + getAPKDownloadFilePath(file);
-		Logger.log(session, "APK URL = " + apkURL);
-		return apkURL;
-	}
-
-	private String getAwsSecret()
-	{
- 		return System.getenv(AMAZON_S3_SECRET_ENV);
-	}
-
-	private String getAwsKey()
-	{
- 		return System.getenv(AMAZON_S3_KEY_ENV);
-	}
-
-	private String getDownloadS3Bucket()
-	{
-  		return System.getenv(AMAZON_S3_DOWNLOAD_BUCKET_ENV);
-	}
-
 	private void copyDefaultBuildFilesToStagingArea(HttpSession session, File baseBuildDir) throws IOException
 	{
 		File source = new File(SecureAppGeneratorApplication.getOriginalBuildDirectory());

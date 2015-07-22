@@ -25,19 +25,12 @@ Boston, MA 02111-1307, USA.
 
 package org.benetech.secureapp.generator;
 
-import java.io.File;
-
-import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
-import org.springframework.core.io.FileSystemResource;
-import org.springframework.http.MediaType;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurerAdapter;
 
 @Controller
@@ -49,10 +42,4 @@ public class FinalPageController extends WebMvcConfigurerAdapter
 		SecureAppGeneratorApplication.setInvalidResults(session);
         return WebPage.ERROR;
     }
-
-	private File getFileFor(HttpSession session, String fileName)
-	{
-		Logger.log(session, "Request to download :" + fileName);
-		return new File(SecureAppGeneratorApplication.getDownloadsDirectory(), fileName);
-	}
 }
