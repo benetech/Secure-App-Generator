@@ -43,6 +43,11 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurerAdapter;
 
+import com.amazonaws.auth.profile.ProfileCredentialsProvider;
+import com.amazonaws.services.s3.AmazonS3;
+import com.amazonaws.services.s3.AmazonS3Client;
+import com.amazonaws.services.s3.model.PutObjectRequest;
+
 @Controller
 public class SummaryController extends WebMvcConfigurerAdapter
 {
@@ -72,6 +77,8 @@ public class SummaryController extends WebMvcConfigurerAdapter
     private static final String GRADLE_GENERATED_SETTINGS_FILE = "generated.build.gradle";
     public static final String GRADLE_GENERATED_SETTINGS_LOCAL = SECURE_APP_PROJECT_DIRECTORY + "/" + GRADLE_GENERATED_SETTINGS_FILE;
     private static final int EXIT_VALUE_GRADLE_SUCCESS = 0;
+	private static final String AMAZON_S3_DOWNLOAD_BUCKET_ENV = "S3_DOWNLOAD_BUCKET";
+	private static final String AMAZON_S3_DOWNLOAD_KEY_ENV = "S3_DOWNLOAD_KEY";
 
 	@RequestMapping(value=WebPage.SUMMARY, method=RequestMethod.GET)
     public String directError(HttpSession session, Model model) 
@@ -255,12 +262,36 @@ public class SummaryController extends WebMvcConfigurerAdapter
 
 	public void copyApkToDownloads(HttpSession session, File apkFileToMove, String apkFinalName) throws IOException
 	{
-		File targetFile = new File(SecureAppGeneratorApplication.getDownloadsDirectory(), apkFinalName);
-		if(targetFile.exists())
-			throw new IOException("This build already exists?");
-		FileUtils.copyFile(apkFileToMove, targetFile);
+		File finalFile = new File(apkFileToMove.getParent(), apkFinalName);
+		FileUtils.moveFile(apkFileToMove, finalFile);
+		uploadToAmazonS3(session, finalFile);
 	}
 	
+	private void uploadToAmazonS3(HttpSession session, File fileToUpload)
+	{
+        AmazonS3 s3client = new AmazonS3Client(new ProfileCredentialsProvider());
+        try 
+        {
+        		String s3BucketName = getDownloadS3Bucket();
+        		String s3KeyName = getDownloadS3Key();
+            s3client.putObject(new PutObjectRequest(s3BucketName, s3KeyName,  fileToUpload));
+         } 
+        catch (Exception e) 
+        {
+            Logger.logException(session, e);
+        } 
+	}
+
+	private String getDownloadS3Key()
+	{
+  		return System.getenv(AMAZON_S3_DOWNLOAD_KEY_ENV);
+	}
+
+	private String getDownloadS3Bucket()
+	{
+  		return System.getenv(AMAZON_S3_DOWNLOAD_BUCKET_ENV);
+	}
+
 	private void copyDefaultBuildFilesToStagingArea(HttpSession session, File baseBuildDir) throws IOException
 	{
 		File source = new File(SecureAppGeneratorApplication.getOriginalBuildDirectory());
@@ -289,5 +320,5 @@ public class SummaryController extends WebMvcConfigurerAdapter
 	    tempDir.delete();
 	    tempDir.mkdirs();
 	    return tempDir;
-	}
+	}	
 }

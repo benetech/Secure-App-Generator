@@ -44,7 +44,8 @@ dependencies {
     compile("org.springframework.boot:spring-boot-starter-web")
     testCompile("org.springframework.boot:spring-boot-starter-test") 
     compile group: 'commons-io', name: 'commons-io', version: '2.4'
-   }
+    compile 'com.amazonaws:aws-java-sdk:+'
+}
 
 eclipse {
     classpath {
