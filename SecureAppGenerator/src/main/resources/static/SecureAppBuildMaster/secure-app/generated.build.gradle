@@ -1,5 +1,0 @@
-project.ext.set("versionMajor", "0")
-project.ext.set("versionMinor", "0")
-project.ext.set("versionBuild","21")
-project.ext.set("versionSagBuild", "0")
-project.ext.set("appName", "secureAppDemo")
