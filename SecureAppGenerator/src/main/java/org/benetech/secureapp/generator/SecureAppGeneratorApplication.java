@@ -25,12 +25,12 @@ import org.springframework.web.multipart.MultipartFile;
 public class SecureAppGeneratorApplication extends SpringBootServletInitializer 
 {
 	private static final String APP_DEFAULT_NAME = "My App";
-	private static final String APK_DOWNLOADS_DIRECTORY = "/Downloads";
 	private static final String MASTER_SA_BUILD_DIRECTORY = "/SecureAppBuildMaster"; 
 	private static final String DEFAULT_APP_ICON_LOCATION = "/images/Martus-swoosh-30x30.png";
 	private static final String ICON_LOCAL_File = getStaticWebDirectory() + DEFAULT_APP_ICON_LOCATION;
 	private static final String GRADLE_HOME_ENV = "GRADLE_HOME";
 	public static final String SAG_DATA_DIR_ENV = "SAG_DATA_DIR";
+	public static final String APK_DOWNLOADS_DIRECTORY = "Downloads";
 
     @Override
     protected SpringApplicationBuilder configure(SpringApplicationBuilder application) {

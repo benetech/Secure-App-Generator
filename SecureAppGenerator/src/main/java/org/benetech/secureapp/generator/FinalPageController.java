@@ -43,18 +43,6 @@ import org.springframework.web.servlet.config.annotation.WebMvcConfigurerAdapter
 @Controller
 public class FinalPageController extends WebMvcConfigurerAdapter
 {
-	@RequestMapping(value = "/downloads/{file_name}.{ext}", method = RequestMethod.GET)
-	@ResponseBody
-	public FileSystemResource getFile(HttpSession session, HttpServletResponse response, @PathVariable( "file_name") String fileName, @PathVariable("ext") String extension) 
-	{
-		String fileWithExtension = fileName + "." + extension;
-		response.setHeader("Content-Disposition", "attachment;filename=" + fileWithExtension );		
-        response.setContentType(MediaType.APPLICATION_OCTET_STREAM_VALUE);
-        
-        FileSystemResource fileSystemResource = new FileSystemResource(getFileFor(session, fileWithExtension));
-	    return fileSystemResource; 
-	}
-
 	@RequestMapping(value=WebPage.FINAL, method=RequestMethod.GET)
     public String directError(HttpSession session, Model model) 
     {

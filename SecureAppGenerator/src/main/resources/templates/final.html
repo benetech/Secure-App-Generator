@@ -25,9 +25,7 @@
  	                    <td>Here is a link to download your app:</td>
 	                    <td class="table_column_spacer"/>
 	   					<td>
-       						 <a class="textFont download_link" 
-       						 	th:href="@{'/downloads/' + ${session.appConfig.apkName}}" 
-       						 	th:text="${session.appConfig.apkName}">Download Link</a>
+ -	   						<a class="textFont download_link" th:href="@{${session.appConfig.apkURL}}" th:text="${session.appConfig.apkName}">Link</a>
 	   					</td>
 	                </tr>
             </table>

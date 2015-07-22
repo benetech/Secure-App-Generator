@@ -55,6 +55,7 @@ public class AppConfiguration
 	private String apkVersionBuild = "0";
 	private String apkSagVersionBuild = "0";
 	private String apkBuildError;
+	private String apkURL;
 	
 	public void setAppName(String appName)
 	{
@@ -301,6 +302,16 @@ public class AppConfiguration
 	public void setAppIconLocalFileLocation(String appIconLocalFileLocation)
 	{
 		this.appIconLocalFileLocation = appIconLocalFileLocation;
+	}
+
+	public String getApkURL()
+	{
+		return apkURL;
+	}
+
+	public void setApkURL(String apkURL)
+	{
+		this.apkURL = apkURL;
 	}
 
 }
