@@ -30,8 +30,6 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.net.MalformedURLException;
 import java.nio.file.Files;
-import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
@@ -70,6 +68,7 @@ public class ObtainTokenController extends WebMvcConfigurerAdapter
 	private static final String SAG_KEYPAIR_DIRECTORY = SecureAppGeneratorApplication.getStaticWebDirectory() + "/keys";
 	private static final String SAG_KEYPAIR_FILE = "sagKeyPair.dat";
 	private static final String SAG_KEYPAIR_PASSWORD = "12SaGPassword";
+
 	@RequestMapping(value=WebPage.OBTAIN_CLIENT_TOKEN, method=RequestMethod.GET)
     public String directError(HttpSession session, Model model) 
     {
@@ -115,7 +114,7 @@ public class ObtainTokenController extends WebMvcConfigurerAdapter
 	{
         AppConfiguration config = (AppConfiguration)session.getAttribute(SessionAttributes.APP_CONFIG);
         getBuildVersionFromGeneratedSettingsFile(config);
-        String uniqueBuildNumber = getUniqueBuildNumber(config.getApkName());
+        String uniqueBuildNumber = AmazonS3Utils.getUniqueBuildNumber(config.getApkName());
         config.setApkSagVersionBuild(uniqueBuildNumber);
  		session.setAttribute(SessionAttributes.APP_CONFIG, config);
 	}
@@ -145,32 +144,6 @@ public class ObtainTokenController extends WebMvcConfigurerAdapter
 		return data[3];
 	}
 
-	private String getUniqueBuildNumber(String apkNameWithNoSagBuild)
-	{
-		String partialApkName = apkNameWithNoSagBuild.substring(0, apkNameWithNoSagBuild.length()-5).toLowerCase();
-		int greatestBuildNumberFound = 0;
-		File apkDownloadDirectory = new File(SecureAppGeneratorApplication.getDownloadsDirectory());
-		if(apkDownloadDirectory.exists())
-		{
-			ArrayList<File> files = new ArrayList<File>(Arrays.asList(apkDownloadDirectory.listFiles()));
-			for (Iterator<File> iterator = files.iterator(); iterator.hasNext();)
-			{
-				File currentApk = (File) iterator.next();
-				String currentApkName = currentApk.getName().toLowerCase();
-				if(currentApkName.startsWith(partialApkName))
-				{
-					int buildStartPos = partialApkName.length();
-					int buildEndPos = currentApkName.length()-4;
-					String currentBuildNumberString = currentApkName.substring(buildStartPos, buildEndPos);
-					int currentBuildNumber = Integer.parseInt(currentBuildNumberString);
-					if(currentBuildNumber > greatestBuildNumberFound)
-						greatestBuildNumberFound = currentBuildNumber;
-				}
-			}
-		}
-		int nextSagBuildNumber = greatestBuildNumberFound+1;
-		return Integer.toString(nextSagBuildNumber);
-	}
 
 	private void updateServerConfiguration(HttpSession session)
 	{
