@@ -45,15 +45,18 @@ repositories {
 
 dependencies {
     providedRuntime 'org.springframework.boot:spring-boot-starter-tomcat'
-    compile files('/Users/charlesl/EclipseMartus/Martus-Secure-App-Generator/SecureAppGenerator/thirdparty/martus-api-52.jar')
-    compile files('/Users/charlesl/EclipseMartus/martus-thirdparty/libext/BouncyCastle/bin/bcprov-jdk15on-148.jar')
-    compile files('/Users/charlesl/EclipseMartus/martus-thirdparty/common/XMLRPC/bin/commons-logging-1.1.jar')
-    compile files('/Users/charlesl/EclipseMartus/Martus-Secure-App-Generator/SecureAppGenerator/thirdparty/JavaRosa/bin/javarosa-libraries.jar')
-    compile files('/Users/charlesl/EclipseMartus/martus-thirdparty/common/XMLRPC/bin/ws-commons-util-1.0.2.jar')
-    compile files('/Users/charlesl/EclipseMartus/martus-thirdparty/common/XMLRPC/bin/xmlrpc-client-3.1.3.jar')
-    compile files('/Users/charlesl/EclipseMartus/martus-thirdparty/common/XMLRPC/bin/xmlrpc-common-3.1.3.jar')
     compile("org.springframework.boot:spring-boot-starter-thymeleaf")
     compile("org.springframework.boot:spring-boot-starter-web")
+ 
+    compile files('./thirdparty/martus-api-52.jar')
+    compile files('./thirdparty/JavaRosa/bin/javarosa-libraries.jar')
+ 
+    compile files('../../martus-thirdparty/libext/BouncyCastle/bin/bcprov-jdk15on-148.jar')
+    compile files('../../martus-thirdparty/common/XMLRPC/bin/commons-logging-1.1.jar')
+    compile files('../../martus-thirdparty/common/XMLRPC/bin/ws-commons-util-1.0.2.jar')
+    compile files('../../martus-thirdparty/common/XMLRPC/bin/xmlrpc-client-3.1.3.jar')
+    compile files('../../martus-thirdparty/common/XMLRPC/bin/xmlrpc-common-3.1.3.jar')
+ 
     testCompile("org.springframework.boot:spring-boot-starter-test") 
     compile group: 'commons-io', name: 'commons-io', version: '2.4'
     compile 'com.amazonaws:aws-java-sdk:+'
