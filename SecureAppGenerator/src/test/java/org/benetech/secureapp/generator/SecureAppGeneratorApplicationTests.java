@@ -1,4 +1,4 @@
-package SAG;
+package org.benetech.secureapp.generator;
 
 import org.benetech.secureapp.generator.SecureAppGeneratorApplication;
 import org.junit.Test;
