@@ -29,7 +29,7 @@ war {
         include 'settings.gradle'
         into('WEB-INF/classes/static/SecureAppBuildMaster')
     }
-    from('../../martus-android/secure-app-vital-voices') {
+    from('../../martus-android/secure-app') {
         include '**/**'
         into('WEB-INF/classes/static/SecureAppBuildMaster/secure-app')
     }
