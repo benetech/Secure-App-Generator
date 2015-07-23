@@ -39,6 +39,8 @@ import java.util.Map;
 import javax.servlet.http.HttpSession;
 
 import org.apache.commons.io.FileUtils;
+import org.javarosa.core.util.JavaRosaCoreModule;
+import org.javarosa.model.xform.XFormsModule;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.ModelAttribute;
@@ -78,15 +80,15 @@ public class ObtainXFormController extends WebMvcConfigurerAdapter
     public String retrieveXForm(HttpSession session, @RequestParam("file") MultipartFile file, @RequestParam("selectedForm") String formName, Model model, AppConfiguration appConfig)
     {
 		Path xFormBuildPath = Paths.get(XML_FILE_LOCATION);
+		String xFormLocation = null;
+		String xFormName = null;
 		if (file.isEmpty()) 
         {
 			if(!copyXFormsFileSelectedToBuildDirectory(session, formName))
 				return WebPage.ERROR; 
 
-            AppConfiguration config = (AppConfiguration)session.getAttribute(SessionAttributes.APP_CONFIG);
-			config.setAppXFormLocation(xFormBuildPath.getFileName().toString());
-			config.setAppXFormName(getFormNameOnly(formName));
-			session.setAttribute(SessionAttributes.APP_CONFIG, config);
+            xFormLocation = xFormBuildPath.getFileName().toString();
+			xFormName = getFormNameOnly(formName);
         }
         else
         {
@@ -100,14 +102,10 @@ public class ObtainXFormController extends WebMvcConfigurerAdapter
             		SecureAppGeneratorApplication.saveMultiPartFileToLocation(file, xFormBuildPath.toFile());
                 Logger.logVerbose(session, "Uploaded XFORM Location" + xFormBuildPath.toString());
   
-                isValidXForm(xFormBuildPath);
- 
-                AppConfiguration config = (AppConfiguration)session.getAttribute(SessionAttributes.APP_CONFIG);
-        			String uploadedFormName = xFormBuildPath.getFileName().toString();
-				config.setAppXFormLocation(uploadedFormName); 
-        			config.setAppXFormName(getFormNameOnly(file.getOriginalFilename()));
-        			session.setAttribute(SessionAttributes.APP_CONFIG, config);
-            } 
+                xFormLocation = xFormBuildPath.getFileName().toString();
+    				xFormName = getFormNameOnly(getFormNameOnly(file.getOriginalFilename()));
+
+              } 
             catch (Exception e) 
             {
             		Logger.logException(session, e);
@@ -119,16 +117,24 @@ public class ObtainXFormController extends WebMvcConfigurerAdapter
 				{
 					Logger.logException(session, e1);
 				}
-            		return returnErrorMessage(model, appConfig, "Error: Xform Invalid."); 
+            		return returnErrorMessage(model, appConfig, "Error: uploading file."); 
             }
-        } 
-		model.addAttribute(SessionAttributes.APP_CONFIG, appConfig);
+        }
+		
+		isValidXForm(new File(xFormLocation));
+		
+		AppConfiguration config = (AppConfiguration)session.getAttribute(SessionAttributes.APP_CONFIG);
+		config.setAppXFormLocation(xFormLocation);
+		config.setAppXFormName(xFormName);
+		session.setAttribute(SessionAttributes.APP_CONFIG, config);
+		model.addAttribute(SessionAttributes.APP_CONFIG, config);
 		return WebPage.OBTAIN_CLIENT_TOKEN;
     }
 
-	private void isValidXForm(Path fileLocation)
+	private void isValidXForm(File xFormFile)
 	{
-		//TODO load XML file, then import into JavaRosa for validation
+		
+		//	void xformsModule = new XFormsModule().registerModule();
 	}
 
 	public String returnErrorMessage(Model model, AppConfiguration appConfig, String errorMsg)
