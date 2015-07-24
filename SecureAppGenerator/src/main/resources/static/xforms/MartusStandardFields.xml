@@ -33,7 +33,6 @@
 
 	<group appearance="field-list">
 		<label>Section 1</label>
-		</input>
 		<select1 appearance="minimal" ref="/martus_standard_fields/language">
 		  <label>Language</label>
 			  <item>
