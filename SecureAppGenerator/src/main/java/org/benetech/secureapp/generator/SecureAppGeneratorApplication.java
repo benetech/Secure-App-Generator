@@ -29,7 +29,8 @@ public class SecureAppGeneratorApplication extends SpringBootServletInitializer
 	private static final String DEFAULT_APP_ICON_LOCATION = "/images/Martus-swoosh-30x30.png";
 	private static final String ICON_LOCAL_File = getStaticWebDirectory() + DEFAULT_APP_ICON_LOCATION;
 	private static final String GRADLE_HOME_ENV = "GRADLE_HOME";
-	public static final String SAG_DATA_DIR_ENV = "SAG_DATA_DIR";
+	public static final String INCLUDE_FDROID_ENV = "INCLUDE_FDROID";
+	public static final String FDROID_TRUE = "true";
 
     @Override
     protected SpringApplicationBuilder configure(SpringApplicationBuilder application) {
@@ -79,13 +80,6 @@ public class SecureAppGeneratorApplication extends SpringBootServletInitializer
 		}
 	}
 	
-	static String getDataDirectory()
-	{
-   		String dataRootDirectory = System.getenv(SecureAppGeneratorApplication.SAG_DATA_DIR_ENV);
-   		Logger.logVerbose(null, "Data Dir:"+dataRootDirectory);
-   		return dataRootDirectory;
-	}
-
 	static String getOriginalBuildDirectory()
 	{
 		return (new File(getStaticWebDirectory(), MASTER_SA_BUILD_DIRECTORY)).getAbsolutePath();
@@ -133,4 +127,8 @@ public class SecureAppGeneratorApplication extends SpringBootServletInitializer
 		return convertToBase64BySingleBytes(data);
 	}
 
+	public static File getOriginalFDroidDirectory()
+	{
+		return new File(getStaticWebDirectory(), "fdroid");
+	}
 }

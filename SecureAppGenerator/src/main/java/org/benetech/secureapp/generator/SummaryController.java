@@ -46,7 +46,8 @@ import org.springframework.web.servlet.config.annotation.WebMvcConfigurerAdapter
 @Controller
 public class SummaryController extends WebMvcConfigurerAdapter
 {
-    public static final String VERSION_BUILD_XML = "versionBuild";
+    private static final String FDROID_REPO_DIR = "repo";
+	public static final String VERSION_BUILD_XML = "versionBuild";
     public static final String VERSION_MINOR_XML = "versionMinor";
     public static final String VERSION_MAJOR_XML = "versionMajor";
 
@@ -99,7 +100,10 @@ public class SummaryController extends WebMvcConfigurerAdapter
 			copyIconToApkBuild(secureAppBuildDir, config.getAppIconLocalFileLocation());
 			copyFormToApkBuild(secureAppBuildDir, config.getAppXFormLocation());
 			File apkCreated = buildApk(session, secureAppBuildDir, config);
-			copyApkToDownloads(session, apkCreated, config);
+			File renamedApk = renameApk(apkCreated, config);
+			copyApkToDownloads(session, renamedApk, config);
+			if(includeFDroid())
+				copyApkToFDroid(session, renamedApk);
 			model.addAttribute(SessionAttributes.APP_CONFIG, config);
 			return WebPage.FINAL;
 		}
@@ -124,6 +128,72 @@ public class SummaryController extends WebMvcConfigurerAdapter
 			}			
 		}
     }
+
+	private File renameApk(File apkCreated, AppConfiguration config) throws IOException
+	{
+		File finalFile = new File(apkCreated.getParent(), config.getApkName());
+		FileUtils.moveFile(apkCreated, finalFile);
+		return finalFile;
+	}
+
+	private void copyApkToFDroid(HttpSession session, File apkCreated) throws Exception
+	{
+		try
+		{
+			File baseDir = createTempFDroidRepo(session);
+			File repoDir = new File(baseDir, FDROID_REPO_DIR);
+			File destination = new File(repoDir, apkCreated.getName());
+			Logger.log(session, "Copy to FDroid Repo: "+ destination.getAbsolutePath());
+			FileUtils.copyFile(apkCreated, destination);
+			destination.setExecutable(true);
+			destination.setWritable(true);
+
+			String fDroidCommand = "fdroid update -v";
+			executeCommand(session, fDroidCommand);
+			fDroidCommand = "fdroid server update -v";
+			executeCommand(session, fDroidCommand);
+		}
+		finally
+		{
+	//		try
+			{
+	//			TODO: add this back once tested on server.			
+	//			if(baseDir != null)
+	//				FileUtils.deleteDirectory(baseDir);
+			}
+	//		catch (IOException e)
+			{
+	//			Logger.logException(e);			
+			}			
+		}
+
+		
+	}
+
+	private int executeCommand(HttpSession session, String command) throws IOException, InterruptedException
+	{
+		String line;
+		Logger.logVerbose(session, "Exec Command:" + command);
+		Runtime rt = Runtime.getRuntime();
+		Process p = rt.exec(command);
+		Logger.logVerbose(session, "Exec Output:");
+		BufferedReader input = new BufferedReader(new InputStreamReader(p.getInputStream()));
+		while ((line = input.readLine()) != null) 
+		{
+			Logger.logVerbose(session, "  |" + line);
+		}
+		Logger.logVerbose(session, "Done.");
+		input.close();		
+		p.waitFor();
+		return p.exitValue();
+	}
+
+	private File createTempFDroidRepo(HttpSession session) throws IOException
+	{
+		File baseDir = getRandomDirectoryFile("fdroid");
+		FileUtils.copyDirectory(SecureAppGeneratorApplication.getOriginalFDroidDirectory(), baseDir);
+		return baseDir;
+	}
 
 	private File configureSecureAppBuildDirectory(HttpSession session) throws IOException
 	{
@@ -211,33 +281,20 @@ public class SummaryController extends WebMvcConfigurerAdapter
 	private File buildApk(HttpSession session, File baseBuildDir, AppConfiguration config) throws IOException, InterruptedException
 	{
 		Logger.log(session, "Building " + config.getApkName());
-		Runtime rt = Runtime.getRuntime();
-   		String gradleCommand = SecureAppGeneratorApplication.getGadleDirectory() + GRADLE_EXE + GRADLE_PARAMETERS + baseBuildDir + GRADLE_BUILD_COMMAND;
-   		Logger.log(session, gradleCommand);
+
+		String gradleCommand = SecureAppGeneratorApplication.getGadleDirectory() + GRADLE_EXE + GRADLE_PARAMETERS + baseBuildDir + GRADLE_BUILD_COMMAND;
 		long startTime = System.currentTimeMillis();
- 
-		String line;
-		Logger.logVerbose(session, "Starting exec");
-		Process p = rt.exec(gradleCommand);
-		Logger.logVerbose(session, "Displaying output from exec.");
-		BufferedReader input = new BufferedReader(new InputStreamReader(p.getInputStream()));
-		while ((line = input.readLine()) != null) 
-		{
-			Logger.logVerbose(session, line);
-		}
-		Logger.logVerbose(session, "Finished exec output.");
-		input.close();		
-    		p.waitFor();
+		int returnCode = executeCommand(session, gradleCommand);
   		long endTime = System.currentTimeMillis();
-   		long buildTime = endTime-startTime;
+ 
+  		long buildTime = endTime-startTime;
    		String timeToBuild = String.format("%02d:%02d", 
    			    TimeUnit.MILLISECONDS.toMinutes(buildTime) - 
    			    TimeUnit.HOURS.toMinutes(TimeUnit.MILLISECONDS.toHours(buildTime)),
    			    TimeUnit.MILLISECONDS.toSeconds(buildTime) - 
    			    TimeUnit.MINUTES.toSeconds(TimeUnit.MILLISECONDS.toMinutes(buildTime)));
 
-   		int returnCode = p.exitValue();
-   		if(returnCode == EXIT_VALUE_GRADLE_SUCCESS)
+    		if(returnCode == EXIT_VALUE_GRADLE_SUCCESS)
    		{
    			Logger.log(session, "Build succeeded:" + timeToBuild);
     		}
@@ -251,11 +308,11 @@ public class SummaryController extends WebMvcConfigurerAdapter
 		return appFileCreated;
 	}
 
-	public void copyApkToDownloads(HttpSession session, File apkFileToMove, AppConfiguration config) throws IOException
+	public void copyApkToDownloads(HttpSession session, File apkFile, AppConfiguration config) throws IOException
 	{
-		File finalFile = new File(apkFileToMove.getParent(), config.getApkName());
-		FileUtils.moveFile(apkFileToMove, finalFile);
-		String urlToApk = AmazonS3Utils.uploadToAmazonS3(session, finalFile);
+		Logger.logVerbose(session, "Uploading APK To S3");
+		String urlToApk = AmazonS3Utils.uploadToAmazonS3(session, apkFile);
+		Logger.logVerbose(session, "Upload Complete.");
 		config.setApkURL(urlToApk);
 	}
 	
@@ -268,16 +325,23 @@ public class SummaryController extends WebMvcConfigurerAdapter
 
 	public File getSessionBuildDirectory() throws IOException
 	{
-		File baseBuildDir = getRandomDirectoryFile();
+		File baseBuildDir = getRandomDirectoryFile("build");
 		return baseBuildDir;
 	}
 
-	public static File getRandomDirectoryFile() throws IOException
+	public static File getRandomDirectoryFile(String type) throws IOException
 	{
 	    final File tempDir;
-	    tempDir = File.createTempFile("build", Long.toString(System.nanoTime()));
+	    tempDir = File.createTempFile(type, Long.toString(System.nanoTime()));
 	    tempDir.delete();
 	    tempDir.mkdirs();
 	    return tempDir;
 	}	
+	
+	private boolean includeFDroid()
+	{
+  		String includeFDroid = System.getenv(SecureAppGeneratorApplication.INCLUDE_FDROID_ENV);
+  		return(includeFDroid != null && includeFDroid.toLowerCase().equals(SecureAppGeneratorApplication.FDROID_TRUE));
+	}
+	
 }

@@ -1,0 +1,352 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<h:html xmlns:h="http://www.w3.org/1999/xhtml" xmlns:orx="http://openrosa.org/jr/xforms" xmlns="http://www.w3.org/2002/xforms" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:jr="http://openrosa.org/javarosa" xmlns:vellum="http://commcarehq.org/xforms/vellum">
+	<h:head>
+		<h:title>Untitled Form</h:title>
+		<model>
+			<instance>
+				<data xmlns:jrm="http://dev.commcarehq.org/jr/xforms" xmlns="http://openrosa.org/formdesigner/338A1A87-9847-4764-9336-1C4E93806578" uiVersion="1" version="1" name="Untitled Form">
+					<section_1>
+						<name />
+						<nationality />
+						<age />
+					</section_1>
+					<section_2>
+						<date />
+					</section_2>
+					<section_3>
+						<sourceOfRecordInformation />
+						<eventLocation />
+					</section_3>
+					<section_4>
+						<anonymous />
+						<testify />
+					</section_4>
+					<section_5 jr:template="">
+						<victimFirstName />
+						<victimLastName />
+						<sex />
+					</section_5>
+				</data>
+			</instance>
+			<bind nodeset="/data/section_1" />
+			<bind nodeset="/data/section_1/name" type="xsd:string" required="true()" />
+			<bind nodeset="/data/section_1/nationality" type="xsd:string" required="true()" />
+			<bind nodeset="/data/section_1/age" type="xsd:int" />
+			<bind nodeset="/data/section_2" />
+			<bind nodeset="/data/section_2/date" type="xsd:date" constraint=". &gt;= date('2000-01-01')" jr:constraintMsg="jr:itext('section_2/date-constraintMsg')" />
+			<bind nodeset="/data/section_3" />
+			<bind nodeset="/data/section_3/sourceOfRecordInformation" />
+			<bind nodeset="/data/section_3/eventLocation" />
+			<bind nodeset="/data/section_4" />
+			<bind nodeset="/data/section_4/anonymous" />
+			<bind nodeset="/data/section_4/testify" />
+			<bind nodeset="/data/section_5" />
+			<bind nodeset="/data/section_5/victimFirstName" type="xsd:string" />
+			<bind nodeset="/data/section_5/victimLastName" type="xsd:string" />
+			<bind nodeset="/data/section_5/sex" />
+			<setvalue event="xforms-ready" ref="/data/section_1/name" value="&quot;John Doe&quot;" />
+			<setvalue event="xforms-ready" ref="/data/section_1/nationality" value="&quot;China&quot;" />
+			<itext>
+				<translation lang="en" default="">
+					<text id="section_1-label">
+						<value>Section 1 (Text Fields)</value>
+					</text>
+					<text id="section_1/name-label">
+						<value>What is your name:</value>
+					</text>
+					<text id="section_1/name-hint">
+						<value>"(Required)"</value>
+					</text>
+					<text id="section_1/nationality-label">
+						<value>What is your country of origin:</value>
+					</text>
+					<text id="section_1/nationality-hint">
+						<value>"(required)"</value>
+					</text>
+					<text id="section_1/age-label">
+						<value>What is your age:</value>
+					</text>
+					<text id="section_2-label">
+						<value>Section 2 (Date field)</value>
+					</text>
+					<text id="section_2/date-label">
+						<value>Date of incident</value>
+					</text>
+					<text id="section_2/date-hint">
+						<value>"(No dates before 2000-01-01 allowed)"</value>
+					</text>
+					<text id="section_2/date-constraintMsg">
+						<value>"No dates before 2000-01-01 allowed"</value>
+					</text>
+					<text id="section_3-label">
+						<value>Section 3 (Drop down lists)</value>
+					</text>
+					<text id="section_3/sourceOfRecordInformation-label">
+						<value>Source of record information</value>
+					</text>
+					<text id="section_3/sourceOfRecordInformation-mediaPress-label">
+						<value>Media/Press</value>
+					</text>
+					<text id="section_3/sourceOfRecordInformation-legalReport-label">
+						<value>Legal Report</value>
+					</text>
+					<text id="section_3/sourceOfRecordInformation-personalInterview-label">
+						<value>Personal Interview</value>
+					</text>
+					<text id="section_3/sourceOfRecordInformation-other-label">
+						<value>Other</value>
+					</text>
+					<text id="section_3/eventLocation-label">
+						<value>Event Location</value>
+					</text>
+					<text id="section_3/eventLocation-r1-label">
+						<value>Region 1</value>
+					</text>
+					<text id="section_3/eventLocation-r2-label">
+						<value>Region 2</value>
+					</text>
+					<text id="section_3/eventLocation-r3-label">
+						<value>Region 3</value>
+					</text>
+					<text id="section_4-label">
+						<value>Section 4 (Check boxes)</value>
+					</text>
+					<text id="section_4/anonymous-label">
+						<value>Does interviewee wish to remain anonymous?</value>
+					</text>
+					<text id="section_4/anonymous-1-label">
+						<value>Yes</value>
+					</text>
+					<text id="section_4/testify-label">
+						<value>Is interviewee willing to testify?</value>
+					</text>
+					<text id="section_4/testify-1-label">
+						<value>Yes</value>
+					</text>
+					<text id="section_5-label">
+						<value>Section 5 (Repeating group of fields)</value>
+					</text>
+					<text id="section_5/victimFirstName-label">
+						<value>Victim First Name</value>
+					</text>
+					<text id="section_5/victimLastName-label">
+						<value>Victim last name</value>
+					</text>
+					<text id="section_5/sex-label">
+						<value>Victim Sex</value>
+					</text>
+					<text id="section_5/sex-female-label">
+						<value>Female</value>
+					</text>
+					<text id="section_5/sex-male-label">
+						<value>Male</value>
+					</text>
+					<text id="section_5/sex-other-label">
+						<value>Other</value>
+					</text>
+				</translation>
+				<translation lang="hin">
+					<text id="section_1-label">
+						<value>Section 1 (Text Fields)</value>
+					</text>
+					<text id="section_1/name-label">
+						<value>What is your name:</value>
+					</text>
+					<text id="section_1/name-hint">
+						<value>"(Required)"</value>
+					</text>
+					<text id="section_1/nationality-label">
+						<value>What is your country of origin:</value>
+					</text>
+					<text id="section_1/nationality-hint">
+						<value>"(required)"</value>
+					</text>
+					<text id="section_1/age-label">
+						<value>What is your age:</value>
+					</text>
+					<text id="section_2-label">
+						<value>Section 2 (Date field)</value>
+					</text>
+					<text id="section_2/date-label">
+						<value>Date of incident</value>
+					</text>
+					<text id="section_2/date-hint">
+						<value>"(No dates before 2000-01-01 allowed)"</value>
+					</text>
+					<text id="section_2/date-constraintMsg">
+						<value>"No dates before 2000-01-01 allowed"</value>
+					</text>
+					<text id="section_3-label">
+						<value>Section 3 (Drop down lists)</value>
+					</text>
+					<text id="section_3/sourceOfRecordInformation-label">
+						<value>Source of record information</value>
+					</text>
+					<text id="section_3/sourceOfRecordInformation-mediaPress-label">
+						<value>Media/Press</value>
+					</text>
+					<text id="section_3/sourceOfRecordInformation-legalReport-label">
+						<value>Legal Report</value>
+					</text>
+					<text id="section_3/sourceOfRecordInformation-personalInterview-label">
+						<value>Personal Interview</value>
+					</text>
+					<text id="section_3/sourceOfRecordInformation-other-label">
+						<value>Other</value>
+					</text>
+					<text id="section_3/eventLocation-label">
+						<value>Event Location</value>
+					</text>
+					<text id="section_3/eventLocation-r1-label">
+						<value>Region 1</value>
+					</text>
+					<text id="section_3/eventLocation-r2-label">
+						<value>Region 2</value>
+					</text>
+					<text id="section_3/eventLocation-r3-label">
+						<value>Region 3</value>
+					</text>
+					<text id="section_4-label">
+						<value>Section 4 (Check boxes)</value>
+					</text>
+					<text id="section_4/anonymous-label">
+						<value>Does interviewee wish to remain anonymous?</value>
+					</text>
+					<text id="section_4/anonymous-1-label">
+						<value>Yes</value>
+					</text>
+					<text id="section_4/testify-label">
+						<value>Is interviewee willing to testify?</value>
+					</text>
+					<text id="section_4/testify-1-label">
+						<value>Yes</value>
+					</text>
+					<text id="section_5-label">
+						<value>Section 5 (Repeating group of fields)</value>
+					</text>
+					<text id="section_5/victimFirstName-label">
+						<value>Victim First Name</value>
+					</text>
+					<text id="section_5/victimLastName-label">
+						<value>Victim last name</value>
+					</text>
+					<text id="section_5/sex-label">
+						<value>Victim Sex</value>
+					</text>
+					<text id="section_5/sex-female-label">
+						<value>Female</value>
+					</text>
+					<text id="section_5/sex-male-label">
+						<value>Male</value>
+					</text>
+					<text id="section_5/sex-other-label">
+						<value>Other</value>
+					</text>
+				</translation>
+			</itext>
+		</model>
+	</h:head>
+	<h:body>
+		<group ref="/data/section_1" appearance="field-list">
+			<label ref="jr:itext('section_1-label')" />
+			<input ref="/data/section_1/name">
+				<label ref="jr:itext('section_1/name-label')" />
+				<hint ref="jr:itext('section_1/name-hint')" />
+			</input>
+			<input ref="/data/section_1/nationality">
+				<label ref="jr:itext('section_1/nationality-label')" />
+				<hint ref="jr:itext('section_1/nationality-hint')" />
+			</input>
+			<input ref="/data/section_1/age">
+				<label ref="jr:itext('section_1/age-label')" />
+			</input>
+		</group>
+		<group ref="/data/section_2" appearance="field-list">
+			<label ref="jr:itext('section_2-label')" />
+			<input ref="/data/section_2/date">
+				<label ref="jr:itext('section_2/date-label')" />
+				<hint ref="jr:itext('section_2/date-hint')" />
+			</input>
+		</group>
+		<group ref="/data/section_3" appearance="field-list">
+			<label ref="jr:itext('section_3-label')" />
+			<select1 ref="/data/section_3/sourceOfRecordInformation" appearance="minimal">
+				<label ref="jr:itext('section_3/sourceOfRecordInformation-label')" />
+				<item>
+					<label ref="jr:itext('section_3/sourceOfRecordInformation-mediaPress-label')" />
+					<value>mediaPress</value>
+				</item>
+				<item>
+					<label ref="jr:itext('section_3/sourceOfRecordInformation-legalReport-label')" />
+					<value>legalReport</value>
+				</item>
+				<item>
+					<label ref="jr:itext('section_3/sourceOfRecordInformation-personalInterview-label')" />
+					<value>personalInterview</value>
+				</item>
+				<item>
+					<label ref="jr:itext('section_3/sourceOfRecordInformation-other-label')" />
+					<value>other</value>
+				</item>
+			</select1>
+			<select1 ref="/data/section_3/eventLocation" appearance="minimal">
+				<label ref="jr:itext('section_3/eventLocation-label')" />
+				<item>
+					<label ref="jr:itext('section_3/eventLocation-r1-label')" />
+					<value>r1</value>
+				</item>
+				<item>
+					<label ref="jr:itext('section_3/eventLocation-r2-label')" />
+					<value>r2</value>
+				</item>
+				<item>
+					<label ref="jr:itext('section_3/eventLocation-r3-label')" />
+					<value>r3</value>
+				</item>
+			</select1>
+		</group>
+		<group ref="/data/section_4" appearance="field-list">
+			<label ref="jr:itext('section_4-label')" />
+			<select1 ref="/data/section_4/anonymous">
+				<label ref="jr:itext('section_4/anonymous-label')" />
+				<item>
+					<label ref="jr:itext('section_4/anonymous-1-label')" />
+					<value>1</value>
+				</item>
+			</select1>
+			<select1 ref="/data/section_4/testify">
+				<label ref="jr:itext('section_4/testify-label')" />
+				<item>
+					<label ref="jr:itext('section_4/testify-1-label')" />
+					<value>1</value>
+				</item>
+			</select1>
+		</group>
+		<group appearance="field-list">
+			<label ref="jr:itext('section_5-label')" />
+			<repeat nodeset="/data/section_5">
+				<input ref="/data/section_5/victimFirstName">
+					<label ref="jr:itext('section_5/victimFirstName-label')" />
+				</input>
+				<input ref="/data/section_5/victimLastName">
+					<label ref="jr:itext('section_5/victimLastName-label')" />
+				</input>
+				<select1 ref="/data/section_5/sex" appearance="minimal">
+					<label ref="jr:itext('section_5/sex-label')" />
+					<item>
+						<label ref="jr:itext('section_5/sex-female-label')" />
+						<value>female</value>
+					</item>
+					<item>
+						<label ref="jr:itext('section_5/sex-male-label')" />
+						<value>male</value>
+					</item>
+					<item>
+						<label ref="jr:itext('section_5/sex-other-label')" />
+						<value>other</value>
+					</item>
+				</select1>
+			</repeat>
+		</group>
+	</h:body>
+</h:html>
