@@ -25,6 +25,10 @@ Boston, MA 02111-1307, USA.
 
 package org.benetech.secureapp.generator;
 
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStreamReader;
+
 import javax.servlet.http.HttpSession;
 
 import org.martus.common.MartusLogger;
@@ -67,6 +71,25 @@ public class Logger
 	{
 		MartusLogger.logWarning(getMsgIncludingSessionIdIfPresent(session, warningMsg));
 	}
+	
+	public static synchronized void logProcess(HttpSession session, Process p) throws IOException
+	{
+		String line;
+		logVerbose(session, "Exec Output:");
+		BufferedReader input = new BufferedReader(new InputStreamReader(p.getInputStream()));
+		BufferedReader error = new BufferedReader(new InputStreamReader(p.getErrorStream()));
+		while ((line = input.readLine()) != null) 
+		{
+			logVerbose(session, "  |" + line);
+		}
+		while ((line = error.readLine()) != null) 
+		{
+			logVerbose(session, "  |Error|" + line);
+		}		
+		logVerbose(session, "Done.");
+		input.close();
+	}
+	
 	
 	private static boolean verboseLogging()
 	{

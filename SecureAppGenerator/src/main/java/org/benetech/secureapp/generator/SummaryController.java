@@ -25,18 +25,17 @@ Boston, MA 02111-1307, USA.
 
 package org.benetech.secureapp.generator;
 
-import java.io.BufferedReader;
 import java.io.BufferedWriter;
 import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
-import java.io.InputStreamReader;
 import java.io.OutputStreamWriter;
 import java.util.concurrent.TimeUnit;
 
 import javax.servlet.http.HttpSession;
 
 import org.apache.commons.io.FileUtils;
+import org.benetech.secureapp.generator.AmazonS3Utils.S3Exception;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -172,21 +171,14 @@ public class SummaryController extends WebMvcConfigurerAdapter
 
 	private int executeCommand(HttpSession session, String command) throws IOException, InterruptedException
 	{
-		String line;
 		Logger.logVerbose(session, "Exec Command:" + command);
 		Runtime rt = Runtime.getRuntime();
 		Process p = rt.exec(command);
-		Logger.logVerbose(session, "Exec Output:");
-		BufferedReader input = new BufferedReader(new InputStreamReader(p.getInputStream()));
-		while ((line = input.readLine()) != null) 
-		{
-			Logger.logVerbose(session, "  |" + line);
-		}
-		Logger.logVerbose(session, "Done.");
-		input.close();		
+		Logger.logProcess(session, p);		
 		p.waitFor();
 		return p.exitValue();
 	}
+
 
 	private File createTempFDroidRepo(HttpSession session) throws IOException
 	{
@@ -308,7 +300,7 @@ public class SummaryController extends WebMvcConfigurerAdapter
 		return appFileCreated;
 	}
 
-	public void copyApkToDownloads(HttpSession session, File apkFile, AppConfiguration config) throws IOException
+	public void copyApkToDownloads(HttpSession session, File apkFile, AppConfiguration config) throws S3Exception
 	{
 		Logger.logVerbose(session, "Uploading APK To S3");
 		String urlToApk = AmazonS3Utils.uploadToAmazonS3(session, apkFile);
