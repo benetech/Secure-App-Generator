@@ -166,8 +166,8 @@ keyaliases['com.example.another.plugin'] = '@com.example.another'
 # any of them.
 #
 awsbucket = 'qa-martus-sag'
-awsaccesskeyid = 'AKIAIS53YP7S3XL7QZXA'
-awssecretkey = 'kknQUJXljz7hvLvb9wix5fQjZaJ60QEps8ox7BKb'
+awsaccesskeyid = ''
+awssecretkey = ''
 
 
 # If you want to force 'fdroid server' to use a non-standard serverwebroot
