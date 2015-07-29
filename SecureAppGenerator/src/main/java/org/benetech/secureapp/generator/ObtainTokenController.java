@@ -37,6 +37,7 @@ import java.util.Vector;
 
 import javax.servlet.http.HttpSession;
 
+import org.benetech.secureapp.generator.AmazonS3Utils.S3Exception;
 import org.martus.clientside.ClientSideNetworkGateway;
 import org.martus.common.DammCheckDigitAlgorithm.CheckDigitInvalidException;
 import org.martus.common.Exceptions.ServerCallFailedException;
@@ -100,6 +101,11 @@ public class ObtainTokenController extends WebMvcConfigurerAdapter
 					return WebPage.SUMMARY;
 				}
 			}
+			catch (S3Exception e)
+			{
+				Logger.logException(session, e);
+				appConfig.setClientTokenError("Error: Unable to communicate with server.");
+			}
 			catch (Exception e)
 			{
 				Logger.logException(session, e);
@@ -110,7 +116,7 @@ public class ObtainTokenController extends WebMvcConfigurerAdapter
 		return WebPage.OBTAIN_CLIENT_TOKEN;
     }
 
-	private void updateApkVersionInfoAndName(HttpSession session) throws IOException
+	private void updateApkVersionInfoAndName(HttpSession session) throws IOException, S3Exception
 	{
         AppConfiguration config = (AppConfiguration)session.getAttribute(SessionAttributes.APP_CONFIG);
         getBuildVersionFromGeneratedSettingsFile(config);

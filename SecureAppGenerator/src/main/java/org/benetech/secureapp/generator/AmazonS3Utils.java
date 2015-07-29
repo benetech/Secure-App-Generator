@@ -41,8 +41,25 @@ import com.amazonaws.services.s3.model.Permission;
 import com.amazonaws.services.s3.model.PutObjectRequest;
 import com.amazonaws.services.s3.model.S3ObjectSummary;
 
+
 public class AmazonS3Utils
 {
+	
+	public static class S3Exception extends Exception
+	{
+		private static final long serialVersionUID = 4912559993409813648L;
+
+		S3Exception(String msg)
+		{
+			super(msg);
+		}
+
+		public S3Exception(Exception e)
+		{
+			super(e);
+		}
+	}
+	
 	private static final String AMAZON_S3_DOWNLOAD_BUCKET_ENV = "S3_DOWNLOAD_BUCKET";
 	private static final String AMAZON_S3_KEY_ENV = "AWS_KEY";
 	private static final String AMAZON_S3_SECRET_ENV = "AWS_SECRET";
@@ -54,65 +71,83 @@ public class AmazonS3Utils
 		return AMAZON_S3_BASE_DIR;
 	}
 	
-	static public String uploadToAmazonS3(HttpSession session, File fileToUpload)
+	static public String uploadToAmazonS3(HttpSession session, File fileToUpload) throws S3Exception
 	{
-        AmazonS3 s3client = getS3();
-		String bucketName = getDownloadS3Bucket();
-		Logger.logVerbose(session, "S3BucketName = " + bucketName);
-		if(!s3client.doesBucketExist(bucketName))
-			Logger.logError(session, "Does not exist?  S3 Bucket :" + bucketName);
+        try
+		{
+			AmazonS3 s3client = getS3();
+			String bucketName = getDownloadS3Bucket();
+			Logger.logVerbose(session, "S3BucketName = " + bucketName);
+			if(!s3client.doesBucketExist(bucketName))
+				Logger.logError(session, "Does not exist?  S3 Bucket :" + bucketName);
 
-		AccessControlList acl = new AccessControlList();
-		acl.grantPermission(GroupGrantee.AllUsers, Permission.Read);
-		s3client.putObject(new PutObjectRequest(bucketName, getAPKDownloadFilePathWithFile(fileToUpload),  fileToUpload).withAccessControlList(acl));
+			AccessControlList acl = new AccessControlList();
+			acl.grantPermission(GroupGrantee.AllUsers, Permission.Read);
+			s3client.putObject(new PutObjectRequest(bucketName, getAPKDownloadFilePathWithFile(fileToUpload),  fileToUpload).withAccessControlList(acl));
 
-		String apkURL = getBaseUrl() + getDownloadS3Bucket() + "/" + getAPKDownloadFilePathWithFile(fileToUpload);
-		Logger.log(session, "APK URL = " + apkURL);
-		return apkURL;
+			String apkURL = getBaseUrl() + getDownloadS3Bucket() + "/" + getAPKDownloadFilePathWithFile(fileToUpload);
+			Logger.log(session, "APK URL = " + apkURL);
+			return apkURL;
+		}
+		catch (Exception e)
+		{
+			throw new S3Exception(e);
+		}
 	}
 
-	private static AmazonS3 getS3()
+	private static AmazonS3 getS3() throws S3Exception
 	{
-		AmazonS3 s3client = new AmazonS3Client(new BasicAWSCredentials(getAwsKey(), getAwsSecret()));
+		String awsKey = getAwsKey();
+		if(awsKey == null)
+			throw new S3Exception("AWS Key can not be null");
+		String awsSecret = getAwsSecret();
+		AmazonS3 s3client = new AmazonS3Client(new BasicAWSCredentials(awsKey, awsSecret));
 		return s3client;
 	}
 
-	public static String getUniqueBuildNumber(String apkNameWithNoSagBuild)
+	public static String getUniqueBuildNumber(String apkNameWithNoSagBuild) throws S3Exception
 	{
-		String partialApkName = apkNameWithNoSagBuild.substring(0, apkNameWithNoSagBuild.length()-5).toLowerCase();
-		int greatestBuildNumberFound = 0;
-
-		AmazonS3 s3 = getS3();
-		ObjectListing listing = s3.listObjects(getDownloadS3Bucket(), AMAZON_DOWNLOADS_DIRECTORY);
-		List<S3ObjectSummary> summaries = listing.getObjectSummaries();
-
-		while (listing.isTruncated()) 
+		try
 		{
-		   listing = s3.listNextBatchOfObjects (listing);
-		   summaries.addAll (listing.getObjectSummaries());
-		}
-		
-		if(!summaries.isEmpty())
-		{
-			for (Iterator<S3ObjectSummary> iterator = summaries.iterator(); iterator.hasNext();)
+			String partialApkName = apkNameWithNoSagBuild.substring(0, apkNameWithNoSagBuild.length()-5).toLowerCase();
+			int greatestBuildNumberFound = 0;
+
+			AmazonS3 s3 = getS3();
+			ObjectListing listing = s3.listObjects(getDownloadS3Bucket(), AMAZON_DOWNLOADS_DIRECTORY);
+			List<S3ObjectSummary> summaries = listing.getObjectSummaries();
+
+			while (listing.isTruncated()) 
 			{
-				S3ObjectSummary currentApk = (S3ObjectSummary) iterator.next();
-				String currentApkName = currentApk.getKey().toLowerCase();
-				String amazonObjectPartialName = AMAZON_DOWNLOADS_DIRECTORY + partialApkName;
-				if(currentApkName.startsWith(amazonObjectPartialName))
+			   listing = s3.listNextBatchOfObjects (listing);
+			   summaries.addAll (listing.getObjectSummaries());
+			}
+			
+			if(!summaries.isEmpty())
+			{
+				for (Iterator<S3ObjectSummary> iterator = summaries.iterator(); iterator.hasNext();)
 				{
-					int buildStartPos = amazonObjectPartialName.length();
-					int buildEndPos = currentApkName.length()-4;
-					String currentBuildNumberString = currentApkName.substring(buildStartPos, buildEndPos);
-					int currentBuildNumber = Integer.parseInt(currentBuildNumberString);
-					if(currentBuildNumber > greatestBuildNumberFound)
-						greatestBuildNumberFound = currentBuildNumber;
+					S3ObjectSummary currentApk = (S3ObjectSummary) iterator.next();
+					String currentApkName = currentApk.getKey().toLowerCase();
+					String amazonObjectPartialName = AMAZON_DOWNLOADS_DIRECTORY + partialApkName;
+					if(currentApkName.startsWith(amazonObjectPartialName))
+					{
+						int buildStartPos = amazonObjectPartialName.length();
+						int buildEndPos = currentApkName.length()-4;
+						String currentBuildNumberString = currentApkName.substring(buildStartPos, buildEndPos);
+						int currentBuildNumber = Integer.parseInt(currentBuildNumberString);
+						if(currentBuildNumber > greatestBuildNumberFound)
+							greatestBuildNumberFound = currentBuildNumber;
+					}
 				}
 			}
+			
+			int nextSagBuildNumber = greatestBuildNumberFound+1;
+			return Integer.toString(nextSagBuildNumber);
 		}
-		
-		int nextSagBuildNumber = greatestBuildNumberFound+1;
-		return Integer.toString(nextSagBuildNumber);
+		catch (Exception e)
+		{
+			throw new S3Exception(e);
+		}
 	}
 
 	static private String getDownloadS3Bucket()
