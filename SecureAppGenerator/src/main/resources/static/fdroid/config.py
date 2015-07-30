@@ -33,8 +33,8 @@ gradle = "gradle"
 # The same policy is applied to the archive repo, if there is one.
 repo_maxage = 0
 
-repo_url = "https://s3.amazonaws.com/qa-martus-sag/fdroid/repo"
-repo_name = "Secure App"
+repo_url = ""
+repo_name = ""
 repo_icon = "fdroid-icon.png"
 repo_description = """
 This is a repository of apps to be used with F-Droid. Applications in this
@@ -69,12 +69,12 @@ The repository of older versions of applications from the main demo repository.
 # gpghome = /home/fdroid/somewhere/else/.gnupg
 
 # The ID of a GPG key for making detached signatures for apks. Optional.
-# gpgkey = '1DBA2E89'
+# gpgkey = ''
 
 # The key (from the keystore defined below) to be used for signing the
 # repository itself.  This is the same name you would give to keytool or
 # jarsigner using -alias.  (Not needed in an unsigned repository).
-repo_keyalias = "9c6c6a034fb6"
+repo_keyalias = ""
 
 # Optionally, the public key for the key defined by repo_keyalias above can
 # be specified here. There is no need to do this, as the public key can and
@@ -101,15 +101,15 @@ keystore = "keystore.jks"
 # different than the keypass below, it can be OK to store the password in this
 # file for real use.  But in general, sensitive passwords should not be stored
 # in text files!
-keystorepass = "WJddze84qI9HxcooXODDqBaXU5Nj0SaxhaXYM4ae58U="
+keystorepass = ""
 
 # The password for keys - the same is used for each auto-generated key as well
 # as for the repository key.  You should not normally store this password in a
 # file since it is a sensitive password.
-keypass = "WJddze84qI9HxcooXODDqBaXU5Nj0SaxhaXYM4ae58U="
+keypass = ""
 
 # The distinguished name used for all keys.
-keydname = "CN=9c6c6a034fb6, OU=F-Droid"
+keydname = ""
 
 # Use this to override the auto-generated key aliases with specific ones
 # for particular applications. Normally, just leave it empty.
@@ -165,7 +165,7 @@ keyaliases['com.example.another.plugin'] = '@com.example.another'
 # storage services, so it should be easy to port the fdroid server tools to
 # any of them.
 #
-awsbucket = 'qa-martus-sag'
+awsbucket = ''
 awsaccesskeyid = ''
 awssecretkey = ''
 
@@ -217,12 +217,12 @@ sdk_path = "$ANDROID_HOME"
 
 build_tools = "22.0.1"
 
-keystore = "keystore.jks"
+keystore = "k"
 
-keystorepass = "WJddze84qI9HxcooXODDqBaXU5Nj0SaxhaXYM4ae58U="
+keystorepass = ""
 
-keypass = "WJddze84qI9HxcooXODDqBaXU5Nj0SaxhaXYM4ae58U="
+keypass = ""
 
-repo_keyalias = "9c6c6a034fb6"
+repo_keyalias = ""
 
-keydname = "CN=9c6c6a034fb6, OU=F-Droid"
+keydname = ""
