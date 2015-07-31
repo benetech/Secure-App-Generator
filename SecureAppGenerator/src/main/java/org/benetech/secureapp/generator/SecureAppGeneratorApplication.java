@@ -29,8 +29,6 @@ public class SecureAppGeneratorApplication extends SpringBootServletInitializer
 	private static final String DEFAULT_APP_ICON_LOCATION = "/images/Martus-swoosh-30x30.png";
 	private static final String ICON_LOCAL_File = getStaticWebDirectory() + DEFAULT_APP_ICON_LOCATION;
 	private static final String GRADLE_HOME_ENV = "GRADLE_HOME";
-	public static final String INCLUDE_FDROID_ENV = "INCLUDE_FDROID";
-	public static final String FDROID_TRUE = "true";
 
     @Override
     protected SpringApplicationBuilder configure(SpringApplicationBuilder application) {
@@ -127,8 +125,22 @@ public class SecureAppGeneratorApplication extends SpringBootServletInitializer
 		return convertToBase64BySingleBytes(data);
 	}
 
-	public static File getOriginalFDroidDirectory()
+	public static File getRandomDirectoryFile(String type) throws IOException
 	{
-		return new File(getStaticWebDirectory(), "fdroid");
+	    final File tempDir;
+	    tempDir = File.createTempFile(type, Long.toString(System.nanoTime()));
+	    tempDir.delete();
+	    tempDir.mkdirs();
+	    return tempDir;
+	}	
+	
+	static public int executeCommand(HttpSession session, String command, File initialDirectory) throws IOException, InterruptedException
+	{
+		Logger.logVerbose(session, "Exec Command:" + command);
+		Runtime rt = Runtime.getRuntime();
+		Process p = rt.exec(command, null, initialDirectory);
+		Logger.logProcess(session, p);		
+		p.waitFor();
+		return p.exitValue();
 	}
 }

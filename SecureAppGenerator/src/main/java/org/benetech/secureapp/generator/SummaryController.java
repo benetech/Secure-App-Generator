@@ -45,7 +45,6 @@ import org.springframework.web.servlet.config.annotation.WebMvcConfigurerAdapter
 @Controller
 public class SummaryController extends WebMvcConfigurerAdapter
 {
-    private static final String FDROID_REPO_DIR = "repo";
 	public static final String VERSION_BUILD_XML = "versionBuild";
     public static final String VERSION_MINOR_XML = "versionMinor";
     public static final String VERSION_MAJOR_XML = "versionMajor";
@@ -101,8 +100,8 @@ public class SummaryController extends WebMvcConfigurerAdapter
 			File apkCreated = buildApk(session, secureAppBuildDir, config);
 			File renamedApk = renameApk(apkCreated, config);
 			copyApkToDownloads(session, renamedApk, config);
-			if(includeFDroid())
-				copyApkToFDroid(session, renamedApk);
+			if(Fdroid.includeFDroid())
+				Fdroid.copyApkToFDroid(session, renamedApk);
 			model.addAttribute(SessionAttributes.APP_CONFIG, config);
 			return WebPage.FINAL;
 		}
@@ -133,58 +132,6 @@ public class SummaryController extends WebMvcConfigurerAdapter
 		File finalFile = new File(apkCreated.getParent(), config.getApkName());
 		FileUtils.moveFile(apkCreated, finalFile);
 		return finalFile;
-	}
-
-	private void copyApkToFDroid(HttpSession session, File apkCreated) throws Exception
-	{
-		try
-		{
-			File baseDir = createTempFDroidRepo(session);
-			File repoDir = new File(baseDir, FDROID_REPO_DIR);
-			File destination = new File(repoDir, apkCreated.getName());
-			Logger.log(session, "Copy to FDroid Repo: "+ destination.getAbsolutePath());
-			FileUtils.copyFile(apkCreated, destination);
-			destination.setExecutable(true);
-			destination.setWritable(true);
-
-			String fDroidCommand = "fdroid update -v";
-			executeCommand(session, fDroidCommand);
-			fDroidCommand = "fdroid server update -v";
-			executeCommand(session, fDroidCommand);
-		}
-		finally
-		{
-	//		try
-			{
-	//			TODO: add this back once tested on server.			
-	//			if(baseDir != null)
-	//				FileUtils.deleteDirectory(baseDir);
-			}
-	//		catch (IOException e)
-			{
-	//			Logger.logException(e);			
-			}			
-		}
-
-		
-	}
-
-	private int executeCommand(HttpSession session, String command) throws IOException, InterruptedException
-	{
-		Logger.logVerbose(session, "Exec Command:" + command);
-		Runtime rt = Runtime.getRuntime();
-		Process p = rt.exec(command);
-		Logger.logProcess(session, p);		
-		p.waitFor();
-		return p.exitValue();
-	}
-
-
-	private File createTempFDroidRepo(HttpSession session) throws IOException
-	{
-		File baseDir = getRandomDirectoryFile("fdroid");
-		FileUtils.copyDirectory(SecureAppGeneratorApplication.getOriginalFDroidDirectory(), baseDir);
-		return baseDir;
 	}
 
 	private File configureSecureAppBuildDirectory(HttpSession session) throws IOException
@@ -276,7 +223,7 @@ public class SummaryController extends WebMvcConfigurerAdapter
 
 		String gradleCommand = SecureAppGeneratorApplication.getGadleDirectory() + GRADLE_EXE + GRADLE_PARAMETERS + baseBuildDir + GRADLE_BUILD_COMMAND;
 		long startTime = System.currentTimeMillis();
-		int returnCode = executeCommand(session, gradleCommand);
+		int returnCode = SecureAppGeneratorApplication.executeCommand(session, gradleCommand, null);
   		long endTime = System.currentTimeMillis();
  
   		long buildTime = endTime-startTime;
@@ -317,23 +264,8 @@ public class SummaryController extends WebMvcConfigurerAdapter
 
 	public File getSessionBuildDirectory() throws IOException
 	{
-		File baseBuildDir = getRandomDirectoryFile("build");
+		File baseBuildDir = SecureAppGeneratorApplication.getRandomDirectoryFile("build");
 		return baseBuildDir;
 	}
 
-	public static File getRandomDirectoryFile(String type) throws IOException
-	{
-	    final File tempDir;
-	    tempDir = File.createTempFile(type, Long.toString(System.nanoTime()));
-	    tempDir.delete();
-	    tempDir.mkdirs();
-	    return tempDir;
-	}	
-	
-	private boolean includeFDroid()
-	{
-  		String includeFDroid = System.getenv(SecureAppGeneratorApplication.INCLUDE_FDROID_ENV);
-  		return(includeFDroid != null && includeFDroid.toLowerCase().equals(SecureAppGeneratorApplication.FDROID_TRUE));
-	}
-	
 }
