@@ -1,11 +1,15 @@
 package org.benetech.secureapp.generator;
 
 import java.io.BufferedOutputStream;
+import java.io.BufferedWriter;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
+import java.io.FileWriter;
 import java.io.IOException;
+import java.io.OutputStreamWriter;
 import java.io.StringWriter;
+import java.io.UnsupportedEncodingException;
 import java.io.Writer;
 import java.nio.file.Files;
 
@@ -134,6 +138,15 @@ public class SecureAppGeneratorApplication extends SpringBootServletInitializer
 	    return tempDir;
 	}	
 	
+	static public void writeDataToFile(File file, StringBuilder data) throws FileNotFoundException, UnsupportedEncodingException, IOException
+	{
+		FileOutputStream fileOutputStream = new FileOutputStream(file);
+		BufferedWriter writer = new BufferedWriter(new OutputStreamWriter(fileOutputStream,"UTF-8"));       
+   		writer.write(data.toString());
+   		writer.flush();
+    		writer.close();
+	}
+
 	static public int executeCommand(HttpSession session, String command, File initialDirectory) throws IOException, InterruptedException
 	{
 		Logger.logVerbose(session, "Exec Command:" + command);

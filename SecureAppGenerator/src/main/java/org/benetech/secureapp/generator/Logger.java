@@ -28,6 +28,7 @@ package org.benetech.secureapp.generator;
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
+import java.util.concurrent.TimeUnit;
 
 import javax.servlet.http.HttpSession;
 
@@ -90,10 +91,21 @@ public class Logger
 		input.close();
 	}
 	
-	
 	private static boolean verboseLogging()
 	{
   		String verbose = System.getenv(DEBUG_VERBOSE_ENV);
   		return(verbose != null && verbose.toLowerCase().equals(VERBOSE_DEBUGGING_ON));
 	}
+
+	public static String getElapsedTime(long startTime, long endTime)
+	{
+		long elapsedTime = endTime-startTime;
+   		String timeToBuild = String.format("%02d:%02d", 
+   			    TimeUnit.MILLISECONDS.toMinutes(elapsedTime) - 
+   			    TimeUnit.HOURS.toMinutes(TimeUnit.MILLISECONDS.toHours(elapsedTime)),
+   			    TimeUnit.MILLISECONDS.toSeconds(elapsedTime) - 
+   			    TimeUnit.MINUTES.toSeconds(TimeUnit.MILLISECONDS.toMinutes(elapsedTime)));
+		return timeToBuild;
+	}
+	
 }

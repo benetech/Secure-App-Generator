@@ -26,7 +26,9 @@ Boston, MA 02111-1307, USA.
 package org.benetech.secureapp.generator;
 
 import java.io.File;
+import java.io.FileNotFoundException;
 import java.io.IOException;
+import java.io.UnsupportedEncodingException;
 
 import javax.servlet.http.HttpSession;
 
@@ -34,20 +36,22 @@ import org.apache.commons.io.FileUtils;
 
 public class Fdroid
 {
-    private static final String FDROID_REPO_DIR = "repo";
+    private static final String CONFIG_PY_FILE_NAME = "config.py";
+	private static final String FDROID_REPO_DIR = "repo";
 	private static final String INCLUDE_FDROID_ENV = "INCLUDE_FDROID";
 	private static final String FDROID_TRUE = "true";
 
     public static File getOriginalFDroidDirectory()
 	{
-		return new File(SecureAppGeneratorApplication.getStaticWebDirectory(), "fdroidmaster");
+		return new File(SecureAppGeneratorApplication.getStaticWebDirectory(), "FDroidMaster");
 	}
 
 	static public void copyApkToFDroid(HttpSession session, File apkCreated) throws Exception
 	{
 		try
 		{
-			File baseDir = createTempFDroidRepo(session);
+			long startTime = System.currentTimeMillis();
+			File baseDir = setupTempFDroidRepo(session);
 			File repoDir = new File(baseDir, FDROID_REPO_DIR);
 			File destination = new File(repoDir, apkCreated.getName());
 			Logger.log(session, "Copy to FDroid Repo: "+ destination.getAbsolutePath());
@@ -59,6 +63,9 @@ public class Fdroid
 			SecureAppGeneratorApplication.executeCommand(session, fDroidCommand, baseDir);
 			fDroidCommand = "fdroid server update -v";
 			SecureAppGeneratorApplication.executeCommand(session, fDroidCommand, baseDir);
+	  		long endTime = System.currentTimeMillis();
+	  		String timeToBuild = Logger.getElapsedTime(startTime, endTime);
+	  		Logger.log(session, "Fdroid Build took" + timeToBuild);
 		}
 		finally
 		{
@@ -75,11 +82,18 @@ public class Fdroid
 		}
 	}
 
-	static private File createTempFDroidRepo(HttpSession session) throws IOException
+	static private File setupTempFDroidRepo(HttpSession session) throws IOException
 	{
 		File baseDir = SecureAppGeneratorApplication.getRandomDirectoryFile("fdroid");
 		FileUtils.copyDirectory(getOriginalFDroidDirectory(), baseDir);
+		addS3ServerInformation(session, baseDir);
 		return baseDir;
+	}
+
+	private static void addS3ServerInformation(HttpSession session, File baseDir) throws FileNotFoundException, UnsupportedEncodingException, IOException
+	{
+		File configFile = new File(baseDir, CONFIG_PY_FILE_NAME);
+		AmazonS3Utils.addS3DataToFdroidConfig(session, configFile);
 	}
 
 	static public boolean includeFDroid()

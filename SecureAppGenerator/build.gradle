@@ -33,6 +33,10 @@ war {
         include '**/**'
         into('WEB-INF/classes/static/SecureAppBuildMaster/secure-app')
     }
+    from('src/main/resources/static/FDroidMaster') {
+        include '**/**'
+        into('WEB-INF/classes/static/FDroidMaster')
+    }
 }
 
 sourceCompatibility = 1.8

@@ -26,6 +26,10 @@ Boston, MA 02111-1307, USA.
 package org.benetech.secureapp.generator;
 
 import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.FileWriter;
+import java.io.IOException;
+import java.io.UnsupportedEncodingException;
 import java.util.Iterator;
 import java.util.List;
 
@@ -169,4 +173,26 @@ public class AmazonS3Utils
 	{
  		return System.getenv(AMAZON_S3_KEY_ENV);
 	}
+
+	public static void addS3DataToFdroidConfig(HttpSession session, File config) throws FileNotFoundException, UnsupportedEncodingException, IOException
+	{
+		Logger.logVerbose(session, "Adding S3 info to File: "+config.getAbsolutePath());
+		StringBuilder awsData = new StringBuilder();
+		addKeyValuePair(awsData, "awsbucket", getDownloadS3Bucket());
+		addKeyValuePair(awsData, "awsaccesskeyid", getAwsKey());
+		addKeyValuePair(awsData, "awssecretkey", getAwsSecret());
+ 		FileWriter writer = new FileWriter(config, true);
+ 		writer.write(awsData.toString());
+ 		writer.flush();
+ 		writer.close();
+ 	}
+
+	private static void addKeyValuePair(StringBuilder awsData, String key, String value)
+	{
+		awsData.append(key);
+		awsData.append(" = '");
+		awsData.append(value);
+		awsData.append("'\n");
+	}
 }
+;;

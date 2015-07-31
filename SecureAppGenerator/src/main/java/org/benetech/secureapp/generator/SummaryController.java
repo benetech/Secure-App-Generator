@@ -25,11 +25,8 @@ Boston, MA 02111-1307, USA.
 
 package org.benetech.secureapp.generator;
 
-import java.io.BufferedWriter;
 import java.io.File;
-import java.io.FileOutputStream;
 import java.io.IOException;
-import java.io.OutputStreamWriter;
 import java.util.concurrent.TimeUnit;
 
 import javax.servlet.http.HttpSession;
@@ -174,11 +171,7 @@ public class SummaryController extends WebMvcConfigurerAdapter
 		appendGradleValue(data, APP_NAME_XML, config.getAppName());
 
 		File apkResourseFile = new File(baseBuildDir, GRADLE_GENERATED_SETTINGS_FILE);
-  		FileOutputStream fileOutputStream = new FileOutputStream(apkResourseFile);
-		BufferedWriter writer = new BufferedWriter(new OutputStreamWriter(fileOutputStream,"UTF-8"));       
-   		writer.write(data.toString());
-   		writer.flush();
-   		writer.close();
+  		SecureAppGeneratorApplication.writeDataToFile(apkResourseFile, data);
  	}
 		
 	private void updateApkSettings(File baseBuildDir, AppConfiguration config) throws IOException
@@ -192,11 +185,7 @@ public class SummaryController extends WebMvcConfigurerAdapter
 		data.append("</resources>\n");
 
 		File apkResourseFile = new File(baseBuildDir, APK_RESOURCE_FILE_LOCAL);
-  		FileOutputStream fileOutputStream = new FileOutputStream(apkResourseFile);
-		BufferedWriter writer = new BufferedWriter(new OutputStreamWriter(fileOutputStream,"UTF-8"));       
-   		writer.write(data.toString());
-   		writer.flush();
-   		writer.close();
+ 		SecureAppGeneratorApplication.writeDataToFile(apkResourseFile, data);
  	}
 
 	private void appendKeyValue(StringBuilder data, String key, String value)
@@ -226,12 +215,7 @@ public class SummaryController extends WebMvcConfigurerAdapter
 		int returnCode = SecureAppGeneratorApplication.executeCommand(session, gradleCommand, null);
   		long endTime = System.currentTimeMillis();
  
-  		long buildTime = endTime-startTime;
-   		String timeToBuild = String.format("%02d:%02d", 
-   			    TimeUnit.MILLISECONDS.toMinutes(buildTime) - 
-   			    TimeUnit.HOURS.toMinutes(TimeUnit.MILLISECONDS.toHours(buildTime)),
-   			    TimeUnit.MILLISECONDS.toSeconds(buildTime) - 
-   			    TimeUnit.MINUTES.toSeconds(TimeUnit.MILLISECONDS.toMinutes(buildTime)));
+  		String timeToBuild = Logger.getElapsedTime(startTime, endTime);
 
     		if(returnCode == EXIT_VALUE_GRADLE_SUCCESS)
    		{
