@@ -280,6 +280,15 @@ a.download_link:active {
     font-size: 36px;
 }  
 
+.button_next_disabled{
+    position: absolute;
+    top: 500px;
+    right: 100px;
+	background-color: gray;
+    color: lightgray;
+    font-size: 36px;
+}  
+
 
 .button_upload{
     color: #6ECDE4;

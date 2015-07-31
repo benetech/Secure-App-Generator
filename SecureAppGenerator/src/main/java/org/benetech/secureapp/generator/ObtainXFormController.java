@@ -34,9 +34,7 @@ import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 import javax.servlet.http.HttpSession;
 import javax.xml.parsers.DocumentBuilder;
@@ -48,6 +46,7 @@ import org.javarosa.core.model.FormIndex;
 import org.javarosa.core.model.GroupDef;
 import org.javarosa.core.model.IFormElement;
 import org.javarosa.core.model.QuestionDef;
+import org.javarosa.core.util.OrderedMap;
 import org.javarosa.form.api.FormEntryController;
 import org.javarosa.form.api.FormEntryModel;
 import org.javarosa.form.api.FormEntryPrompt;
@@ -388,9 +387,11 @@ public class ObtainXFormController extends WebMvcConfigurerAdapter
 	}
 	
 	@ModelAttribute("formsImpMap")
-	public static Map<String,String> populateFormsMap() throws MalformedURLException, IOException 
+	public static OrderedMap<String,String> populateFormsMap() throws MalformedURLException, IOException 
 	{
-	    Map<String,String> formsImpMap = new HashMap<String,String>();
+	    OrderedMap<String,String> formsImpMap = new OrderedMap<String,String>();
+	    String chooseAnXForm = new String("Select a default form");
+	    formsImpMap.put(chooseAnXForm, null);
 		File xFormsDirectory = new File(XFORMS_DEFAULT_DIRECTORY);
 		if(!xFormsDirectory.exists())
 			return formsImpMap;
@@ -398,8 +399,8 @@ public class ObtainXFormController extends WebMvcConfigurerAdapter
 		files.forEach((file) -> addForms(formsImpMap, file));
 	    return formsImpMap;
 	}
-
-	private static void addForms(Map<String,String> formsImpMap, File file)
+	
+	private static void addForms(OrderedMap<String,String> formsImpMap, File file)
 	{
 		String formName = file.getName();
 		if(formName.toLowerCase().endsWith(XFORM_FILE_EXTENSION))

@@ -45,7 +45,7 @@
                     			</label>
          		 		</td>
          		 		<td>
-							<select id="defaultXFormSelection" name="selectedForm" >
+							<select id="defaultXFormSelection" th:onchange="'javascript:xformSelectionChange();'" name="selectedForm" >
 			 					<option th:each="type : ${formsImpMap}" 
 			        		    			th:value="${type.value}" 
 			          				th:text="${type.key}">
@@ -55,7 +55,7 @@
          		 	</tr>
 	                <tr>
  	                    <td>
-  	       					<input id="uploadCustomXFormButton" class = "textFont button_upload" type="file" name="file"></input> 
+  	       					<input id="uploadCustomXFormButton" class = "textFont button_upload" type="file" name="file" th:onchange="'javascript:uploadxFormSelected();'"></input> 
   	                    	</td>
 	                    <td>
 	                    		<span class="textFont error_msg" th:if="*{appXFormError != null}" th:text="*{appXFormError}">Errors</span>
@@ -67,8 +67,9 @@
         				Upload your custom XForm .xml file.
        			</label>
  			</div>
-			<input class="textFont button_next" name="next" type="submit" value="Continue &gt;"/>
+			<input disabled="true" class="textFont button_next_disabled" id="next" name="next" type="submit" value="Continue &gt;"/>
 		</form>
-	<script src="./js/tota11y.min.js"></script>	
+		<script src="./js/xFormSelection.js"></script>	
+		<script src="./js/tota11y.min.js"></script>	
 	</body>
 </html>
