@@ -84,7 +84,7 @@ public class Logger
 		}
 		while ((line = error.readLine()) != null) 
 		{
-			logVerbose(session, "  |Error|" + line);
+			logVerbose(session, "  ||" + line);
 		}		
 		logVerbose(session, "Done.");
 		input.close();
