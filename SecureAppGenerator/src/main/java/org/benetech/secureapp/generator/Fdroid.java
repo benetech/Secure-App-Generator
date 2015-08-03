@@ -59,7 +59,7 @@ public class Fdroid
 			destination.setExecutable(true);
 			destination.setWritable(true);
 
-			String fDroidCommand = "fdroid update -v";
+			String fDroidCommand = "fdroid update --create-metadata -v";
 			SecureAppGeneratorApplication.executeCommand(session, fDroidCommand, baseDir);
 			fDroidCommand = "fdroid server update -v";
 			SecureAppGeneratorApplication.executeCommand(session, fDroidCommand, baseDir);
@@ -82,12 +82,20 @@ public class Fdroid
 		}
 	}
 
-	static private File setupTempFDroidRepo(HttpSession session) throws IOException
+	static private File setupTempFDroidRepo(HttpSession session) throws IOException, InterruptedException
 	{
 		File baseDir = SecureAppGeneratorApplication.getRandomDirectoryFile("fdroid");
 		FileUtils.copyDirectory(getOriginalFDroidDirectory(), baseDir);
+		fixPermissions(session, baseDir);
 		addS3ServerInformation(session, baseDir);
 		return baseDir;
+	}
+
+	private static void fixPermissions(HttpSession session, File baseDir) throws IOException, InterruptedException
+	{
+		File configPy = new File(baseDir, CONFIG_PY_FILE_NAME);
+		String changePermissions = "chmod 600 " + configPy.getAbsolutePath();
+		SecureAppGeneratorApplication.executeCommand(session, changePermissions, null);
 	}
 
 	private static void addS3ServerInformation(HttpSession session, File baseDir) throws FileNotFoundException, UnsupportedEncodingException, IOException

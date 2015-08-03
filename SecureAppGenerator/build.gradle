@@ -32,7 +32,7 @@ war {
     from('../../martus-android/secure-app') {
         include '**/**'
         into('WEB-INF/classes/static/SecureAppBuildMaster/secure-app')
-    }
+     }
     from('src/main/resources/static/FDroidMaster') {
         include '**/**'
         into('WEB-INF/classes/static/FDroidMaster')
