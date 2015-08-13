@@ -46,6 +46,8 @@ public class SummaryController extends WebMvcConfigurerAdapter
     public static final String VERSION_MAJOR_XML = "versionMajor";
 
 	private static final String APP_NAME_XML = "appName";
+	private static final String APP_CUSTOM_APPLICATION_ID_XML = "customApplicationId";
+	private static final String APP_BASE_APPLICATION_ID = "org.benetech.secureapp.";
 	private static final String VERSION_SAG_BUILD_XML = "versionSagBuild";
     private static final String LOGO_NAME_PNG = "ic_launcher_secure_app.png";
 	private static final String XML_DESKTOP_PUBLIC_KEY = "public_key_desktop";
@@ -168,6 +170,7 @@ public class SummaryController extends WebMvcConfigurerAdapter
 		appendGradleValue(data, VERSION_BUILD_XML, config.getApkVersionBuild());
 		appendGradleValue(data, VERSION_SAG_BUILD_XML, config.getApkSagVersionBuild());
 		appendGradleValue(data, APP_NAME_XML, config.getAppName());
+		appendGradleValue(data, APP_CUSTOM_APPLICATION_ID_XML, APP_BASE_APPLICATION_ID + config.getAppName());
 
 		File apkResourseFile = new File(baseBuildDir, GRADLE_GENERATED_SETTINGS_FILE);
   		SecureAppGeneratorApplication.writeDataToFile(apkResourseFile, data);
