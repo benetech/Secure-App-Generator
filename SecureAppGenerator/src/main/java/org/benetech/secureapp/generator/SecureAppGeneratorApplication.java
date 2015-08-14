@@ -5,7 +5,6 @@ import java.io.BufferedWriter;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
-import java.io.FileWriter;
 import java.io.IOException;
 import java.io.OutputStreamWriter;
 import java.io.StringWriter;
@@ -34,7 +33,8 @@ public class SecureAppGeneratorApplication extends SpringBootServletInitializer
 	private static final String ICON_LOCAL_File = getStaticWebDirectory() + DEFAULT_APP_ICON_LOCATION;
 	private static final String GRADLE_HOME_ENV = "GRADLE_HOME";
 
-    @Override
+
+	@Override
     protected SpringApplicationBuilder configure(SpringApplicationBuilder application) {
         return application.sources(SecureAppGeneratorApplication.class);
     }
