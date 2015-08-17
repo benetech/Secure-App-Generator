@@ -1,46 +1,43 @@
 <!DOCTYPE HTML>
 <html xmlns:th="http://www.thymeleaf.org">
 	<head> 
-	    <title>Secure App Generator</title> 
+	    <title th:text="#{text.title}"></title> 
 	    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
   		  <link rel="stylesheet" type="text/css" media="all"  
      		 href="/css/main.css" th:href="@{../css/main.css}" />
  	</head>
 	<body>
-      	<img class="cellphone" src="/images/cellphone.png" alt="Android Cellphone"/>
+      	<img class="cellphone" src="/images/cellphone.png" th:alt="#{alt_text.cellphone}"/>
 	   	<div class="cellphone_logo"><img class="cellphone_logo_size" th:src="${session.appConfig.appIconLocation}" role="presentation" alt=""/></div>
 	   	<div class="textFont cellphone_title" th:text="${session.appConfig.appName}"></div>
 
-		<div class="textFont cellphone_center_title" align="center"><p/>Secure Data Collection</div>
-  		<div class="textFont cellphone_center_data" align="center"><p/>Customized for your projects</div>
+		<div class="textFont cellphone_center_title" align="center"><p/><a th:text="#{text.cellphone_message1}"></a></div>
+  		<div class="textFont cellphone_center_data" align="center" th:text="#{text.cellphone_message2}"></div>
      	<div class="textFont main_title">
      		<div th:text="#{text.title}"/>
 		</div>
      	<div class="textFont sub_title">
-     		<a th:text="#{text.subtitle}"/><img  src="../images/MartusLogoWhite.png" alt="Martus" align="top"/>
+     		<a th:text="#{text.subtitle}"/><img  src="../images/MartusLogoWhite.png" th:alt="#{alt_text.Martus}" align="top"/>
 		</div>
 		
      	<div class="textFont info_area_1" align="center">
      		<p th:text="#{text.info_msg1}"/>
-      		<p>quick and easy installation for your field team!</p>
-     		<p>No need for complicated setup or configuration!</p>
+     		<p th:text="#{text.info_msg2}"/>
+     		<p th:text="#{text.info_msg3}"/>
 		</div>
 	    	
-	    	<div class="textFont info_area_2">
-     		You can
-		</div>
+	    	<div class="textFont info_area_2" th:text="#{text.info_msg4}"/>
      	
      	<div class="textFont info_area_3">
      		<ul>
-	     		<li>Add your project name and logo</li>
-	     		<li>Specify the forms your field team can use</li>
-	     		<li>Choose who receives your data</li>
+	     		<li th:text="#{text.info_msg5}"></li>
+	     		<li th:text="#{text.info_msg6}"></li>
+	     		<li th:text="#{text.info_msg7}"></li>
 	     	</ul>
 		</div>
 			
 		<form method="POST" action="/welcome">
-			<input class="textFont button_start" name="next" type="submit" value="GET STARTED &gt;"/>
+			<input class="textFont button_start" name="next" type="submit" th:value="#{button.start}"/>
 		</form>
-	<script src="./js/tota11y.min.js"></script>	
 	</body>
 </html>
