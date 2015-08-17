@@ -159,12 +159,17 @@ public class SecureAppGeneratorApplication extends SpringBootServletInitializer
 		return p.exitValue();
 	}
 	
-	static public String getMessage(String msgId)
+	static private String getMessage(String msgId)
 	{
 		ReloadableResourceBundleMessageSource messageSource=new ReloadableResourceBundleMessageSource();
 		messageSource.setBasename("classpath:/messages");
 		messageSource.setDefaultEncoding("UTF8");
 		messageSource.setUseCodeAsDefaultMessage(true);
 		return messageSource.getMessage(msgId, null, LocaleContextHolder.getLocale());
+	}
+	
+	static public String getErrorMessage(String msgId)
+	{
+		return getMessage("error."+msgId);
 	}
 }
