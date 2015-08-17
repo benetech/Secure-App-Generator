@@ -20,6 +20,8 @@ import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.boot.builder.SpringApplicationBuilder;
 import org.springframework.boot.context.web.SpringBootServletInitializer;
+import org.springframework.context.i18n.LocaleContextHolder;
+import org.springframework.context.support.ReloadableResourceBundleMessageSource;
 import org.springframework.core.io.support.PathMatchingResourcePatternResolver;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -155,5 +157,14 @@ public class SecureAppGeneratorApplication extends SpringBootServletInitializer
 		Logger.logProcess(session, p);		
 		p.waitFor();
 		return p.exitValue();
+	}
+	
+	static public String getMessage(String msgId)
+	{
+		ReloadableResourceBundleMessageSource messageSource=new ReloadableResourceBundleMessageSource();
+		messageSource.setBasename("classpath:/messages");
+		messageSource.setDefaultEncoding("UTF8");
+		messageSource.setUseCodeAsDefaultMessage(true);
+		return messageSource.getMessage(msgId, null, LocaleContextHolder.getLocale());
 	}
 }
