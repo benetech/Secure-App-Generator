@@ -1,39 +1,39 @@
 <!DOCTYPE HTML>
 <html xmlns:th="http://www.thymeleaf.org">
 	<head> 
-	    <title>Secure App Generator</title> 
+	    <title th:text="#{text.title}"></title> 
 	    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
   		  <link rel="stylesheet" type="text/css" media="all"  
      		 href="/css/main.css" th:href="@{../css/main.css}" />
  	</head>
 	<body>
 	    <img class="progressBarLocation" src="/images/Step1line.png" role="presentation" alt=""/>
-		<div class="textFont progressStep1Location progressBarStepActive" align="center">Name</div>
- 		<div class="textFont progressStep2Location progressBarStepInactive" align="center">Logo</div>
-		<div class="textFont progressStep3Location progressBarStepInactive" align="center">Form</div>
-		<div class="textFont progressStep4Location progressBarStepInactive" align="center">Contact</div>
-		<div class="textFont progressStep5Location progressBarStepInactive" align="center">Build</div>
+		<div class="textFont progressStep1Location progressBarStepActive" align="center" th:text="#{progressbar.name}"></div>
+ 		<div class="textFont progressStep2Location progressBarStepInactive" align="center" th:text="#{progressbar.logo}"></div>
+		<div class="textFont progressStep3Location progressBarStepInactive" align="center" th:text="#{progressbar.form}"></div>
+		<div class="textFont progressStep4Location progressBarStepInactive" align="center" th:text="#{progressbar.contact}"></div>
+		<div class="textFont progressStep5Location progressBarStepInactive" align="center" th:text="#{progressbar.build}"></div>
  
-      	<img class="cellphone" src="/images/cellphone.png" alt="Android Cellphone"/>
+      	<img class="cellphone" src="/images/cellphone.png" th:alt="#{alt_text.cellphone}"/>
 	   	<div class="cellphone_logo"><img class="cellphone_logo_size" th:src="${session.appConfig.appIconLocation}" role="presentation" alt=""/></div>
 	   	<div class="textFont cellphone_title" th:text="${session.appConfig.appName}"></div>
 
-		<div class="textFont cellphone_center_title" align="center"><p/>Secure Data Collection</div>
-  		<div class="textFont cellphone_center_data" align="center"><p/>Customized for your projects</div>
+		<div class="textFont cellphone_center_title" align="center"><p/><a th:text="#{text.cellphone_message1}"></a></div>
+  		<div class="textFont cellphone_center_data" align="center" th:text="#{text.cellphone_message2}"></div>
       	<div class="textFont main_title">
      		<div th:text="#{text.title}"/>
 		</div>
      	<div class="textFont sub_title">
-     		<a th:text="#{text.subtitle}"/><img  src="../images/MartusLogoWhite.png" alt="Martus" align="top"/>
+     		<a th:text="#{text.subtitle}"/><img  src="../images/MartusLogoWhite.png" th:alt="#{alt_text.Martus}" align="top"/>
 		</div>
  
      	<div class="textFont page_title">
-     		<h1>Name Your Custom App!</h1>
+     		<h1 th:text="#{text.info_name_app}"></h1>
  		</div>
    	
  			
 		<form method="POST" th:action="@{/nameAppPrevious}">
-			<input class="textFont button_previous" name="previous" type="submit" value="&lt; Back"/>
+			<input class="textFont button_previous" name="previous" type="submit" th:value="#{button.previous}"/>
 		</form>
 		
 		<form method="POST" th:action="@{/nameAppNext}" th:object="${appConfig}">
@@ -41,22 +41,19 @@
            		 <table>
 	                <tr>
  	                    <td>                					
- 	                    		<label for="appName">
-	                    				Name:
-                    			</label>
+ 	                    		<label for="appName" th:text="#{label.Name}"/>
 						</td>
 	                    <td>
 	    	                    	<input type="text" th:field="*{appName}" autofocus="true"/>
 	                    	</td>
 	                    <td>
-	                    		<span class="textFont error_msg" th:if="*{appNameError != null}" th:text="*{appNameError}">Errors</span>
+	                    		<span class="textFont error_msg" th:if="*{appNameError != null}" th:text="*{appNameError}"></span>
 	                    	</td>
 	                </tr>
                 </table>
-  				Give your new app a name
+                <div th:text="#{text.info_name_app_directions}"/>
  			</div>
-			<input class="textFont button_next" name="next" type="submit" value="Continue &gt;"/>
+			<input class="textFont button_next" name="next" type="submit" th:value="#{button.continue}"/>
 		</form>
-	<script src="./js/tota11y.min.js"></script>	
 	</body>
 </html>
