@@ -22,11 +22,7 @@ war {
     baseName = 'SAG'
     version =  '0.1.0'
     from('../../martus-android/') {
-        include 'build.gradle'
-        into('WEB-INF/classes/static/SecureAppBuildMaster')
-    }
-    from('../../martus-android/') {
-        include 'settings.gradle'
+        include '*.gradle'
         into('WEB-INF/classes/static/SecureAppBuildMaster')
     }
     from('../../martus-android/secure-app') {
@@ -36,6 +32,10 @@ war {
     from('src/main/resources/static/FDroidMaster') {
         include '**/**'
         into('WEB-INF/classes/static/FDroidMaster')
+    }
+    from('messages') {
+        include '**/**'
+        into('WEB-INF/classes/')
     }
 }
 
