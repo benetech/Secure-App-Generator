@@ -1,38 +1,38 @@
 <!DOCTYPE HTML>
 <html xmlns:th="http://www.thymeleaf.org">
 	<head> 
-	    <title>Secure App Generator</title> 
+	    <title th:text="#{text.title}"></title> 
 	    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
   		  <link rel="stylesheet" type="text/css" media="all"  
      		 href="/css/main.css" th:href="@{../css/main.css}" />
  	</head>
 	<body>
       	<img class="progressBarLocation" src="/images/Step3line.png" role="presentation" alt=""/>
-		<div class="textFont progressStep1Location progressBarStepComplete" align="center">Name</div>
-		<div class="textFont progressStep2Location progressBarStepComplete" align="center">Logo</div>
-		<div class="textFont progressStep3Location progressBarStepActive" align="center">Form</div>
-		<div class="textFont progressStep4Location progressBarStepInactive" align="center">Contact</div>
-		<div class="textFont progressStep5Location progressBarStepInactive" align="center">Build</div>
+		<div class="textFont progressStep1Location progressBarStepComplete" align="center" th:text="#{progressbar.name}"></div>
+ 		<div class="textFont progressStep2Location progressBarStepComplete" align="center" th:text="#{progressbar.logo}"></div>
+		<div class="textFont progressStep3Location progressBarStepActive" align="center" th:text="#{progressbar.form}"></div>
+		<div class="textFont progressStep4Location progressBarStepInactive" align="center" th:text="#{progressbar.contact}"></div>
+		<div class="textFont progressStep5Location progressBarStepInactive" align="center" th:text="#{progressbar.build}"></div>
 
-      	<img class="cellphone" src="/images/cellphone.png" alt="Android Cellphone"/>
-	   	<div class="cellphone_logo"><img class="cellphone_logo_size" th:src="${session.appConfig.appIconBase64Data}" role="presentation" alt=""/></div>
+     	<img class="cellphone" src="/images/cellphone.png" th:alt="#{alt_text.cellphone}"/>
+	   	<div class="cellphone_logo"><img class="cellphone_logo_size" th:src="${session.appConfig.appIconLocation}" role="presentation" alt=""/></div>
 	   	<div class="textFont cellphone_title" th:text="${session.appConfig.appName}"></div>
 
-		<div class="textFont cellphone_center_title" align="center"><p/>Secure Data Collection</div>
-  		<div class="textFont cellphone_center_data" align="center"><p/>Customized for your projects</div>
-     	<div class="textFont main_title">
-     		<b>secureApp</b> Generator
+		<div class="textFont cellphone_center_title" align="center"><p/><a th:text="#{text.cellphone_message1}"></a></div>
+  		<div class="textFont cellphone_center_data" align="center" th:text="#{text.cellphone_message2}"></div>
+      	<div class="textFont main_title">
+     		<div th:text="#{text.title}"/>
 		</div>
-     	<div class="textFont sub_title" >
-     		powered by<img  src="../images/MartusLogoWhite.png" alt="Martus" align="top"/>
+     	<div class="textFont sub_title">
+     		<a th:text="#{text.subtitle}"/><img  src="../images/MartusLogoWhite.png" th:alt="#{alt_text.Martus}" align="top"/>
 		</div>
 		
       	<div class="textFont page_title">
-     		<h1>Choose or Upload a Custom XForm</h1>
+      		<h1 th:text="#{text.pagetitle_xform}"></h1>
  		</div>
-   	
+
 		<form method="POST" th:action="@{/obtainXFormPrevious}">
-			<input class="textFont button_previous" name="previous" type="submit" value="&lt; Back"/>
+			<input class="textFont button_previous" name="previous" type="submit" th:value="#{button.previous}"/>
 		</form>
 
 		<form  method="POST" enctype="multipart/form-data" th:action="@{/obtainXFormNext}" th:object="${appConfig}">
@@ -40,9 +40,7 @@
          		 <table>
          		 	<tr>
          		 		<td>
- 	                    		<label for="defaultXFormSelection">
-	                    				Form to Use:
-                    			</label>
+ 	                    		<label for="defaultXFormSelection" th:text="#{label.select_form}"/>
          		 		</td>
          		 		<td>
 							<select id="defaultXFormSelection" th:onchange="'javascript:xformSelectionChange();'" name="selectedForm" >
@@ -58,18 +56,15 @@
   	       					<input id="uploadCustomXFormButton" class = "textFont button_upload" type="file" name="file" th:onchange="'javascript:uploadxFormSelected();'"></input> 
   	                    	</td>
 	                    <td>
-	                    		<span class="textFont error_msg" th:if="*{appXFormError != null}" th:text="*{appXFormError}">Errors</span>
+	                    		<span class="textFont error_msg" th:if="*{appXFormError != null}" th:text="*{appXFormError}"></span>
 	                    	</td>
 	                </tr>
                 </table>
  				<p/>
-         		<label for="uploadCustomXFormButton">
-        				Upload your custom XForm .xml file.
-       			</label>
+         		<label for="uploadCustomXFormButton" th:text="#{label.info_xform_type_supported}"/>
  			</div>
-			<input disabled="true" class="textFont button_next_disabled" id="next" name="next" type="submit" value="Continue &gt;"/>
+			<input disabled="true" class="textFont button_next_disabled" id="next" name="next" type="submit" th:value="#{button.continue}"/>
 		</form>
 		<script src="./js/xFormSelection.js"></script>	
-		<script src="./js/tota11y.min.js"></script>	
 	</body>
 </html>
