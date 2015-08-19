@@ -20,6 +20,8 @@ import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.boot.builder.SpringApplicationBuilder;
 import org.springframework.boot.context.web.SpringBootServletInitializer;
+import org.springframework.context.MessageSource;
+import org.springframework.context.annotation.Bean;
 import org.springframework.context.i18n.LocaleContextHolder;
 import org.springframework.context.support.ReloadableResourceBundleMessageSource;
 import org.springframework.core.io.support.PathMatchingResourcePatternResolver;
@@ -44,6 +46,7 @@ public class SecureAppGeneratorApplication extends SpringBootServletInitializer
         SpringApplication.run(SecureAppGeneratorApplication.class, args);
     }
 
+	
 	static void setInvalidResults(HttpSession session) 
 	{
 		setInvalidResults(session, getLocalizedErrorMessage("invalid_request")); //TODO move this to a localizable String Table
@@ -162,15 +165,6 @@ public class SecureAppGeneratorApplication extends SpringBootServletInitializer
 		return p.exitValue();
 	}
 	
-	static public String getMessage(String msgId)
-	{
-		ReloadableResourceBundleMessageSource messageSource=new ReloadableResourceBundleMessageSource();
-		messageSource.setBasename("classpath:/messages");
-		messageSource.setDefaultEncoding("UTF8");
-		messageSource.setUseCodeAsDefaultMessage(true);
-		return messageSource.getMessage(msgId, null, LocaleContextHolder.getLocale());
-	}
-	
 	static public String getLocalizedErrorMessage(String msgId)
 	{
 		if(msgId == null)
@@ -188,5 +182,31 @@ public class SecureAppGeneratorApplication extends SpringBootServletInitializer
 		errorMessage.append(e.getLocalizedMessage());
 		return errorMessage.toString();
 	}
-	
+
+/*
+ *  FIXME this doesn't work from a WAR file but works in Eclispe
+ *  Workaround is having to copy *.properties files to 
+ *  root of classes folder in gradle script
+ 	@Bean
+	public MessageSource messageSource() 
+	{
+        return getMessageSource();
+	}
+ */
+
+	//TODO: we may want to have only a single instance of ReloadableResourceBundleMessageSource
+	private static MessageSource getMessageSource()
+	{
+		ReloadableResourceBundleMessageSource messageSource = new ReloadableResourceBundleMessageSource();
+		messageSource.setBasenames("classpath:/messages");
+		messageSource.setUseCodeAsDefaultMessage(true);
+		messageSource.setDefaultEncoding("UTF-8");
+		messageSource.setCacheSeconds(0);
+		return messageSource;
+	}
+
+	static public String getMessage(String msgId)
+	{
+		return getMessageSource().getMessage(msgId, null, LocaleContextHolder.getLocale());
+	}
 }

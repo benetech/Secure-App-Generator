@@ -33,6 +33,9 @@ war {
         include '**/**'
         into('WEB-INF/classes/static/FDroidMaster')
     }
+    
+    //Bean MessageSource messageSource()  doesn't work in WAR file deployment
+    //remove this once we figure out why, since we are duplicating these files
     from('messages') {
         include '**/**'
         into('WEB-INF/classes/')
