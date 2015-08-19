@@ -29,12 +29,10 @@ import org.springframework.web.multipart.MultipartFile;
 @SpringBootApplication
 public class SecureAppGeneratorApplication extends SpringBootServletInitializer 
 {
-	private static final String APP_DEFAULT_NAME = "My App";
 	private static final String MASTER_SA_BUILD_DIRECTORY = "/SecureAppBuildMaster"; 
 	private static final String DEFAULT_APP_ICON_LOCATION = "/images/Martus-swoosh-30x30.png";
 	private static final String ICON_LOCAL_File = getStaticWebDirectory() + DEFAULT_APP_ICON_LOCATION;
 	private static final String GRADLE_HOME_ENV = "GRADLE_HOME";
-
 
 	@Override
     protected SpringApplicationBuilder configure(SpringApplicationBuilder application) {
@@ -60,10 +58,7 @@ public class SecureAppGeneratorApplication extends SpringBootServletInitializer
 	
 	public static void setInvalidResults(HttpSession session, String msgId, Exception e)
 	{
-		StringBuilder errorMessage = new StringBuilder(getErrorMessage(msgId));
-		errorMessage.append(" ");
-		errorMessage.append(e.getMessage());
-		setInvalidResults(session, errorMessage.toString());
+		setInvalidResults(session, getLocalizedErrorMessage(msgId, e));
 	}
 
 	static void setDefaultIconForSession(HttpSession session, AppConfiguration config) throws Exception
@@ -107,7 +102,7 @@ public class SecureAppGeneratorApplication extends SpringBootServletInitializer
 	static void setSessionFromConfig(HttpSession session, AppConfiguration config)
 	{
 		AppConfiguration sessionConfig = new AppConfiguration();
-		sessionConfig.setAppName(APP_DEFAULT_NAME);
+		sessionConfig.setAppName(getMessage("default.app_name"));
 		sessionConfig.setAppIconLocation(config.getAppIconLocation());
 		sessionConfig.setClientToken(config.getClientToken());
 		session.setAttribute(SessionAttributes.APP_CONFIG, sessionConfig);
@@ -185,4 +180,13 @@ public class SecureAppGeneratorApplication extends SpringBootServletInitializer
 		errorMsg.append(getMessage("error."+msgId));
 		return errorMsg.toString();
 	}
+	
+	public static String getLocalizedErrorMessage(String msgId, Exception e)
+	{
+		StringBuilder errorMessage = new StringBuilder(getErrorMessage(msgId));
+		errorMessage.append(" ");
+		errorMessage.append(e.getLocalizedMessage());
+		return errorMessage.toString();
+	}
+	
 }

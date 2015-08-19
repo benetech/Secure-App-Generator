@@ -98,9 +98,9 @@ public class AppConfiguration
 		return appIconError;
 	}
 
-	public void setAppIconError(String appIconError)
+	public void setAppIconError(String appIconErrorId)
 	{
-		this.appIconError = appIconError;
+		this.appIconError = SecureAppGeneratorApplication.getErrorMessage(appIconErrorId);
 	}
 
 	public String getAppXFormName()
@@ -130,7 +130,12 @@ public class AppConfiguration
 
 	public void setAppXFormError(String appXFormErrorId)
 	{
-		this.appXFormError = SecureAppGeneratorApplication.getErrorMessage(appXFormErrorId);
+		setAppXFormErrorRaw(SecureAppGeneratorApplication.getErrorMessage(appXFormErrorId));
+	}
+
+	public void setAppXFormErrorRaw(String appXFormErrorMessage)
+	{
+		this.appXFormError = appXFormErrorMessage;
 	}
 
 	public String getClientToken()
