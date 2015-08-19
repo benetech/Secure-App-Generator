@@ -106,7 +106,7 @@ public class SummaryController extends WebMvcConfigurerAdapter
 		catch (Exception e)
 		{
 			Logger.logException(session, e);
-			appConfig.setApkBuildError("Error: Unable to generate APK.");
+			appConfig.setApkBuildError("generating_apk");
 			model.addAttribute(SessionAttributes.APP_CONFIG, appConfig);
 			return WebPage.SUMMARY;
 		}

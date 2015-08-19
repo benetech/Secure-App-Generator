@@ -248,9 +248,9 @@ public class AppConfiguration
 		return apkBuildError;
 	}
 
-	public void setApkBuildError(String apkBuildError)
+	public void setApkBuildError(String apkBuildErrorId)
 	{
-		this.apkBuildError = apkBuildError;
+		this.apkBuildError = SecureAppGeneratorApplication.getErrorMessage(apkBuildErrorId);
 	}
 	
 	public String getApkVersionNumberFull()
