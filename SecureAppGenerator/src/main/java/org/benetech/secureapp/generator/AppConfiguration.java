@@ -128,9 +128,9 @@ public class AppConfiguration
 		return appXFormError;
 	}
 
-	public void setAppXFormError(String appXFormError)
+	public void setAppXFormError(String appXFormErrorId)
 	{
-		this.appXFormError = appXFormError;
+		this.appXFormError = SecureAppGeneratorApplication.getErrorMessage(appXFormErrorId);
 	}
 
 	public String getClientToken()
