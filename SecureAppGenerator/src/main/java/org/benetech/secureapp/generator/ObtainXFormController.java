@@ -390,7 +390,7 @@ public class ObtainXFormController extends WebMvcConfigurerAdapter
 	public static OrderedMap<String,String> populateFormsMap() throws MalformedURLException, IOException 
 	{
 	    OrderedMap<String,String> formsImpMap = new OrderedMap<String,String>();
-	    String chooseAnXForm = new String("Select a default form");
+	    String chooseAnXForm = new String(SecureAppGeneratorApplication.getMessage("combo.select_default_form"));
 	    formsImpMap.put(chooseAnXForm, null);
 		File xFormsDirectory = new File(XFORMS_DEFAULT_DIRECTORY);
 		if(!xFormsDirectory.exists())

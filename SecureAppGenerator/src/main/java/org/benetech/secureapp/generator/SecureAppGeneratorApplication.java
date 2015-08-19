@@ -167,7 +167,7 @@ public class SecureAppGeneratorApplication extends SpringBootServletInitializer
 		return p.exitValue();
 	}
 	
-	static private String getMessage(String msgId)
+	static public String getMessage(String msgId)
 	{
 		ReloadableResourceBundleMessageSource messageSource=new ReloadableResourceBundleMessageSource();
 		messageSource.setBasename("classpath:/messages");
