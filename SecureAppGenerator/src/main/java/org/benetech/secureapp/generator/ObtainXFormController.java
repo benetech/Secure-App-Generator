@@ -381,7 +381,7 @@ public class ObtainXFormController extends WebMvcConfigurerAdapter
 		catch (IOException e)
 		{
 			Logger.logException(session, e);
-			SecureAppGeneratorApplication.setInvalidResults(session, "Failed to copy file => " + e.getMessage());
+    			SecureAppGeneratorApplication.setInvalidResults(session, "failed_copy_file", e);
 		    return false;
 		}
 	}

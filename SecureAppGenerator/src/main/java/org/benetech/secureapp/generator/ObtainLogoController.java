@@ -78,7 +78,7 @@ public class ObtainLogoController extends WebMvcConfigurerAdapter
             		if(!file.getContentType().contains(IMAGE_PNG))
             		{
             			Logger.log(session, "Non-PNG Logo Image: " + file.getContentType());
-            	      	appConfig.setAppIconError("Error: Image type must be png.");
+            	      	appConfig.setAppIconError(SecureAppGeneratorApplication.getErrorMessage("logo_file_type_invalid"));
             			model.addAttribute(SessionAttributes.APP_CONFIG, appConfig);
          			return WebPage.OBTAIN_LOGO; 
             		}
@@ -92,7 +92,8 @@ public class ObtainLogoController extends WebMvcConfigurerAdapter
             catch (Exception e) 
             {
             		Logger.logException(session, e);
-            		SecureAppGeneratorApplication.setInvalidResults(session, "You failed to upload a file => " + e.getMessage());
+            		
+            		SecureAppGeneratorApplication.setInvalidResults(session, "upload_logo_failed", e);
                 return WebPage.ERROR;
             }
         } 
