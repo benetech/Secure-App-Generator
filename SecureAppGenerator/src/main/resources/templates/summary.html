@@ -79,10 +79,10 @@
 			<input class="textFont button_previous" name="previous" id="previous" type="submit" th:value="#{button.previous}"/>
 		</form>
 
-	    <canvas class="progress_location" id="ProgressArea" width="400" height="350"></canvas> 
+	    <canvas class="progress_location" id="ProgressArea" width="400" height="350"/> 
  
 		<form id="buildApp" name="buildApp" method="POST" action="/summaryNext">
-			<button class="textFont button_next" id="next" name="next" onclick="showProgress('Building App')" th:text="#{button.buildapp}"/>
+			<button class="textFont button_next" id="next" name="next" th:onclick="'javascript:showProgress(\'' + #{text.buildingApk} + '\');'" th:text="#{button.buildapp}"/>
 		</form>
 
   		<script src="./js/ProgressCircle.js"></script>	
