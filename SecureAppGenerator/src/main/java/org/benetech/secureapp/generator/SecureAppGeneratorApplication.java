@@ -48,7 +48,7 @@ public class SecureAppGeneratorApplication extends SpringBootServletInitializer
 
 	static void setInvalidResults(HttpSession session) 
 	{
-		setInvalidResults(session, "Invalid Request"); //TODO move this to a localizable String Table
+		setInvalidResults(session, getErrorMessage("invalid_request")); //TODO move this to a localizable String Table
 	}
 	
 	static void setInvalidResults(HttpSession session, String message) 
@@ -58,6 +58,14 @@ public class SecureAppGeneratorApplication extends SpringBootServletInitializer
 		session.setAttribute(SessionAttributes.INVALID_REQUEST, invalidRequest);
 	}
 	
+	public static void setInvalidResults(HttpSession session, String msgId, Exception e)
+	{
+		StringBuilder errorMessage = new StringBuilder(getErrorMessage(msgId));
+		errorMessage.append(" ");
+		errorMessage.append(e.getMessage());
+		setInvalidResults(session, errorMessage.toString());
+	}
+
 	static void setDefaultIconForSession(HttpSession session, AppConfiguration config) throws Exception
 	{
 		config.setAppIconLocation(DEFAULT_APP_ICON_LOCATION);
@@ -170,6 +178,9 @@ public class SecureAppGeneratorApplication extends SpringBootServletInitializer
 	
 	static public String getErrorMessage(String msgId)
 	{
-		return getMessage("error."+msgId);
+		StringBuilder errorMsg = new StringBuilder(getMessage("error_prefix"));
+		errorMsg.append(" ");
+		errorMsg.append(getMessage("error."+msgId));
+		return errorMsg.toString();
 	}
 }
