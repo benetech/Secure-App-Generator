@@ -145,7 +145,7 @@ public class ObtainXFormController extends WebMvcConfigurerAdapter
             		if(!file.getContentType().contains(XML_TYPE))
             		{
             			Logger.log(session, "Non-XML xForm: " + file.getContentType());
-             		return returnErrorMessage(model, appConfig, "xform_file_type_invalid"); 
+             		return returnLocalizedErrorMessage(model, appConfig, "xform_file_type_invalid"); 
             		}
             		SecureAppGeneratorApplication.saveMultiPartFileToLocation(file, xFormBuildPath.toFile());
                 Logger.logVerbose(session, "Uploaded XFORM Location" + xFormBuildPath.toString());
@@ -165,7 +165,7 @@ public class ObtainXFormController extends WebMvcConfigurerAdapter
 				{
 					Logger.logException(session, e1);
 				}
-            		return returnErrorMessage(model, appConfig, "xform_upload_failed"); 
+            		return returnLocalizedErrorMessage(model, appConfig, "xform_upload_failed"); 
             }
         }
 		
@@ -176,7 +176,7 @@ public class ObtainXFormController extends WebMvcConfigurerAdapter
 		catch (Exception e)
 		{
     			Logger.logException(session, e);
-       		return returnErrorMessageRaw(model, appConfig, SecureAppGeneratorApplication.getLocalizedErrorMessage("xform_invalid", e)); 
+       		return returnRawErrorMessage(model, appConfig, SecureAppGeneratorApplication.getLocalizedErrorMessage("xform_invalid", e)); 
 		}
 		
 		AppConfiguration config = (AppConfiguration)session.getAttribute(SessionAttributes.APP_CONFIG);
@@ -362,14 +362,14 @@ public class ObtainXFormController extends WebMvcConfigurerAdapter
 		fieldErrors.append("]");
 	}	
 
-	public String returnErrorMessage(Model model, AppConfiguration appConfig, String errorMsgId)
+	public String returnLocalizedErrorMessage(Model model, AppConfiguration appConfig, String errorMsgId)
 	{
 		appConfig.setAppXFormError(errorMsgId);
 		model.addAttribute(SessionAttributes.APP_CONFIG, appConfig);
 		return WebPage.OBTAIN_XFORM;
 	}
 
-	public String returnErrorMessageRaw(Model model, AppConfiguration appConfig, String errorMsg)
+	public String returnRawErrorMessage(Model model, AppConfiguration appConfig, String errorMsg)
 	{
 		appConfig.setAppXFormErrorRaw(errorMsg);
 		model.addAttribute(SessionAttributes.APP_CONFIG, appConfig);

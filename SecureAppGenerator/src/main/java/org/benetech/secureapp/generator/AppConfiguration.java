@@ -74,7 +74,7 @@ public class AppConfiguration
 
 	public void setAppNameError(String appNameErrorId)
 	{
-		this.appNameError = SecureAppGeneratorApplication.getErrorMessage(appNameErrorId);
+		this.appNameError = SecureAppGeneratorApplication.getLocalizedErrorMessage(appNameErrorId);
 	}
 
 	public String getAppIconLocation()
@@ -100,7 +100,7 @@ public class AppConfiguration
 
 	public void setAppIconError(String appIconErrorId)
 	{
-		this.appIconError = SecureAppGeneratorApplication.getErrorMessage(appIconErrorId);
+		this.appIconError = SecureAppGeneratorApplication.getLocalizedErrorMessage(appIconErrorId);
 	}
 
 	public String getAppXFormName()
@@ -130,7 +130,7 @@ public class AppConfiguration
 
 	public void setAppXFormError(String appXFormErrorId)
 	{
-		setAppXFormErrorRaw(SecureAppGeneratorApplication.getErrorMessage(appXFormErrorId));
+		setAppXFormErrorRaw(SecureAppGeneratorApplication.getLocalizedErrorMessage(appXFormErrorId));
 	}
 
 	public void setAppXFormErrorRaw(String appXFormErrorMessage)
@@ -155,7 +155,7 @@ public class AppConfiguration
 
 	public void setClientTokenError(String clientTokenErrorId)
 	{
-		this.clientTokenError = SecureAppGeneratorApplication.getErrorMessage(clientTokenErrorId);
+		this.clientTokenError = SecureAppGeneratorApplication.getLocalizedErrorMessage(clientTokenErrorId);
 	}
 
 	public String getClientPublicKey()
@@ -255,7 +255,7 @@ public class AppConfiguration
 
 	public void setApkBuildError(String apkBuildErrorId)
 	{
-		this.apkBuildError = SecureAppGeneratorApplication.getErrorMessage(apkBuildErrorId);
+		this.apkBuildError = SecureAppGeneratorApplication.getLocalizedErrorMessage(apkBuildErrorId);
 	}
 	
 	public String getApkVersionNumberFull()

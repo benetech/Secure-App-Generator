@@ -46,7 +46,7 @@ public class SecureAppGeneratorApplication extends SpringBootServletInitializer
 
 	static void setInvalidResults(HttpSession session) 
 	{
-		setInvalidResults(session, getErrorMessage("invalid_request")); //TODO move this to a localizable String Table
+		setInvalidResults(session, getLocalizedErrorMessage("invalid_request")); //TODO move this to a localizable String Table
 	}
 	
 	static void setInvalidResults(HttpSession session, String message) 
@@ -171,7 +171,7 @@ public class SecureAppGeneratorApplication extends SpringBootServletInitializer
 		return messageSource.getMessage(msgId, null, LocaleContextHolder.getLocale());
 	}
 	
-	static public String getErrorMessage(String msgId)
+	static public String getLocalizedErrorMessage(String msgId)
 	{
 		if(msgId == null)
 			return null;
@@ -183,7 +183,7 @@ public class SecureAppGeneratorApplication extends SpringBootServletInitializer
 	
 	public static String getLocalizedErrorMessage(String msgId, Exception e)
 	{
-		StringBuilder errorMessage = new StringBuilder(getErrorMessage(msgId));
+		StringBuilder errorMessage = new StringBuilder(getLocalizedErrorMessage(msgId));
 		errorMessage.append(" ");
 		errorMessage.append(e.getLocalizedMessage());
 		return errorMessage.toString();
