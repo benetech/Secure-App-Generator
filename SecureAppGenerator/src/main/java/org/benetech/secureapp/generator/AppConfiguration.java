@@ -148,9 +148,9 @@ public class AppConfiguration
 		return clientTokenError;
 	}
 
-	public void setClientTokenError(String clientTokenError)
+	public void setClientTokenError(String clientTokenErrorId)
 	{
-		this.clientTokenError = clientTokenError;
+		this.clientTokenError = SecureAppGeneratorApplication.getErrorMessage(clientTokenErrorId);
 	}
 
 	public String getClientPublicKey()

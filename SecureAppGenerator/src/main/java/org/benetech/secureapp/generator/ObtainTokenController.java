@@ -104,12 +104,12 @@ public class ObtainTokenController extends WebMvcConfigurerAdapter
 			catch (S3Exception e)
 			{
 				Logger.logException(session, e);
-				appConfig.setClientTokenError("Error: Unable to communicate with server.");
+				appConfig.setClientTokenError("server_s3");
 			}
 			catch (Exception e)
 			{
 				Logger.logException(session, e);
-				appConfig.setClientTokenError("Error: Unable to retrieve token from server.");
+				appConfig.setClientTokenError("server_token");
 			}
 		}
 		model.addAttribute(SessionAttributes.APP_CONFIG, appConfig);
@@ -226,7 +226,7 @@ public class ObtainTokenController extends WebMvcConfigurerAdapter
 		catch (CreateDigestException | CheckDigitInvalidException e)
 		{
 			Logger.logException(session, e);
-			appConfig.setClientTokenError("Error: Token not found.");
+			appConfig.setClientTokenError("token_not_found");
 			return false;
 		}
  		session.setAttribute(SessionAttributes.APP_CONFIG, config);
@@ -245,7 +245,7 @@ public class ObtainTokenController extends WebMvcConfigurerAdapter
 		catch (TokenInvalidException e)
 		{
 			Logger.logError(session, "Token invalid:" + tokenString);
-			appConfig.setClientTokenError("Error: Token is invalid");
+			appConfig.setClientTokenError("token_invalid");
 			return false;
 		}
 		return true;
