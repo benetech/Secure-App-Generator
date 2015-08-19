@@ -178,6 +178,8 @@ public class SecureAppGeneratorApplication extends SpringBootServletInitializer
 	
 	static public String getErrorMessage(String msgId)
 	{
+		if(msgId == null)
+			return null;
 		StringBuilder errorMsg = new StringBuilder(getMessage("error_prefix"));
 		errorMsg.append(" ");
 		errorMsg.append(getMessage("error."+msgId));

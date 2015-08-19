@@ -75,13 +75,13 @@ public class NameAppController extends WebMvcConfigurerAdapter
 		int length = name.length();
 		if(length<3 || length>30)
 		{
-			appConfig.setAppNameError(SecureAppGeneratorApplication.getErrorMessage("app_name_length"));
+			appConfig.setAppNameError("app_name_length");
 			return false;
 		}
 		
 		if (!name.matches("^[^!\"#$%&'()\\[\\]*+,/:;<=>?@\\^`{|}~]+$")) 
 		{
-			appConfig.setAppNameError(SecureAppGeneratorApplication.getErrorMessage("app_name_characters"));
+			appConfig.setAppNameError("app_name_characters");
 			return false;
 		}		
 		appConfig.setAppNameError(null);

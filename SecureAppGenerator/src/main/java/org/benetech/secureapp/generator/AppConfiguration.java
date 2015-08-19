@@ -72,9 +72,9 @@ public class AppConfiguration
 		return appNameError;
 	}
 
-	public void setAppNameError(String appNameError)
+	public void setAppNameError(String appNameErrorId)
 	{
-		this.appNameError = appNameError;
+		this.appNameError = SecureAppGeneratorApplication.getErrorMessage(appNameErrorId);
 	}
 
 	public String getAppIconLocation()
