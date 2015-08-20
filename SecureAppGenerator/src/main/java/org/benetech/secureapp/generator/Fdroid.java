@@ -39,7 +39,9 @@ public class Fdroid
     private static final String CONFIG_PY_FILE_NAME = "config.py";
 	private static final String FDROID_REPO_DIR = "repo";
 	private static final String INCLUDE_FDROID_ENV = "INCLUDE_FDROID";
+	private static final String FDROID_HOME_ENV = "FDROID_HOME";
 	private static final String FDROID_TRUE = "true";
+	private static final String FDROID_CMD = "fdroid";
 
     public static File getOriginalFDroidDirectory()
 	{
@@ -59,9 +61,9 @@ public class Fdroid
 			destination.setExecutable(true);
 			destination.setWritable(true);
 
-			String fDroidCommand = "fdroid update --create-metadata -v";
+			String fDroidCommand = getFDroidCommand("update --create-metadata -v");
 			SecureAppGeneratorApplication.executeCommand(session, fDroidCommand, baseDir);
-			fDroidCommand = "fdroid server update -v";
+			fDroidCommand = getFDroidCommand("server update -v");
 			SecureAppGeneratorApplication.executeCommand(session, fDroidCommand, baseDir);
 	  		long endTime = System.currentTimeMillis();
 	  		String timeToBuild = Logger.getElapsedTime(startTime, endTime);
@@ -108,5 +110,22 @@ public class Fdroid
 	{
   		String includeFDroid = System.getenv(INCLUDE_FDROID_ENV);
   		return(includeFDroid != null && includeFDroid.toLowerCase().equals(FDROID_TRUE));
+	}
+	
+	static private String getFDroidCommand(String command)
+	{
+  		String fDroidCompleteCommand = "";
+				
+  		String fdroidHomeDir = System.getenv(FDROID_HOME_ENV);
+  		if(fdroidHomeDir != null)
+  		{
+  			fDroidCompleteCommand =	fdroidHomeDir;
+  			if(!fdroidHomeDir.endsWith("/"))
+  				fDroidCompleteCommand += "/";
+  		}
+  		fDroidCompleteCommand += FDROID_CMD;
+  		fDroidCompleteCommand += " ";
+  		fDroidCompleteCommand += command;
+  		return fDroidCompleteCommand;
 	}
 }
