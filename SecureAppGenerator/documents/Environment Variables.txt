@@ -1,0 +1,31 @@
+Environment Variables for SAG
+These can either be set up inside Eclipse, or in your environment.plist, 
+or passed in to the Docker env.
+
+S3_DOWNLOAD_BUCKET
+	**Pick one of the options below depending on what is being released/tested
+	qa-benetech-sag
+	staging-benetech-sag
+	benetech-sag
+	
+AWS_KEY
+	**get a key from Ron for either (QA / Staging / Release) depending on S3_DOWNLOAD_BUCKET
+	
+AWS_SECRET 
+	**get the secred from Ron for either (QA / Staging / Release) depending on S3_DOWNLOAD_BUCKET
+	
+GRADLE_HOME
+	**directory to the latest version of Gradle you are using for building the SA.
+	/Users/charlesl/Dev/gradle-2.4
+	
+FDROID_HOME (Optional)
+	**directory to the fdroid directory (needed if your path env. doesn't include FDroid location)
+	/opt/local/bin
+	
+INCLUDE_FDROID (Optional)
+	true 	= will auto generate an FDroid version
+	false	= (default) skips generating FDroid version
+	
+SAG_DEBUG_VERBOSE (Optional)
+	true 	= logs will contain extra debug information such as command line exec to std.out/err
+	false	= (default) minimal logging
