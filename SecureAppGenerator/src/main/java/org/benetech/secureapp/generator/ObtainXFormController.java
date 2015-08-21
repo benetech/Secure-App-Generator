@@ -39,6 +39,7 @@ import java.util.List;
 import javax.servlet.http.HttpSession;
 import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
+import javax.xml.parsers.ParserConfigurationException;
 
 import org.apache.commons.io.FileUtils;
 import org.javarosa.core.model.FormDef;
@@ -59,6 +60,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurerAdapter;
+import org.xml.sax.SAXException;
 
 /**
  * 
@@ -190,7 +192,13 @@ public class ObtainXFormController extends WebMvcConfigurerAdapter
 	private void isValidXForm() throws Exception
 	{
 		File xformFile = new File(XML_FILE_LOCATION);
-		
+		StringBuilder fieldErrors = isXFormValid(xformFile);
+        if(fieldErrors.length() != 0)
+    			throw new Exception("Unsupported XForm Field(s): " +fieldErrors.toString());
+	}
+
+	protected StringBuilder isXFormValid(File xformFile) throws ParserConfigurationException, SAXException, IOException
+	{
 		DocumentBuilderFactory dbFactory = DocumentBuilderFactory.newInstance();
 		DocumentBuilder dBuilder = dbFactory.newDocumentBuilder();
 		dBuilder.parse(xformFile);
@@ -201,8 +209,7 @@ public class ObtainXFormController extends WebMvcConfigurerAdapter
         FormEntryModel formEntryModel = new FormEntryModel(formDef);
         StringBuilder fieldErrors = new StringBuilder();
         inspectFields(formEntryModel, formDef, fieldErrors);
-        if(fieldErrors.length() != 0)
-    			throw new Exception("Unsupported XForm Field(s): " +fieldErrors.toString());
+		return fieldErrors;
 	}
 	
 	private void inspectFields(FormEntryModel model, FormDef formDef, StringBuilder fieldErrors)
@@ -338,7 +345,10 @@ public class ObtainXFormController extends WebMvcConfigurerAdapter
 	{
 		StringBuilder errorMsg = new StringBuilder(fieldType);
 		errorMsg.append(" : \"");
-		errorMsg.append(prompt.getQuestion().getTextID());
+		QuestionDef question = prompt.getQuestion();
+		errorMsg.append(question.getLabelInnerText());
+		errorMsg.append(" - ");
+		errorMsg.append(question.getTextID());
 		errorMsg.append("\"");
 		addErrorToListOfErrors(fieldErrors, errorMsg);
 	}

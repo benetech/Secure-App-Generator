@@ -10,10 +10,12 @@ import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 @RunWith(SpringJUnit4ClassRunner.class)
 @SpringApplicationConfiguration(classes = SecureAppGeneratorApplication.class)
 @WebAppConfiguration
-public class SecureAppGeneratorApplicationTests {
+public class SecureAppGeneratorApplicationTests 
+{
 
 	@Test
-	public void contextLoads() {
+	public void contextLoads() 
+	{
 	}
 
 }
