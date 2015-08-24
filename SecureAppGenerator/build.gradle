@@ -15,7 +15,7 @@ apply plugin: 'java'
 apply plugin: 'eclipse'
 apply plugin: 'idea'
 apply plugin: 'spring-boot' 
-apply plugin: 'io.spring.dependency-management' 
+//apply plugin: 'io.spring.dependency-management' 
 apply plugin: 'war'
 
 war {
