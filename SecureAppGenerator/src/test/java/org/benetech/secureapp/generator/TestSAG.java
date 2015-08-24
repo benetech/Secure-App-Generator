@@ -33,18 +33,17 @@ public class TestSAG
 {
 	public static void main(String[] args)
 	{
-//		runTests();
+		runTests();
 	}
 
 	public static void runTests ()
 	{
-//		junit.textui.TestRunner.run (suite());
+		junit.textui.TestRunner.run (suite());
 	}
 
 	public static Test suite ( )
 	{
 		TestSuite suite= new TestSuite("SAG Tests");
-		
 		suite.addTest(new TestSuite(TestXFormValidation.class));
 	    return suite;
 	}
