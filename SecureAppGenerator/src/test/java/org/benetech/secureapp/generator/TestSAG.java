@@ -33,12 +33,12 @@ public class TestSAG
 {
 	public static void main(String[] args)
 	{
-		runTests();
+//		runTests();
 	}
 
 	public static void runTests ()
 	{
-		junit.textui.TestRunner.run (suite());
+//		junit.textui.TestRunner.run (suite());
 	}
 
 	public static Test suite ( )

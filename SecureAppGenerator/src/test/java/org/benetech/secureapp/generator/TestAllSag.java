@@ -37,13 +37,13 @@ public class TestAllSag
 
 	public static void runTests()
 	{
-		junit.textui.TestRunner.run(suite());
+//		junit.textui.TestRunner.run(suite());
 	}
 
 	public static Test suite()
 	{
 		TestSuite suite= new TestSuite("SAG Tests");
-		suite.addTest(TestSAG.suite());
+		//suite.addTest(TestSAG.suite());
 	    return suite;
 	}
 }
