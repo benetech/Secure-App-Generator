@@ -225,7 +225,7 @@ public class ObtainTokenController extends WebMvcConfigurerAdapter
  			Vector<String> singleAccountId = response.getResultVector();
  			if(singleAccountId.size() != 1)
  				throw new TokenNotFoundException();
- 			String AccountId = (String)singleAccountId.get(0);
+ 			String AccountId = singleAccountId.get(0);
 	 		config.setClientPublicKey(AccountId);
 			config.setClientPublicCode(MartusCrypto.computeFormattedPublicCode40(AccountId));
 		}

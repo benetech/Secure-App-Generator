@@ -130,7 +130,7 @@ public class AmazonS3Utils
 			{
 				for (Iterator<S3ObjectSummary> iterator = summaries.iterator(); iterator.hasNext();)
 				{
-					S3ObjectSummary currentApk = (S3ObjectSummary) iterator.next();
+					S3ObjectSummary currentApk = iterator.next();
 					String currentApkName = currentApk.getKey().toLowerCase();
 					String amazonObjectPartialName = AMAZON_DOWNLOADS_DIRECTORY + partialApkName;
 					if(currentApkName.startsWith(amazonObjectPartialName))
