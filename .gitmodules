@@ -1,0 +1,3 @@
+[submodule "SecureAppGenerator/src/main/resources/static/clapierre.github.io"]
+	path = SecureAppGenerator/src/main/resources/static/clapierre.github.io
+	url = git://github.com/clapierre/clapierre.github.io

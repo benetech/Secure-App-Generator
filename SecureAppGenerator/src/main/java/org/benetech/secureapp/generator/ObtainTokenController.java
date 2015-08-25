@@ -76,6 +76,13 @@ public class ObtainTokenController extends WebMvcConfigurerAdapter
 		SecureAppGeneratorApplication.setInvalidResults(session);
         return WebPage.ERROR;
     }
+	
+	@RequestMapping(value=WebPage.OBTAIN_XFORM_CREATE, method=RequestMethod.GET)
+    public String createXForm(HttpSession session, Model model, AppConfiguration appConfig)
+    {
+		model.addAttribute(SessionAttributes.APP_CONFIG, appConfig);
+       return WebPage.OBTAIN_XFORM_CREATE;
+    }
 
 	@RequestMapping(value=WebPage.OBTAIN_CLIENT_TOKEN_PREVIOUS, method=RequestMethod.POST)
     public String goBack(HttpSession session, Model model, AppConfiguration appConfig)
@@ -83,7 +90,6 @@ public class ObtainTokenController extends WebMvcConfigurerAdapter
 		model.addAttribute(SessionAttributes.APP_CONFIG, appConfig);
        return WebPage.OBTAIN_XFORM;
     }
-
 	
 	@RequestMapping(value=WebPage.OBTAIN_CLIENT_TOKEN_NEXT, method=RequestMethod.POST)
 	
