@@ -7,14 +7,12 @@ define([
     'vellum/datasources',
     'vellum/widgets',
     'vellum/window',
-    'tpl!vellum/templates/external_sources_tree',
 ], function (
     $,
     _,
     datasources,
     widgets,
     window_,
-    external_sources_tree
 ) {
     var fn = {},
         panelHeight;
@@ -27,7 +25,6 @@ define([
                 pane = this.$f.find(".fd-accessory-pane"),
                 head, headHeight;
             fn.initDataBrowser = _.once(_initDataBrowser);
-            pane.append($(external_sources_tree()));
             head = pane.find(".fd-head-external-sources");
             headHeight = head.outerHeight(true) || 0;
             pane.data("min-size", headHeight)
