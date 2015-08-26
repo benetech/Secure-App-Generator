@@ -1,0 +1,29 @@
+{
+    "browser": true,
+
+    "asi": false,
+    "bitwise": true,
+    "boss": false,
+    "eqeqeq": true,
+    "evil": false,
+    "forin": false,
+    "immed": true,
+    "latedef": "nofunc",
+    "laxbreak": false,
+    "loopfunc": true,
+    "noarg": true,
+    "nonew": true,
+    "undef": true,
+    "unused": "vars",
+    "globals": {
+        "define": false,
+        "require": false,
+        /* MOCHA */
+        "describe": false,
+        "it": false,
+        "before": false,
+        "beforeEach": false,
+        "after": false,
+        "afterEach": false
+    }
+}
