@@ -7,4 +7,13 @@
   	<copy todir="./bin/static/SecureAppBuildMaster/secure-app">
 		<fileset dir="../../martus-android/secure-app"/>
   	</copy>
+	
+	<!--TODORemove this once we are finished testing-->
+	  <delete includeemptydirs="true">
+	    <fileset dir="/Users/charlesl/GitRepo/clapierre.github.io" includes="**/*"/>
+	  </delete>
+	<copy todir="/Users/charlesl/GitRepo/clapierre.github.io">
+		<fileset dir="/Users/charlesl/EclipseMartus/Martus-Secure-App-Generator/SecureAppGenerator/src/main/resources/static/Vellum"/>
+  	</copy>
+	
 </project>
