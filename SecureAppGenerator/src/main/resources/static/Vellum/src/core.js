@@ -352,8 +352,7 @@ define([
 
     fn.getSelectQuestions = function () {
         return [
-            "Select",
-            "MSelect"
+            "Select"
         ];
     };
 
