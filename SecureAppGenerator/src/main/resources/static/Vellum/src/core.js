@@ -295,7 +295,7 @@ define([
                 ]
             },
             {
-                group: ["Select", 'Multiple Choice'],
+                group: ["Select"],
                 related: [
                     "Item"
                     // an Itemset is added automatically when you add a new dynamic
