@@ -1917,13 +1917,8 @@ define([
 
     fn.getLogicProperties = function () {
         return [
-            "calculateAttr",
             "requiredAttr",
-            "relevantAttr",
-            "constraintAttr",
-            "repeat_count",
             "defaultValue",
-            
         ];
     };
 
