@@ -325,7 +325,6 @@ define([
             },
             {
                 group: ["Geopoint"],
-                textOnly: true,
                 questions: this.getAdvancedQuestions()
             }
         ];
