@@ -305,15 +305,11 @@ define([
             },
             {
                 group: ["Int", 'Number'],
-                questions: [
-                    "Int"
-                ]
+                questions: ["Int"]
             },
             {
                 group: ["Date", 'Date'],
-                questions: [
-                    "Date"
-                ]
+                questions: ["Date"]
             },
            
             {
@@ -325,7 +321,7 @@ define([
             },
             {
                 group: ["Geopoint"],
-                questions: this.getAdvancedQuestions()
+                questions: ["Geopoint"]
             }
         ];
     };
