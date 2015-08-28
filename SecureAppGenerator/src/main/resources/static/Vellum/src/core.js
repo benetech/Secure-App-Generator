@@ -324,15 +324,6 @@ define([
                 ]
             },
             {
-                group: ["Image", 'Multimedia Capture'],
-                questions: [
-                    "Image",
-                    "Audio",
-                    "Video",
-                    "Signature"
-                ]
-            },
-            {
                 group: ["Geopoint", 'Advanced', ''],
                 textOnly: true,
                 questions: this.getAdvancedQuestions()
