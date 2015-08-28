@@ -312,9 +312,7 @@ define([
             {
                 group: ["Date", 'Date'],
                 questions: [
-                    "Date",
-                    "Time",
-                    "DateTime"
+                    "Date"
                 ]
             },
             {
