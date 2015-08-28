@@ -1897,7 +1897,7 @@ define([
                 slug: "advanced",
                 type: "accordion",
                 displayName: "Advanced",
-                properties: this.getAdvancedProperties(),
+                properties: ["defaultValue"],
                 isCollapsed: true,
                 help: {
                     title: "Advanced",
@@ -1934,7 +1934,9 @@ define([
             "requiredAttr",
             "relevantAttr",
             "constraintAttr",
-            "repeat_count"
+            "repeat_count",
+            "defaultValue",
+            
         ];
     };
 
