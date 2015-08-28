@@ -1881,17 +1881,6 @@ define([
                         "the question required or ensure the answer is in a valid range.",
                     link: "https://confluence.dimagi.com/display/commcarepublic/Common+Logic+and+Calculations"
                 }
-            },
-            {
-                displayName: "Media",
-                slug: "content",
-                properties: this.getMediaProperties(),
-                isCollapsed: false,
-                help: {
-                    title: "Media",
-                    text: "This will allow you to add images, audio or video media to a question, or other custom content.",
-                    link: "https://confluence.dimagi.com/display/commcarepublic/Multimedia+in+CommCare"
-                }
             }
        ];
     };
