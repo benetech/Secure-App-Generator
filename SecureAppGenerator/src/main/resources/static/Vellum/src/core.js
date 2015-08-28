@@ -324,7 +324,7 @@ define([
                 ]
             },
             {
-                group: ["Geopoint", 'Advanced', ''],
+                group: ["Geopoint"],
                 textOnly: true,
                 questions: this.getAdvancedQuestions()
             }
@@ -339,9 +339,7 @@ define([
 
     fn.getAdvancedQuestions = function () {
         return [
-            "Geopoint",
-            "Barcode",
-            "Secret",
+            "Geopoint"
         ];
     };
 
