@@ -320,8 +320,7 @@ define([
                 group: ["Group", 'Groups'],
                 questions: [
                     "Group",
-                    "Repeat",
-                    "FieldList"
+                    "Repeat"
                 ]
             },
             {
