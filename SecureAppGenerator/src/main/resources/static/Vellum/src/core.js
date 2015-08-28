@@ -318,10 +318,6 @@ define([
                     "Group",
                     "Repeat"
                 ]
-            },
-            {
-                group: ["Geopoint"],
-                questions: ["Geopoint"]
             }
         ];
     };
