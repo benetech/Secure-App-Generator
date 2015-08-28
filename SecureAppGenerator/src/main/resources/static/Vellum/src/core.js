@@ -306,9 +306,7 @@ define([
             {
                 group: ["Int", 'Number'],
                 questions: [
-                    "Int",
-                    "PhoneNumber",
-                    "Double",
+                    "Int"
                 ]
             },
             {
