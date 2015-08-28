@@ -315,12 +315,7 @@ define([
                     "Date"
                 ]
             },
-            {
-                group: ["DataBindOnly", 'Hidden Value'],
-                questions: [
-                    "DataBindOnly"
-                ]
-            },
+           
             {
                 group: ["Group", 'Groups'],
                 questions: [
