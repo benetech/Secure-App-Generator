@@ -29,7 +29,7 @@ public class AppConfiguration
 {
 	private static final char DASH_CHAR = '-';
 	private static final String APK_EXTENSION = ".apk";
-	private static final String DEBUG_APK_EXTENSION = "-debug" + APK_EXTENSION;
+	private static final String DEBUG_APK_EXTENSION = "-release" + APK_EXTENSION;
 	private static final char DOT_CHAR = '.';
 	private static final char UNDERSCORE_CHAR = '_';
 	private static final char SPACE_CHAR = ' ';
@@ -281,12 +281,17 @@ public class AppConfiguration
 
 	public String getApkName()
 	{
-        String appNameWithoutSpaces = appName.replace(SPACE_CHAR, UNDERSCORE_CHAR);
+        String appNameWithoutSpaces = getAppNameWithoutSpaces();
         StringBuilder apkName = new StringBuilder(appNameWithoutSpaces);
         apkName.append(DASH_CHAR);
 		apkName.append(getApkVersionNumberFull());
         apkName.append(APK_EXTENSION);
 		return apkName.toString();
+	}
+
+	protected String getAppNameWithoutSpaces()
+	{
+		return appName.replace(SPACE_CHAR, UNDERSCORE_CHAR);
 	}
 
 	public String getAppIconBase64Data()

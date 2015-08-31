@@ -56,7 +56,7 @@ public class SummaryController extends WebMvcConfigurerAdapter
 	private static final String XML_APP_NAME = "app_name";
 	private static final String GRADLE_EXE = "/bin/gradle";
     private static final String GRADLE_PARAMETERS = " -p ";
-	private static final String GRADLE_BUILD_COMMAND = " assembledebug";
+	private static final String GRADLE_BUILD_COMMAND = " assemblerelease";
 	private static final String APK_LOCAL_FILE_DIRECTORY = "/build/outputs/apk/";
     private static final String APK_RESOURCE_FILE_LOCAL = "/res/values/non-traslatable-auto-generated-resources.xml";
     private static final String APK_HDPI_FILE_LOCAL = "/res/drawable-hdpi/";
@@ -170,7 +170,7 @@ public class SummaryController extends WebMvcConfigurerAdapter
 		appendGradleValue(data, VERSION_BUILD_XML, config.getApkVersionBuild());
 		appendGradleValue(data, VERSION_SAG_BUILD_XML, config.getApkSagVersionBuild());
 		appendGradleValue(data, APP_NAME_XML, config.getAppName());
-		appendGradleValue(data, APP_CUSTOM_APPLICATION_ID_XML, APP_BASE_APPLICATION_ID + config.getAppName());
+		appendGradleValue(data, APP_CUSTOM_APPLICATION_ID_XML, APP_BASE_APPLICATION_ID + config.getAppNameWithoutSpaces());
 
 		File apkResourseFile = new File(baseBuildDir, GRADLE_GENERATED_SETTINGS_FILE);
   		SecureAppGeneratorApplication.writeDataToFile(apkResourseFile, data);
