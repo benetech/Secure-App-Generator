@@ -190,7 +190,6 @@ define([
             _this.data.windowManager.adjustToWindow();
         });
 
-        bindBeforeUnload(this.data.core.saveButton.beforeunload);
         this.data.core.currentErrors = [];
 
         this.data.core.lastSavedXForm = this.opts().core.form;
