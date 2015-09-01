@@ -450,9 +450,27 @@ define([
             $modal.find(".modal-body").html(content);
             $modal.modal('show');
         } else {
-            _this.showSourceInModal(done);
+        	
+        	
+         		//_this.showSourceInModal(done);
+        		download("myCustomForm.xml", this.createXML());
         }
     };
+    
+    function download(filename, text) {
+        var pom = document.createElement('a');
+        pom.setAttribute('href', 'data:text/plain;charset=utf-8,' + encodeURIComponent(text));
+        pom.setAttribute('download', filename);
+
+        if (document.createEvent) {
+            var event = document.createEvent('MouseEvents');
+            event.initEvent('click', true, true);
+            pom.dispatchEvent(event);
+        }
+        else {
+            pom.click();
+        }
+    }   
 
     fn.showSourceInModal = function (done) {
         var _this = this,
