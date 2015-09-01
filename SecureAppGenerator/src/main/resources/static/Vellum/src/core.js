@@ -155,8 +155,7 @@ define([
         				var forceFullSave = false;
         				_this.ensureCurrentMugIsSaved(function () 
         						{
-        							_this.showSourceXMLModal();
-        							//_this.validateAndSaveXForm(forceFullSave);
+         							_this.validateAndSaveXForm(forceFullSave);
         						}
         				);
         			},
@@ -1770,8 +1769,9 @@ define([
             $modal.modal('show');
             return;
         }
-
-        this.send(formText, forceFullSave ? 'full' : null);
+		
+        this.showSourceXMLModal();
+        //this.send(formText, forceFullSave ? 'full' : null);
     };
         
     fn.send = function (formText, saveType) {
