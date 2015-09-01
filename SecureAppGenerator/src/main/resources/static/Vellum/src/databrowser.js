@@ -12,7 +12,7 @@ define([
     _,
     datasources,
     widgets,
-    window_,
+    window_
 ) {
     var fn = {},
         panelHeight;
