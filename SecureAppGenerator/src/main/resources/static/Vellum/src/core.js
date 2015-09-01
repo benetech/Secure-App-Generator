@@ -148,24 +148,20 @@ define([
 
         var _this = this,
             bindBeforeUnload = this.opts().core.bindBeforeUnload;
-        this.data.core.saveButton = SaveButton.init({
-            save: function(event) {
-                var forceFullSave = event && event.altKey;
-                if (forceFullSave &&
-                    !window.confirm("Holding the ALT key while clicking save " +
-                            "invokes an inefficient save procedure. Do " +
-                            "this only if a normal save fails.")) {
-                    return; // abort
-                }
-                _this.ensureCurrentMugIsSaved(function () {
-                    if (window.analytics) {
-                        window.analytics.workflow("Clicked Save in form builder");
-                    }
-                    _this.validateAndSaveXForm(forceFullSave);
-                });
-            },
-            unsavedMessage: 'Are you sure you want to exit? All unsaved changes will be lost!'
-        });
+        this.data.core.saveButton = SaveButton.init(
+        		{
+        			save: function(event) 
+        			{
+        				var forceFullSave = false;
+        				_this.ensureCurrentMugIsSaved(function () 
+        						{
+        							_this.showSourceXMLModal();
+        							//_this.validateAndSaveXForm(forceFullSave);
+        						}
+        				);
+        			},
+        			unsavedMessage: ''
+        		});
         var setFullscreenIcon = function () {
             var $i = $('i', _this.data.core.$fullscreenButton);
             if (_this.data.windowManager.fullscreen) {
@@ -223,7 +219,7 @@ define([
             // Allow onReady to access vellum instance (mostly for tests)
             _this.opts().core.onReady.apply(_this);
         }
-        this._init_extra_tools();
+       //  this._init_extra_tools();
         parser.init(this);
         this.loadXFormOrError(this.opts().core.form, function () {
             setTimeout(onReady, 0);
