@@ -61,8 +61,12 @@ public class Fdroid
 			destination.setExecutable(true);
 			destination.setWritable(true);
 
-			String fDroidCommand = getFDroidCommand("update --create-metadata -v");
+			String fDroidCommand = getFDroidCommand("--version");
 			SecureAppGeneratorApplication.executeCommand(session, fDroidCommand, baseDir);
+
+			fDroidCommand = getFDroidCommand("update --create-metadata -v");
+			SecureAppGeneratorApplication.executeCommand(session, fDroidCommand, baseDir);
+
 			fDroidCommand = getFDroidCommand("server update -v");
 			SecureAppGeneratorApplication.executeCommand(session, fDroidCommand, baseDir);
 	  		long endTime = System.currentTimeMillis();
