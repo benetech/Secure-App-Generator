@@ -451,8 +451,13 @@ define([
             $modal.modal('show');
         } else {
         	
-        	
-         		//_this.showSourceInModal(done);
+        		var isSafari = navigator.vendor && navigator.vendor.indexOf('Apple') > -1;
+        		
+        		if(isSafari)
+        		{
+        			window.alert("NOTE: Safari users the xml will be shown in your broswer instead of downloading it directly.  You will need to use 'Command + S' to save the file locally.");
+        		}
+         	//_this.showSourceInModal(done);
         		download("myCustomForm.xml", this.createXML());
         }
     };
