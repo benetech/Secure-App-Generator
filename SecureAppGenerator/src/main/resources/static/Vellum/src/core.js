@@ -2063,3 +2063,10 @@ define([
         }
     }, fn);
 });
+
+function HandleBrowseClick()
+{
+    var fileinput = document.getElementById("file");
+    fileinput.click();
+}
+
