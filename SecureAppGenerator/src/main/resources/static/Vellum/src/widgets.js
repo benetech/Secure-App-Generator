@@ -324,7 +324,7 @@ define([
                     return options.autocompleteChoices(mug);
                 };
             }
-            return getUIElementWithEditButton(elem, function () {
+            return getUIElementWithNoEditButton(elem, function () {
                 widget.options.displayXPathEditor({
                     leftPlaceholder: options.leftPlaceholder,
                     rightPlaceholder: options.rightPlaceholder,
@@ -565,6 +565,19 @@ define([
         return $uiElem;
     };
     
+    var getUIElementWithNoEditButton = function($uiElem, editFn, isDisabled) {
+        var input = $uiElem.find('input');
+        if (_.isUndefined(isDisabled)) {
+            isDisabled = input ? input.prop('disabled') : false;
+        }
+
+        $uiElem.css('position', 'relative');
+        $uiElem.find('.controls').not('.messages')
+            .addClass('fd-edit-controls')
+            .css('margin-right', '0px');
+        return $uiElem;
+    };
+
     var getUIElement = function($input, labelText, isDisabled, help) {
         var uiElem = $("<div />").addClass("widget control-group"),
             $controls = $('<div class="controls" />'),
