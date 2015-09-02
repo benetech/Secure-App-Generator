@@ -142,11 +142,11 @@ var SaveButton = {
         return button;
     },
     message: {
-        SAVE: 'Save',
-        SAVING: 'Saving',
-        SAVED: 'Saved',
+        SAVE: 'Export',
+        SAVING: 'Exporting',
+        SAVED: 'Exported',
         RETRY: 'Try Again',
-        ERROR_SAVING: 'There was an error saving'
+        ERROR_SAVING: 'There was an error exportingƒ'
     }
 };
 

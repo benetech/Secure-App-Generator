@@ -1,9 +1,19 @@
+<script language="JavaScript" type="text/javascript">
+function HandleBrowseClick()
+{
+    var fileinput = document.getElementById("file");
+    fileinput.click();
+}
+</script>
+
+
 <div class="fd-ui-container">
     <div class="fd-toolbar">
         <div class="fd-form-actions pull-right">
         		<div class="fd-save-button"></div>
  	        <div>
-  				<input type="file" id="file"/>
+				<input type="file" id="file" name="fileupload" style="display: none"/>
+				<input class="btn" type="button" value="Import..." id="importForm" onclick="HandleBrowseClick();"/>
          	</div>
             
         </div>
