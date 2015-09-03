@@ -39,7 +39,7 @@ define([
         
         createSetValues(dataTree, form, xmlWriter);
 
-        form.vellum.contributeToModelXML(xmlWriter);
+       // form.vellum.contributeToModelXML(xmlWriter); //Language Independent <itext>
         
         xmlWriter.writeEndElement(); //CLOSE MODEL
 
@@ -251,8 +251,10 @@ define([
     /**
      * Creates the label tag inside of a control Element in the xform
      */
-    function createLabel(xmlWriter, mug) {
-        var labelItext = mug.p.labelItext,
+    function createLabel(xmlWriter, mug) 
+    {
+    		/* OLD way with ref to translations
+    		var labelItext = mug.p.labelItext,
             labelRef;
         if (labelItext) {
             labelRef = "jr:itext('" + labelItext.id + "')";
@@ -272,6 +274,16 @@ define([
             }
             xmlWriter.writeEndElement(); // close label
         }
+  		*/
+    		var labelIText = mug.p.labelItext; 	
+    		var label;
+    		if(labelIText)
+    			label = labelIText.get("default", "en");
+    		if(label == "")
+    			label = " ";
+        xmlWriter.writeStartElement('label');
+        xmlWriter.writeString(label);
+        xmlWriter.writeEndElement(); // close label
     }
 
     function createHint(xmlWriter, mug) {
