@@ -24,13 +24,13 @@ Boston, MA 02111-1307, USA.
 */
 
 package org.benetech.secureapp.generator;
-
 import java.io.File;
 import java.io.IOException;
 
 import org.martus.util.TestCaseEnhanced;
 import org.martus.util.UnicodeWriter;
 import org.xml.sax.SAXException;
+import org.benetech.secureapp.generator.ObtainXFormController;
 
 public class TestXFormValidation extends TestCaseEnhanced
 {
