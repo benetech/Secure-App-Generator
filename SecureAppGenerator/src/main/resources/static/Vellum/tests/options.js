@@ -102,7 +102,7 @@ define(["underscore"], function (_) {
             saveUrl: function (data) {},
         },
         javaRosa: {
-            langs: ['en', 'hin'],
+            langs: ['en'],
             displayLanguage: 'en'
         },
         intents: {
