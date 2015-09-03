@@ -18,14 +18,6 @@
 						<value>English</value>
 					</text>
 				</translation>
-				<translation lang="hin">
-					<text id="text-label">
-						<value>text</value>
-					</text>
-					<text id="text-constraintMsg">
-						<value>Hindi</value>
-					</text>
-				</translation>
 			</itext>
 		</model>
 	</h:head>

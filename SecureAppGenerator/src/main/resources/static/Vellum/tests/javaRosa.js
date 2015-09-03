@@ -56,7 +56,7 @@ require([
     describe("The javaRosa plugin with multiple languages", function () {
         before(function (done) {
             util.init({
-                javaRosa: {langs: ['en', 'hin']},
+                javaRosa: {langs: ['en']},
                 core: {onReady: function () { done(); }}
             });
         });
@@ -64,7 +64,7 @@ require([
         describe("and non default language is first", function () {
             before(function (done) {
                 util.init({
-                    javaRosa: {langs: ['hin', 'en']},
+                    javaRosa: {langs: ['en']},
                     core: {onReady: function () { done(); }}
                 });
             });

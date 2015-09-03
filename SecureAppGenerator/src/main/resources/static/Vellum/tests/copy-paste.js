@@ -46,7 +46,7 @@ require([
     describe("The copy-paste plugin", function () {
         before(function (done) {
             util.init({
-                javaRosa: { langs: ['en', 'hin'] },
+                javaRosa: { langs: ['en'] },
                 core: {
                     onReady: function () {
                         assert(this.isPluginEnabled("copyPaste"),
@@ -975,7 +975,7 @@ require([
         describe("with multimedia", function () {
             before(function (done) {
                 util.init({
-                    javaRosa: { langs: ['en', 'hin'] },
+                    javaRosa: { langs: ['en'] },
                     uploader: { objectMap: {
                         "jr://file/commcare/audio/data/question1.mp3": true
                     }},

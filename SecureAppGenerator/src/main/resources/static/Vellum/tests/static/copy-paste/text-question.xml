@@ -18,14 +18,6 @@
 						<value>Nope</value>
 					</text>
 				</translation>
-				<translation lang="hin">
-					<text id="txt-label">
-						<value>Hindi Text</value>
-					</text>
-					<text id="txt-constraintMsg">
-						<value>Nope</value>
-					</text>
-				</translation>
 			</itext>
 		</model>
 	</h:head>

@@ -39,7 +39,7 @@ require([
     describe("The markdown widget", function () {
         function beforeFn(done) {
             util.init({
-                javaRosa: {langs: ['en', 'hin']},
+                javaRosa: {langs: ['en']},
                 core: {onReady: done}
             });
         }
