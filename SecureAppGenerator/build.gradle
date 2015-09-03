@@ -49,16 +49,8 @@ repositories {
     mavenCentral()
 }
 
-sourceSets {
-    integrationTest {
-        java {
-            compileClasspath += main.output + test.output
-            runtimeClasspath += main.output + test.output
-            srcDir file('src/test/java')
-        }
-        resources.srcDir file('src/test/java')
-    }
-}                
+check.dependsOn.remove(test)
+               
 dependencies {
     providedRuntime 'org.springframework.boot:spring-boot-starter-tomcat'
     compile("org.springframework.boot:spring-boot-starter-thymeleaf")
