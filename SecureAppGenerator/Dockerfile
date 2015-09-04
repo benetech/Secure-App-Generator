@@ -68,8 +68,4 @@ ENV ROOT_WAR_PATH /usr/local/tomcat/webapps/ROOT.war
 
 COPY ./build/libs/SAG-*.war $ROOT_WAR_PATH
 
-RUN wget --output-document=$ROOT_WAR_PATH \
-         --quiet $SAG_DL_URL
-
 USER tomcat
-
