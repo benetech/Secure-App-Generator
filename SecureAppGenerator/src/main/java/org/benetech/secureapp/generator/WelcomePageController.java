@@ -50,7 +50,7 @@ public class WelcomePageController extends WebMvcConfigurerAdapter
 		AppConfiguration defaultConfig = new AppConfiguration();
 		SecureAppGeneratorApplication.setDefaultIconForSession(session, defaultConfig);
 		SecureAppGeneratorApplication.setSessionFromConfig(session, defaultConfig);
-	}
+ 	}
 
 	@RequestMapping(value=WebPage.WELCOME, method=RequestMethod.GET)
     public String directError(HttpSession session, Model model) 

@@ -138,6 +138,18 @@ form{
     color: yellow;
     font-size: 16px;
   }
+    
+ .cellphone_center_version {
+    position: absolute;
+    top: 475px;
+    left: 33px;
+    width: 243px;
+    height: 15px;
+    padding: 4px;
+    background-color: #4D4D4D;
+    color: yellow;
+    font-size: 10px;
+  } 
   
 .progress_location{
     position: absolute;
