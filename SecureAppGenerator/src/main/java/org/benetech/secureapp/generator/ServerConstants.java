@@ -54,12 +54,14 @@ public class ServerConstants {
 
     public static String getCurrentServerIp()
     {
-        return IP_FOR_SL1_DEV;
+    		return IP_FOR_SL1_IE_REAL;
+       // return IP_FOR_SL1_DEV;
     }
 
     public static String getCurrentSeverKey()
     {
-        return PUBLIC_KEY_SL1_DEV;
+    		return PUBLIC_KEY_FOR_SL1_IE_REAL;
+        //return PUBLIC_KEY_SL1_DEV;
     }
     
     public static boolean usingRealServer()
