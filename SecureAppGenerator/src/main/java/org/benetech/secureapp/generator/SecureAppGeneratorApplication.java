@@ -79,7 +79,7 @@ public class SecureAppGeneratorApplication extends SpringBootServletInitializer
 		{
 			final PathMatchingResourcePatternResolver pmrpr = new PathMatchingResourcePatternResolver();
 			final File staticDir = pmrpr.getResource("classpath:static").getFile();
-			Logger.logVerbose(null, "Static dir:"+staticDir.getAbsolutePath());
+			//Logger.logVerbose(null, "Static dir:"+staticDir.getAbsolutePath());
 			return staticDir;
 		}
 		catch (IOException e)
