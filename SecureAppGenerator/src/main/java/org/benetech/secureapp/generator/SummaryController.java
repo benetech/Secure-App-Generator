@@ -214,7 +214,7 @@ public class SummaryController extends WebMvcConfigurerAdapter
 		Logger.log(session, "Building " + config.getApkName());
 		Logger.logMemoryStatistics();
 		String includeLogging = "";
-		//includeLogging = GRADLE_BUILD_COMMAND_LOGGING;
+		includeLogging = GRADLE_BUILD_COMMAND_LOGGING;
 		String gradleCommand = SecureAppGeneratorApplication.getGadleDirectory() + GRADLE_EXE + GRADLE_PARAMETERS + baseBuildDir + includeLogging + GRADLE_BUILD_COMMAND_RELEASE;
 		long startTime = System.currentTimeMillis();
 		int returnCode = SecureAppGeneratorApplication.executeCommand(session, gradleCommand, null);
