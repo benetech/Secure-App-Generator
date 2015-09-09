@@ -86,36 +86,21 @@ public class SummaryController extends WebMvcConfigurerAdapter
     }
 	
 	@RequestMapping(value=WebPage.SUMMARY_NEXT, method=RequestMethod.POST)	
-	public String buildApk(HttpSession session, Model model, AppConfiguration appConfig) 
+	public String buildApk(HttpSession session, Model model, AppConfiguration appConfig) throws Exception 
     {
 		File secureAppBuildDir = null;
-		try
-		{
-			secureAppBuildDir = configureSecureAppBuildDirectory(session);
-			AppConfiguration config = (AppConfiguration)session.getAttribute(SessionAttributes.APP_CONFIG);
-			updateApkSettings(secureAppBuildDir, config);
-			updateGradleSettings(secureAppBuildDir, config);
-			copyIconToApkBuild(secureAppBuildDir, config.getAppIconLocalFileLocation());
-			copyFormToApkBuild(secureAppBuildDir, config.getAppXFormLocation());
-			File apkCreated = buildApk(session, secureAppBuildDir, config);
-			File renamedApk = renameApk(apkCreated, config);
-			copyApkToDownloads(session, renamedApk, config);
-			if(Fdroid.includeFDroid())
-				Fdroid.copyApkToFDroid(session, renamedApk);
-			model.addAttribute(SessionAttributes.APP_CONFIG, config);
-			Logger.logVerbose(session, "Returning webpage:" + WebPage.FINAL);		
-			return WebPage.FINAL;
-		}
-		catch (Exception e)
-		{
-			Logger.logException(session, e);
-			appConfig.setApkBuildError("generating_apk");
-			model.addAttribute(SessionAttributes.APP_CONFIG, appConfig);
-			Logger.logVerbose(session, "Returning webpage:" + WebPage.SUMMARY);		
-			return WebPage.SUMMARY;
-		}
-	//	finally
-	//	{
+		secureAppBuildDir = configureSecureAppBuildDirectory(session);
+		AppConfiguration config = (AppConfiguration)session.getAttribute(SessionAttributes.APP_CONFIG);
+		updateApkSettings(secureAppBuildDir, config);
+		updateGradleSettings(secureAppBuildDir, config);
+		copyIconToApkBuild(secureAppBuildDir, config.getAppIconLocalFileLocation());
+		copyFormToApkBuild(secureAppBuildDir, config.getAppXFormLocation());
+		File apkCreated = buildApk(session, secureAppBuildDir, config);
+		File renamedApk = renameApk(apkCreated, config);
+		copyApkToDownloads(session, renamedApk, config);
+		if(Fdroid.includeFDroid())
+			Fdroid.copyApkToFDroid(session, renamedApk);
+		model.addAttribute(SessionAttributes.APP_CONFIG, config);
 	//		try
 	//		{
 	//			TODO: add this back once tested on server.			
@@ -127,7 +112,10 @@ public class SummaryController extends WebMvcConfigurerAdapter
 	//			Logger.logException(e);			
 	//		}			
 	//	}
-    }
+
+		Logger.logVerbose(session, "Returning webpage:" + WebPage.FINAL);		
+		return WebPage.FINAL;
+   }
 
 	private File renameApk(File apkCreated, AppConfiguration config) throws IOException
 	{
