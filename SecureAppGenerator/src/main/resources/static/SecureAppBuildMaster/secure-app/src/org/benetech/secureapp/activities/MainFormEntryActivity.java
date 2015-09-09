@@ -9,14 +9,17 @@ import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.ImageButton;
 import android.widget.Toast;
 
 import org.benetech.secureapp.MartusUploadManager;
+import org.benetech.secureapp.R;
 import org.benetech.secureapp.application.MainApplication;
 import org.benetech.secureapp.collect.io.SecureFileStorageManager;
 import org.benetech.secureapp.collect.tasks.SecureFormLoaderTask;
 import org.benetech.secureapp.collect.tasks.SecureSavePointTask;
 import org.benetech.secureapp.collect.tasks.SecureSaveToDiskTask;
+import org.javarosa.core.model.FormIndex;
 import org.javarosa.form.api.FormEntryController;
 import org.martus.android.library.common.dialog.ProgressDialogHandler;
 import org.martus.android.library.io.SecureFile;
@@ -52,7 +55,11 @@ public class MainFormEntryActivity extends FormEntryActivity implements ICacheWo
     private SecureFileStorageManager mStorage;
 	private boolean mYieldedToFormGroupActivity = false;
 
-	@Override
+
+    private ImageButton mNextButton;
+    private ImageButton mBackButton;
+
+    @Override
 	public void onCreate(Bundle savedInstanceState) {
 		// We have to ensure mStorage is mounted before super.onCreate
 		// But also on each onResume as we should be eventually unmounting on onPause
@@ -68,7 +75,10 @@ public class MainFormEntryActivity extends FormEntryActivity implements ICacheWo
         // must be re-connected
         setContentView(org.benetech.secureapp.R.layout.main_form_entry);
         mQuestionHolder = (android.widget.LinearLayout) findViewById(org.benetech.secureapp.R.id.questionholder);
-	}
+
+        mNextButton = (ImageButton) findViewById(R.id.form_forward_button);
+        mBackButton = (ImageButton) findViewById(R.id.form_back_button);
+    }
 	
 	@Override
 	public void onResume() {
@@ -90,6 +100,7 @@ public class MainFormEntryActivity extends FormEntryActivity implements ICacheWo
     @Override
     public void onPause() {
         super.onPause();
+
         mCacheWordActivityHandler.disconnectFromService();
     }
 	
@@ -247,11 +258,8 @@ public class MainFormEntryActivity extends FormEntryActivity implements ICacheWo
      */
     @Override
     protected View createView(int event, boolean advancingPage) {
-        FormController formController = Collect.getInstance()
-                .getFormController();
-        setTitle(getString(org.odk.collect.android.R.string.app_name) + " > "
-                + formController.getFormTitle());
-
+        FormController formController = Collect.getInstance().getFormController();
+        setTitle(getString(org.odk.collect.android.R.string.app_name) + " > " + formController.getFormTitle());
         try {
             switch (event) {
                 case FormEntryController.EVENT_BEGINNING_OF_FORM:
@@ -261,9 +269,16 @@ public class MainFormEntryActivity extends FormEntryActivity implements ICacheWo
                         Log.e(t, e1.getMessage(), e1);
                         createErrorDialog(e1.getMessage() + "\n\n" + e1.getCause().getMessage(), DO_NOT_EXIT);
                     }
+
                     return createView(event, advancingPage);
                 default:
-                    return super.createView(event, advancingPage);
+                    View view = super.createView(event, advancingPage);
+                    if (formController.getFormIndex().getLocalIndex() == 0)
+                        mBackButton.setEnabled(false);
+                    else
+                        mBackButton.setEnabled(true);
+
+                    return view;
             }
         } finally {
             // Make sure we always override any Activity (Action Bar) title set by our parent class

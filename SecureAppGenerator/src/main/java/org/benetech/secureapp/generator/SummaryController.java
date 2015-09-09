@@ -70,12 +70,12 @@ public class SummaryController extends WebMvcConfigurerAdapter
     private static final String GRADLE_GENERATED_SETTINGS_FILE = "generated.build.gradle";
     public static final String GRADLE_GENERATED_SETTINGS_LOCAL = SECURE_APP_PROJECT_DIRECTORY + "/" + GRADLE_GENERATED_SETTINGS_FILE;
     private static final int EXIT_VALUE_GRADLE_SUCCESS = 0;
-	@RequestMapping(value=WebPage.SUMMARY, method=RequestMethod.GET)
-    public String directError(HttpSession session, Model model) 
-    {
-		SecureAppGeneratorApplication.setInvalidResults(session);
-        return WebPage.ERROR;
-    }
+	//@RequestMapping(value=WebPage.SUMMARY, method=RequestMethod.GET)
+    //public String directError(HttpSession session, Model model) 
+    //{
+	//	SecureAppGeneratorApplication.setInvalidResults(session);
+     //   return WebPage.ERROR;
+    //}
 
 	@RequestMapping(value=WebPage.SUMMARY_PREVIOUS, method=RequestMethod.POST)
     public String goBack(HttpSession session, Model model, AppConfiguration appConfig) 
@@ -102,6 +102,7 @@ public class SummaryController extends WebMvcConfigurerAdapter
 			if(Fdroid.includeFDroid())
 				Fdroid.copyApkToFDroid(session, renamedApk);
 			model.addAttribute(SessionAttributes.APP_CONFIG, config);
+			Logger.logVerbose(session, "Returning webpage:" + WebPage.FINAL);		
 			return WebPage.FINAL;
 		}
 		catch (Exception e)
@@ -109,21 +110,22 @@ public class SummaryController extends WebMvcConfigurerAdapter
 			Logger.logException(session, e);
 			appConfig.setApkBuildError("generating_apk");
 			model.addAttribute(SessionAttributes.APP_CONFIG, appConfig);
+			Logger.logVerbose(session, "Returning webpage:" + WebPage.SUMMARY);		
 			return WebPage.SUMMARY;
 		}
-		finally
-		{
+	//	finally
+	//	{
 	//		try
-			{
+	//		{
 	//			TODO: add this back once tested on server.			
 	//			if(secureAppBuildDir != null)
 	//				FileUtils.deleteDirectory(secureAppBuildDir);
-			}
+	//		}
 	//		catch (IOException e)
-			{
+	//		{
 	//			Logger.logException(e);			
-			}			
-		}
+	//		}			
+	//	}
     }
 
 	private File renameApk(File apkCreated, AppConfiguration config) throws IOException

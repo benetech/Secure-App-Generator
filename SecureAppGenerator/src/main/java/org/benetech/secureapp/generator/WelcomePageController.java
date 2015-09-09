@@ -45,7 +45,7 @@ public class WelcomePageController extends WebMvcConfigurerAdapter
 	    return WebPage.WELCOME;
 	}
 
-	public void setupDefaultSessionAttributes(HttpSession session) throws Exception
+	public static void setupDefaultSessionAttributes(HttpSession session) throws Exception
 	{
 		AppConfiguration defaultConfig = new AppConfiguration();
 		SecureAppGeneratorApplication.setDefaultIconForSession(session, defaultConfig);

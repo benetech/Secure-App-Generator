@@ -21,7 +21,7 @@ android {
     dexOptions {
         preDexLibraries = false
         incremental true
-        javaMaxHeapSize "1280m"
+        javaMaxHeapSize "1240m"
     }
 
     signingConfigs {
