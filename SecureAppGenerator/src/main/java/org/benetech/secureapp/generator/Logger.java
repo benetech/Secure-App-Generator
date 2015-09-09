@@ -108,4 +108,8 @@ public class Logger
 		return timeToBuild;
 	}
 	
+	public static void logMemoryStatistics()
+	{
+		MartusLogger.logMemoryStatistics();
+	}
 }
