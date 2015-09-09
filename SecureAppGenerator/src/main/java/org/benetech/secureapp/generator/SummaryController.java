@@ -70,12 +70,13 @@ public class SummaryController extends WebMvcConfigurerAdapter
     private static final String GRADLE_GENERATED_SETTINGS_FILE = "generated.build.gradle";
     public static final String GRADLE_GENERATED_SETTINGS_LOCAL = SECURE_APP_PROJECT_DIRECTORY + "/" + GRADLE_GENERATED_SETTINGS_FILE;
     private static final int EXIT_VALUE_GRADLE_SUCCESS = 0;
-	//@RequestMapping(value=WebPage.SUMMARY, method=RequestMethod.GET)
-    //public String directError(HttpSession session, Model model) 
-    //{
-	//	SecureAppGeneratorApplication.setInvalidResults(session);
-     //   return WebPage.ERROR;
-    //}
+	
+    @RequestMapping(value=WebPage.SUMMARY, method=RequestMethod.GET)
+    public String directError(HttpSession session, Model model) 
+    {
+		SecureAppGeneratorApplication.setInvalidResults(session);
+        return WebPage.ERROR;
+    }
 
 	@RequestMapping(value=WebPage.SUMMARY_PREVIOUS, method=RequestMethod.POST)
     public String goBack(HttpSession session, Model model, AppConfiguration appConfig) 

@@ -9,7 +9,7 @@ buildscript {
     dependencies {
         classpath("org.springframework.boot:spring-boot-gradle-plugin:${springBootVersion}") 
         classpath("io.spring.gradle:dependency-management-plugin:0.5.1.RELEASE")
-    }
+     }
 }
 
 apply plugin: 'java'
@@ -75,6 +75,8 @@ dependencies {
     testCompile("org.springframework.boot:spring-boot-starter-test") 
     compile group: 'commons-io', name: 'commons-io', version: '2.4'
     compile 'com.amazonaws:aws-java-sdk:+'
+	compile group: 'org.apache.logging.log4j', name: 'log4j-api', version: '2.3'
+ 	compile group: 'org.apache.logging.log4j', name: 'log4j-core', version: '2.3'
 }
 
 eclipse {

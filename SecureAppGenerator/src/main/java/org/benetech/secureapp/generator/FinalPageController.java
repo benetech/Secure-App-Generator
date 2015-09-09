@@ -37,9 +37,9 @@ import org.springframework.web.servlet.config.annotation.WebMvcConfigurerAdapter
 public class FinalPageController extends WebMvcConfigurerAdapter
 {
 	@RequestMapping(value=WebPage.FINAL, method=RequestMethod.GET)
-    public String index(HttpSession session, Model model) throws Exception
+    public String directError(HttpSession session, Model model) 
     {
-		WelcomePageController.setupDefaultSessionAttributes(session);
-        return WebPage.FINAL;
+		SecureAppGeneratorApplication.setInvalidResults(session);
+        return WebPage.ERROR;
     }
 }
