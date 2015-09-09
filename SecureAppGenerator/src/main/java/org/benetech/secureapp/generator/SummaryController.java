@@ -56,7 +56,8 @@ public class SummaryController extends WebMvcConfigurerAdapter
 	private static final String XML_APP_NAME = "app_name";
 	private static final String GRADLE_EXE = "/bin/gradle";
     private static final String GRADLE_PARAMETERS = " -p ";
-	private static final String GRADLE_BUILD_COMMAND = " assemblerelease";
+	private static final String GRADLE_BUILD_COMMAND_LOGGING = " --stacktrace --debug";
+	private static final String GRADLE_BUILD_COMMAND_RELEASE = " assemblerelease";
 	private static final String APK_LOCAL_FILE_DIRECTORY = "/build/outputs/apk/";
     private static final String APK_RESOURCE_FILE_LOCAL = "/res/values/non-traslatable-auto-generated-resources.xml";
     private static final String APK_HDPI_FILE_LOCAL = "/res/drawable-hdpi/";
@@ -211,25 +212,25 @@ public class SummaryController extends WebMvcConfigurerAdapter
 	private File buildApk(HttpSession session, File baseBuildDir, AppConfiguration config) throws IOException, InterruptedException
 	{
 		Logger.log(session, "Building " + config.getApkName());
-
-		String gradleCommand = SecureAppGeneratorApplication.getGadleDirectory() + GRADLE_EXE + GRADLE_PARAMETERS + baseBuildDir + GRADLE_BUILD_COMMAND;
+		Logger.logMemoryStatistics();
+		String includeLogging = "";
+		//includeLogging = GRADLE_BUILD_COMMAND_LOGGING;
+		String gradleCommand = SecureAppGeneratorApplication.getGadleDirectory() + GRADLE_EXE + GRADLE_PARAMETERS + baseBuildDir + includeLogging + GRADLE_BUILD_COMMAND_RELEASE;
 		long startTime = System.currentTimeMillis();
 		int returnCode = SecureAppGeneratorApplication.executeCommand(session, gradleCommand, null);
   		long endTime = System.currentTimeMillis();
- 
+		Logger.logMemoryStatistics();
   		String timeToBuild = Logger.getElapsedTime(startTime, endTime);
 
-    		if(returnCode == EXIT_VALUE_GRADLE_SUCCESS)
-   		{
-   			Logger.log(session, "Build succeeded:" + timeToBuild);
-    		}
-   		else
+    		if(returnCode != EXIT_VALUE_GRADLE_SUCCESS)
    		{
    			Logger.logError(session, "Build return code:" + returnCode);
-	   		throw new IOException("Error creating APK");
+	   		throw new RuntimeException("Error creating APK");
    		}
-   		String tempApkBuildFileDirectory = baseBuildDir.getAbsolutePath() + APK_LOCAL_FILE_DIRECTORY;
-		File appFileCreated = new File(tempApkBuildFileDirectory, config.getGradleApkRawBuildFileName());
+    		
+  		Logger.log(session, "Build succeeded:" + timeToBuild);
+  		String tempaApkBuildFileDirectory = baseBuildDir.getAbsolutePath() + APK_LOCAL_FILE_DIRECTORY;
+		File appFileCreated = new File(tempaApkBuildFileDirectory, config.getGradleApkRawBuildFileName());
 		return appFileCreated;
 	}
 

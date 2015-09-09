@@ -47,6 +47,7 @@ import org.martus.common.MartusAccountAccessToken;
 import org.martus.common.MartusAccountAccessToken.TokenInvalidException;
 import org.martus.common.MartusAccountAccessToken.TokenNotFoundException;
 import org.martus.common.crypto.MartusCrypto;
+import org.martus.common.crypto.MartusCrypto.AuthorizationFailedException;
 import org.martus.common.crypto.MartusCrypto.CreateDigestException;
 import org.martus.common.crypto.MartusSecurity;
 import org.martus.common.network.ClientSideNetworkInterface;
@@ -99,18 +100,26 @@ public class ObtainTokenController extends WebMvcConfigurerAdapter
 		{
 			try
 			{
-				if(getClientPublicKeyFromToken(session, appConfig))
-				{
-					updateServerConfiguration(session);
-					updateApkVersionInfoAndName(session);
-					model.addAttribute(SessionAttributes.APP_CONFIG, appConfig);
-					return WebPage.SUMMARY;
-				}
+				getClientPublicKeyFromToken(session, appConfig);
+				updateServerConfiguration(session);
+				updateApkVersionInfoAndName(session);
+				model.addAttribute(SessionAttributes.APP_CONFIG, appConfig);
+				return WebPage.SUMMARY;
+			}
+			catch (TokenNotFoundException e)
+			{
+				Logger.logException(session, e);
+				appConfig.setClientTokenError("token_not_found");
 			}
 			catch (S3Exception e)
 			{
 				Logger.logException(session, e);
 				appConfig.setClientTokenError("server_s3");
+			}
+			catch (AuthorizationFailedException e)
+			{
+				Logger.logException(session, e);
+				appConfig.setClientTokenError("crypto_authorization_failed");
 			}
 			catch (Exception e)
 			{
@@ -178,7 +187,7 @@ public class ObtainTokenController extends WebMvcConfigurerAdapter
 	}
 
 	// TODO add unit tests
-	private boolean getClientPublicKeyFromToken(HttpSession session, AppConfiguration appConfig) throws Exception
+	private void getClientPublicKeyFromToken(HttpSession session, AppConfiguration appConfig) throws Exception
 	{
         AppConfiguration config = (AppConfiguration)session.getAttribute(SessionAttributes.APP_CONFIG);
  		try
@@ -188,13 +197,24 @@ public class ObtainTokenController extends WebMvcConfigurerAdapter
  			ClientSideNetworkGateway gateway = new ClientSideNetworkGateway(createXmlRpcNetworkInterfaceHandler());
  			
  			File keyPair = new File(SAG_KEYPAIR_DIRECTORY, SAG_KEYPAIR_FILE);
-			if(keyPair.exists())
+			boolean createNewKeypair = true;
+ 			if(keyPair.exists())
 			{
-				Logger.logVerbose(session, "reading keypair: " + SAG_KEYPAIR_DIRECTORY);
-				security.readKeyPair(keyPair, SAG_KEYPAIR_PASSWORD.toCharArray());
-				Logger.logVerbose(session, "read keypair");
+				try
+				{
+					Logger.logVerbose(session, "reading keypair: " + SAG_KEYPAIR_DIRECTORY);
+					security.readKeyPair(keyPair, SAG_KEYPAIR_PASSWORD.toCharArray());
+					Logger.logVerbose(session, "read keypair");
+					createNewKeypair = false;
+				}
+				catch (Exception e)
+				{
+					Logger.logException(session, e);
+					createNewKeypair = true;
+				}
 			}
-			else
+ 			
+			if(createNewKeypair)
 			{
 				Logger.log(session, "Creating new SAG Keypair");
 				File keyPairDir = new File(SAG_KEYPAIR_DIRECTORY);
@@ -232,11 +252,9 @@ public class ObtainTokenController extends WebMvcConfigurerAdapter
 		catch (CreateDigestException | CheckDigitInvalidException e)
 		{
 			Logger.logException(session, e);
-			appConfig.setClientTokenError("token_not_found");
-			return false;
+			throw new TokenNotFoundException();
 		}
  		session.setAttribute(SessionAttributes.APP_CONFIG, config);
-		return true;
 	}
 
 	//TODO add unit tests!
