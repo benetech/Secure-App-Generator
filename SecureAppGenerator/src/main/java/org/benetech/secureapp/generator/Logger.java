@@ -110,6 +110,7 @@ public class Logger
 	
 	public static void logMemoryStatistics()
 	{
-		MartusLogger.logMemoryStatistics();
+		if(verboseLogging())
+			MartusLogger.logMemoryStatistics();
 	}
 }
