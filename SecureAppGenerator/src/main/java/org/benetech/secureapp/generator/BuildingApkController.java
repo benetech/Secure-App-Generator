@@ -98,7 +98,8 @@ public class BuildingApkController extends WebMvcConfigurerAdapter
 		copyFormToApkBuild(secureAppBuildDir, config.getAppXFormLocation());
 		File apkCreated = buildApk(session, secureAppBuildDir, config);
 		File renamedApk = renameApk(apkCreated, config);
-		copyApkToDownloads(session, renamedApk, config);
+		String urlToApk = copyApkToDownloads(session, renamedApk);
+		config.setApkURL(urlToApk);
 		if(Fdroid.includeFDroid())
 			Fdroid.copyApkToFDroid(session, renamedApk);
 		model.addAttribute(SessionAttributes.APP_CONFIG, config);
@@ -198,7 +199,7 @@ public class BuildingApkController extends WebMvcConfigurerAdapter
 		data.append("\")\n");
 	}
 
-	static private File buildApk(HttpSession session, File baseBuildDir, AppConfiguration config) throws IOException, InterruptedException
+	static private File buildApk(final HttpSession session, final File baseBuildDir, final AppConfiguration config) throws IOException, InterruptedException
 	{
 		Logger.log(session, "Building " + config.getApkName());
 		Logger.logMemoryStatistics();
@@ -223,12 +224,12 @@ public class BuildingApkController extends WebMvcConfigurerAdapter
 		return appFileCreated;
 	}
 
-	static public void copyApkToDownloads(HttpSession session, File apkFile, AppConfiguration config) throws S3Exception
+	static public String copyApkToDownloads(final HttpSession session, final File apkFile) throws S3Exception
 	{
 		Logger.logVerbose(session, "Uploading APK To S3");
 		String urlToApk = AmazonS3Utils.uploadToAmazonS3(session, apkFile);
 		Logger.logVerbose(session, "Upload Complete.");
-		config.setApkURL(urlToApk);
+		return urlToApk;
 	}
 	
 	static private void copyDefaultBuildFilesToStagingArea(HttpSession session, File baseBuildDir) throws IOException
