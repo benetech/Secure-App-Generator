@@ -29,7 +29,7 @@
      		<a th:text="#{text.subtitle}"/><img  src="../images/MartusLogoWhite.png" th:alt="#{alt_text.Martus}" align="top"/>
 		</div>
 		
-      	<div class="textFont summary_title" th:text="#{text.info_summary}"/>
+      	<div class="textFont summary_title" id="progressArea" th:text="#{text.info_summary}"/>
 		
     		 <div class="textFont info_area_summary">
              <table>
@@ -81,10 +81,14 @@
 			<input class="textFont button_previous" name="previous" id="previous" type="submit" th:value="#{button.previous}"/>
 		</form>
 
-		<form id="startBuild" name="startBuild" method="POST" action="/summaryNext">
-			<button class="textFont button_next" id="next" name="next" th:text="#{button.buildapp}"/>
+	    <canvas class="progress_location" id="ProgressArea" width="400" height="350"/> 
+ 
+		<form id="buildApp" name="buildApp" method="POST" action="/buildingApkNext">
+			<button class="textFont button_next" id="next" name="next" th:onclick="'javascript:showProgress(\'' + #{text.buildingApk} + '\');'" th:text="#{button.buildapp}"/>
 		</form>
-
+ 
+  		<script src="./js/ProgressCircle.js"></script>	
+ 		<script src="./js/progress.js"></script>	
  	</body>
 </html>
 

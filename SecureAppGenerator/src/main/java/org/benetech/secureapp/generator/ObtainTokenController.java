@@ -142,16 +142,16 @@ public class ObtainTokenController extends WebMvcConfigurerAdapter
 
 	public static void getBuildVersionFromGeneratedSettingsFile(AppConfiguration config) throws IOException
 	{
-		File apkResourseFile = new File(SecureAppGeneratorApplication.getOriginalBuildDirectory(), SummaryController.GRADLE_GENERATED_SETTINGS_LOCAL);
+		File apkResourseFile = new File(SecureAppGeneratorApplication.getOriginalBuildDirectory(), BuildingApkController.GRADLE_GENERATED_SETTINGS_LOCAL);
 		List<String> lines = Files.readAllLines(apkResourseFile.toPath());
 		for (Iterator<String> iterator = lines.iterator(); iterator.hasNext();)
 		{
 			String currentLine = iterator.next();
-			if(currentLine.contains(SummaryController.VERSION_MAJOR_XML))
+			if(currentLine.contains(BuildingApkController.VERSION_MAJOR_XML))
 		        config.setApkVersionMajor(extractVersionInformationFromLine(currentLine));
-			if(currentLine.contains(SummaryController.VERSION_MINOR_XML))
+			if(currentLine.contains(BuildingApkController.VERSION_MINOR_XML))
 		        config.setApkVersionMinor(extractVersionInformationFromLine(currentLine));
-			if(currentLine.contains(SummaryController.VERSION_BUILD_XML))
+			if(currentLine.contains(BuildingApkController.VERSION_BUILD_XML))
 		        config.setApkVersionBuild(extractVersionInformationFromLine(currentLine));
 		}
 	}

@@ -57,4 +57,6 @@ public interface WebPage
 	public static final String SUMMARY_PREVIOUS = SUMMARY+ PREVIOUS_PAGE;
 	public static final String SUMMARY_NEXT = SUMMARY + NEXT_PAGE;
 
+	public static final String BUILDING_APK = "/buildingApk";
+	public static final String BUILDING_APK_NEXT = BUILDING_APK + NEXT_PAGE;
 }
