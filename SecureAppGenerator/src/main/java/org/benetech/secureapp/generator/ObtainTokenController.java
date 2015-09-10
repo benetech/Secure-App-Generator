@@ -108,7 +108,7 @@ public class ObtainTokenController extends WebMvcConfigurerAdapter
 			}
 			catch (TokenNotFoundException e)
 			{
-				Logger.logException(session, e);
+				Logger.logVerbose(session, "Token Not Found on Server.");
 				appConfig.setClientTokenError("token_not_found");
 			}
 			catch (S3Exception e)
@@ -135,7 +135,7 @@ public class ObtainTokenController extends WebMvcConfigurerAdapter
 	{
         AppConfiguration config = (AppConfiguration)session.getAttribute(SessionAttributes.APP_CONFIG);
         getBuildVersionFromGeneratedSettingsFile(config);
-        String uniqueBuildNumber = AmazonS3Utils.getUniqueBuildNumber(config.getApkName());
+        String uniqueBuildNumber = AmazonS3Utils.getUniqueBuildNumber(session, config.getApkName());
         config.setApkSagVersionBuild(uniqueBuildNumber);
  		session.setAttribute(SessionAttributes.APP_CONFIG, config);
 	}
@@ -248,6 +248,7 @@ public class ObtainTokenController extends WebMvcConfigurerAdapter
  			String AccountId = singleAccountId.get(0);
 	 		config.setClientPublicKey(AccountId);
 			config.setClientPublicCode(MartusCrypto.computeFormattedPublicCode40(AccountId));
+			Logger.logVerbose(session, "Account Found:" + config.getClientPublicCode());
 		}
 		catch (CreateDigestException | CheckDigitInvalidException e)
 		{

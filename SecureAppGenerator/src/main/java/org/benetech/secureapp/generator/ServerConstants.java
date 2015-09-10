@@ -26,6 +26,8 @@ Boston, MA 02111-1307, USA.
 package org.benetech.secureapp.generator;
 
 public class ServerConstants {
+	private static final boolean useRealServer = false;
+	
     private static final String IP_FOR_SL1_IE_REAL = "54.72.26.74";
     private static final String PUBLIC_KEY_FOR_SL1_IE_REAL =
             "MIIBojANBgkqhkiG9w0BAQEFAAOCAY8AMIIBigKCAYEAgzYTaocXQARAW5df4"
@@ -54,21 +56,20 @@ public class ServerConstants {
 
     public static String getCurrentServerIp()
     {
-    		return IP_FOR_SL1_IE_REAL;
-       // return IP_FOR_SL1_DEV;
+    		if(useRealServer)
+    			return IP_FOR_SL1_IE_REAL;
+       return IP_FOR_SL1_DEV;
     }
 
     public static String getCurrentSeverKey()
     {
-    		return PUBLIC_KEY_FOR_SL1_IE_REAL;
-        //return PUBLIC_KEY_SL1_DEV;
+    		if(useRealServer)
+    			return PUBLIC_KEY_FOR_SL1_IE_REAL;
+        return PUBLIC_KEY_SL1_DEV;
     }
     
     public static boolean usingRealServer()
     {
-    		if(	getCurrentServerIp().equals(IP_FOR_SL1_IE_REAL) && 
-    			getCurrentSeverKey().equals(PUBLIC_KEY_FOR_SL1_IE_REAL))
-    			return true;
-    		return false;
+    		return useRealServer;
     }
 }

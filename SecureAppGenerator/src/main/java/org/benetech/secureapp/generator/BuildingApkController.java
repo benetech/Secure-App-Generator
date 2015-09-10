@@ -79,15 +79,16 @@ public class BuildingApkController extends WebMvcConfigurerAdapter
     }
 
 	@RequestMapping(value=WebPage.BUILDING_APK_NEXT, method=RequestMethod.POST)	
-	public String initiateBuild(HttpSession session, Model model) throws Exception 
+	public String initiateBuild(HttpSession session, Model model, AppConfiguration appConfig) throws Exception 
     {
-		BuildingApkController.initiateAsyncronousApkBuild(session, model);
+		initiateSyncronousApkBuild(session, model);
+		model.addAttribute(SessionAttributes.APP_CONFIG, appConfig);
 		return WebPage.FINAL;
-   }
+    }
 	
 
 	
-	static public void initiateAsyncronousApkBuild(HttpSession session, Model model) throws IOException, InterruptedException, S3Exception, Exception
+	static private void initiateSyncronousApkBuild(HttpSession session, Model model) throws IOException, InterruptedException, S3Exception, Exception
 	{
 		File secureAppBuildDir = null;
 		secureAppBuildDir = configureSecureAppBuildDirectory(session);

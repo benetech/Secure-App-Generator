@@ -53,7 +53,6 @@ public class SummaryController extends WebMvcConfigurerAdapter
 	@RequestMapping(value=WebPage.SUMMARY_NEXT, method=RequestMethod.POST)	
 	public String initiateBuild(HttpSession session, Model model, AppConfiguration appConfig) throws Exception 
     {
-//		BuildingApkController.initiateAsyncronousApkBuild(session, model);
 			model.addAttribute(SessionAttributes.APP_CONFIG, appConfig);
 		 	return WebPage.BUILDING_APK;
    }

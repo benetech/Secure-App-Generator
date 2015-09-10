@@ -109,7 +109,7 @@ public class AmazonS3Utils
 		return s3client;
 	}
 
-	public static String getUniqueBuildNumber(String apkNameWithNoSagBuild) throws S3Exception
+	public static String getUniqueBuildNumber(HttpSession session, String apkNameWithNoSagBuild) throws S3Exception
 	{
 		try
 		{
@@ -119,15 +119,18 @@ public class AmazonS3Utils
 			AmazonS3 s3 = getS3();
 			ObjectListing listing = s3.listObjects(getDownloadS3Bucket(), AMAZON_DOWNLOADS_DIRECTORY);
 			List<S3ObjectSummary> summaries = listing.getObjectSummaries();
+			Logger.logVerbose(session, "S3 ListObjects");
 
 			while (listing.isTruncated()) 
 			{
 			   listing = s3.listNextBatchOfObjects (listing);
 			   summaries.addAll (listing.getObjectSummaries());
 			}
+			Logger.logVerbose(session, "S3 Summaries Added");
 			
 			if(!summaries.isEmpty())
 			{
+				Logger.logVerbose(session, "S3 Summarys Found:" + summaries.size());
 				for (Iterator<S3ObjectSummary> iterator = summaries.iterator(); iterator.hasNext();)
 				{
 					S3ObjectSummary currentApk = iterator.next();
@@ -156,7 +159,9 @@ public class AmazonS3Utils
 
 	static private String getDownloadS3Bucket()
 	{
-  		return System.getenv(AMAZON_S3_DOWNLOAD_BUCKET_ENV);
+		String bucket = System.getenv(AMAZON_S3_DOWNLOAD_BUCKET_ENV);
+		Logger.log(null, "Bucket =" + bucket);
+  		return bucket;
 	}
 	
 	static private String getAPKDownloadFilePathWithFile(File fileToUpload)
