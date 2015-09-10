@@ -2,11 +2,6 @@ function initalize()
 {
 	this.document.getElementById('cellphone_center_title').innerHTML = "";
 	this.document.getElementById('cellphone_center_data').innerHTML = "";
-	this.document.getElementById("next").disabled = true;
-	this.document.getElementById("next").style.visibility = "hidden";
-	this.document.getElementById("previous").disabled = true;
-	this.document.getElementById("previous").style.visibility = "hidden";
-
 	this.document.body.style.cursor = 'wait';
 }
 
@@ -38,7 +33,7 @@ function showProgress(buildText)
 	    	return percentComplete;},
 	    	infoListener: function() {return buildText;},// (Optional)	    	
 	 }); 		
-	circle.start(800); 
+	circle.start(1000); 
 	this.document.forms["buildApp"].submit();
 	return true;
 }

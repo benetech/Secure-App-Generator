@@ -6,7 +6,7 @@
   		  <link rel="stylesheet" type="text/css" media="all"  
      		 th:href="@{../css/main.css}" />
  	</head>
-	<body>
+	<body th:onload="'javascript:showProgress(\'' + #{text.buildingApk} + '\');'" >
        	<img class="progressBarLocation" src="/images/Step5line.png" role="presentation" alt=""/>
 		<div class="textFont progressStep1Location progressBarStepComplete" align="center" th:text="#{progressbar.name}"></div>
  		<div class="textFont progressStep2Location progressBarStepComplete" align="center" th:text="#{progressbar.logo}"></div>
@@ -77,15 +77,10 @@
 	                </tr>
              </table>
 		</div>
-		<form method="POST" th:action="@{/summaryPrevious}">
-			<input class="textFont button_previous" name="previous" id="previous" type="submit" th:value="#{button.previous}"/>
-		</form>
 
 	    <canvas class="progress_location" id="ProgressArea" width="400" height="350"/> 
  
-		<form id="buildApp" name="buildApp" method="POST" action="/buildingApkNext">
-			<button class="textFont button_next" id="next" name="next" th:onclick="'javascript:showProgress(\'' + #{text.buildingApk} + '\');'" th:text="#{button.buildapp}"/>
-		</form>
+		<form id="buildApp" name="buildApp" method="POST" action="/buildingApkNext"/>
  
   		<script src="./js/ProgressCircle.js"></script>	
  		<script src="./js/progress.js"></script>	
