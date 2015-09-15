@@ -70,6 +70,14 @@ public class Util {
         Log.e(context.getClass().getSimpleName(), message, e);
     }
 
+    public static void showMessage(Context context, String msg, String title){
+        AlertDialog.Builder alert = new AlertDialog.Builder(context);
+        alert.setIcon(android.R.drawable.ic_dialog_alert)
+                .setTitle(title)
+                .setMessage(msg)
+                .show();
+    }
+
     public static void showErrorMessage(Context context, String msg){
         showErrorMessage(context, msg, context.getString(R.string.error_message));
     }

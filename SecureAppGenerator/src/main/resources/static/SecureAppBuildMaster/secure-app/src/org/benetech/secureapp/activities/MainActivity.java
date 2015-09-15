@@ -1,5 +1,6 @@
 package org.benetech.secureapp.activities;
 
+import android.app.Activity;
 import android.app.ListActivity;
 import android.app.LoaderManager.LoaderCallbacks;
 import android.content.ContentUris;
@@ -18,16 +19,13 @@ import android.os.Bundle;
 import android.preference.PreferenceManager;
 import android.util.Log;
 import android.view.Menu;
-import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
-import android.widget.CompoundButton;
 import android.widget.ListView;
 import android.widget.SimpleCursorAdapter;
 import android.widget.Toast;
 
 import org.apache.commons.io.FileUtils;
-import org.martus.android.library.common.dialog.ProgressDialogHandler;
 import org.benetech.secureapp.FormFromAssetFolderExtractor;
 import org.benetech.secureapp.MartusUploadManager;
 import org.benetech.secureapp.R;
@@ -35,6 +33,8 @@ import org.benetech.secureapp.adapters.FormAdapter;
 import org.benetech.secureapp.adapters.FormAdapter.FormAdapterItemClickListener;
 import org.benetech.secureapp.application.Constants;
 import org.benetech.secureapp.application.MainApplication;
+import org.martus.android.library.common.dialog.ProgressDialogHandler;
+import org.martus.common.crypto.MartusCrypto;
 import org.odk.collect.android.application.Collect;
 import org.odk.collect.android.preferences.PreferencesActivity;
 import org.odk.collect.android.provider.FormsProviderAPI;
@@ -44,6 +44,7 @@ import java.io.File;
 
 import info.guardianproject.cacheword.CacheWordHandler;
 import info.guardianproject.cacheword.ICacheWordSubscriber;
+
 
 public class MainActivity extends ListActivity implements ICacheWordSubscriber, FormAdapterItemClickListener, LoaderCallbacks<Cursor>, MartusUploadManager.MartusUploadManagerCallback {
 
@@ -353,8 +354,24 @@ public class MainActivity extends ListActivity implements ICacheWordSubscriber, 
             showVersionNumberAsToast(this);
             return true;
         }
+        if (id == R.id.show_receiving_contact_public_key_menu_item) {
+            showReceivingContactPublicKey(this);
+            return true;
+        }
 
         return super.onOptionsItemSelected(item);
+    }
+
+    public static void showReceivingContactPublicKey(Activity context) {
+        try {
+            String desktopPublicKey = context.getString(R.string.public_key_desktop);
+            String publicCode40 = MartusCrypto.computeFormattedPublicCode40(desktopPublicKey);
+            Util.showMessage(context, publicCode40, context.getString(R.string.receiving_contact_public_key));
+        }
+        catch (Exception e) {
+            Log.e(TAG, "Could not format public key", e);
+            showShortToast(context, context.getString(R.string.error_message));
+        }
     }
 
     public static void showVersionNumberAsToast(Context context) {

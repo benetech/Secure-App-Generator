@@ -424,7 +424,6 @@ public class MainFormEntryActivity extends FormEntryActivity implements ICacheWo
 
     protected void endOfFormEvent(int event) {
         saveForm();
-        finish();
     }
 
     @Override

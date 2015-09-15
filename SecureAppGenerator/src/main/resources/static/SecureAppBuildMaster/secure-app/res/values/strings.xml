@@ -54,7 +54,7 @@
     <string name="version_name_label">Version Name: %1$s</string>
     <string name="version_code_label">Version Code: %1$s</string>
     <string name="send_failed_cant_reach_server">Can\'t reach server</string>
-
+    <string name="receiving_contact_public_key">Receiving Contact Key</string>
     <string name="bulletin_sending_progress">Sending…</string>
     <string name="default_author">Unknown Author</string>
     <string name="error_cleaning_up_odk_folders">Error cleaning up folders</string>

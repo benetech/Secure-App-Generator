@@ -25,6 +25,7 @@ import org.javarosa.core.model.IFormElement;
 import org.javarosa.form.api.FormEntryCaption;
 import org.javarosa.form.api.FormEntryController;
 import org.javarosa.form.api.FormEntryPrompt;
+import org.martus.android.library.common.dialog.ProgressDialogHandler;
 import org.odk.collect.android.activities.FormHierarchyActivity;
 import org.odk.collect.android.application.Collect;
 import org.odk.collect.android.exception.JavaRosaException;
@@ -45,6 +46,7 @@ public class FormGroupActivity extends FormHierarchyActivity {
     private EditText mFormAuthor;
     private EditText mFormOrganization;
     private boolean mFormTitleNeedsSaving;
+    private ProgressDialogHandler mProgressDialogHandler;
 
     /** Every time the Form Title EditText is changed mFormTitleNeedsSaving is set true.
      *
@@ -93,6 +95,8 @@ public class FormGroupActivity extends FormHierarchyActivity {
         this.mFormTitle.addTextChangedListener(mFormTitleWatcher);
         mFormAuthor.addTextChangedListener(mFormTitleWatcher);
         mFormOrganization.addTextChangedListener(mFormTitleWatcher);
+
+        mProgressDialogHandler = new ProgressDialogHandler(this);
     }
 
     private void addFormFieldEditorActionListener(EditText formField) {
@@ -423,7 +427,11 @@ public class FormGroupActivity extends FormHierarchyActivity {
             case R.id.show_version_menu_item:
                 MainActivity.showVersionNumberAsToast(this);
                 return true;
-            }
+
+            case R.id.show_receiving_contact_public_key_menu_item:
+                MainActivity.showReceivingContactPublicKey(this);
+                return true;
+        }
 
         return super.onOptionsItemSelected(item);
     }
@@ -435,5 +443,9 @@ public class FormGroupActivity extends FormHierarchyActivity {
         getMenuInflater().inflate(R.menu.main, menu);
 
         return true;
+    }
+
+    private ProgressDialogHandler getProgressDialogHandler() {
+        return mProgressDialogHandler;
     }
 }

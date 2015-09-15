@@ -157,7 +157,7 @@ public class MartusUploadManager {
     }
 
     private String getServerIp(){
-        return mHostActivity.getString(org.benetech.secureapp.R.string.martus_server_ip);
+        return mHostActivity.getString(R.string.martus_server_ip);
     }
 
     private PublicKeyTaskPostExecuteHandler mPublicKeyTaskPostExecuteHandler = new PublicKeyTaskPostExecuteHandler() {
@@ -209,7 +209,7 @@ public class MartusUploadManager {
     };
 
     private String getServerPublicKey() {
-        return mHostActivity.getString(org.benetech.secureapp.R.string.martus_server_public_key);
+        return mHostActivity.getString(R.string.martus_server_public_key);
     }
 
     private MobileClientSideNetworkGateway getNetworkGateway() {
@@ -220,15 +220,15 @@ public class MartusUploadManager {
         @Override
         public void processMagicWordResponse(NetworkResponse response) {
             if (response == null) {
-                showShortToast(mHostActivity, mHostActivity.getString(org.benetech.secureapp.R.string.error_establishing_upload_rights));
+                showShortToast(mHostActivity, mHostActivity.getString(R.string.error_establishing_upload_rights));
                 return;
             }
 
             try {
                 if (!response.getResultCode().equals(NetworkInterfaceConstants.OK)) {
-                    showShortToast(mHostActivity, mHostActivity.getString(org.benetech.secureapp.R.string.no_upload_rights));
+                    showShortToast(mHostActivity, mHostActivity.getString(R.string.no_upload_rights));
                 } else {
-                    showShortToast(mHostActivity, mHostActivity.getString(org.benetech.secureapp.R.string.label_server_connection_setup_successful));
+                    showShortToast(mHostActivity, mHostActivity.getString(R.string.label_server_connection_setup_successful));
 //                SharedPreferences.Editor editor = mySettings.edit();
 //                editor.putBoolean(SettingsActivity.KEY_HAVE_UPLOAD_RIGHTS, true);
 //                editor.commit();
@@ -236,7 +236,7 @@ public class MartusUploadManager {
                 }
             } catch (Exception e) {
                 Log.e(TAG, MainApplication.getInstance().getString(R.string.error_message_problem_verifying_upload_rights), e);
-                showShortToast(mHostActivity, mHostActivity.getString(org.benetech.secureapp.R.string.error_connecting_to_server));
+                showShortToast(mHostActivity, mHostActivity.getString(R.string.error_connecting_to_server));
             }
         }
     };
