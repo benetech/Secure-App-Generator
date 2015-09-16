@@ -40,9 +40,14 @@ public class WelcomePageController extends WebMvcConfigurerAdapter
 	@RequestMapping({"/"})
 	String index(HttpSession session) throws Exception 
 	{
+		initialSetup(session);
+	    return WebPage.WELCOME;
+	}
+
+	private void initialSetup(HttpSession session) throws Exception
+	{
 		SecureAppGeneratorApplication.setInvalidResults(session);
 		setupDefaultSessionAttributes(session);
-	    return WebPage.WELCOME;
 	}
 
 	public static void setupDefaultSessionAttributes(HttpSession session) throws Exception
@@ -60,8 +65,9 @@ public class WelcomePageController extends WebMvcConfigurerAdapter
     }
 	
 	@RequestMapping(value=WebPage.WELCOME, method=RequestMethod.POST)
-    public String loadAppNamePage(HttpSession session, Model model) 
+    public String loadAppNamePage(HttpSession session, Model model) throws Exception 
     {
+		initialSetup(session);
         return WebPage.NAME_APP;
     }
 	
