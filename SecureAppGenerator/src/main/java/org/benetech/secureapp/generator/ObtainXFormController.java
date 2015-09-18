@@ -127,33 +127,33 @@ public class ObtainXFormController extends WebMvcConfigurerAdapter
     }
 
 	@RequestMapping(value=WebPage.OBTAIN_XFORM_NEXT, method=RequestMethod.POST)
-    public String retrieveXForm(HttpSession session, @RequestParam("file") MultipartFile file, @RequestParam("selectedForm") String formName, Model model, AppConfiguration appConfig)
+    public String retrieveXForm(HttpSession session, @RequestParam("xmlCustomFile") MultipartFile xmlFile, @RequestParam("selectedForm") String formLocation, Model model, AppConfiguration appConfig)
     {
 		Path xFormBuildPath = Paths.get(XML_FILE_LOCATION);
 		String xFormLocation = null;
 		String xFormName = null;
-		if (file.isEmpty()) 
+		if (xmlFile.isEmpty()) 
         {
-			if(!copyXFormsFileSelectedToBuildDirectory(session, formName))
+			if(!copyXFormsFileSelectedToBuildDirectory(session, formLocation))
 				return WebPage.ERROR; 
 
             xFormLocation = xFormBuildPath.getFileName().toString();
-			xFormName = getFormNameOnly(formName);
+			xFormName = getFormNameOnly(formLocation);
         }
         else
         {
             try 
             {
-            		if(!file.getContentType().contains(XML_TYPE))
+            		if(!xmlFile.getContentType().contains(XML_TYPE))
             		{
-            			Logger.log(session, "Non-XML xForm: " + file.getContentType());
+            			Logger.log(session, "Non-XML xForm: " + xmlFile.getContentType());
              		return returnLocalizedErrorMessage(model, appConfig, "xform_file_type_invalid"); 
             		}
-            		SecureAppGeneratorApplication.saveMultiPartFileToLocation(file, xFormBuildPath.toFile());
+            		SecureAppGeneratorApplication.saveMultiPartFileToLocation(xmlFile, xFormBuildPath.toFile());
                 Logger.logVerbose(session, "Uploaded XFORM Location" + xFormBuildPath.toString());
   
                 xFormLocation = xFormBuildPath.getFileName().toString();
-    				xFormName = getFormNameOnly(getFormNameOnly(file.getOriginalFilename()));
+    				xFormName = getFormNameOnly(getFormNameOnly(xmlFile.getOriginalFilename()));
 
               } 
             catch (Exception e) 
@@ -386,9 +386,9 @@ public class ObtainXFormController extends WebMvcConfigurerAdapter
 		return WebPage.OBTAIN_XFORM;
 	}
 
-	public boolean copyXFormsFileSelectedToBuildDirectory(HttpSession session, String formName)
+	public boolean copyXFormsFileSelectedToBuildDirectory(HttpSession session, String formLocation)
 	{
-		File source = new File(formName);
+		File source = new File(formLocation);
 		File destination = new File(XML_FILE_LOCATION);
 		try
 		{

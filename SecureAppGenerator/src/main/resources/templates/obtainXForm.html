@@ -45,16 +45,16 @@
          		 		</td>
          		 		<td>
 							<select id="defaultXFormSelection" th:onchange="'javascript:xformSelectionChange();'" name="selectedForm" >
-			 					<option th:each="type : ${formsImpMap}" 
-			        		    			th:value="${type.value}" 
-			          				th:text="${type.key}">
+			 					<option th:each="defaultForm : ${formsImpMap}" 
+			        		    			th:value="${defaultForm.value}" 
+			          				th:text="${defaultForm.key}">
 			          			</option>
 							</select>
 						</td>
          		 	</tr>
 	                <tr>
  	                    <td>
-  	       					<input id="uploadCustomXFormButton" class = "textFont button_upload" type="file" name="file" th:onchange="'javascript:uploadxFormSelected();'"></input> 
+  	       					<input id="uploadCustomXFormButton" class = "textFont button_upload" type="file" name="xmlCustomFile" th:onchange="'javascript:uploadxFormSelected();'"></input> 
   	                    	</td>
 	                    <td>
 	                    		<span class="textFont error_msg" th:if="*{appXFormError != null}" th:text="*{appXFormError}"></span>
