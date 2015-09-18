@@ -64,9 +64,9 @@ public class ObtainLogoController extends WebMvcConfigurerAdapter
     }
 
 	@RequestMapping(value=WebPage.OBTAIN_LOGO_NEXT, method=RequestMethod.POST)
-    public String retrieveLogo(HttpSession session, @RequestParam("file") MultipartFile file, Model model, AppConfiguration appConfig)
+    public String retrieveLogo(HttpSession session, @RequestParam("pngFile") MultipartFile iconFile, Model model, AppConfiguration appConfig)
     {
-        if (!file.isEmpty()) 
+        if (!iconFile.isEmpty()) 
          {
             try 
             {
@@ -75,15 +75,15 @@ public class ObtainLogoController extends WebMvcConfigurerAdapter
             		File tempIconLocation = File.createTempFile(LOGO_FILE_NAME, PNG_EXT);
             		Logger.logVerbose(session, "Uploaded Icon Location" + tempIconLocation.getAbsolutePath());
                	tempIconLocation.deleteOnExit();
-            		if(!file.getContentType().contains(IMAGE_PNG))
+            		if(!iconFile.getContentType().contains(IMAGE_PNG))
             		{
-            			Logger.log(session, "Non-PNG Logo Image: " + file.getContentType());
+            			Logger.log(session, "Non-PNG Logo Image: " + iconFile.getContentType());
             	      	appConfig.setAppIconError("logo_file_type_invalid");
             			model.addAttribute(SessionAttributes.APP_CONFIG, appConfig);
          			return WebPage.OBTAIN_LOGO; 
             		}
              	
-            		SecureAppGeneratorApplication.saveMultiPartFileToLocation(file, tempIconLocation);
+            		SecureAppGeneratorApplication.saveMultiPartFileToLocation(iconFile, tempIconLocation);
             		AppConfiguration config = (AppConfiguration)session.getAttribute(SessionAttributes.APP_CONFIG);
             		config.setAppIconLocalFileLocation(tempIconLocation.getAbsolutePath());
             		config.setAppIconBase64Data(SecureAppGeneratorApplication.getBase64DataFromFile(tempIconLocation.getAbsoluteFile()));
