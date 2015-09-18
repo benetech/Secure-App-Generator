@@ -45,7 +45,7 @@
  	                    		<label for="appName" th:text="#{label.Name}"/>
 						</td>
 	                    <td>
-	    	                    	<input type="text" th:field="*{appName}" autofocus="true" th:title="#{input.help_name}"/>
+	    	                    	<input id="appName" type="text" th:field="*{appName}" autofocus="true" th:title="#{input.help_name}"/>
 	                    	</td>
 	                    <td>
 	                    		<span class="textFont error_msg" th:if="*{appNameError != null}" th:text="*{appNameError}"></span>
