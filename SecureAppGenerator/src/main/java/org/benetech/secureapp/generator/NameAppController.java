@@ -33,6 +33,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurerAdapter;
 
+
 @Controller
 public class NameAppController extends WebMvcConfigurerAdapter
 {
@@ -83,9 +84,24 @@ public class NameAppController extends WebMvcConfigurerAdapter
 		{
 			appConfig.setAppNameError("app_name_characters");
 			return false;
-		}		
+		}
+		if(startsWithNumber(name))
+		{
+			appConfig.setAppNameError("app_name_numeric");
+			return false;
+			
+		}
 		appConfig.setAppNameError(null);
 		return true;
 	}
+	
+	public boolean startsWithNumber(String str)
+	{
+	    char[] c = str.toCharArray();
+	    if (!Character.isDigit(c[0])) 
+	        	return false;
+	    return true;
+	}
+	
 
 }
