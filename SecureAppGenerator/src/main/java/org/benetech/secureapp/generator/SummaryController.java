@@ -44,10 +44,13 @@ public class SummaryController extends WebMvcConfigurerAdapter
     }
 
 	@RequestMapping(value=WebPage.SUMMARY_PREVIOUS, method=RequestMethod.POST)
-    public String goBack(HttpSession session, Model model, AppConfiguration appConfig) 
+    public String goBack(HttpSession session, Model model) 
     {
-		model.addAttribute(SessionAttributes.APP_CONFIG, appConfig);
-       return WebPage.OBTAIN_CLIENT_TOKEN;
+		AppConfiguration config = (AppConfiguration)session.getAttribute(SessionAttributes.APP_CONFIG);
+		config.resetVersion();
+		model.addAttribute(SessionAttributes.APP_CONFIG, config);
+		session.setAttribute(SessionAttributes.APP_CONFIG, config);
+		return WebPage.OBTAIN_CLIENT_TOKEN;
     }
 	
 	@RequestMapping(value=WebPage.SUMMARY_NEXT, method=RequestMethod.POST)	
