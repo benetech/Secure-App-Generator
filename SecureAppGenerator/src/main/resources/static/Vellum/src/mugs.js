@@ -892,7 +892,8 @@ define([
                 lstring: 'Extra Bind Attributes'
             },
             defaultValue: {
-                visibility: 'visible',
+            	//TODO re-enable visibility to "visible" and fix default values
+                visibility: 'hidden',
                 presence: 'optional',
                 lstring: 'Default Value',
                 widget: widgets.xPath,
