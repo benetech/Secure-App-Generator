@@ -271,13 +271,11 @@ a.download_link:active {
 .buttonCreateXForm {
 	font-family: 'Arial Narrow', Arial, sans-serif;
     font-weight: normal;
-	-webkit-appearance: button;
-    -moz-appearance: button;
     appearance: button;
 
     text-decoration: none;
 	background-color: yellow;
-    color: Black;
+    color: black;
     font-size: 28px;
 }
 
@@ -286,7 +284,7 @@ a.download_link:active {
     top: 500px;
     right: 100px;
 	background-color: yellow;
-    color: Black;
+    color: black;
     font-size: 36px;
 }
 
@@ -295,7 +293,7 @@ a.download_link:active {
     top: 500px;
     left: 400px;
 	background-color: gray;
-    color: Black;
+    color: black;
     font-size: 36px;
 }
 
@@ -304,7 +302,7 @@ a.download_link:active {
     top: 500px;
     right: 100px;
 	background-color: yellow;
-    color: Black;
+    color: black;
     font-size: 36px;
 }  
 
