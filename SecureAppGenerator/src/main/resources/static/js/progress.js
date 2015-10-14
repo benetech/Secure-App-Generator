@@ -35,8 +35,7 @@ function showProgress(buildText)
 		    	infoListener: function() {return buildText;},// (Optional)	    	
 		 }); 		
 		circle.start(1000); 
-
-		this.document.forms["startBuildingApp"].submit();
+	//	this.document.forms["startBuildingApp"].submit();
 	return true;
 }
 

@@ -81,13 +81,19 @@ public class BuildingApkController extends WebMvcConfigurerAdapter
 	@RequestMapping(value=WebPage.BUILDING_APK_NEXT, method=RequestMethod.POST)	
 	public String initiateBuild(HttpSession session, Model model, AppConfiguration appConfig) throws Exception 
     {
-		initiateSyncronousApkBuild(session, model);
 		model.addAttribute(SessionAttributes.APP_CONFIG, appConfig);
 		return WebPage.FINAL;
     }
 	
-
 	
+	
+	
+	static public void startTheBuild(HttpSession session, Model model)
+    {
+		BuildApkThread thread = new BuildApkThread(session, model);
+		thread.start();
+    }
+    
 	static private void initiateSyncronousApkBuild(HttpSession session, Model model) throws IOException, InterruptedException, S3Exception, Exception
 	{
 		File secureAppBuildDir = null;
@@ -99,11 +105,12 @@ public class BuildingApkController extends WebMvcConfigurerAdapter
 		copyFormToApkBuild(secureAppBuildDir, config.getAppXFormLocation());
 		File apkCreated = buildApk(session, secureAppBuildDir, config);
 		File renamedApk = renameApk(apkCreated, config);
-		String urlToApk = copyApkToDownloads(session, renamedApk);
-		config.setApkURL(urlToApk);
+		copyApkToDownloads(session, renamedApk);
 		if(Fdroid.includeFDroid())
 			Fdroid.copyApkToFDroid(session, renamedApk);
+		config.setApkBuilt(true);
 		model.addAttribute(SessionAttributes.APP_CONFIG, config);
+		session.setAttribute(SessionAttributes.APP_CONFIG, config);
 	//		try
 	//		{
 	//			TODO: add this back once tested on server.			
@@ -116,6 +123,7 @@ public class BuildingApkController extends WebMvcConfigurerAdapter
 	//		}			
 	//	}
 	}
+	
 
 	static private File renameApk(File apkCreated, AppConfiguration config) throws IOException
 	{
@@ -225,12 +233,11 @@ public class BuildingApkController extends WebMvcConfigurerAdapter
 		return appFileCreated;
 	}
 
-	static public String copyApkToDownloads(final HttpSession session, final File apkFile) throws S3Exception
+	static public void copyApkToDownloads(final HttpSession session, final File apkFile) throws S3Exception
 	{
 		Logger.logVerbose(session, "Uploading APK To S3");
-		String urlToApk = AmazonS3Utils.uploadToAmazonS3(session, apkFile);
+		AmazonS3Utils.uploadToAmazonS3(session, apkFile);
 		Logger.logVerbose(session, "Upload Complete.");
-		return urlToApk;
 	}
 	
 	static private void copyDefaultBuildFilesToStagingArea(HttpSession session, File baseBuildDir) throws IOException
@@ -245,4 +252,33 @@ public class BuildingApkController extends WebMvcConfigurerAdapter
 		File baseBuildDir = SecureAppGeneratorApplication.getRandomDirectoryFile("build");
 		return baseBuildDir;
 	}
+	
+	static class BuildApkThread extends Thread
+	{
+		private HttpSession session;
+		private Model model;
+		
+		public BuildApkThread(HttpSession session, Model model)
+		{
+			this.session = session;
+			this.model = model;
+		}
+		
+		@Override
+		public void run()
+		{
+			try
+			{
+				initiateSyncronousApkBuild(session, model);
+			}
+			catch (Exception e)
+			{
+				Logger.logException(session, e);
+				//TODO fix how exceptions are passed back to Web.
+			}
+		}
+		
+	}
+	
 }
+

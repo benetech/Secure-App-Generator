@@ -75,7 +75,12 @@ public class AmazonS3Utils
 		return AMAZON_S3_BASE_DIR;
 	}
 	
-	static public String uploadToAmazonS3(HttpSession session, File fileToUpload) throws S3Exception
+	static public String getApkUrl(String name)
+	{
+		return getBaseUrl() + getDownloadS3Bucket() + "/" + getAPKDownloadFilePathWithFile(name);
+	}
+	
+	static public void uploadToAmazonS3(HttpSession session, File fileToUpload) throws S3Exception
 	{
         try
 		{
@@ -87,11 +92,9 @@ public class AmazonS3Utils
 
 			AccessControlList acl = new AccessControlList();
 			acl.grantPermission(GroupGrantee.AllUsers, Permission.Read);
-			s3client.putObject(new PutObjectRequest(bucketName, getAPKDownloadFilePathWithFile(fileToUpload),  fileToUpload).withAccessControlList(acl));
+			s3client.putObject(new PutObjectRequest(bucketName, getAPKDownloadFilePathWithFile(fileToUpload.getName()),  fileToUpload).withAccessControlList(acl));
 
-			String apkURL = getBaseUrl() + getDownloadS3Bucket() + "/" + getAPKDownloadFilePathWithFile(fileToUpload);
-			Logger.log(session, "APK URL = " + apkURL);
-			return apkURL;
+			Logger.log(session, "Finished uploading to S3");
 		}
 		catch (Exception e)
 		{
@@ -164,9 +167,9 @@ public class AmazonS3Utils
   		return bucket;
 	}
 	
-	static private String getAPKDownloadFilePathWithFile(File fileToUpload)
+	static private String getAPKDownloadFilePathWithFile(String apkName)
 	{
-		return  AMAZON_DOWNLOADS_DIRECTORY + fileToUpload.getName();
+		return  AMAZON_DOWNLOADS_DIRECTORY + apkName;
 	}
 
 	static private String getAwsSecret()

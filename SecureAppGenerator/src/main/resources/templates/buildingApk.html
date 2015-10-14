@@ -5,6 +5,7 @@
 	    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
   		  <link rel="stylesheet" type="text/css" media="all"  
      		 th:href="@{../css/main.css}" />
+ 		<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
  	</head>
 	<body th:onload="'javascript:showProgress(\'' + #{text.buildingApk} + '\');'" >
        	<img class="progressBarLocation" src="/images/Step5line.png" role="presentation" alt=""/>
@@ -77,13 +78,39 @@
 	                </tr>
              </table>
 		</div>
-
 	    <canvas class="progress_location" id="ProgressArea" width="400" height="350"/> 
  
-		<form id="startBuildingApp" name="startBuildingApp" method="POST" action="/buildingApkNext"/>
+		<form id="finalPage" name="finalPage" method="POST" action="/buildingApkNext"/>
  
+		<script type="text/javascript" th:inline="javascript">
+		var startchecking = 0;
+ 		 	function checkApkFinished()
+			{
+ 		 		startchecking += 1;
+ 		 		if(startchecking > 30)
+ 		 		{
+				$.ajax({
+				    type: 'HEAD',
+				    url: [[${session.appConfig.apkURL}]],
+			        dataType : 'jsonp',   //you may use jsonp for cross origin request
+			        crossDomain:true,
+			        complete: function(xhr, statusText)
+			        {
+			            if(xhr.status == 200)
+			            	{
+			           	 	document.forms["finalPage"].submit();
+			            	}
+			        }
+				});
+ 		 		}
+			}
+			
+			window.setInterval(checkApkFinished, 2000);
+		</script>
+
   		<script src="./js/ProgressCircle.js"></script>	
  		<script src="./js/progress.js"></script>	
  	</body>
+ 	
 </html>
 

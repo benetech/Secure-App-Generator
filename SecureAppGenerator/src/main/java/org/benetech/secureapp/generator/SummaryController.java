@@ -54,9 +54,15 @@ public class SummaryController extends WebMvcConfigurerAdapter
     }
 	
 	@RequestMapping(value=WebPage.SUMMARY_NEXT, method=RequestMethod.POST)	
-	public String initiateBuild(HttpSession session, Model model, AppConfiguration appConfig) throws Exception 
+	public String initiateBuild(HttpSession session, Model model) throws Exception 
     {
-			model.addAttribute(SessionAttributes.APP_CONFIG, appConfig);
-		 	return WebPage.BUILDING_APK;
+		AppConfiguration appConfig = (AppConfiguration) session.getAttribute(SessionAttributes.APP_CONFIG);
+		String apkUrl = AmazonS3Utils.getApkUrl(appConfig.getApkName());
+		appConfig.setApkURL(apkUrl);
+		Logger.logVerbose(session, "URL to apk = " + apkUrl);
+		model.addAttribute(SessionAttributes.APP_CONFIG, appConfig);
+		session.setAttribute(SessionAttributes.APP_CONFIG, appConfig);
+		BuildingApkController.startTheBuild(session, model);
+		return WebPage.BUILDING_APK;
    }
 }
