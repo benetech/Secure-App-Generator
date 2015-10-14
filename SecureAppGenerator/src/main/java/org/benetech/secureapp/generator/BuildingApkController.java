@@ -108,7 +108,6 @@ public class BuildingApkController extends WebMvcConfigurerAdapter
 		copyApkToDownloads(session, renamedApk);
 		if(Fdroid.includeFDroid())
 			Fdroid.copyApkToFDroid(session, renamedApk);
-		config.setApkBuilt(true);
 		model.addAttribute(SessionAttributes.APP_CONFIG, config);
 		session.setAttribute(SessionAttributes.APP_CONFIG, config);
 	//		try
