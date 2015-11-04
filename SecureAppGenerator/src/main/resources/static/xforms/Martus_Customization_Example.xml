@@ -1,0 +1,671 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<h:html xmlns:h="http://www.w3.org/1999/xhtml" xmlns:orx="http://openrosa.org/jr/xforms" xmlns="http://www.w3.org/2002/xforms" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:jr="http://openrosa.org/javarosa" xmlns:vellum="http://commcarehq.org/xforms/vellum">
+	<h:head>
+		<h:title>Untitled Form</h:title>
+		<model>
+			<instance>
+				<data xmlns:jrm="http://dev.commcarehq.org/jr/xforms" xmlns="http://openrosa.org/formdesigner/D0FB2323-8E1D-40D6-AFAC-881ADB218D56" uiVersion="1" version="1" name="Untitled Form">
+					<Record_Information>
+						<Language />
+					</Record_Information>
+					<Summary_Section>
+						<Regional_office_collecting_the_data />
+						<Source_of_record_information />
+						<If_Source_other />
+					</Summary_Section>
+					<Interviewee_Information>
+						<Interviewee_Name />
+						<Interviewee_Speaks />
+						<Interview_Start_Date />
+						<Interview_End_Date />
+						<IntervieweeAnonymous />
+						<IntervieweeAddtInfo />
+						<IntervieweeTestify />
+					</Interviewee_Information>
+					<Event_Information>
+						<Event_Start_Date />
+						<Event_End_Date />
+						<Event_Location />
+					</Event_Information>
+					<Victim_Information>
+						<FirstName />
+						<LastName />
+						<Is_Identified />
+						<Date_of_Birth />
+						<Sex />
+						<Region_of_Birth />
+						<Ethnicity />
+					</Victim_Information>
+					<Professional_History>
+						<First_Name />
+						<Last_Name />
+						<Profession />
+						<Profession_Start_Date />
+						<Profession_End_Date />
+					</Professional_History>
+					<Narrative>
+						<Narrative_Description />
+					</Narrative>
+				</data>
+			</instance>
+			<bind nodeset="/data/Record_Information" />
+			<bind nodeset="/data/Record_Information/Language" />
+			<bind nodeset="/data/Summary_Section" />
+			<bind nodeset="/data/Summary_Section/Regional_office_collecting_the_data" type="xsd:string" />
+			<bind nodeset="/data/Summary_Section/Source_of_record_information" />
+			<bind nodeset="/data/Summary_Section/If_Source_other" type="xsd:string" />
+			<bind nodeset="/data/Interviewee_Information" />
+			<bind nodeset="/data/Interviewee_Information/Interviewee_Name" type="xsd:string" />
+			<bind nodeset="/data/Interviewee_Information/Interviewee_Speaks" />
+			<bind nodeset="/data/Interviewee_Information/Interview_Start_Date" type="xsd:date" />
+			<bind nodeset="/data/Interviewee_Information/Interview_End_Date" type="xsd:date" />
+			<bind nodeset="/data/Interviewee_Information/IntervieweeAnonymous" />
+			<bind nodeset="/data/Interviewee_Information/IntervieweeAddtInfo" />
+			<bind nodeset="/data/Interviewee_Information/IntervieweeTestify" />
+			<bind nodeset="/data/Event_Information" />
+			<bind nodeset="/data/Event_Information/Event_Start_Date" type="xsd:date" />
+			<bind nodeset="/data/Event_Information/Event_End_Date" type="xsd:date" />
+			<bind nodeset="/data/Event_Information/Event_Location" type="xsd:string" />
+			<bind nodeset="/data/Victim_Information" />
+			<bind nodeset="/data/Victim_Information/FirstName" type="xsd:string" />
+			<bind nodeset="/data/Victim_Information/LastName" type="xsd:string" />
+			<bind nodeset="/data/Victim_Information/Is_Identified" />
+			<bind nodeset="/data/Victim_Information/Date_of_Birth" type="xsd:date" />
+			<bind nodeset="/data/Victim_Information/Sex" />
+			<bind nodeset="/data/Victim_Information/Region_of_Birth" type="xsd:string" />
+			<bind nodeset="/data/Victim_Information/Ethnicity" type="xsd:string" />
+			<bind nodeset="/data/Professional_History" />
+			<bind nodeset="/data/Professional_History/First_Name" type="xsd:string" />
+			<bind nodeset="/data/Professional_History/Last_Name" type="xsd:string" />
+			<bind nodeset="/data/Professional_History/Profession" type="xsd:string" />
+			<bind nodeset="/data/Professional_History/Profession_Start_Date" type="xsd:date" />
+			<bind nodeset="/data/Professional_History/Profession_End_Date" type="xsd:date" />
+			<bind nodeset="/data/Narrative" />
+			<bind nodeset="/data/Narrative/Narrative_Description" type="xsd:string" />
+		</model>
+	</h:head>
+	<h:body>
+		<group ref="/data/Record_Information" appearance="field-list">
+			<label>Record Information</label>
+			<select1 ref="/data/Record_Information/Language"  appearance="minimal">
+				<label>Language</label>
+				<item>
+					<label>- Other -</label>
+					<value>language_1</value>
+				</item>
+				<item>
+					<label>English</label>
+					<value>language_2</value>
+				</item>
+				<item>
+					<label>Arabic</label>
+					<value>language_3</value>
+				</item>
+				<item>
+					<label>Armenian</label>
+					<value>language_4</value>
+				</item>
+				<item>
+					<label>Azerbaijani</label>
+					<value>language_5</value>
+				</item>
+				<item>
+					<label>Bulgarian</label>
+					<value>language_6</value>
+				</item>
+				<item>
+					<label>Bengali, Bangla</label>
+					<value>language_7</value>
+				</item>
+				<item>
+					<label>Burmese</label>
+					<value>language_8</value>
+				</item>
+				<item>
+					<label>Chinese</label>
+					<value>language_9</value>
+				</item>
+				<item>
+					<label>Dutch</label>
+					<value>language_10</value>
+				</item>
+				<item>
+					<label>Esperanto</label>
+					<value>language_11</value>
+				</item>
+				<item>
+					<label>Farsi/Dari</label>
+					<value>language_12</value>
+				</item>
+				<item>
+					<label>French</label>
+					<value>language_13</value>
+				</item>
+				<item>
+					<label>German</label>
+					<value>language_14</value>
+				</item>
+				<item>
+					<label>Gujarati</label>
+					<value>language_15</value>
+				</item>
+				<item>
+					<label>Hausa</label>
+					<value>language_16</value>
+				</item>
+				<item>
+					<label>Hebrew</label>
+					<value>language_17</value>
+				</item>
+				<item>
+					<label>Hindi</label>
+					<value>language_18</value>
+				</item>
+				<item>
+					<label>Hungarian</label>
+					<value>language_19</value>
+				</item>
+				<item>
+					<label>Italian</label>
+					<value>language_20</value>
+				</item>
+				<item>
+					<label>Japanese</label>
+					<value>language_21</value>
+				</item>
+				<item>
+					<label>Javanese</label>
+					<value>language_22</value>
+				</item>
+				<item>
+					<label>Kannada</label>
+					<value>language_23</value>
+				</item>
+				<item>
+					<label>Kazakh</label>
+					<value>language_24</value>
+				</item>
+				<item>
+					<label>Khmer</label>
+					<value>language_25</value>
+				</item>
+				<item>
+					<label>Kirghiz</label>
+					<value>language_26</value>
+				</item>
+				<item>
+					<label>Korean</label>
+					<value>language_27</value>
+				</item>
+				<item>
+					<label>Kurdish</label>
+					<value>language_28</value>
+				</item>
+				<item>
+					<label>Malayalam</label>
+					<value>language_29</value>
+				</item>
+				<item>
+					<label>Marathi</label>
+					<value>language_30</value>
+				</item>
+				<item>
+					<label>Nepali</label>
+					<value>language_31</value>
+				</item>
+				<item>
+					<label>Oriya</label>
+					<value>language_32</value>
+				</item>
+				<item>
+					<label>Panjabi</label>
+					<value>language_33</value>
+				</item>
+				<item>
+					<label>Pashto, Pushto</label>
+					<value>language_34</value>
+				</item>
+				<item>
+					<label>Polish</label>
+					<value>language_35</value>
+				</item>
+				<item>
+					<label>Portuguese</label>
+					<value>language_36</value>
+				</item>
+				<item>
+					<label>Romanian</label>
+					<value>language_37</value>
+				</item>
+				<item>
+					<label>Russian</label>
+					<value>language_38</value>
+				</item>
+				<item>
+					<label>Serbian</label>
+					<value>language_39</value>
+				</item>
+				<item>
+					<label>Sindhi</label>
+					<value>language_40</value>
+				</item>
+				<item>
+					<label>Sinhalese</label>
+					<value>language_41</value>
+				</item>
+				<item>
+					<label>Spanish</label>
+					<value>language_42</value>
+				</item>
+				<item>
+					<label>Tamil</label>
+					<value>language_43</value>
+				</item>
+				<item>
+					<label>Tajik</label>
+					<value>language_44</value>
+				</item>
+				<item>
+					<label>Telugu</label>
+					<value>language_45</value>
+				</item>
+				<item>
+					<label>Thai</label>
+					<value>language_46</value>
+				</item>
+				<item>
+					<label>Turkish</label>
+					<value>language_47</value>
+				</item>
+				<item>
+					<label>Turkmen</label>
+					<value>language_48</value>
+				</item>
+				<item>
+					<label>Ukranian</label>
+					<value>language_49</value>
+				</item>
+				<item>
+					<label>Urdu</label>
+					<value>language_50</value>
+				</item>
+				<item>
+					<label>Uzbek</label>
+					<value>language_51</value>
+				</item>
+				<item>
+					<label>Vietnamese</label>
+					<value>language_52</value>
+				</item>
+			</select1>
+		</group>
+		<group ref="/data/Summary_Section" appearance="field-list">
+			<label>Summary Section</label>
+			<input ref="/data/Summary_Section/Regional_office_collecting_the_data">
+				<label>Regional office collecting the data</label>
+			</input>
+			<select1 ref="/data/Summary_Section/Source_of_record_information">
+				<label>Source of record information</label>
+				<item>
+					<label>Media Press</label>
+					<value>MediaPress</value>
+				</item>
+				<item>
+					<label>Legal Report</label>
+					<value>Legal_Report</value>
+				</item>
+				<item>
+					<label>Personal Interview</label>
+					<value>Personal_Interview</value>
+				</item>
+				<item>
+					<label>Other</label>
+					<value>Other</value>
+				</item>
+			</select1>
+			<input ref="/data/Summary_Section/If_Source_other">
+				<label>If Source = &quot;other&quot;, please  specify</label>
+			</input>
+		</group>
+		<group ref="/data/Interviewee_Information" appearance="field-list">
+			<label>Interviewee Information</label>
+			<input ref="/data/Interviewee_Information/Interviewee_Name">
+				<label>Interviewee  Name</label>
+			</input>
+			<select1 ref="/data/Interviewee_Information/Interviewee_Speaks" appearance="minimal">
+				<label>Interviewee Speaks</label>
+				<item>
+					<label>- Other -</label>
+					<value>language_1</value>
+				</item>
+				<item>
+					<label>English</label>
+					<value>language_2</value>
+				</item>
+				<item>
+					<label>Arabic</label>
+					<value>language_3</value>
+				</item>
+				<item>
+					<label>Armenian</label>
+					<value>language_4</value>
+				</item>
+				<item>
+					<label>Azerbaijani</label>
+					<value>language_5</value>
+				</item>
+				<item>
+					<label>Bulgarian</label>
+					<value>language_6</value>
+				</item>
+				<item>
+					<label>Bengali, Bangla</label>
+					<value>language_7</value>
+				</item>
+				<item>
+					<label>Burmese</label>
+					<value>language_8</value>
+				</item>
+				<item>
+					<label>Chinese</label>
+					<value>language_9</value>
+				</item>
+				<item>
+					<label>Dutch</label>
+					<value>language_10</value>
+				</item>
+				<item>
+					<label>Esperanto</label>
+					<value>language_11</value>
+				</item>
+				<item>
+					<label>Farsi/Dari</label>
+					<value>language_12</value>
+				</item>
+				<item>
+					<label>French</label>
+					<value>language_13</value>
+				</item>
+				<item>
+					<label>German</label>
+					<value>language_14</value>
+				</item>
+				<item>
+					<label>Gujarati</label>
+					<value>language_15</value>
+				</item>
+				<item>
+					<label>Hausa</label>
+					<value>language_16</value>
+				</item>
+				<item>
+					<label>Hebrew</label>
+					<value>language_17</value>
+				</item>
+				<item>
+					<label>Hindi</label>
+					<value>language_18</value>
+				</item>
+				<item>
+					<label>Hungarian</label>
+					<value>language_19</value>
+				</item>
+				<item>
+					<label>Italian</label>
+					<value>language_20</value>
+				</item>
+				<item>
+					<label>Japanese</label>
+					<value>language_21</value>
+				</item>
+				<item>
+					<label>Javanese</label>
+					<value>language_22</value>
+				</item>
+				<item>
+					<label>Kannada</label>
+					<value>language_23</value>
+				</item>
+				<item>
+					<label>Kazakh</label>
+					<value>language_24</value>
+				</item>
+				<item>
+					<label>Khmer</label>
+					<value>language_25</value>
+				</item>
+				<item>
+					<label>Kirghiz</label>
+					<value>language_26</value>
+				</item>
+				<item>
+					<label>Korean</label>
+					<value>language_27</value>
+				</item>
+				<item>
+					<label>Kurdish</label>
+					<value>language_28</value>
+				</item>
+				<item>
+					<label>Malayalam</label>
+					<value>language_29</value>
+				</item>
+				<item>
+					<label>Marathi</label>
+					<value>language_30</value>
+				</item>
+				<item>
+					<label>Nepali</label>
+					<value>language_31</value>
+				</item>
+				<item>
+					<label>Oriya</label>
+					<value>language_32</value>
+				</item>
+				<item>
+					<label>Panjabi</label>
+					<value>language_33</value>
+				</item>
+				<item>
+					<label>Pashto, Pushto</label>
+					<value>language_34</value>
+				</item>
+				<item>
+					<label>Polish</label>
+					<value>language_35</value>
+				</item>
+				<item>
+					<label>Portuguese</label>
+					<value>language_36</value>
+				</item>
+				<item>
+					<label>Romanian</label>
+					<value>language_37</value>
+				</item>
+				<item>
+					<label>Russian</label>
+					<value>language_38</value>
+				</item>
+				<item>
+					<label>Serbian</label>
+					<value>language_39</value>
+				</item>
+				<item>
+					<label>Sindhi</label>
+					<value>language_40</value>
+				</item>
+				<item>
+					<label>Sinhalese</label>
+					<value>language_41</value>
+				</item>
+				<item>
+					<label>Spanish</label>
+					<value>language_42</value>
+				</item>
+				<item>
+					<label>Tamil</label>
+					<value>language_43</value>
+				</item>
+				<item>
+					<label>Tajik</label>
+					<value>language_44</value>
+				</item>
+				<item>
+					<label>Telugu</label>
+					<value>language_45</value>
+				</item>
+				<item>
+					<label>Thai</label>
+					<value>language_46</value>
+				</item>
+				<item>
+					<label>Turkish</label>
+					<value>language_47</value>
+				</item>
+				<item>
+					<label>Turkmen</label>
+					<value>language_48</value>
+				</item>
+				<item>
+					<label>Ukranian</label>
+					<value>language_49</value>
+				</item>
+				<item>
+					<label>Urdu</label>
+					<value>language_50</value>
+				</item>
+				<item>
+					<label>Uzbek</label>
+					<value>language_51</value>
+				</item>
+				<item>
+					<label>Vietnamese</label>
+					<value>language_52</value>
+				</item>
+			</select1>
+			<input ref="/data/Interviewee_Information/Interview_Start_Date" appearance="no-calendar">
+				<label>Interview Start Date</label>
+			</input>
+			<input ref="/data/Interviewee_Information/Interview_End_Date" appearance="no-calendar">
+				<label>Interview End Date</label>
+			</input>
+			<select1 ref="/data/Interviewee_Information/IntervieweeAnonymous">
+				<label>Does interviewee wish to remain anonymous?</label>
+				<item>
+					<label>Yes</label>
+					<value>Yes</value>
+				</item>
+				<item>
+					<label>No</label>
+					<value>No</value>
+				</item>
+			</select1>
+			<select1 ref="/data/Interviewee_Information/IntervieweeAddtInfo">
+				<label>Is interviewee willing to give additional information if needed?</label>
+				<item>
+					<label>Yes</label>
+					<value>Yes</value>
+				</item>
+				<item>
+					<label>No</label>
+					<value>No</value>
+				</item>
+			</select1>
+			<select1 ref="/data/Interviewee_Information/IntervieweeTestify">
+				<label>Is interviewee willing to testify?</label>
+				<item>
+					<label>Yes</label>
+					<value>Yes</value>
+				</item>
+				<item>
+					<label>No</label>
+					<value>No</value>
+				</item>
+			</select1>
+		</group>
+		<group ref="/data/Event_Information" appearance="field-list">
+			<label>Event Information</label>
+			<input ref="/data/Event_Information/Event_Start_Date" appearance="no-calendar">
+				<label>Event Start Date</label>
+			</input>
+			<input ref="/data/Event_Information/Event_End_Date" appearance="no-calendar">
+				<label>Event End Date</label>
+			</input>
+			<input ref="/data/Event_Information/Event_Location">
+				<label>Event Location</label>
+			</input>
+		</group>
+		<group>
+			<label>Victim Information</label>
+			<repeat nodeset="/data/Victim_Information">
+				<input ref="/data/Victim_Information/FirstName">
+					<label>First Name</label>
+				</input>
+				<input ref="/data/Victim_Information/LastName">
+					<label>Last Name</label>
+				</input>
+				<select1 ref="/data/Victim_Information/Is_Identified">
+					<label>Is Identified?</label>
+					<item>
+						<label>Yes</label>
+						<value>Yes</value>
+					</item>
+					<item>
+						<label>No</label>
+						<value>No</value>
+					</item>
+				</select1>
+				<input ref="/data/Victim_Information/Date_of_Birth" appearance="no-calendar">
+					<label>Date of Birth</label>
+				</input>
+				<select1 ref="/data/Victim_Information/Sex">
+					<label>Sex</label>
+					<item>
+						<label>Male</label>
+						<value>Male</value>
+					</item>
+					<item>
+						<label>Female</label>
+						<value>Female</value>
+					</item>
+					<item>
+						<label>Unknown</label>
+						<value>Unknown</value>
+					</item>
+				</select1>
+				<input ref="/data/Victim_Information/Region_of_Birth">
+					<label>Region of Birth</label>
+				</input>
+				<input ref="/data/Victim_Information/Ethnicity">
+					<label>Ethnicity</label>
+				</input>
+			</repeat>
+		</group>
+		<group>
+			<label>Professional History</label>
+			<repeat nodeset="/data/Professional_History">
+				<input ref="/data/Professional_History/First_Name">
+					<label>First Name</label>
+				</input>
+				<input ref="/data/Professional_History/Last_Name">
+					<label>Last Name</label>
+				</input>
+				<input ref="/data/Professional_History/Profession">
+					<label>Profession</label>
+				</input>
+				<input ref="/data/Professional_History/Profession_Start_Date" appearance="no-calendar">
+					<label>Profession Start  Date</label>
+				</input>
+				<input ref="/data/Professional_History/Profession_End_Date" appearance="no-calendar">
+					<label>Profession End Date</label>
+				</input>
+			</repeat>
+		</group>
+		<group ref="/data/Narrative" appearance="field-list">
+			<label>Narrative</label>
+			<input ref="/data/Narrative/Narrative_Description">
+				<label>Narrative description of events</label>
+			</input>
+		</group>
+	</h:body>
+</h:html>

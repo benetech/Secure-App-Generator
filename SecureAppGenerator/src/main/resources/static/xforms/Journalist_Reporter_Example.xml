@@ -1,0 +1,407 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<h:html xmlns:h="http://www.w3.org/1999/xhtml" xmlns:orx="http://openrosa.org/jr/xforms" xmlns="http://www.w3.org/2002/xforms" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:jr="http://openrosa.org/javarosa" xmlns:vellum="http://commcarehq.org/xforms/vellum">
+	<h:head>
+		<h:title>Untitled Form</h:title>
+		<model>
+			<instance>
+				<data xmlns:jrm="http://dev.commcarehq.org/jr/xforms" xmlns="http://openrosa.org/formdesigner/07E95BA1-0F74-4A32-A099-C1CD8F4045A3" uiVersion="1" version="1" name="Untitled Form">
+					<General_Information>
+						<Language />
+						<Assignment />
+						<Source_Title />
+						<Source_CompanyOrganizationAffiliation />
+						<Source_PR />
+						<Source_Contact_Information />
+						<Source_Social_Media_Coordinates />
+						<Date_of_Interview />
+						<Location_of_Interview />
+						<Does_interviewee_wish_to_remain_anonymous />
+					</General_Information>
+					<Story_Information>
+						<Story_Title />
+						<Story_Date />
+						<Story_Keywords />
+						<Media_Outlet />
+						<Contact_URL />
+						<EditorName />
+						<EditorTitle />
+						<EditorContactInfo />
+					</Story_Information>
+					<Notes>
+						<InterviewNotes />
+					</Notes>
+					<DraftsSection>
+						<Drafts />
+						<EditorsComments />
+						<Final_Draft />
+					</DraftsSection>
+					<AttachmentsSection>
+						<Attachments__background />
+						<Attachments_published />
+						<AttachmentsNotes />
+					</AttachmentsSection>
+				</data>
+			</instance>
+			<bind nodeset="/data/General_Information" />
+			<bind nodeset="/data/General_Information/Language" />
+			<bind nodeset="/data/General_Information/Assignment" type="xsd:string" />
+			<bind nodeset="/data/General_Information/Source_Title" type="xsd:string" />
+			<bind nodeset="/data/General_Information/Source_CompanyOrganizationAffiliation" type="xsd:string" />
+			<bind nodeset="/data/General_Information/Source_PR" type="xsd:string" />
+			<bind nodeset="/data/General_Information/Source_Contact_Information" type="xsd:string" />
+			<bind nodeset="/data/General_Information/Source_Social_Media_Coordinates" type="xsd:string" />
+			<bind nodeset="/data/General_Information/Date_of_Interview" type="xsd:date" />
+			<bind nodeset="/data/General_Information/Location_of_Interview" type="xsd:string" />
+			<bind nodeset="/data/General_Information/Does_interviewee_wish_to_remain_anonymous" />
+			<bind nodeset="/data/Story_Information" />
+			<bind nodeset="/data/Story_Information/Story_Title" type="xsd:string" />
+			<bind nodeset="/data/Story_Information/Story_Date" type="xsd:date" />
+			<bind nodeset="/data/Story_Information/Story_Keywords" type="xsd:string" />
+			<bind nodeset="/data/Story_Information/Media_Outlet" type="xsd:string" />
+			<bind nodeset="/data/Story_Information/Contact_URL" type="xsd:string" />
+			<bind nodeset="/data/Story_Information/EditorName" type="xsd:string" />
+			<bind nodeset="/data/Story_Information/EditorTitle" type="xsd:string" />
+			<bind nodeset="/data/Story_Information/EditorContactInfo" type="xsd:string" />
+			<bind nodeset="/data/Notes" />
+			<bind nodeset="/data/Notes/InterviewNotes" type="xsd:string" />
+			<bind nodeset="/data/DraftsSection" />
+			<bind nodeset="/data/DraftsSection/Drafts" type="xsd:string" />
+			<bind nodeset="/data/DraftsSection/EditorsComments" type="xsd:string" />
+			<bind nodeset="/data/DraftsSection/Final_Draft" type="xsd:string" />
+			<bind nodeset="/data/AttachmentsSection" />
+			<bind nodeset="/data/AttachmentsSection/Attachments__background" />
+			<bind nodeset="/data/AttachmentsSection/Attachments_published" />
+			<bind nodeset="/data/AttachmentsSection/AttachmentsNotes" type="xsd:string" />
+		</model>
+	</h:head>
+	<h:body>
+		<group ref="/data/General_Information" appearance="field-list">
+			<label>General Information</label>
+			<select1 appearance="minimal" ref="/data/General_Information/Language">
+				<label>Language</label>
+				<item>
+					<label>- Other -</label>
+					<value>language_1</value>
+				</item>
+				<item>
+					<label>English</label>
+					<value>language_2</value>
+				</item>
+				<item>
+					<label>Arabic</label>
+					<value>language_3</value>
+				</item>
+				<item>
+					<label>Armenian</label>
+					<value>language_4</value>
+				</item>
+				<item>
+					<label>Azerbaijani</label>
+					<value>language_5</value>
+				</item>
+				<item>
+					<label>Bulgarian</label>
+					<value>language_6</value>
+				</item>
+				<item>
+					<label>Bengali, Bangla</label>
+					<value>language_7</value>
+				</item>
+				<item>
+					<label>Burmese</label>
+					<value>language_8</value>
+				</item>
+				<item>
+					<label>Chinese</label>
+					<value>language_9</value>
+				</item>
+				<item>
+					<label>Dutch</label>
+					<value>language_10</value>
+				</item>
+				<item>
+					<label>Esperanto</label>
+					<value>language_11</value>
+				</item>
+				<item>
+					<label>Farsi/Dari</label>
+					<value>language_12</value>
+				</item>
+				<item>
+					<label>French</label>
+					<value>language_13</value>
+				</item>
+				<item>
+					<label>German</label>
+					<value>language_14</value>
+				</item>
+				<item>
+					<label>Gujarati</label>
+					<value>language_15</value>
+				</item>
+				<item>
+					<label>Hausa</label>
+					<value>language_16</value>
+				</item>
+				<item>
+					<label>Hebrew</label>
+					<value>language_17</value>
+				</item>
+				<item>
+					<label>Hindi</label>
+					<value>language_18</value>
+				</item>
+				<item>
+					<label>Hungarian</label>
+					<value>language_19</value>
+				</item>
+				<item>
+					<label>Italian</label>
+					<value>language_20</value>
+				</item>
+				<item>
+					<label>Japanese</label>
+					<value>language_21</value>
+				</item>
+				<item>
+					<label>Javanese</label>
+					<value>language_22</value>
+				</item>
+				<item>
+					<label>Kannada</label>
+					<value>language_23</value>
+				</item>
+				<item>
+					<label>Kazakh</label>
+					<value>language_24</value>
+				</item>
+				<item>
+					<label>Khmer</label>
+					<value>language_25</value>
+				</item>
+				<item>
+					<label>Kirghiz</label>
+					<value>language_26</value>
+				</item>
+				<item>
+					<label>Korean</label>
+					<value>language_27</value>
+				</item>
+				<item>
+					<label>Kurdish</label>
+					<value>language_28</value>
+				</item>
+				<item>
+					<label>Malayalam</label>
+					<value>language_29</value>
+				</item>
+				<item>
+					<label>Marathi</label>
+					<value>language_30</value>
+				</item>
+				<item>
+					<label>Nepali</label>
+					<value>language_31</value>
+				</item>
+				<item>
+					<label>Oriya</label>
+					<value>language_32</value>
+				</item>
+				<item>
+					<label>Panjabi</label>
+					<value>language_33</value>
+				</item>
+				<item>
+					<label>Pashto, Pushto</label>
+					<value>language_34</value>
+				</item>
+				<item>
+					<label>Polish</label>
+					<value>language_35</value>
+				</item>
+				<item>
+					<label>Portuguese</label>
+					<value>language_36</value>
+				</item>
+				<item>
+					<label>Romanian</label>
+					<value>language_37</value>
+				</item>
+				<item>
+					<label>Russian</label>
+					<value>language_38</value>
+				</item>
+				<item>
+					<label>Serbian</label>
+					<value>language_39</value>
+				</item>
+				<item>
+					<label>Sindhi</label>
+					<value>language_40</value>
+				</item>
+				<item>
+					<label>Sinhalese</label>
+					<value>language_41</value>
+				</item>
+				<item>
+					<label>Spanish</label>
+					<value>language_42</value>
+				</item>
+				<item>
+					<label>Tamil</label>
+					<value>language_43</value>
+				</item>
+				<item>
+					<label>Tajik</label>
+					<value>language_44</value>
+				</item>
+				<item>
+					<label>Telugu</label>
+					<value>language_45</value>
+				</item>
+				<item>
+					<label>Thai</label>
+					<value>language_46</value>
+				</item>
+				<item>
+					<label>Turkish</label>
+					<value>language_47</value>
+				</item>
+				<item>
+					<label>Turkmen</label>
+					<value>language_48</value>
+				</item>
+				<item>
+					<label>Ukranian</label>
+					<value>language_49</value>
+				</item>
+				<item>
+					<label>Urdu</label>
+					<value>language_50</value>
+				</item>
+				<item>
+					<label>Uzbek</label>
+					<value>language_51</value>
+				</item>
+				<item>
+					<label>Vietnamese</label>
+					<value>language_52</value>
+				</item>
+			</select1>
+			<input ref="/data/General_Information/Assignment">
+				<label>Assignment</label>
+			</input>
+			<input ref="/data/General_Information/Source_Title">
+				<label>Source Title</label>
+			</input>
+			<input ref="/data/General_Information/Source_CompanyOrganizationAffiliation">
+				<label>Source Company/Organization/Affiliation</label>
+			</input>
+			<input ref="/data/General_Information/Source_PR">
+				<label>Source PR Contact</label>
+			</input>
+			<input ref="/data/General_Information/Source_Contact_Information">
+				<label>Source Contact Information</label>
+			</input>
+			<input ref="/data/General_Information/Source_Social_Media_Coordinates">
+				<label>Source Social Media Coordinates</label>
+			</input>
+			<input ref="/data/General_Information/Date_of_Interview" appearance="no-calendar">
+				<label>Date of Interview</label>
+			</input>
+			<input ref="/data/General_Information/Location_of_Interview">
+				<label>Location of Interview</label>
+			</input>
+			<select1 ref="/data/General_Information/Does_interviewee_wish_to_remain_anonymous">
+				<label>Does interviewee wish to remain anonymous?</label>
+				<item>
+					<label>Yes</label>
+					<value>Yes</value>
+				</item>
+				<item>
+					<label>No</label>
+					<value>No</value>
+				</item>
+				<item>
+					<label>Not Specified</label>
+					<value>Not_Specified</value>
+				</item>
+			</select1>
+		</group>
+		<group>
+			<label>Story Information</label>
+			<repeat nodeset="/data/Story_Information">
+				<input ref="/data/Story_Information/Story_Title">
+					<label>Story  Title</label>
+				</input>
+				<input ref="/data/Story_Information/Story_Date" appearance="no-calendar">
+					<label>Story Date</label>
+				</input>
+				<input ref="/data/Story_Information/Story_Keywords">
+					<label>Topic(s)/Keyword(s)</label>
+				</input>
+				<input ref="/data/Story_Information/Media_Outlet">
+					<label>Media Outlet</label>
+				</input>
+				<input ref="/data/Story_Information/Contact_URL">
+					<label>Contact Info/URL</label>
+				</input>
+				<input ref="/data/Story_Information/EditorName">
+					<label>Editor Name</label>
+				</input>
+				<input ref="/data/Story_Information/EditorTitle">
+					<label>Editor Title</label>
+				</input>
+				<input ref="/data/Story_Information/EditorContactInfo">
+					<label>Editor Contact Information</label>
+				</input>
+			</repeat>
+		</group>
+		<group ref="/data/Notes" appearance="field-list">
+			<label>Notes</label>
+			<input ref="/data/Notes/InterviewNotes">
+				<label>Interview Notes</label>
+			</input>
+		</group>
+		<group ref="/data/DraftsSection" appearance="field-list">
+			<label>Drafts Section</label>
+			<input ref="/data/DraftsSection/Drafts">
+				<label>Draft(s)</label>
+			</input>
+			<input ref="/data/DraftsSection/EditorsComments">
+				<label>Editor's Comments</label>
+			</input>
+			<input ref="/data/DraftsSection/Final_Draft">
+				<label>Final Draft</label>
+			</input>
+		</group>
+		<group ref="/data/AttachmentsSection" appearance="field-list">
+			<label>Attachments Section</label>
+			<select1 ref="/data/AttachmentsSection/Attachments__background">
+				<label>Attachments contain background info?</label>
+				<item>
+					<label>Yes</label>
+					<value>Yes</value>
+				</item>
+				<item>
+					<label>No</label>
+					<value>No</value>
+				</item>
+			</select1>
+			<select1 ref="/data/AttachmentsSection/Attachments_published">
+				<label>Attachments contain published  information?</label>
+				<item>
+					<label>Yes</label>
+					<value>Yes</value>
+				</item>
+				<item>
+					<label>No</label>
+					<value>No</value>
+				</item>
+			</select1>
+			<input ref="/data/AttachmentsSection/AttachmentsNotes">
+				<label>Attachments Note</label>
+			</input>
+		</group>
+	</h:body>
+</h:html>

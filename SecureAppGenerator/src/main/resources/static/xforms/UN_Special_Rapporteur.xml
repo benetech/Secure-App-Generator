@@ -1,0 +1,659 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<h:html xmlns:h="http://www.w3.org/1999/xhtml" xmlns:orx="http://openrosa.org/jr/xforms" xmlns="http://www.w3.org/2002/xforms" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:jr="http://openrosa.org/javarosa" xmlns:vellum="http://commcarehq.org/xforms/vellum">
+	<h:head>
+		<h:title>Untitled Form</h:title>
+		<model>
+			<instance>
+				<un_special_rapporteur xmlns:jrm="http://dev.commcarehq.org/jr/xforms" xmlns="http://openrosa.org/formdesigner/A6EA8CDB-0E20-46D8-9DE7-83EEA94AAA23" uiVersion="1" version="1" name="Untitled Form">
+					<General_Information />
+					<Identity_of_the_Person_Concerned />
+					<PersonInfo_Section>
+						<PersonInfo_FirstName />
+						<PersonInfo_LastName />
+						<PersonInfo_OtherNames />
+						<PersonInfo_Sex />
+						<PersonInfo_BirthDate />
+						<PersonInfo_Age />
+						<PersonInfo_Nationality />
+						<PersonInfo_CivilStatus />
+						<PersonInfo_DocumentType />
+						<PersonInfo_IDNumber />
+						<PersonInfo_IDIssuedBy />
+						<PersonInfo_IDIssueDate />
+						<PersonInfo_Linkage />
+						<PersonInfo_Address />
+						<PersonInfo_MiscComments />
+					</PersonInfo_Section>
+					<ProfessionalHistoryGrid>
+						<ProfessionalInfo_FirstName />
+						<ProfessionalInfo_LastName />
+						<ProfessionalInfo_Profession />
+						<ProfessionalInfo_StartDate />
+						<ProfessionalInfo_EndDate />
+					</ProfessionalHistoryGrid>
+					<PersonalProfessional_Comment />
+					<Information_Regarding_the_Incident />
+					<Forces_believed_to_be_responsible_for_the_incident />
+					<Steps_taken_by_the_victim_or_his_her_family>
+						<Have_complaints_been_filed />
+					</Steps_taken_by_the_victim_or_his_her_family>
+					<ComplaintsGrid>
+						<Complaints_FiledDate />
+						<Complaints_FiledBy />
+						<Complaints_FiledOrganization />
+					</ComplaintsGrid>
+					<Additional_Steps />
+					<Steps_taken_by_the_authorities />
+					<Identity_of_the_person_submitting_the_case>
+						<Additional_Information />
+					</Identity_of_the_person_submitting_the_case>
+					<language />
+					<keywords />
+					<ConfidentialityNote />
+					<PersonComments />
+					<IncidentDateStart />
+					<IncidentDateEnd />
+					<IncidentTime />
+					<IncidentLocation />
+					<IncidentDescA />
+					<IncidentDescB />
+					<IncidentDescC />
+					<RespForcesA />
+					<RespForcesB />
+					<RespForcesC />
+					<OtherStepsTaken />
+					<AuthoritiesStepsA />
+					<AuthoritiesStepsB />
+					<SubmitterFamilyName />
+					<SubmitterFirstName />
+					<SubmitterOtherName />
+					<SubmitterStatus />
+					<SubmitterEmail />
+					<SpecifyOtherStatus />
+					<SubmitterAddress />
+					<SubmitterPhone />
+					<SubmitterFax />
+					<IDConfidential />
+					<QuestionnaireDate />
+					<SignatureReceived />
+				</un_special_rapporteur>
+			</instance>
+			<bind nodeset="/un_special_rapporteur/General_Information" />
+			<bind nodeset="/un_special_rapporteur/Identity_of_the_Person_Concerned" />
+			<bind nodeset="/un_special_rapporteur/PersonInfo_Section" />
+			<bind nodeset="/un_special_rapporteur/PersonInfo_Section/PersonInfo_FirstName" type="xsd:string" />
+			<bind nodeset="/un_special_rapporteur/PersonInfo_Section/PersonInfo_LastName" type="xsd:string" />
+			<bind nodeset="/un_special_rapporteur/PersonInfo_Section/PersonInfo_OtherNames" type="xsd:string" />
+			<bind nodeset="/un_special_rapporteur/PersonInfo_Section/PersonInfo_Sex" type="select1" />
+			<bind nodeset="/un_special_rapporteur/PersonInfo_Section/PersonInfo_BirthDate" type="xsd:date" constraint=". &gt;= date('1900-01-01')" jr:constraintMsg="The date you entered is not within the accepted date range." />
+			<bind nodeset="/un_special_rapporteur/PersonInfo_Section/PersonInfo_Age" type="xsd:string" />
+			<bind nodeset="/un_special_rapporteur/PersonInfo_Section/PersonInfo_Nationality" type="xsd:string" />
+			<bind nodeset="/un_special_rapporteur/PersonInfo_Section/PersonInfo_CivilStatus" type="select1" />
+			<bind nodeset="/un_special_rapporteur/PersonInfo_Section/PersonInfo_DocumentType" type="xsd:string" />
+			<bind nodeset="/un_special_rapporteur/PersonInfo_Section/PersonInfo_IDNumber" type="xsd:string" />
+			<bind nodeset="/un_special_rapporteur/PersonInfo_Section/PersonInfo_IDIssuedBy" type="xsd:string" />
+			<bind nodeset="/un_special_rapporteur/PersonInfo_Section/PersonInfo_IDIssueDate" type="xsd:date" constraint=". &gt;= date('1900-01-01')" jr:constraintMsg="The date you entered is not within the accepted date range." />
+			<bind nodeset="/un_special_rapporteur/PersonInfo_Section/PersonInfo_Linkage" type="string" />
+			<bind nodeset="/un_special_rapporteur/PersonInfo_Section/PersonInfo_Address" type="xsd:string" />
+			<bind nodeset="/un_special_rapporteur/PersonInfo_Section/PersonInfo_MiscComments" type="xsd:string" />
+			<bind nodeset="/un_special_rapporteur/ProfessionalHistoryGrid" />
+			<bind nodeset="/un_special_rapporteur/ProfessionalHistoryGrid/ProfessionalInfo_FirstName" type="xsd:string" />
+			<bind nodeset="/un_special_rapporteur/ProfessionalHistoryGrid/ProfessionalInfo_LastName" type="xsd:string" />
+			<bind nodeset="/un_special_rapporteur/ProfessionalHistoryGrid/ProfessionalInfo_Profession" type="xsd:string" />
+			<bind nodeset="/un_special_rapporteur/ProfessionalHistoryGrid/ProfessionalInfo_StartDate" type="xsd:date" constraint=". &gt;= date('1900-01-01')" jr:constraintMsg="The date you entered is not within the accepted date range." />
+			<bind nodeset="/un_special_rapporteur/ProfessionalHistoryGrid/ProfessionalInfo_EndDate" type="xsd:date" constraint=". &gt;= date('1900-01-01')" jr:constraintMsg="The date you entered is not within the accepted date range." />
+			<bind nodeset="/un_special_rapporteur/PersonalProfessional_Comment" />
+			<bind nodeset="/un_special_rapporteur/Information_Regarding_the_Incident" />
+			<bind nodeset="/un_special_rapporteur/Forces_believed_to_be_responsible_for_the_incident" />
+			<bind nodeset="/un_special_rapporteur/Steps_taken_by_the_victim_or_his_her_family" />
+			<bind nodeset="/un_special_rapporteur/Steps_taken_by_the_victim_or_his_her_family/Have_complaints_been_filed" />
+			<bind nodeset="/un_special_rapporteur/ComplaintsGrid" />
+			<bind nodeset="/un_special_rapporteur/ComplaintsGrid/Complaints_FiledDate" type="xsd:date" constraint=". &gt;= date('1900-01-01')" jr:constraintMsg="The date you entered is not within the accepted date range." />
+			<bind nodeset="/un_special_rapporteur/ComplaintsGrid/Complaints_FiledBy" type="xsd:string" />
+			<bind nodeset="/un_special_rapporteur/ComplaintsGrid/Complaints_FiledOrganization" type="xsd:string" />
+			<bind nodeset="/un_special_rapporteur/Additional_Steps" />
+			<bind nodeset="/un_special_rapporteur/Steps_taken_by_the_authorities" />
+			<bind nodeset="/un_special_rapporteur/Identity_of_the_person_submitting_the_case" />
+			<bind nodeset="/un_special_rapporteur/Identity_of_the_person_submitting_the_case/Additional_Information" type="xsd:string" />
+			<bind nodeset="/un_special_rapporteur/language" type="select1" />
+			<bind nodeset="/un_special_rapporteur/keywords" type="xsd:string" />
+			<bind nodeset="/un_special_rapporteur/ConfidentialityNote" type="xsd:string" readonly="true()" />
+			<bind nodeset="/un_special_rapporteur/PersonComments" type="xsd:string" />
+			<bind nodeset="/un_special_rapporteur/IncidentDateStart" type="xsd:date" constraint=". &gt;= date('1900-01-01')" jr:constraintMsg="The date you entered is not within the accepted date range." />
+			<bind nodeset="/un_special_rapporteur/IncidentDateEnd" type="xsd:date" constraint=". &gt;= date('1900-01-01')" jr:constraintMsg="The date you entered is not within the accepted date range." />
+			<bind nodeset="/un_special_rapporteur/IncidentTime" type="xsd:string" />
+			<bind nodeset="/un_special_rapporteur/IncidentLocation" type="xsd:string" />
+			<bind nodeset="/un_special_rapporteur/IncidentDescA" type="xsd:string" />
+			<bind nodeset="/un_special_rapporteur/IncidentDescB" type="xsd:string" />
+			<bind nodeset="/un_special_rapporteur/IncidentDescC" type="xsd:string" />
+			<bind nodeset="/un_special_rapporteur/RespForcesA" type="xsd:string" />
+			<bind nodeset="/un_special_rapporteur/RespForcesB" type="xsd:string" />
+			<bind nodeset="/un_special_rapporteur/RespForcesC" type="xsd:string" />
+			<bind nodeset="/un_special_rapporteur/OtherStepsTaken" type="xsd:string" />
+			<bind nodeset="/un_special_rapporteur/AuthoritiesStepsA" type="xsd:string" />
+			<bind nodeset="/un_special_rapporteur/AuthoritiesStepsB" type="xsd:string" />
+			<bind nodeset="/un_special_rapporteur/SubmitterFamilyName" type="xsd:string" />
+			<bind nodeset="/un_special_rapporteur/SubmitterFirstName" type="xsd:string" />
+			<bind nodeset="/un_special_rapporteur/SubmitterOtherName" type="xsd:string" />
+			<bind nodeset="/un_special_rapporteur/SubmitterStatus" type="select1" />
+			<bind nodeset="/un_special_rapporteur/SubmitterEmail" type="xsd:string" />
+			<bind nodeset="/un_special_rapporteur/SpecifyOtherStatus" type="xsd:string" />
+			<bind nodeset="/un_special_rapporteur/SubmitterAddress" type="xsd:string" />
+			<bind nodeset="/un_special_rapporteur/SubmitterPhone" type="xsd:string" />
+			<bind nodeset="/un_special_rapporteur/SubmitterFax" type="xsd:string" />
+			<bind nodeset="/un_special_rapporteur/IDConfidential" type="string" />
+			<bind nodeset="/un_special_rapporteur/QuestionnaireDate" type="xsd:date" constraint=". &gt;= date('1900-01-01')" jr:constraintMsg="The date you entered is not within the accepted date range." />
+			<bind nodeset="/un_special_rapporteur/SignatureReceived" type="string" />
+		</model>
+	</h:head>
+	<h:body>
+		<group ref="/un_special_rapporteur/General_Information" appearance="field-list">
+			<label>General Information</label>
+			<select1 ref="/un_special_rapporteur/language" appearance="minimal">
+				<label>Language</label>
+				<item>
+					<label>- Other -</label>
+					<value>language_1</value>
+				</item>
+				<item>
+					<label>English</label>
+					<value>language_2</value>
+				</item>
+				<item>
+					<label>Arabic</label>
+					<value>language_3</value>
+				</item>
+				<item>
+					<label>Armenian</label>
+					<value>language_4</value>
+				</item>
+				<item>
+					<label>Azerbaijani</label>
+					<value>language_5</value>
+				</item>
+				<item>
+					<label>Bulgarian</label>
+					<value>language_6</value>
+				</item>
+				<item>
+					<label>Bengali, Bangla</label>
+					<value>language_7</value>
+				</item>
+				<item>
+					<label>Burmese</label>
+					<value>language_8</value>
+				</item>
+				<item>
+					<label>Chinese</label>
+					<value>language_9</value>
+				</item>
+				<item>
+					<label>Dutch</label>
+					<value>language_10</value>
+				</item>
+				<item>
+					<label>Esperanto</label>
+					<value>language_11</value>
+				</item>
+				<item>
+					<label>Farsi/Dari</label>
+					<value>language_12</value>
+				</item>
+				<item>
+					<label>French</label>
+					<value>language_13</value>
+				</item>
+				<item>
+					<label>German</label>
+					<value>language_14</value>
+				</item>
+				<item>
+					<label>Gujarati</label>
+					<value>language_15</value>
+				</item>
+				<item>
+					<label>Hausa</label>
+					<value>language_16</value>
+				</item>
+				<item>
+					<label>Hebrew</label>
+					<value>language_17</value>
+				</item>
+				<item>
+					<label>Hindi</label>
+					<value>language_18</value>
+				</item>
+				<item>
+					<label>Hungarian</label>
+					<value>language_19</value>
+				</item>
+				<item>
+					<label>Italian</label>
+					<value>language_20</value>
+				</item>
+				<item>
+					<label>Japanese</label>
+					<value>language_21</value>
+				</item>
+				<item>
+					<label>Javanese</label>
+					<value>language_22</value>
+				</item>
+				<item>
+					<label>Kannada</label>
+					<value>language_23</value>
+				</item>
+				<item>
+					<label>Kazakh</label>
+					<value>language_24</value>
+				</item>
+				<item>
+					<label>Khmer</label>
+					<value>language_25</value>
+				</item>
+				<item>
+					<label>Kirghiz</label>
+					<value>language_26</value>
+				</item>
+				<item>
+					<label>Korean</label>
+					<value>language_27</value>
+				</item>
+				<item>
+					<label>Kurdish</label>
+					<value>language_28</value>
+				</item>
+				<item>
+					<label>Malayalam</label>
+					<value>language_29</value>
+				</item>
+				<item>
+					<label>Marathi</label>
+					<value>language_30</value>
+				</item>
+				<item>
+					<label>Nepali</label>
+					<value>language_31</value>
+				</item>
+				<item>
+					<label>Oriya</label>
+					<value>language_32</value>
+				</item>
+				<item>
+					<label>Panjabi</label>
+					<value>language_33</value>
+				</item>
+				<item>
+					<label>Pashto, Pushto</label>
+					<value>language_34</value>
+				</item>
+				<item>
+					<label>Polish</label>
+					<value>language_35</value>
+				</item>
+				<item>
+					<label>Portuguese</label>
+					<value>language_36</value>
+				</item>
+				<item>
+					<label>Romanian</label>
+					<value>language_37</value>
+				</item>
+				<item>
+					<label>Russian</label>
+					<value>language_38</value>
+				</item>
+				<item>
+					<label>Serbian</label>
+					<value>language_39</value>
+				</item>
+				<item>
+					<label>Sindhi</label>
+					<value>language_40</value>
+				</item>
+				<item>
+					<label>Sinhalese</label>
+					<value>language_41</value>
+				</item>
+				<item>
+					<label>Spanish</label>
+					<value>language_42</value>
+				</item>
+				<item>
+					<label>Tamil</label>
+					<value>language_43</value>
+				</item>
+				<item>
+					<label>Tajik</label>
+					<value>language_44</value>
+				</item>
+				<item>
+					<label>Telugu</label>
+					<value>language_45</value>
+				</item>
+				<item>
+					<label>Thai</label>
+					<value>language_46</value>
+				</item>
+				<item>
+					<label>Turkish</label>
+					<value>language_47</value>
+				</item>
+				<item>
+					<label>Turkmen</label>
+					<value>language_48</value>
+				</item>
+				<item>
+					<label>Ukranian</label>
+					<value>language_49</value>
+				</item>
+				<item>
+					<label>Urdu</label>
+					<value>language_50</value>
+				</item>
+				<item>
+					<label>Uzbek</label>
+					<value>language_51</value>
+				</item>
+				<item>
+					<label>Vietnamese</label>
+					<value>language_52</value>
+				</item>
+			</select1>
+			<input ref="/un_special_rapporteur/keywords">
+				<label>Keywords</label>
+			</input>
+		</group>
+		<group ref="/un_special_rapporteur/Identity_of_the_Person_Concerned" appearance="field-list">
+			<label>I. Identity of the Person Concerned</label>
+			<input ref="/un_special_rapporteur/ConfidentialityNote">
+				<label>If any information contained in the questionnaire should be kept confidential please mark &quot;CONFIDENTIAL&quot; beside the relevant entry.</label>
+			</input>
+		</group>
+		<group ref="/un_special_rapporteur/PersonInfo_Section">
+			<label>Person Information</label>
+			<repeat nodeset="/un_special_rapporteur/PersonInfo_Section">
+				<input ref="/un_special_rapporteur/PersonInfo_Section/PersonInfo_FirstName">
+					<label>First Name</label>
+				</input>
+				<input ref="/un_special_rapporteur/PersonInfo_Section/PersonInfo_LastName">
+					<label>Last Name</label>
+				</input>
+				<input ref="/un_special_rapporteur/PersonInfo_Section/PersonInfo_OtherNames">
+					<label>Other Names</label>
+				</input>
+				<select1 ref="/un_special_rapporteur/PersonInfo_Section/PersonInfo_Sex" appearance="minimal">
+					<label>Sex</label>
+					<item>
+						<label>Male</label>
+						<value>sex_1</value>
+					</item>
+					<item>
+						<label>Female</label>
+						<value>sex_2</value>
+					</item>
+					<item>
+						<label>Unknown</label>
+						<value>sex_3</value>
+					</item>
+				</select1>
+				<input ref="/un_special_rapporteur/PersonInfo_Section/PersonInfo_BirthDate" appearance="no-calendar">
+					<label>Date of Birth</label>
+				</input>
+				<input ref="/un_special_rapporteur/PersonInfo_Section/PersonInfo_Age">
+					<label>Age Range/Description</label>
+				</input>
+				<input ref="/un_special_rapporteur/PersonInfo_Section/PersonInfo_Nationality">
+					<label>Nationality</label>
+				</input>
+				<select1 ref="/un_special_rapporteur/PersonInfo_Section/PersonInfo_CivilStatus" appearance="minimal">
+					<label>Civil Status</label>
+					<item>
+						<label>Single</label>
+						<value>civil_status_1</value>
+					</item>
+					<item>
+						<label>Married</label>
+						<value>civil_status_2</value>
+					</item>
+					<item>
+						<label>Divorced</label>
+						<value>civil_status_3</value>
+					</item>
+					<item>
+						<label>Separated</label>
+						<value>civil_status_4</value>
+					</item>
+					<item>
+						<label>Widowed</label>
+						<value>civil_status_5</value>
+					</item>
+					<item>
+						<label>Unknown</label>
+						<value>civil_status_6</value>
+					</item>
+					<item>
+						<label>Other</label>
+						<value>civil_status_7</value>
+					</item>
+				</select1>
+				<input ref="/un_special_rapporteur/PersonInfo_Section/PersonInfo_DocumentType">
+					<label>Identity Document type</label>
+				</input>
+				<input ref="/un_special_rapporteur/PersonInfo_Section/PersonInfo_IDNumber">
+					<label>ID Doc #</label>
+				</input>
+				<input ref="/un_special_rapporteur/PersonInfo_Section/PersonInfo_IDIssuedBy">
+					<label>ID Doc Issued by</label>
+				</input>
+				<input ref="/un_special_rapporteur/PersonInfo_Section/PersonInfo_IDIssueDate" appearance="no-calendar">
+					<label>ID Doc Date of Issue</label>
+				</input>
+				<select1 ref="/un_special_rapporteur/PersonInfo_Section/PersonInfo_Linkage">
+					<label>Link to other cases/persons?</label>
+					<item>
+						<label>Yes</label>
+						<value>Yes</value>
+					</item>
+					<item>
+						<label>No</label>
+						<value>No</value>
+					</item>
+				</select1>
+				<input ref="/un_special_rapporteur/PersonInfo_Section/PersonInfo_Address">
+					<label>Address of usual residence</label>
+				</input>
+				<input ref="/un_special_rapporteur/PersonInfo_Section/PersonInfo_MiscComments">
+					<label>Misc Comments (or &quot;Other&quot; values)</label>
+				</input>
+			</repeat>
+		</group>
+		<group ref="/un_special_rapporteur/ProfessionalHistoryGrid">
+			<label>Professional History</label>
+			<repeat nodeset="/un_special_rapporteur/ProfessionalHistoryGrid">
+				<input ref="/un_special_rapporteur/ProfessionalHistoryGrid/ProfessionalInfo_FirstName">
+					<label>First Name</label>
+				</input>
+				<input ref="/un_special_rapporteur/ProfessionalHistoryGrid/ProfessionalInfo_LastName">
+					<label>Last Name</label>
+				</input>
+				<input ref="/un_special_rapporteur/ProfessionalHistoryGrid/ProfessionalInfo_Profession">
+					<label>Profession</label>
+				</input>
+				<input ref="/un_special_rapporteur/ProfessionalHistoryGrid/ProfessionalInfo_StartDate" appearance="no-calendar">
+					<label>Date of Employment (Start)</label>
+				</input>
+				<input ref="/un_special_rapporteur/ProfessionalHistoryGrid/ProfessionalInfo_EndDate" appearance="no-calendar">
+					<label>Date of Employment (End)</label>
+				</input>
+			</repeat>
+		</group>
+		<group ref="/un_special_rapporteur/PersonalProfessional_Comment" appearance="field-list">
+			<label>Personal/Professional Comment</label>
+			<input ref="/un_special_rapporteur/PersonComments" appearance="multiline">
+				<label>Comments on Person/Profession Information</label>
+			</input>
+		</group>
+		<group ref="/un_special_rapporteur/Information_Regarding_the_Incident" appearance="field-list">
+			<label>II. Information Regarding the Incident</label>
+			<input ref="/un_special_rapporteur/IncidentDateStart" appearance="no-calendar">
+				<label>Incident Date (Start)</label>
+			</input>
+			<input ref="/un_special_rapporteur/IncidentDateEnd" appearance="no-calendar">
+				<label>Incident Date (End)</label>
+			</input>
+			<input ref="/un_special_rapporteur/IncidentTime">
+				<label>Incident Time</label>
+			</input>
+			<input ref="/un_special_rapporteur/IncidentLocation">
+				<label>Incident Location</label>
+			</input>
+			<input ref="/un_special_rapporteur/IncidentDescA" appearance="multiline">
+				<label>Incident Description (a)</label>
+			</input>
+			<input ref="/un_special_rapporteur/IncidentDescB" appearance="multiline">
+				<label>Incident Description (b)</label>
+			</input>
+			<input ref="/un_special_rapporteur/IncidentDescC" appearance="multiline">
+				<label>Incident Description (c)</label>
+			</input>
+		</group>
+		<group ref="/un_special_rapporteur/Forces_believed_to_be_responsible_for_the_incident" appearance="field-list">
+			<label>III. Forces believed to be responsible for the incident</label>
+			<input ref="/un_special_rapporteur/RespForcesA" appearance="multiline">
+				<label>Responsible Forces (a)</label>
+			</input>
+			<input ref="/un_special_rapporteur/RespForcesB" appearance="multiline">
+				<label>Responsible Forces (b)</label>
+			</input>
+			<input ref="/un_special_rapporteur/RespForcesC" appearance="multiline">
+				<label>Responsible Forces (c)</label>
+			</input>
+		</group>
+		<group ref="/un_special_rapporteur/Steps_taken_by_the_victim_or_his_her_family" appearance="field-list">
+			<label>IV. Steps taken by the victim or his/her family:</label>
+			<select1 ref="/un_special_rapporteur/Steps_taken_by_the_victim_or_his_her_family/Have_complaints_been_filed">
+				<label>Have complaints been filed by (or on behalf of) the victim  or their family?</label>
+				<item>
+					<label>Yes</label>
+					<value>Yes</value>
+				</item>
+				<item>
+					<label>No</label>
+					<value>No</value>
+				</item>
+			</select1>
+		</group>
+		<group ref="/un_special_rapporteur/ComplaintsGrid">
+			<label>Complaints</label>
+			<repeat nodeset="/un_special_rapporteur/ComplaintsGrid">
+				<input ref="/un_special_rapporteur/ComplaintsGrid/Complaints_FiledDate" appearance="no-calendar">
+					<label>Filed Date</label>
+				</input>
+				<input ref="/un_special_rapporteur/ComplaintsGrid/Complaints_FiledBy">
+					<label>Filed by</label>
+				</input>
+				<input ref="/un_special_rapporteur/ComplaintsGrid/Complaints_FiledOrganization">
+					<label>Filed with which organization/person</label>
+				</input>
+			</repeat>
+		</group>
+		<group ref="/un_special_rapporteur/Additional_Steps" appearance="field-list">
+			<label>Additional Steps</label>
+			<input ref="/un_special_rapporteur/OtherStepsTaken" appearance="multiline">
+				<label>Other steps taken by victim</label>
+			</input>
+		</group>
+		<group ref="/un_special_rapporteur/Steps_taken_by_the_authorities" appearance="field-list">
+			<label>V. Steps taken by the authorities</label>
+			<input ref="/un_special_rapporteur/AuthoritiesStepsA" appearance="multiline">
+				<label>Steps taken by the Authorities (a)</label>
+			</input>
+			<input ref="/un_special_rapporteur/AuthoritiesStepsB" appearance="multiline">
+				<label>Steps taken by the Authorities (b)</label>
+			</input>
+		</group>
+		<group ref="/un_special_rapporteur/Identity_of_the_person_submitting_the_case" appearance="field-list">
+			<label>VI. Identity of the person submitting the case</label>
+			<input ref="/un_special_rapporteur/SubmitterFamilyName">
+				<label>Family name</label>
+			</input>
+			<input ref="/un_special_rapporteur/SubmitterFirstName">
+				<label>First name</label>
+			</input>
+			<input ref="/un_special_rapporteur/SubmitterOtherName">
+				<label>Other name(s)</label>
+			</input>
+			<select1 ref="/un_special_rapporteur/SubmitterStatus">
+				<label>Submitter Status</label>
+				<item>
+					<label>Individual</label>
+					<value>submitter_status_1</value>
+				</item>
+				<item>
+					<label>Group</label>
+					<value>submitter_status_2</value>
+				</item>
+				<item>
+					<label>Non-Governmental Organization</label>
+					<value>submitter_status_3</value>
+				</item>
+				<item>
+					<label>Inter-Governmental Agency</label>
+					<value>submitter_status_4</value>
+				</item>
+				<item>
+					<label>Government</label>
+					<value>submitter_status_5</value>
+				</item>
+				<item>
+					<label>Other</label>
+					<value>submitter_status_6</value>
+				</item>
+			</select1>
+			<input ref="/un_special_rapporteur/SubmitterEmail">
+				<label>Submitter Email</label>
+			</input>
+			<input ref="/un_special_rapporteur/SpecifyOtherStatus">
+				<label>If Submitter Status =&quot;Other&quot;, please specify</label>
+			</input>
+			<input ref="/un_special_rapporteur/SubmitterAddress">
+				<label>Submitter Street Address</label>
+			</input>
+			<input ref="/un_special_rapporteur/SubmitterPhone">
+				<label>Submitter Phone Number</label>
+			</input>
+			<input ref="/un_special_rapporteur/SubmitterFax">
+				<label>Submitter Fax</label>
+			</input>
+			<select1 ref="/un_special_rapporteur/IDConfidential">
+				<label>Submitter wish to remain confidential?</label>
+				<item>
+					<label>Yes</label>
+					<value>Yes</value>
+				</item>
+				<item>
+					<label>No</label>
+					<value>No</value>
+				</item>
+			</select1>
+			<input ref="/un_special_rapporteur/QuestionnaireDate" appearance="no-calendar">
+				<label>Questionnaire Date</label>
+			</input>
+			<select1 ref="/un_special_rapporteur/SignatureReceived">
+				<label>Signature Received?</label>
+				<item>
+					<label>Yes</label>
+					<value>Yes</value>
+				</item>
+				<item>
+					<label>No</label>
+					<value>No</value>
+				</item>
+			</select1>
+			<input ref="/un_special_rapporteur/Identity_of_the_person_submitting_the_case/Additional_Information">
+				<label>Additional Information</label>
+			</input>
+		</group>
+	</h:body>
+</h:html>
