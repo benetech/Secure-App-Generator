@@ -4,4 +4,12 @@
   	<copy todir="./src/main/resources/static/SecureAppBuildMaster/secure-app">
 		<fileset dir="../../martus-android/secure-app"/>
   	</copy>
+	<!--	 This takes ~10 minutes only need if you modify the Vellum JS.
+		<exec executable="/bin/sh">
+		<arg line='"minify_Vellum.sh"' />
+		</exec> 
+	-->
+	<copy todir="./src/main/resources/static/Vellum">
+		<fileset dir="./thirdparty/Vellum/minified"/>
+  	</copy>
 </project>

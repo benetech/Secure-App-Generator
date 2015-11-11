@@ -1,0 +1,39 @@
+{
+    "name": "Vellum",
+    "version": "1.6.0",
+    "description": "A JavaRosa XForms designer",
+    "authors": [
+        "Dimagi <dev@dimagi.com>",
+        "Michael White <m@mwhite.info>"
+    ],
+    "license": "MIT",
+    "homepage": "https://github.com/dimagi/Vellum",
+    "keywords": [
+        "XForms"
+    ],
+    "repository": {
+        "type": "git",
+        "url": "https://github.com/dimagi/Vellum.git"
+    },
+    "devDependencies": {
+        "bower": "~1.3.3",
+        "istanbul": ">=0.1.34",
+        "jshint": ">=1.1.0",
+        "mocha": ">=1.9.0",
+        "mocha-istanbul": ">=0.2.0",
+        "mocha-phantomjs": "3.5.3",
+        "http-server": "*",
+        "phantomjs": "~1.9.1",
+
+        "less": "~1.7.0",
+        "csso": ">=1.3.11",
+        "requirejs": "~2.1.14",
+
+        "madge": ">=0.3.1"
+    },
+    "main": "src/main.js",
+    "scripts": {
+        "install": "bower install",
+        "test": "mocha-phantomjs 'index.html?built' && jshint src/*.js && jshint -c tests/.jshintrc tests/*.js"
+    }
+}
