@@ -21,5 +21,8 @@
 	<copy todir="./src/main/resources/static/js">
 		<fileset dir="./JavaScript/minified"/>
   	</copy>
+	<copy todir="./src/main/resources/static/css">
+		<fileset dir="./CSS/minified"/>
+  	</copy>
 	
 </project>

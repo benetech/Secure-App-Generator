@@ -14,7 +14,6 @@ if  [ -d "$DEST/src" ]
 	else
 		mkdir $DEST/src
 fi
-
 java -jar $MINIFY $SRC/src/base.js -o $DEST/src/base.js
 java -jar $MINIFY $SRC/src/commtrack.js -o $DEST/src/commtrack.js
 java -jar $MINIFY $SRC/src/copy-paste.js -o $DEST/src/copy-paste.js
