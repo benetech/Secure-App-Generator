@@ -65,9 +65,9 @@
 	   					<td th:text="${session.appConfig.apkVersionMajor} + '.' +${session.appConfig.apkVersionMinor} + '.' + ${session.appConfig.apkVersionBuild}+ '.' + ${session.appConfig.apkSagVersionBuild}"/>
 	                </tr>
  	                <tr>
- 	                    <td th:text="#{text.summary_file_name}"/>
-  	                    <td class="table_column_spacer"/>
-	   					<td th:text="${session.appConfig.apkName}"/>
+ 	                    <td th:text="#{text.summary_final_apk_url}"/>
+	                    <td class="table_column_spacer"/>
+	   					<td th:text="${session.appConfig.apkURL}"/>
 	                </tr>
 	                <tr>
 	                		<td/>
@@ -87,7 +87,7 @@
  		 	function checkApkFinished()
 			{
  		 		startchecking += 1;
- 		 		if(startchecking > 15) //Check after 30 seconds
+ 		 		if(startchecking > 4) //Check after 40 seconds
  		 		{
 				$.ajax({
 				    type: 'HEAD',
@@ -105,7 +105,7 @@
  		 		}
 			}
 			
-			window.setInterval(checkApkFinished, 2000);
+			window.setInterval(checkApkFinished, 10000); //Check every 10 seconds
 		</script>
 
   		<script src="./js/ProgressCircle.js"></script>	
