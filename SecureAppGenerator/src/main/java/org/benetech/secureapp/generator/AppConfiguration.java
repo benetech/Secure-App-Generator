@@ -27,7 +27,7 @@ package org.benetech.secureapp.generator;
 
 public class AppConfiguration
 {
-	private static final String VERSION = "1.0 Beta 26";
+	private static final String VERSION = "1.0 Beta 27";
 	private static final char DASH_CHAR = '-';
 	private static final String APK_EXTENSION = ".apk";
 	private static final String DEBUG_APK_EXTENSION = "-release" + APK_EXTENSION;
@@ -57,10 +57,12 @@ public class AppConfiguration
 	private String apkSagVersionBuild = "0";
 	private String apkBuildError;
 	private String apkURL;
+	private boolean apkBuilt;
 	
 	public AppConfiguration()
 	{
 		resetVersion();
+		apkBuilt = false;
 	}
 	
 	public void resetVersion()
@@ -333,5 +335,15 @@ public class AppConfiguration
 	public void setApkURL(String apkURL)
 	{
 		this.apkURL = apkURL;
+	}
+
+	public boolean isApkBuilt()
+	{
+		return apkBuilt;
+	}
+
+	public void setApkBuilt(boolean apkBuilt)
+	{
+		this.apkBuilt = apkBuilt;
 	}
 }

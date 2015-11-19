@@ -87,16 +87,15 @@
  		 	function checkApkFinished()
 			{
  		 		startchecking += 1;
- 		 		if(startchecking > 4) //Check after 40 seconds
+ 		 		if(startchecking > 8) //Check after 40 seconds
  		 		{
-				$.ajax({
-				    type: 'HEAD',
-				    url: [[${session.appConfig.apkURL}]],
-			        dataType : 'jsonp',   //you may use jsonp for cross origin request
-			        crossDomain:true,
-			        complete: function(xhr, statusText)
+ 		 			$.ajax({
+ 		 			type:'POST',
+ 		 			url: "/buildingApk/isAPKBuilt",
+ 		 			dataType: "json",
+ 			        complete: function(xhr, statusText)
 			        {
-			            if(xhr.status == 200)
+			            if(xhr.responseText == "true")
 			            	{
 			           	 	document.forms["finalPage"].submit();
 			            	}
@@ -105,7 +104,7 @@
  		 		}
 			}
 			
-			window.setInterval(checkApkFinished, 10000); //Check every 10 seconds
+			window.setInterval(checkApkFinished, 5000); //Check every 5 seconds
 		</script>
 
   		<script src="./js/ProgressCircle.js"></script>	

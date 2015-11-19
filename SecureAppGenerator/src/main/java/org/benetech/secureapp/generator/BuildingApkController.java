@@ -36,6 +36,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurerAdapter;
 
 @Controller
@@ -70,8 +71,16 @@ public class BuildingApkController extends WebMvcConfigurerAdapter
     private static final String GRADLE_GENERATED_SETTINGS_FILE = "generated.build.gradle";
     public static final String GRADLE_GENERATED_SETTINGS_LOCAL = SECURE_APP_PROJECT_DIRECTORY + "/" + GRADLE_GENERATED_SETTINGS_FILE;
     private static final int EXIT_VALUE_GRADLE_SUCCESS = 0;
-	
-    @RequestMapping(value=WebPage.BUILDING_APK, method=RequestMethod.GET)
+	public int myVal = 1;
+	@RequestMapping(value = "/buildingApk/isAPKBuilt", method = RequestMethod.POST)
+	@ResponseBody
+	public boolean isAPKBuilt(HttpSession session)
+	{
+		AppConfiguration config = (AppConfiguration) session.getAttribute(SessionAttributes.APP_CONFIG);
+		return config.isApkBuilt();
+	}
+
+	@RequestMapping(value=WebPage.BUILDING_APK, method=RequestMethod.GET)
     public String directError(HttpSession session, Model model) 
     {
 		SecureAppGeneratorApplication.setInvalidResults(session);
@@ -108,6 +117,7 @@ public class BuildingApkController extends WebMvcConfigurerAdapter
 		copyApkToDownloads(session, renamedApk);
 		if(Fdroid.includeFDroid())
 			Fdroid.copyApkToFDroid(session, renamedApk);
+		config.setApkBuilt(true);
 		model.addAttribute(SessionAttributes.APP_CONFIG, config);
 		session.setAttribute(SessionAttributes.APP_CONFIG, config);
 	//		try
