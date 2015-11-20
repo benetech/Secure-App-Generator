@@ -153,7 +153,7 @@ public class ObtainXFormController extends WebMvcConfigurerAdapter
                 Logger.logVerbose(session, "Uploaded XFORM Location" + xFormBuildPath.toString());
   
                 xFormLocation = xFormBuildPath.getFileName().toString();
-    				xFormName = getFormNameOnly(getFormNameOnly(xmlFile.getOriginalFilename()));
+    				xFormName = getFormNameOnly(xmlFile.getOriginalFilename());
 
               } 
             catch (Exception e) 
@@ -434,6 +434,8 @@ public class ObtainXFormController extends WebMvcConfigurerAdapter
 			startPosition = startOfFileName + 1;
 		
 		int fileNameLengthWithoutXmlExtension = formName.length()-XFORM_FILE_EXTENSION.length();
+		if(fileNameLengthWithoutXmlExtension < 1)
+			return formName;
 		return formName.substring(startPosition, fileNameLengthWithoutXmlExtension);
 	}
 }
