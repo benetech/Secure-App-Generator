@@ -67,6 +67,9 @@
     <string name="title_attachments">Form Attachments</string>
     <string name="xforms_constraint_error">Cannot upload:\n Constraint issue found in form</string>
     <string name="xforms_missing_required_field">Cannot upload:\n Missing required field</string>
+    <string name="hint_password_field">Password</string>
+    <string name="hint_confirm_password_field">Confirm Password</string>
+    <string name="label_enter_your_password">Enter your password to proceed</string>
 
     <!-- Override Cacheword -->
     <string name="cacheword_notification_cached_title">Account Unlocked</string>
@@ -77,5 +80,14 @@
     <!-- Override ODK -->
     <string name="required_answer_error">A required response is missing.</string>
     <!-- End override ODK -->
+
+    <!-- ACCESSIBILITY-->
+    <string name="content_description_secure_camera_button">secure camera</string>
+    <string name="content_description_gallery_button">secure gallery</string>
+    <string name="content_description_upload">upload record</string>
+    <string name="content_description_delete_record">delete record</string>
+    <string name="content_description_manage_attachments">manage attachments</string>
+    <string name="content_description_delete_attachment">delete attachment</string>
+    <string name="content_description_attachments_list">list of attachments</string>
 
 </resources>

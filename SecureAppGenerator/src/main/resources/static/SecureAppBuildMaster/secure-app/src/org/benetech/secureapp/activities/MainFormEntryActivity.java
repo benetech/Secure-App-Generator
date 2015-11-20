@@ -19,7 +19,6 @@ import org.benetech.secureapp.collect.io.SecureFileStorageManager;
 import org.benetech.secureapp.collect.tasks.SecureFormLoaderTask;
 import org.benetech.secureapp.collect.tasks.SecureSavePointTask;
 import org.benetech.secureapp.collect.tasks.SecureSaveToDiskTask;
-import org.javarosa.core.model.FormIndex;
 import org.javarosa.form.api.FormEntryController;
 import org.martus.android.library.common.dialog.ProgressDialogHandler;
 import org.martus.android.library.io.SecureFile;
@@ -77,7 +76,7 @@ public class MainFormEntryActivity extends FormEntryActivity implements ICacheWo
         mQuestionHolder = (android.widget.LinearLayout) findViewById(org.benetech.secureapp.R.id.questionholder);
 
         mNextButton = (ImageButton) findViewById(R.id.form_forward_button);
-        mBackButton = (ImageButton) findViewById(R.id.form_back_button);
+        mBackButton = getBackButton();
     }
 	
 	@Override
@@ -273,6 +272,7 @@ public class MainFormEntryActivity extends FormEntryActivity implements ICacheWo
                     return createView(event, advancingPage);
                 default:
                     View view = super.createView(event, advancingPage);
+                    mBackButton = getBackButton();
                     if (formController.getFormIndex().getLocalIndex() == 0)
                         mBackButton.setEnabled(false);
                     else
@@ -290,6 +290,13 @@ public class MainFormEntryActivity extends FormEntryActivity implements ICacheWo
                 setTitle(Collect.getInstance().getFormController().getFormTitle());
             }
         }
+    }
+
+    private ImageButton getBackButton() {
+        if (mBackButton == null)
+            mBackButton = (ImageButton) findViewById(R.id.form_back_button);
+
+        return mBackButton;
     }
 
     /**

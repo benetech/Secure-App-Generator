@@ -15,7 +15,9 @@
         android:background="@drawable/image_button_bg_selector"
         android:padding="4dp"
         android:scaleType="fitCenter"
-        android:src="@drawable/ic_delete" />
+        android:src="@drawable/ic_delete"
+        android:contentDescription="@string/content_description_delete_record"
+        />
 
     <ImageButton
         android:id="@+id/syncButton"
@@ -27,7 +29,8 @@
         android:background="@drawable/image_button_bg_selector"
         android:padding="4dp"
         android:scaleType="fitCenter"
-        android:src="@drawable/ic_upload" />
+        android:src="@drawable/ic_upload"
+        android:contentDescription="@string/content_description_upload"/>
 
     <ImageButton
         android:id="@+id/manageAttachmentsButton"
@@ -39,7 +42,9 @@
         android:background="@drawable/image_button_bg_selector"
         android:padding="4dp"
         android:scaleType="fitCenter"
-        android:src="@drawable/ic_attachments_management" />
+        android:src="@drawable/ic_attachments_management"
+        android:contentDescription="@string/content_description_manage_attachments"
+        />
 
 
     <TextView

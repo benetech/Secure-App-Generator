@@ -13,7 +13,8 @@
         android:layout_alignLeft="@id/passphrase_edit_field"
         android:layout_alignRight="@id/passphrase_edit_field"
         android:layout_marginTop="20dp"
-        android:text="Enter your password to proceed"
+        android:text="@string/label_enter_your_password"
+        android:contentDescription="@string/label_enter_your_password"
         android:textSize="18sp" />
 
     <com.iangclifton.android.floatlabel.FloatLabel
@@ -36,6 +37,7 @@
         android:layout_alignRight="@id/passphrase_edit_field"
         android:layout_marginTop="20dp"
         android:onClick="login"
-        android:text="@string/title_login" />
+        android:text="@string/title_login"
+        android:contentDescription="@string/title_login"/>
 
 </RelativeLayout>

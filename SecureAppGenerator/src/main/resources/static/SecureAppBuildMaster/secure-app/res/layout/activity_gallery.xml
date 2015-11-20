@@ -10,7 +10,8 @@
         android:layout_height="match_parent"
         android:textSize="18sp"
         android:gravity="center"
-        android:text="@string/label_no_images_in_gallery"/>
+        android:text="@string/label_no_images_in_gallery"
+        android:contentDescription="@string/label_no_images_in_gallery"/>
 
     <GridView xmlns:android="http://schemas.android.com/apk/res/android"
         android:id="@+id/gridview"

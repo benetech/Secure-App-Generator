@@ -21,7 +21,8 @@
             android:clickable="true"
             android:onClick="onStartStillCamera"
             android:layout_weight="1"
-            android:src="@drawable/ic_camera" />
+            android:src="@drawable/ic_camera"
+            android:contentDescription="@string/content_description_secure_camera_button"/>
 
         <ImageButton
             android:id="@+id/buttonStartFileAttachment"
@@ -30,7 +31,8 @@
             android:clickable="true"
             android:onClick="onStartAddingAttachments"
             android:layout_weight="1"
-            android:src="@drawable/ic_attachment" />
+            android:src="@drawable/ic_attachment"
+            android:contentDescription="@string/title_attachments"/>
 
         <ImageButton
             android:id="@+id/buttonStartGallaryPage"
@@ -39,7 +41,8 @@
             android:clickable="true"
             android:onClick="onStartShowGallary"
             android:layout_weight="1"
-            android:src="@drawable/ic_gallery" />
+            android:src="@drawable/ic_gallery"
+            android:contentDescription="@string/content_description_gallery_button"/>
 
     </LinearLayout>
 
@@ -49,7 +52,8 @@
         android:layout_height="match_parent"
         android:paddingLeft="16dp"
         android:paddingRight="16dp"
-        android:layout_above="@+id/linearLayout" />
+        android:layout_above="@+id/linearLayout"
+        android:contentDescription="@string/content_description_attachments_list"/>
 
     <TextView android:id="@+id/android:empty"
         android:layout_width="match_parent"
@@ -59,6 +63,7 @@
         android:text="@string/label_no_attachments"
         android:layout_marginBottom="158dp"
         android:layout_above="@+id/linearLayout"
-        android:layout_alignParentStart="true" />
+        android:layout_alignParentStart="true"
+        android:contentDescription="@string/label_no_attachments"/>
 
 </RelativeLayout>

@@ -123,14 +123,14 @@
 
         <activity
             android:name="info.guardianproject.iocipher.camera.StillCameraActivity"
-            android:label="Secure Selfie"
+            android:label="Secure Still Camera"
             android:exported="true"
             android:configChanges="orientation|keyboardHidden|screenSize"
             android:theme="@android:style/Theme.NoTitleBar"/>
 
         <activity
             android:name=".activities.SecureGallery"
-            android:label="Secure Selfie"
+            android:label="Secure Gallery"
             android:exported="true"
             android:theme="@android:style/Theme.NoTitleBar"/>
 

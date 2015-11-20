@@ -58,6 +58,7 @@ the License.
             android:onClick="saveFormButtonClicked"
             android:src="@drawable/ic_save"
             android:layout_weight="0.3"
+            android:contentDescription="@string/save"
             />
 
         <ImageButton

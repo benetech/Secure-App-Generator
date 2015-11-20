@@ -46,7 +46,7 @@
         android:layout_marginRight="40dp"
         android:layout_marginTop="20dp"
         android:ems="10"
-        android:hint="Passphrase"/>
+        android:hint="@string/hint_password_field"/>
 
     <!--
     <TextView
@@ -65,7 +65,7 @@
         android:layout_centerHorizontal="true"
         android:layout_marginLeft="40dp"
         android:layout_marginRight="40dp"
-        android:hint="Confirm Passphrase"
+        android:hint="@string/hint_confirm_password_field"
         android:ems="10"/>
 
     <Button
