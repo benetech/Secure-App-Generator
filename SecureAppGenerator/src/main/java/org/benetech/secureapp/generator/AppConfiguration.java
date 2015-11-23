@@ -34,6 +34,7 @@ public class AppConfiguration
 	private static final char DOT_CHAR = '.';
 	private static final char UNDERSCORE_CHAR = '_';
 	private static final char SPACE_CHAR = ' ';
+    private static final String APK_NOT_BUILT = "false";
 	
 	private String appName;
 	private String appNameError;
@@ -57,12 +58,12 @@ public class AppConfiguration
 	private String apkSagVersionBuild = "0";
 	private String apkBuildError;
 	private String apkURL;
-	private boolean apkBuilt;
+	private String apkBuildResult;
 	
 	public AppConfiguration()
 	{
 		resetVersion();
-		apkBuilt = false;
+		apkBuildResult = APK_NOT_BUILT;
 	}
 	
 	public void resetVersion()
@@ -337,13 +338,13 @@ public class AppConfiguration
 		this.apkURL = apkURL;
 	}
 
-	public boolean isApkBuilt()
+	public String getApkBuilt()
 	{
-		return apkBuilt;
+		return apkBuildResult;
 	}
 
-	public void setApkBuilt(boolean apkBuilt)
+	public void setApkBuilt(String apkBuildResult)
 	{
-		this.apkBuilt = apkBuilt;
+		this.apkBuildResult = apkBuildResult;
 	}
 }

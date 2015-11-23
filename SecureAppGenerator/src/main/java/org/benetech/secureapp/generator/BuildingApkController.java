@@ -71,13 +71,15 @@ public class BuildingApkController extends WebMvcConfigurerAdapter
     private static final String GRADLE_GENERATED_SETTINGS_FILE = "generated.build.gradle";
     public static final String GRADLE_GENERATED_SETTINGS_LOCAL = SECURE_APP_PROJECT_DIRECTORY + "/" + GRADLE_GENERATED_SETTINGS_FILE;
     private static final int EXIT_VALUE_GRADLE_SUCCESS = 0;
-	public int myVal = 1;
-	@RequestMapping(value = "/buildingApk/isAPKBuilt", method = RequestMethod.POST)
+    private static final String APK_BUILT_SUCCESS = "true";
+    private static final String APK_BUILT_ERROR= "error";
+    
+    @RequestMapping(value = "/buildingApk/isAPKBuilt", method = RequestMethod.POST)
 	@ResponseBody
-	public boolean isAPKBuilt(HttpSession session)
+	public String isAPKBuilt(HttpSession session)
 	{
 		AppConfiguration config = (AppConfiguration) session.getAttribute(SessionAttributes.APP_CONFIG);
-		return config.isApkBuilt();
+		return config.getApkBuilt();
 	}
 
 	@RequestMapping(value=WebPage.BUILDING_APK, method=RequestMethod.GET)
@@ -117,7 +119,6 @@ public class BuildingApkController extends WebMvcConfigurerAdapter
 		copyApkToDownloads(session, renamedApk);
 		if(Fdroid.includeFDroid())
 			Fdroid.copyApkToFDroid(session, renamedApk);
-		config.setApkBuilt(true);
 		model.addAttribute(SessionAttributes.APP_CONFIG, config);
 		session.setAttribute(SessionAttributes.APP_CONFIG, config);
 	//		try
@@ -276,18 +277,20 @@ public class BuildingApkController extends WebMvcConfigurerAdapter
 		@Override
 		public void run()
 		{
+			AppConfiguration config = (AppConfiguration)session.getAttribute(SessionAttributes.APP_CONFIG);
 			try
 			{
 				initiateSyncronousApkBuild(session, model);
+				config.setApkBuilt(APK_BUILT_SUCCESS);
 			}
 			catch (Exception e)
 			{
 				Logger.logException(session, e);
-				//TODO fix how exceptions are passed back to Web.
+				config.setApkBuilt(APK_BUILT_ERROR);
 			}
+			model.addAttribute(SessionAttributes.APP_CONFIG, config);
+			session.setAttribute(SessionAttributes.APP_CONFIG, config);
 		}
-		
 	}
-	
 }
 
