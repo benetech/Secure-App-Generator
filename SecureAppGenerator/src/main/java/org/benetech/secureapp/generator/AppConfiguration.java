@@ -63,10 +63,15 @@ public class AppConfiguration
 	
 	public AppConfiguration()
 	{
+		InitializeVariables();
+	}
+	
+	private void InitializeVariables()
+	{
 		resetVersion();
 		apkBuildResult = APK_NOT_BUILT;
 	}
-	
+
 	public void resetVersion()
 	{
 		setApkVersionMajor(VERSION);
