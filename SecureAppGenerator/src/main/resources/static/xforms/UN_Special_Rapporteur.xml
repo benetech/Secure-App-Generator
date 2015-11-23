@@ -5,7 +5,6 @@
 		<model>
 			<instance>
 				<un_special_rapporteur xmlns:jrm="http://dev.commcarehq.org/jr/xforms" xmlns="http://openrosa.org/formdesigner/A6EA8CDB-0E20-46D8-9DE7-83EEA94AAA23" uiVersion="1" version="1" name="Untitled Form">
-					<General_Information />
 					<Identity_of_the_Person_Concerned />
 					<PersonInfo_Section>
 						<PersonInfo_FirstName />
@@ -34,9 +33,9 @@
 					<PersonalProfessional_Comment />
 					<Information_Regarding_the_Incident />
 					<Forces_believed_to_be_responsible_for_the_incident />
-					<Steps_taken_by_the_victim_or_his_her_family>
+					<Steps_taken_by_the_victim_or_their_family>
 						<Have_complaints_been_filed />
-					</Steps_taken_by_the_victim_or_his_her_family>
+					</Steps_taken_by_the_victim_or_their_family>
 					<ComplaintsGrid>
 						<Complaints_FiledDate />
 						<Complaints_FiledBy />
@@ -47,8 +46,6 @@
 					<Identity_of_the_person_submitting_the_case>
 						<Additional_Information />
 					</Identity_of_the_person_submitting_the_case>
-					<language />
-					<keywords />
 					<ConfidentialityNote />
 					<PersonComments />
 					<IncidentDateStart />
@@ -78,21 +75,20 @@
 					<SignatureReceived />
 				</un_special_rapporteur>
 			</instance>
-			<bind nodeset="/un_special_rapporteur/General_Information" />
 			<bind nodeset="/un_special_rapporteur/Identity_of_the_Person_Concerned" />
 			<bind nodeset="/un_special_rapporteur/PersonInfo_Section" />
 			<bind nodeset="/un_special_rapporteur/PersonInfo_Section/PersonInfo_FirstName" type="xsd:string" />
 			<bind nodeset="/un_special_rapporteur/PersonInfo_Section/PersonInfo_LastName" type="xsd:string" />
 			<bind nodeset="/un_special_rapporteur/PersonInfo_Section/PersonInfo_OtherNames" type="xsd:string" />
 			<bind nodeset="/un_special_rapporteur/PersonInfo_Section/PersonInfo_Sex" type="select1" />
-			<bind nodeset="/un_special_rapporteur/PersonInfo_Section/PersonInfo_BirthDate" type="xsd:date" constraint=". &gt;= date('1900-01-01')" jr:constraintMsg="The date you entered is not within the accepted date range." />
+			<bind nodeset="/un_special_rapporteur/PersonInfo_Section/PersonInfo_BirthDate" type="xsd:date"  />
 			<bind nodeset="/un_special_rapporteur/PersonInfo_Section/PersonInfo_Age" type="xsd:string" />
 			<bind nodeset="/un_special_rapporteur/PersonInfo_Section/PersonInfo_Nationality" type="xsd:string" />
 			<bind nodeset="/un_special_rapporteur/PersonInfo_Section/PersonInfo_CivilStatus" type="select1" />
 			<bind nodeset="/un_special_rapporteur/PersonInfo_Section/PersonInfo_DocumentType" type="xsd:string" />
 			<bind nodeset="/un_special_rapporteur/PersonInfo_Section/PersonInfo_IDNumber" type="xsd:string" />
 			<bind nodeset="/un_special_rapporteur/PersonInfo_Section/PersonInfo_IDIssuedBy" type="xsd:string" />
-			<bind nodeset="/un_special_rapporteur/PersonInfo_Section/PersonInfo_IDIssueDate" type="xsd:date" constraint=". &gt;= date('1900-01-01')" jr:constraintMsg="The date you entered is not within the accepted date range." />
+			<bind nodeset="/un_special_rapporteur/PersonInfo_Section/PersonInfo_IDIssueDate" type="xsd:date"  />
 			<bind nodeset="/un_special_rapporteur/PersonInfo_Section/PersonInfo_Linkage" type="string" />
 			<bind nodeset="/un_special_rapporteur/PersonInfo_Section/PersonInfo_Address" type="xsd:string" />
 			<bind nodeset="/un_special_rapporteur/PersonInfo_Section/PersonInfo_MiscComments" type="xsd:string" />
@@ -100,27 +96,25 @@
 			<bind nodeset="/un_special_rapporteur/ProfessionalHistoryGrid/ProfessionalInfo_FirstName" type="xsd:string" />
 			<bind nodeset="/un_special_rapporteur/ProfessionalHistoryGrid/ProfessionalInfo_LastName" type="xsd:string" />
 			<bind nodeset="/un_special_rapporteur/ProfessionalHistoryGrid/ProfessionalInfo_Profession" type="xsd:string" />
-			<bind nodeset="/un_special_rapporteur/ProfessionalHistoryGrid/ProfessionalInfo_StartDate" type="xsd:date" constraint=". &gt;= date('1900-01-01')" jr:constraintMsg="The date you entered is not within the accepted date range." />
-			<bind nodeset="/un_special_rapporteur/ProfessionalHistoryGrid/ProfessionalInfo_EndDate" type="xsd:date" constraint=". &gt;= date('1900-01-01')" jr:constraintMsg="The date you entered is not within the accepted date range." />
+			<bind nodeset="/un_special_rapporteur/ProfessionalHistoryGrid/ProfessionalInfo_StartDate" type="xsd:date"  />
+			<bind nodeset="/un_special_rapporteur/ProfessionalHistoryGrid/ProfessionalInfo_EndDate" type="xsd:date"  />
 			<bind nodeset="/un_special_rapporteur/PersonalProfessional_Comment" />
 			<bind nodeset="/un_special_rapporteur/Information_Regarding_the_Incident" />
 			<bind nodeset="/un_special_rapporteur/Forces_believed_to_be_responsible_for_the_incident" />
-			<bind nodeset="/un_special_rapporteur/Steps_taken_by_the_victim_or_his_her_family" />
-			<bind nodeset="/un_special_rapporteur/Steps_taken_by_the_victim_or_his_her_family/Have_complaints_been_filed" />
+			<bind nodeset="/un_special_rapporteur/Steps_taken_by_the_victim_or_their_family" />
+			<bind nodeset="/un_special_rapporteur/Steps_taken_by_the_victim_or_their_family/Have_complaints_been_filed" />
 			<bind nodeset="/un_special_rapporteur/ComplaintsGrid" />
-			<bind nodeset="/un_special_rapporteur/ComplaintsGrid/Complaints_FiledDate" type="xsd:date" constraint=". &gt;= date('1900-01-01')" jr:constraintMsg="The date you entered is not within the accepted date range." />
+			<bind nodeset="/un_special_rapporteur/ComplaintsGrid/Complaints_FiledDate" type="xsd:date"  />
 			<bind nodeset="/un_special_rapporteur/ComplaintsGrid/Complaints_FiledBy" type="xsd:string" />
 			<bind nodeset="/un_special_rapporteur/ComplaintsGrid/Complaints_FiledOrganization" type="xsd:string" />
 			<bind nodeset="/un_special_rapporteur/Additional_Steps" />
 			<bind nodeset="/un_special_rapporteur/Steps_taken_by_the_authorities" />
 			<bind nodeset="/un_special_rapporteur/Identity_of_the_person_submitting_the_case" />
 			<bind nodeset="/un_special_rapporteur/Identity_of_the_person_submitting_the_case/Additional_Information" type="xsd:string" />
-			<bind nodeset="/un_special_rapporteur/language" type="select1" />
-			<bind nodeset="/un_special_rapporteur/keywords" type="xsd:string" />
 			<bind nodeset="/un_special_rapporteur/ConfidentialityNote" type="xsd:string" readonly="true()" />
 			<bind nodeset="/un_special_rapporteur/PersonComments" type="xsd:string" />
-			<bind nodeset="/un_special_rapporteur/IncidentDateStart" type="xsd:date" constraint=". &gt;= date('1900-01-01')" jr:constraintMsg="The date you entered is not within the accepted date range." />
-			<bind nodeset="/un_special_rapporteur/IncidentDateEnd" type="xsd:date" constraint=". &gt;= date('1900-01-01')" jr:constraintMsg="The date you entered is not within the accepted date range." />
+			<bind nodeset="/un_special_rapporteur/IncidentDateStart" type="xsd:date"  />
+			<bind nodeset="/un_special_rapporteur/IncidentDateEnd" type="xsd:date"  />
 			<bind nodeset="/un_special_rapporteur/IncidentTime" type="xsd:string" />
 			<bind nodeset="/un_special_rapporteur/IncidentLocation" type="xsd:string" />
 			<bind nodeset="/un_special_rapporteur/IncidentDescA" type="xsd:string" />
@@ -142,228 +136,11 @@
 			<bind nodeset="/un_special_rapporteur/SubmitterPhone" type="xsd:string" />
 			<bind nodeset="/un_special_rapporteur/SubmitterFax" type="xsd:string" />
 			<bind nodeset="/un_special_rapporteur/IDConfidential" type="string" />
-			<bind nodeset="/un_special_rapporteur/QuestionnaireDate" type="xsd:date" constraint=". &gt;= date('1900-01-01')" jr:constraintMsg="The date you entered is not within the accepted date range." />
+			<bind nodeset="/un_special_rapporteur/QuestionnaireDate" type="xsd:date"  />
 			<bind nodeset="/un_special_rapporteur/SignatureReceived" type="string" />
 		</model>
 	</h:head>
 	<h:body>
-		<group ref="/un_special_rapporteur/General_Information" appearance="field-list">
-			<label>General Information</label>
-			<select1 ref="/un_special_rapporteur/language" appearance="minimal">
-				<label>Language</label>
-				<item>
-					<label>- Other -</label>
-					<value>language_1</value>
-				</item>
-				<item>
-					<label>English</label>
-					<value>language_2</value>
-				</item>
-				<item>
-					<label>Arabic</label>
-					<value>language_3</value>
-				</item>
-				<item>
-					<label>Armenian</label>
-					<value>language_4</value>
-				</item>
-				<item>
-					<label>Azerbaijani</label>
-					<value>language_5</value>
-				</item>
-				<item>
-					<label>Bulgarian</label>
-					<value>language_6</value>
-				</item>
-				<item>
-					<label>Bengali, Bangla</label>
-					<value>language_7</value>
-				</item>
-				<item>
-					<label>Burmese</label>
-					<value>language_8</value>
-				</item>
-				<item>
-					<label>Chinese</label>
-					<value>language_9</value>
-				</item>
-				<item>
-					<label>Dutch</label>
-					<value>language_10</value>
-				</item>
-				<item>
-					<label>Esperanto</label>
-					<value>language_11</value>
-				</item>
-				<item>
-					<label>Farsi/Dari</label>
-					<value>language_12</value>
-				</item>
-				<item>
-					<label>French</label>
-					<value>language_13</value>
-				</item>
-				<item>
-					<label>German</label>
-					<value>language_14</value>
-				</item>
-				<item>
-					<label>Gujarati</label>
-					<value>language_15</value>
-				</item>
-				<item>
-					<label>Hausa</label>
-					<value>language_16</value>
-				</item>
-				<item>
-					<label>Hebrew</label>
-					<value>language_17</value>
-				</item>
-				<item>
-					<label>Hindi</label>
-					<value>language_18</value>
-				</item>
-				<item>
-					<label>Hungarian</label>
-					<value>language_19</value>
-				</item>
-				<item>
-					<label>Italian</label>
-					<value>language_20</value>
-				</item>
-				<item>
-					<label>Japanese</label>
-					<value>language_21</value>
-				</item>
-				<item>
-					<label>Javanese</label>
-					<value>language_22</value>
-				</item>
-				<item>
-					<label>Kannada</label>
-					<value>language_23</value>
-				</item>
-				<item>
-					<label>Kazakh</label>
-					<value>language_24</value>
-				</item>
-				<item>
-					<label>Khmer</label>
-					<value>language_25</value>
-				</item>
-				<item>
-					<label>Kirghiz</label>
-					<value>language_26</value>
-				</item>
-				<item>
-					<label>Korean</label>
-					<value>language_27</value>
-				</item>
-				<item>
-					<label>Kurdish</label>
-					<value>language_28</value>
-				</item>
-				<item>
-					<label>Malayalam</label>
-					<value>language_29</value>
-				</item>
-				<item>
-					<label>Marathi</label>
-					<value>language_30</value>
-				</item>
-				<item>
-					<label>Nepali</label>
-					<value>language_31</value>
-				</item>
-				<item>
-					<label>Oriya</label>
-					<value>language_32</value>
-				</item>
-				<item>
-					<label>Panjabi</label>
-					<value>language_33</value>
-				</item>
-				<item>
-					<label>Pashto, Pushto</label>
-					<value>language_34</value>
-				</item>
-				<item>
-					<label>Polish</label>
-					<value>language_35</value>
-				</item>
-				<item>
-					<label>Portuguese</label>
-					<value>language_36</value>
-				</item>
-				<item>
-					<label>Romanian</label>
-					<value>language_37</value>
-				</item>
-				<item>
-					<label>Russian</label>
-					<value>language_38</value>
-				</item>
-				<item>
-					<label>Serbian</label>
-					<value>language_39</value>
-				</item>
-				<item>
-					<label>Sindhi</label>
-					<value>language_40</value>
-				</item>
-				<item>
-					<label>Sinhalese</label>
-					<value>language_41</value>
-				</item>
-				<item>
-					<label>Spanish</label>
-					<value>language_42</value>
-				</item>
-				<item>
-					<label>Tamil</label>
-					<value>language_43</value>
-				</item>
-				<item>
-					<label>Tajik</label>
-					<value>language_44</value>
-				</item>
-				<item>
-					<label>Telugu</label>
-					<value>language_45</value>
-				</item>
-				<item>
-					<label>Thai</label>
-					<value>language_46</value>
-				</item>
-				<item>
-					<label>Turkish</label>
-					<value>language_47</value>
-				</item>
-				<item>
-					<label>Turkmen</label>
-					<value>language_48</value>
-				</item>
-				<item>
-					<label>Ukranian</label>
-					<value>language_49</value>
-				</item>
-				<item>
-					<label>Urdu</label>
-					<value>language_50</value>
-				</item>
-				<item>
-					<label>Uzbek</label>
-					<value>language_51</value>
-				</item>
-				<item>
-					<label>Vietnamese</label>
-					<value>language_52</value>
-				</item>
-			</select1>
-			<input ref="/un_special_rapporteur/keywords">
-				<label>Keywords</label>
-			</input>
-		</group>
 		<group ref="/un_special_rapporteur/Identity_of_the_Person_Concerned" appearance="field-list">
 			<label>I. Identity of the Person Concerned</label>
 			<input ref="/un_special_rapporteur/ConfidentialityNote">
@@ -372,7 +149,7 @@
 		</group>
 		<group ref="/un_special_rapporteur/PersonInfo_Section">
 			<label>Person Information</label>
-			<repeat nodeset="/un_special_rapporteur/PersonInfo_Section">
+			<repeat nodeset="/un_special_rapporteur/PersonInfo_Section" appearance="field-list">
 				<input ref="/un_special_rapporteur/PersonInfo_Section/PersonInfo_FirstName">
 					<label>First Name</label>
 				</input>
@@ -470,7 +247,7 @@
 		</group>
 		<group ref="/un_special_rapporteur/ProfessionalHistoryGrid">
 			<label>Professional History</label>
-			<repeat nodeset="/un_special_rapporteur/ProfessionalHistoryGrid">
+			<repeat nodeset="/un_special_rapporteur/ProfessionalHistoryGrid" appearance="field-list">
 				<input ref="/un_special_rapporteur/ProfessionalHistoryGrid/ProfessionalInfo_FirstName">
 					<label>First Name</label>
 				</input>
@@ -530,9 +307,9 @@
 				<label>Responsible Forces (c)</label>
 			</input>
 		</group>
-		<group ref="/un_special_rapporteur/Steps_taken_by_the_victim_or_his_her_family" appearance="field-list">
-			<label>IV. Steps taken by the victim or his/her family:</label>
-			<select1 ref="/un_special_rapporteur/Steps_taken_by_the_victim_or_his_her_family/Have_complaints_been_filed">
+		<group ref="/un_special_rapporteur/Steps_taken_by_the_victim_or_their_family" appearance="field-list">
+			<label>IV. Steps taken by the victim or their family</label>
+			<select1 ref="/un_special_rapporteur/Steps_taken_by_the_victim_or_their_family/Have_complaints_been_filed">
 				<label>Have complaints been filed by (or on behalf of) the victim  or their family?</label>
 				<item>
 					<label>Yes</label>
@@ -546,7 +323,7 @@
 		</group>
 		<group ref="/un_special_rapporteur/ComplaintsGrid">
 			<label>Complaints</label>
-			<repeat nodeset="/un_special_rapporteur/ComplaintsGrid">
+			<repeat nodeset="/un_special_rapporteur/ComplaintsGrid" appearance="field-list">
 				<input ref="/un_special_rapporteur/ComplaintsGrid/Complaints_FiledDate" appearance="no-calendar">
 					<label>Filed Date</label>
 				</input>
@@ -584,7 +361,7 @@
 			<input ref="/un_special_rapporteur/SubmitterOtherName">
 				<label>Other name(s)</label>
 			</input>
-			<select1 ref="/un_special_rapporteur/SubmitterStatus">
+			<select1 ref="/un_special_rapporteur/SubmitterStatus" appearance="minimal">
 				<label>Submitter Status</label>
 				<item>
 					<label>Individual</label>
