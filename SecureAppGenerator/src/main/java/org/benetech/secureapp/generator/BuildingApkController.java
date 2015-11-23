@@ -32,6 +32,7 @@ import javax.servlet.http.HttpSession;
 
 import org.apache.commons.io.FileUtils;
 import org.benetech.secureapp.generator.AmazonS3Utils.S3Exception;
+import org.benetech.secureapp.generator.BuildException;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -72,7 +73,6 @@ public class BuildingApkController extends WebMvcConfigurerAdapter
     public static final String GRADLE_GENERATED_SETTINGS_LOCAL = SECURE_APP_PROJECT_DIRECTORY + "/" + GRADLE_GENERATED_SETTINGS_FILE;
     private static final int EXIT_VALUE_GRADLE_SUCCESS = 0;
     private static final String APK_BUILT_SUCCESS = "true";
-    private static final String APK_BUILT_ERROR= "error";
     
     @RequestMapping(value = "/buildingApk/isAPKBuilt", method = RequestMethod.POST)
 	@ResponseBody
@@ -90,14 +90,16 @@ public class BuildingApkController extends WebMvcConfigurerAdapter
     }
 
 	@RequestMapping(value=WebPage.BUILDING_APK_NEXT, method=RequestMethod.POST)	
-	public String initiateBuild(HttpSession session, Model model, AppConfiguration appConfig) throws Exception 
+	public String initiateBuild(HttpSession session, Model model) throws Exception 
     {
-		model.addAttribute(SessionAttributes.APP_CONFIG, appConfig);
-		return WebPage.FINAL;
+		AppConfiguration config = (AppConfiguration)session.getAttribute(SessionAttributes.APP_CONFIG);
+		model.addAttribute(SessionAttributes.APP_CONFIG, config);
+		if(config.getApkBuildError() == null)
+			return WebPage.FINAL;
+
+		SecureAppGeneratorApplication.setInvalidResults(session, config.getApkBuildError());
+		return WebPage.ERROR;
     }
-	
-	
-	
 	
 	static public void startTheBuild(HttpSession session, Model model)
     {
@@ -105,7 +107,7 @@ public class BuildingApkController extends WebMvcConfigurerAdapter
 		thread.start();
     }
     
-	static private void initiateSyncronousApkBuild(HttpSession session, Model model) throws IOException, InterruptedException, S3Exception, Exception
+	static private void initiateSyncronousApkBuild(HttpSession session, Model model) throws IOException, InterruptedException, S3Exception, BuildException, Exception
 	{
 		File secureAppBuildDir = null;
 		secureAppBuildDir = configureSecureAppBuildDirectory(session);
@@ -218,7 +220,7 @@ public class BuildingApkController extends WebMvcConfigurerAdapter
 		data.append("\")\n");
 	}
 
-	static private File buildApk(final HttpSession session, final File baseBuildDir, final AppConfiguration config) throws IOException, InterruptedException
+	static private File buildApk(final HttpSession session, final File baseBuildDir, final AppConfiguration config) throws IOException, InterruptedException, BuildException
 	{
 		Logger.log(session, "Building " + config.getApkName());
 		Logger.logMemoryStatistics();
@@ -234,7 +236,7 @@ public class BuildingApkController extends WebMvcConfigurerAdapter
     		if(returnCode != EXIT_VALUE_GRADLE_SUCCESS)
    		{
    			Logger.logError(session, "Build return code:" + returnCode);
-	   		throw new RuntimeException("Error creating APK");
+	   		throw new BuildException("Error creating APK");
    		}
     		
   		Logger.log(session, "Build succeeded:" + timeToBuild);
@@ -286,7 +288,7 @@ public class BuildingApkController extends WebMvcConfigurerAdapter
 			catch (Exception e)
 			{
 				Logger.logException(session, e);
-				config.setApkBuilt(APK_BUILT_ERROR);
+				config.setApkBuildError("generating_apk");
 			}
 			model.addAttribute(SessionAttributes.APP_CONFIG, config);
 			session.setAttribute(SessionAttributes.APP_CONFIG, config);

@@ -95,7 +95,7 @@
  		 			dataType: "json",
  			        complete: function(xhr, statusText)
 			        {
-			            if(xhr.responseText == "true")
+			            if(xhr.responseText == "true" || xhr.responseText == "error")
 			            	{
 			           	 	document.forms["finalPage"].submit();
 			            	}

@@ -35,6 +35,7 @@ public class AppConfiguration
 	private static final char UNDERSCORE_CHAR = '_';
 	private static final char SPACE_CHAR = ' ';
     private static final String APK_NOT_BUILT = "false";
+    private static final String APK_BUILT_ERROR = "error";
 	
 	private String appName;
 	private String appNameError;
@@ -270,6 +271,7 @@ public class AppConfiguration
 	public void setApkBuildError(String apkBuildErrorId)
 	{
 		this.apkBuildError = SecureAppGeneratorApplication.getLocalizedErrorMessage(apkBuildErrorId);
+		setApkBuilt(APK_BUILT_ERROR);	
 	}
 	
 	public String getApkVersionNumberFull()

@@ -48,7 +48,7 @@ public class SecureAppGeneratorApplication extends SpringBootServletInitializer
 	
 	static void setInvalidResults(HttpSession session) 
 	{
-		setInvalidResults(session, getLocalizedErrorMessage("invalid_request")); //TODO move this to a localizable String Table
+		setInvalidResults(session, getLocalizedErrorMessage("invalid_request")); 
 	}
 	
 	static void setInvalidResults(HttpSession session, String message) 
