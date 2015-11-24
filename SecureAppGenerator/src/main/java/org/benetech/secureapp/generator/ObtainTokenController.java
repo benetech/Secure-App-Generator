@@ -65,8 +65,8 @@ import org.springframework.web.servlet.config.annotation.WebMvcConfigurerAdapter
 @Controller
 public class ObtainTokenController extends WebMvcConfigurerAdapter
 {
-	private static final String SL1_DEVELOPMENT_NAME = "SL1 Development";
-	private static final String SL1_IE_NAME = "SL1 IE";
+	private static final String SL1_DEVELOPMENT_NAME = "Development";
+	private static final String SL1_IE_NAME = "Production";
 	private static final String SAG_KEYPAIR_DIRECTORY = SecureAppGeneratorApplication.getStaticWebDirectory() + "/keys";
 	private static final String SAG_KEYPAIR_FILE = "sagKeyPair.dat";
 	private static final String SAG_KEYPAIR_PASSWORD = "12SaGPassword";
