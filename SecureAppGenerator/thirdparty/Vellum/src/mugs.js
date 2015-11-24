@@ -1353,7 +1353,8 @@ define([
 
     var Trigger = util.extend(defaultOptions, {
         typeName: 'Label',
-        tagName: 'trigger',
+        dataType: 'xsd:string" readonly="true()',
+         tagName: 'input',
         icon: 'icon-tag',
         init: function (mug, form) {
             mug.p.appearance = "minimal";
