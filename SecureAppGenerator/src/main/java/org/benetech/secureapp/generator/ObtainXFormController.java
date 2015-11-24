@@ -242,6 +242,7 @@ public class ObtainXFormController extends WebMvcConfigurerAdapter
 				case org.javarosa.core.model.Constants.DATATYPE_LONG:
  				case org.javarosa.core.model.Constants.DATATYPE_TIME:
  				case org.javarosa.core.model.Constants.DATATYPE_BOOLEAN:
+ 				case org.javarosa.core.model.Constants.DATATYPE_NULL: //Labels have Null Data Types
  					break;
 
  				//Unsupported DataType's below
@@ -266,10 +267,7 @@ public class ObtainXFormController extends WebMvcConfigurerAdapter
  				case org.javarosa.core.model.Constants.DATATYPE_GEOTRACE:
  					addFieldTypeNotSupported("GEOTRACE", fieldErrors, prompt);
  					break;
- 				case org.javarosa.core.model.Constants.DATATYPE_NULL:
- 					addFieldTypeNotSupported("NULL", fieldErrors, prompt);
- 					break;
- 				case org.javarosa.core.model.Constants.DATATYPE_UNSUPPORTED:
+  				case org.javarosa.core.model.Constants.DATATYPE_UNSUPPORTED:
  					addFieldTypeNotSupported("UNSUPPORTED", fieldErrors, prompt);
  					break;
  				default:
