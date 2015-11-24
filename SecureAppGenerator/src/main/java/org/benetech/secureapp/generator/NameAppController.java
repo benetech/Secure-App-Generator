@@ -68,8 +68,7 @@ public class NameAppController extends WebMvcConfigurerAdapter
         return WebPage.OBTAIN_LOGO;
     }
 
-	//TODO add unit tests!
-	private boolean validateAppName(AppConfiguration appConfig)
+	public boolean validateAppName(AppConfiguration appConfig)
 	{
 		String name = appConfig.getAppName().trim();
 		appConfig.setAppName(name);
@@ -80,16 +79,25 @@ public class NameAppController extends WebMvcConfigurerAdapter
 			return false;
 		}
 		
-		if (!name.matches("^[^!\"#$%&'()\\[\\]*+,/:;<=>?@\\^`{|}~]+$")) 
-		{
-			appConfig.setAppNameError("app_name_characters");
-			return false;
-		}
 		if(startsWithNumber(name))
 		{
 			appConfig.setAppNameError("app_name_numeric");
 			return false;
-			
+		}
+		if (!name.matches("^[^!\"#$%&'()\\[\\]*.+,/:;<=>?@\\^`{|}~]+$")) 
+		{
+			appConfig.setAppNameError("app_name_characters");
+			return false;
+		}
+		if(name.indexOf('-')>=0)//FixMe: Regex did not work for some reason
+		{
+			appConfig.setAppNameError("app_name_characters");
+			return false;
+		}
+		if(name.indexOf('\\')>=0)//FixMe: Regex didn't work for some reason
+		{
+			appConfig.setAppNameError("app_name_characters");
+			return false;
 		}
 		appConfig.setAppNameError(null);
 		return true;

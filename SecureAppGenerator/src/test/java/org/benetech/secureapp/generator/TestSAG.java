@@ -44,6 +44,7 @@ public class TestSAG
 	public static Test suite ( )
 	{
 		TestSuite suite= new TestSuite("SAG Tests");
+		suite.addTest(new TestSuite(TestAppNameValidation.class));
 		suite.addTest(new TestSuite(TestXFormValidation.class));
 	    return suite;
 	}

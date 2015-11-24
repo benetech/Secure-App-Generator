@@ -70,6 +70,7 @@ public class AppConfiguration
 	{
 		resetVersion();
 		apkBuildResult = APK_NOT_BUILT;
+		appName = "";
 	}
 
 	public void resetVersion()
