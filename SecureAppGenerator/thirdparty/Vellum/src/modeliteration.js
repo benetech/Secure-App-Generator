@@ -68,7 +68,7 @@ define([
                     p: {rawDataAttributes: null},
                     options: {
                         getExtraDataAttributes: function (mug) {
-                            return {id: "", index: "", "jr:template": ""};
+                            return {id: "", index: ""};
                         }
                     }
                 })];

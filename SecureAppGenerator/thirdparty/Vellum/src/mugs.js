@@ -1451,7 +1451,7 @@ define([
             return $node.children('repeat').children();
         },
         getExtraDataAttributes: function (mug) {
-            return {"jr:template": ""};
+            return {};
         },
         controlChildFilter: function (children, mug) {
             var absPath = mug.form.getAbsolutePath(mug),
