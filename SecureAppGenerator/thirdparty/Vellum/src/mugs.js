@@ -1461,7 +1461,9 @@ define([
                 }), _.identity));
             return [new Tree.Node(children, {
                 getNodeID: function () {},
-                getAppearanceAttribute: function () {},
+                getAppearanceAttribute: function () {
+                	return "field-list";
+                },
                 p: {
                     rawControlAttributes: attrs
                 },
