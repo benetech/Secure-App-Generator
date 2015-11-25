@@ -289,10 +289,16 @@ public class ObtainXFormController extends WebMvcConfigurerAdapter
                 GroupDef groupDef = (GroupDef) child;
             		if(inGroup)
             		{
-            			addGroupsInsideGroupsNotSupported(fieldErrors, groupDef);
+            			addGroupNotSupported("xform_group_inside_group", fieldErrors, groupDef);
 					return;
             		}
                 List<IFormElement> groupChildren = groupDef.getChildren();
+                if(groupChildren.isEmpty())
+                {
+           			addGroupNotSupported("xform_group_empty", fieldErrors, groupDef);
+                   inGroup = false;
+                    	return;
+                }
                 recursivelyInspectFields(groupChildren, fieldErrors, true);
                 inGroup = false;
             }
@@ -307,7 +313,6 @@ public class ObtainXFormController extends WebMvcConfigurerAdapter
 	            case org.javarosa.core.model.Constants.CONTROL_SELECT_ONE:
 	            case org.javarosa.core.model.Constants.CONTROL_LABEL:
 	            case org.javarosa.core.model.Constants.CONTROL_TEXTAREA:
-// 	            case org.javarosa.core.model.Constants.CONTROL_TRIGGER:
  	            		break;
 
  	            	//Unsupported Control types below
@@ -349,10 +354,9 @@ public class ObtainXFormController extends WebMvcConfigurerAdapter
         }
      }
 
-	public void addGroupsInsideGroupsNotSupported(StringBuilder fieldErrors,
-			GroupDef groupDef)
+	public void addGroupNotSupported(String error_msg_id, StringBuilder fieldErrors, GroupDef groupDef)
 	{
-		StringBuilder errorMsg = new StringBuilder(SecureAppGeneratorApplication.getLocalizedErrorMessageNoPrefix("xform_group_inside_group"));
+		StringBuilder errorMsg = new StringBuilder(SecureAppGeneratorApplication.getLocalizedErrorMessageNoPrefix(error_msg_id));
 		errorMsg.append(" : ID=");
 		errorMsg.append(groupDef.getID());
 		errorMsg.append(" : LABEL=");
