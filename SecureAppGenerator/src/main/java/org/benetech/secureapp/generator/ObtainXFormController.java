@@ -177,7 +177,6 @@ public class ObtainXFormController extends WebMvcConfigurerAdapter
 		}
 		catch (Exception e)
 		{
-    			Logger.logException(session, e);
        		return returnRawErrorMessage(model, appConfig, SecureAppGeneratorApplication.getLocalizedErrorMessage("xform_invalid", e)); 
 		}
 		
@@ -194,7 +193,7 @@ public class ObtainXFormController extends WebMvcConfigurerAdapter
 		File xformFile = new File(XML_FILE_LOCATION);
 		StringBuilder fieldErrors = isXFormValid(xformFile);
         if(fieldErrors.length() != 0)
-    			throw new Exception("Unsupported XForm Field(s): " +fieldErrors.toString());
+    			throw new Exception(SecureAppGeneratorApplication.getLocalizedErrorMessageNoPrefix("xform_field_error") + " " + fieldErrors.toString());
 	}
 
 	protected StringBuilder isXFormValid(File xformFile) throws ParserConfigurationException, SAXException, IOException
@@ -353,10 +352,10 @@ public class ObtainXFormController extends WebMvcConfigurerAdapter
 	public void addGroupsInsideGroupsNotSupported(StringBuilder fieldErrors,
 			GroupDef groupDef)
 	{
-		StringBuilder errorMsg = new StringBuilder("Group inside Group");
-		errorMsg.append(" : id=");
+		StringBuilder errorMsg = new StringBuilder(SecureAppGeneratorApplication.getLocalizedErrorMessageNoPrefix("xform_group_inside_group"));
+		errorMsg.append(" : ID=");
 		errorMsg.append(groupDef.getID());
-		errorMsg.append(" : label=");
+		errorMsg.append(" : LABEL=");
 		errorMsg.append(groupDef.getLabelInnerText());
 		addErrorToListOfErrors(fieldErrors, errorMsg);
      			return;
@@ -377,9 +376,9 @@ public class ObtainXFormController extends WebMvcConfigurerAdapter
 	private void addFieldControlNotSupported(String fieldName, StringBuilder fieldErrors, QuestionDef questionDef)
 	{
 		StringBuilder errorMsg = new StringBuilder(fieldName);
-		errorMsg.append(" : id=");
+		errorMsg.append(" : ID=");
 		errorMsg.append(questionDef.getID());
-		errorMsg.append(" : label=");
+		errorMsg.append(" : LABEL=");
 		errorMsg.append(questionDef.getLabelInnerText());
 		addErrorToListOfErrors(fieldErrors, errorMsg);
 	}

@@ -170,10 +170,18 @@ public class SecureAppGeneratorApplication extends SpringBootServletInitializer
 			return null;
 		StringBuilder errorMsg = new StringBuilder(getMessage("error_prefix"));
 		errorMsg.append(" ");
-		errorMsg.append(getMessage("error."+msgId));
+		errorMsg.append(getLocalizedErrorMessageNoPrefix(msgId));
 		return errorMsg.toString();
 	}
 	
+	static public String getLocalizedErrorMessageNoPrefix(String msgId)
+	{
+		if(msgId == null)
+			return null;
+		StringBuilder errorMsg = new StringBuilder(getMessage("error."+msgId));
+		return errorMsg.toString();
+	}
+
 	public static String getLocalizedErrorMessage(String msgId, Exception e)
 	{
 		StringBuilder errorMessage = new StringBuilder(getLocalizedErrorMessage(msgId));
