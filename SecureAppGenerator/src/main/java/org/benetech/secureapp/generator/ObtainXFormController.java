@@ -215,7 +215,7 @@ public class ObtainXFormController extends WebMvcConfigurerAdapter
 	private void inspectFields(FormEntryModel model, FormDef formDef, StringBuilder fieldErrors)
     {
          List<IFormElement> children = formDef.getChildren();
-         recursivelyInspectFields(children, fieldErrors);
+         recursivelyInspectFields(children, fieldErrors, false);
          checkModel(model, fieldErrors);
     }
 
@@ -281,15 +281,21 @@ public class ObtainXFormController extends WebMvcConfigurerAdapter
 		}
 	}
 
-	private void recursivelyInspectFields(List<IFormElement> children, StringBuilder fieldErrors)
+	private void recursivelyInspectFields(List<IFormElement> children, StringBuilder fieldErrors, boolean inGroup)
     {
         for (IFormElement child : children)
         {
             if (child instanceof GroupDef)
             {
                 GroupDef groupDef = (GroupDef) child;
+            		if(inGroup)
+            		{
+            			addGroupsInsideGroupsNotSupported(fieldErrors, groupDef);
+					return;
+            		}
                 List<IFormElement> groupChildren = groupDef.getChildren();
-                recursivelyInspectFields(groupChildren, fieldErrors);
+                recursivelyInspectFields(groupChildren, fieldErrors, true);
+                inGroup = false;
             }
  
             if (child instanceof QuestionDef)
@@ -343,6 +349,18 @@ public class ObtainXFormController extends WebMvcConfigurerAdapter
            }
         }
      }
+
+	public void addGroupsInsideGroupsNotSupported(StringBuilder fieldErrors,
+			GroupDef groupDef)
+	{
+		StringBuilder errorMsg = new StringBuilder("Group inside Group");
+		errorMsg.append(" : id=");
+		errorMsg.append(groupDef.getID());
+		errorMsg.append(" : label=");
+		errorMsg.append(groupDef.getLabelInnerText());
+		addErrorToListOfErrors(fieldErrors, errorMsg);
+     			return;
+	}
 
 	private void addFieldTypeNotSupported(String fieldType, StringBuilder fieldErrors, FormEntryPrompt prompt)
 	{
