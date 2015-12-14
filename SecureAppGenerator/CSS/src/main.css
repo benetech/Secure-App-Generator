@@ -126,7 +126,8 @@ form{
     color: #6ECDE4;
     background-color: #3C3D3C;
     font-weight: bold;
-    font-size: 24px;
+    font-size: 23px;
+    	font-family: 'Courier New', monospace;
   }
 
 .cellphone_center_title {

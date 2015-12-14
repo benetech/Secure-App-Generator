@@ -16,7 +16,7 @@
 
    	 	<img class="cellphone" src="/images/cellphone.png" th:alt="#{alt_text.cellphone}"/>
 	   	<div class="cellphone_logo"><img class="cellphone_logo_size" th:src="${session.appConfig.appIconBase64Data}" role="presentation" alt=""/></div>
-	   	<div class="textFont cellphone_title" th:text="${session.appConfig.appName}"></div>
+	   	<div class="cellphone_title" th:text="${session.appConfig.appNameShort}"></div>
 
 		<div class="textFont cellphone_center_title" align="center"><p/><a th:text="#{text.cellphone_message1}"></a></div>
   		<div class="textFont cellphone_center_data" align="center" th:text="#{text.cellphone_message2}"></div>

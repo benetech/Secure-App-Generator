@@ -49,6 +49,8 @@ public class TestAppNameValidation extends TestCaseEnhanced
 		assertFalse("Not configured valid app name?", nameAppController.validateAppName(appConfig));
 		assertEquals("Incorrect error msg for not initalized appConfig with no Name", getLocalizedMessage("app_name_length"), appConfig.getAppNameError());
 		appConfig.setAppName(VALID_NAME);
+		assertEquals("App Name different?", VALID_NAME, appConfig.getAppName());
+		assertEquals("Short App name different?", VALID_NAME, appConfig.getAppNameShort());
 		assertTrue("Correct app name not valid?", nameAppController.validateAppName(appConfig));
 		appConfig.setAppName(NAME_TOO_SHORT);
 		assertFalse("App Name should be too short.", nameAppController.validateAppName(appConfig));
@@ -68,6 +70,22 @@ public class TestAppNameValidation extends TestCaseEnhanced
 		{
 			testIllegalCharacter(appConfig, charArray[i]);
 		}
+		
+		appConfig.setAppName(VALID_NAME_OVER_15_CHARACTERS);
+		assertEquals("App Name different?", VALID_NAME_OVER_15_CHARACTERS, appConfig.getAppName());
+		assertEquals("Short App name not correct?", VALID_NAME_OVER_15_CHARACTERS_SHORT, appConfig.getAppNameShort());
+		
+		appConfig.setAppName(VALID_NAME_EXACTLY_15_CHARACTERS);
+		assertEquals("15 char. App Name different?", VALID_NAME_EXACTLY_15_CHARACTERS, appConfig.getAppName());
+		assertEquals("15 char. Short App name different?", VALID_NAME_EXACTLY_15_CHARACTERS, appConfig.getAppNameShort());
+
+		appConfig.setAppName(VALID_NAME_EXACTLY_16_CHARACTERS);
+		assertEquals("16 char. App Name different?", VALID_NAME_EXACTLY_16_CHARACTERS, appConfig.getAppName());
+		assertEquals("16 char. Short App name different?", VALID_NAME_EXACTLY_16_CHARACTERS_SHORT, appConfig.getAppNameShort());
+
+		appConfig.setAppName(LONG_ARABIC_NAME);
+		assertEquals("Arabic App Name different?", LONG_ARABIC_NAME, appConfig.getAppName());
+		assertEquals("Arabic Short App name different?", SHORT_ARABIC_NAME, appConfig.getAppNameShort());
 	}
 	//TODO add test for following illegal characters [^!\"#$%&'()\\[\\]*+,/:;<=>?@\\^`{|}~]+$
 
@@ -83,9 +101,16 @@ public class TestAppNameValidation extends TestCaseEnhanced
 		return SecureAppGeneratorApplication.getLocalizedErrorMessage(msg);
 	}
 
-	private final String VALID_NAME_WITH_EXTRA_SPACES = "  My Good App Name   ";
-	private final String VALID_NAME = "My Good App Name";
+	private final String VALID_NAME_WITH_EXTRA_SPACES = "  My Good Name   ";
+	private final String VALID_NAME = "My Good Name";
 	private final String NAME_TOO_SHORT = "My";
 	private final String NAME_TOO_LONG = "My Really Long App Name More Than Thirty Characters";
 	private final String NAME_STARTING_WITH_A_NUMBER = "1My incorrect File Name";
+	private final String VALID_NAME_OVER_15_CHARACTERS = "My Good App Long Name";
+	private final String VALID_NAME_OVER_15_CHARACTERS_SHORT = "My Good App ...";
+	private final String VALID_NAME_EXACTLY_15_CHARACTERS = "123456789012345";
+	private final String VALID_NAME_EXACTLY_16_CHARACTERS = "1234567890123456";
+	private final String VALID_NAME_EXACTLY_16_CHARACTERS_SHORT = "123456789012...";
+	private final String LONG_ARABIC_NAME = "هو 施 هو 施 هو 施 هو 施";
+	private final String SHORT_ARABIC_NAME = "هو 施 هو 施 هو...";
 }

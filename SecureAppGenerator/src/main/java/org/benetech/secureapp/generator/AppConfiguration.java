@@ -36,8 +36,10 @@ public class AppConfiguration
 	private static final char SPACE_CHAR = ' ';
     private static final String APK_NOT_BUILT = "false";
     private static final String APK_BUILT_ERROR = "error";
+	private static final int SHORT_NAME_MAX_CHARACTER_LIMIT = 15;
 	
 	private String appName;
+	private String appNameShort;
 	private String appNameError;
 	private String appIconLocation;
 	private String appIconLocalFileLocation;
@@ -81,11 +83,31 @@ public class AppConfiguration
 	public void setAppName(String appName)
 	{
 		this.appName = appName;
+		setAppNameShort(appName);
 	}
 	
 	public String getAppName()
 	{
 		return appName;
+	}
+
+	public String getAppNameShort()
+	{
+		return appNameShort;
+	}
+
+	private void setAppNameShort(String appFullName)
+	{
+		if(appFullName.length() > SHORT_NAME_MAX_CHARACTER_LIMIT)
+		{
+			StringBuilder shortName = new StringBuilder(appFullName.substring(0, SHORT_NAME_MAX_CHARACTER_LIMIT-3));
+			shortName.append("...");
+			appNameShort = shortName.toString();
+		}
+		else
+		{
+			appNameShort = appFullName;
+		}
 	}
 
 	public String getAppNameError()
@@ -355,4 +377,5 @@ public class AppConfiguration
 	{
 		this.apkBuildResult = apkBuildResult;
 	}
+
 }
