@@ -296,7 +296,7 @@ a.url_link:active {
 
 .button_start{
     position: absolute;
-    top: 500px;
+    top: 570px;
     right: 100px;
 	background-color: yellow;
     color: black;
@@ -305,7 +305,7 @@ a.url_link:active {
 
 .button_previous{
     position: absolute;
-    top: 500px;
+    top: 570px;
     left: 400px;
 	background-color: gray;
     color: black;
@@ -314,7 +314,7 @@ a.url_link:active {
 
 .button_next{
     position: absolute;
-    top: 500px;
+    top: 570px;
     right: 100px;
 	background-color: yellow;
     color: black;
@@ -323,7 +323,7 @@ a.url_link:active {
 
 .button_next_disabled{
     position: absolute;
-    top: 500px;
+    top: 570px;
     right: 100px;
 	background-color: gray;
     color: lightgray;

@@ -65,8 +65,6 @@ import org.springframework.web.servlet.config.annotation.WebMvcConfigurerAdapter
 @Controller
 public class ObtainTokenController extends WebMvcConfigurerAdapter
 {
-	private static final String SL1_DEVELOPMENT_NAME = "Development";
-	private static final String SL1_IE_NAME = "Production";
 	private static final String SAG_KEYPAIR_DIRECTORY = SecureAppGeneratorApplication.getStaticWebDirectory() + "/keys";
 	private static final String SAG_KEYPAIR_FILE = "sagKeyPair.dat";
 	private static final String SAG_KEYPAIR_PASSWORD = "12SaGPassword";
@@ -170,9 +168,9 @@ public class ObtainTokenController extends WebMvcConfigurerAdapter
 	{
         AppConfiguration config = (AppConfiguration)session.getAttribute(SessionAttributes.APP_CONFIG);
 		if(ServerConstants.usingRealServer())
-			config.setServerName(SL1_IE_NAME);
+			config.setServerName(SecureAppGeneratorApplication.getMessage("text.summary_production_server_name"));
 		else
-			config.setServerName(SL1_DEVELOPMENT_NAME);
+			config.setServerName(SecureAppGeneratorApplication.getMessage("text.summary_development_server_name"));
 		config.setServerIP(ServerConstants.getCurrentServerIp());
 		config.setServerPublicKey(ServerConstants.getCurrentSeverKey());
 		session.setAttribute(SessionAttributes.APP_CONFIG, config);
