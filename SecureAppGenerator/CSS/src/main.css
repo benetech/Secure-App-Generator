@@ -12,6 +12,20 @@ form{
     font-weight: normal;
 }
 
+.helpFont {
+	background-color: transparent;
+	font-family: 'Arial Narrow', Arial, sans-serif;
+    font-weight: normal;
+	font-size: 20px;
+    color: #6ECDE4;
+}
+
+.help_area{
+    position: absolute;
+    top: 600px;
+    left: 10px;
+}  
+
 .ProgressCircleInfo{
     font-size: 24px;
  	font-family: 'Arial Narrow', Arial, sans-serif;
@@ -247,22 +261,22 @@ form{
 }
 
 /* unvisited link */
-a.download_link:link {
+a.url_link:link {
     color: #6ECDE4;
 }
 
 /* visited link */
-a.download_link:visited {
+a.url_link:visited {
     color: white;
 }
 
 /* mouse over link */
-a.download_link:hover {
+a.url_link:hover {
     color: lightgray;
 }
 
 /* selected link */
-a.download_link:active {
+a.url_link:active {
     color: #FF00FF;
 }
 

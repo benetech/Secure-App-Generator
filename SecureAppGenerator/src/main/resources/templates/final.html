@@ -25,10 +25,11 @@
  	                    <td th:text="#{text.link_to_app}"/>
 	                    <td class="table_column_spacer"/>
 	   					<td>
- 	   						<a class="textFont download_link" th:href="@{${session.appConfig.apkURL}}" th:text="${session.appConfig.apkName}"></a>
+ 	   						<a class="textFont url_link" th:href="@{${session.appConfig.apkURL}}" th:text="${session.appConfig.apkName}"></a>
 	   					</td>
 	                </tr>
             </table>
 		</div>
+		<div class="helpFont help_area">Need help? Email <a class="url_link" href="mailto:secureApp@benetech.org">secureApp@benetech.org</a></div> 
  	</body>
 </html>
