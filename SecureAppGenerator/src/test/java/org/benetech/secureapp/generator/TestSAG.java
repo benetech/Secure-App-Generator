@@ -46,6 +46,7 @@ public class TestSAG
 		TestSuite suite= new TestSuite("SAG Tests");
 		suite.addTest(new TestSuite(TestAppNameValidation.class));
 		suite.addTest(new TestSuite(TestXFormValidation.class));
+		suite.addTest(new TestSuite(TestImageResize.class));
 	    return suite;
 	}
 }

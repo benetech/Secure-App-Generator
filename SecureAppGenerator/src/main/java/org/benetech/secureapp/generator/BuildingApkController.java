@@ -25,14 +25,17 @@ Boston, MA 02111-1307, USA.
 
 package org.benetech.secureapp.generator;
 
+import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
 
+import javax.imageio.ImageIO;
 import javax.servlet.http.HttpSession;
 
 import org.apache.commons.io.FileUtils;
 import org.benetech.secureapp.generator.AmazonS3Utils.S3Exception;
 import org.benetech.secureapp.generator.BuildException;
+import org.imgscalr.Scalr;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -43,6 +46,7 @@ import org.springframework.web.servlet.config.annotation.WebMvcConfigurerAdapter
 @Controller
 public class BuildingApkController extends WebMvcConfigurerAdapter
 {
+	private static final String PNG_TYPE = "png";
 	public static final String VERSION_BUILD_XML = "versionBuild";
     public static final String VERSION_MINOR_XML = "versionMinor";
     public static final String VERSION_MAJOR_XML = "versionMajor";
@@ -62,11 +66,16 @@ public class BuildingApkController extends WebMvcConfigurerAdapter
 	private static final String GRADLE_BUILD_COMMAND_RELEASE = " assemblerelease";
 	private static final String APK_LOCAL_FILE_DIRECTORY = "/build/outputs/apk/";
     private static final String APK_RESOURCE_FILE_LOCAL = "/res/values/non-traslatable-auto-generated-resources.xml";
-    private static final String APK_HDPI_FILE_LOCAL = "/res/drawable-hdpi/";
-    private static final String APK_MDPI_FILE_LOCAL = "/res/drawable-mdpi/";
     private static final String APK_NODPI_FILE_LOCAL = "/res/drawable-nodpi/";
+    private static final String APK_MDPI_FILE_LOCAL = "/res/drawable-mdpi/";
+    private static final String APK_HDPI_FILE_LOCAL = "/res/drawable-hdpi/";
     private static final String APK_XHDPI_FILE_LOCAL = "/res/drawable-xhdpi/";
     private static final String APK_XXHDPI_FILE_LOCAL = "/res/drawable-xxhdpi/";
+    private static final int APK_NODPI_SIZE = 36;
+    private static final int APK_MDPI_SIZE = 48;
+    private static final int APK_HDPI_SIZE = 72;
+    private static final int APK_XHDPI_SIZE = 96;
+    private static final int APK_XXHDPI_SIZE = 144;
     private static final String APK_XFORM_FILE_LOCAL = "/assets/xforms/sample.xml";
     private static final String SECURE_APP_PROJECT_DIRECTORY = "secure-app";
     private static final String GRADLE_GENERATED_SETTINGS_FILE = "generated.build.gradle";
@@ -160,18 +169,21 @@ public class BuildingApkController extends WebMvcConfigurerAdapter
 
 	static private void copyIconToApkBuild(File baseBuildDir, String appIconLocation) throws IOException
 	{
-		//TODO adjust resolution
+		resizeAndSaveImage(baseBuildDir, appIconLocation, APK_NODPI_SIZE, APK_NODPI_FILE_LOCAL);
+		resizeAndSaveImage(baseBuildDir, appIconLocation, APK_MDPI_SIZE, APK_MDPI_FILE_LOCAL);
+		resizeAndSaveImage(baseBuildDir, appIconLocation, APK_HDPI_SIZE, APK_HDPI_FILE_LOCAL);
+		resizeAndSaveImage(baseBuildDir, appIconLocation, APK_XHDPI_SIZE, APK_XHDPI_FILE_LOCAL);
+		resizeAndSaveImage(baseBuildDir, appIconLocation, APK_XXHDPI_SIZE, APK_XXHDPI_FILE_LOCAL);
+	}
+
+	private static void resizeAndSaveImage(File baseBuildDir, String appIconLocation, int resizeValue, String apkFileName)
+			throws IOException
+	{
 		File source = new File(appIconLocation);
-		File destination = new File(baseBuildDir, APK_NODPI_FILE_LOCAL + LOGO_NAME_PNG);
-		FileUtils.copyFile(source, destination);
-		destination = new File(baseBuildDir, APK_MDPI_FILE_LOCAL + LOGO_NAME_PNG);
-		FileUtils.copyFile(source, destination);
-		destination = new File(baseBuildDir, APK_HDPI_FILE_LOCAL + LOGO_NAME_PNG);
-		FileUtils.copyFile(source, destination);
-		destination = new File(baseBuildDir, APK_XHDPI_FILE_LOCAL + LOGO_NAME_PNG);
-		FileUtils.copyFile(source, destination);
-		destination = new File(baseBuildDir, APK_XXHDPI_FILE_LOCAL + LOGO_NAME_PNG);
-		FileUtils.copyFile(source, destination);
+		BufferedImage originalImage = ImageIO.read(source);
+		BufferedImage scaledImg = Scalr.resize(originalImage, Scalr.Mode.AUTOMATIC, resizeValue, resizeValue);
+		File destination = new File(baseBuildDir, apkFileName + LOGO_NAME_PNG);
+		ImageIO.write(scaledImg, PNG_TYPE, destination);
 	}
 
 	static private void updateGradleSettings(File baseBuildDir, AppConfiguration config) throws IOException
