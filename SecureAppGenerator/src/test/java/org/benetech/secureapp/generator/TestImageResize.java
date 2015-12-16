@@ -27,6 +27,7 @@ package org.benetech.secureapp.generator;
 
 import java.awt.image.BufferedImage;
 import java.io.File;
+import java.io.IOException;
 
 import javax.imageio.ImageIO;
 
@@ -80,4 +81,26 @@ public class TestImageResize extends TestCaseEnhanced
 		assertEquals("retrieved Image width not scaled up?", 36, retrievedImage.getWidth());
 	}
 	
+	public void testBuildingImages() throws Exception
+	{
+		verifyResize(BuildingApkController.APK_NODPI_SIZE);
+		verifyResize(BuildingApkController.APK_MDPI_SIZE);
+		verifyResize(BuildingApkController.APK_HDPI_SIZE);
+		verifyResize(BuildingApkController.APK_XHDPI_SIZE);
+		verifyResize(BuildingApkController.APK_XXHDPI_SIZE);
+	}
+
+	private void verifyResize(final int size) throws IOException
+	{
+		String originalImageLocation = "./src/test/java/org/benetech/secureapp/generator/smallImage.jpg";
+		File temp = File.createTempFile("testBuildingImages", "test");
+		File destination = BuildingApkController.resizeAndSavePngImage(temp.getParentFile(), originalImageLocation, size, "ImageTest");
+		temp.delete();
+		destination.deleteOnExit();
+		assertTrue("File not saved as png?", destination.exists());
+		BufferedImage retrievedImage = ImageIO.read(destination);
+		assertEquals("retrieved Image height not scaled correctly?", size, retrievedImage.getHeight());
+		assertEquals("retrieved Image width not scaled correctly?", size, retrievedImage.getWidth());
+	}
+
 }

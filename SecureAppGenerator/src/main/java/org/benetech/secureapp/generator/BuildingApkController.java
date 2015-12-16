@@ -51,7 +51,13 @@ public class BuildingApkController extends WebMvcConfigurerAdapter
     public static final String VERSION_MINOR_XML = "versionMinor";
     public static final String VERSION_MAJOR_XML = "versionMajor";
 
-	private static final String APP_NAME_XML = "appName";
+    static final int APK_NODPI_SIZE = 36;
+    static final int APK_MDPI_SIZE = 48;
+    static final int APK_HDPI_SIZE = 72;
+    static final int APK_XHDPI_SIZE = 96;
+    static final int APK_XXHDPI_SIZE = 144;
+
+    private static final String APP_NAME_XML = "appName";
 	private static final String APP_CUSTOM_APPLICATION_ID_XML = "customApplicationId";
 	private static final String APP_BASE_APPLICATION_ID = "org.benetech.secureapp.";
 	private static final String VERSION_SAG_BUILD_XML = "versionSagBuild";
@@ -71,11 +77,6 @@ public class BuildingApkController extends WebMvcConfigurerAdapter
     private static final String APK_HDPI_FILE_LOCAL = "/res/drawable-hdpi/";
     private static final String APK_XHDPI_FILE_LOCAL = "/res/drawable-xhdpi/";
     private static final String APK_XXHDPI_FILE_LOCAL = "/res/drawable-xxhdpi/";
-    private static final int APK_NODPI_SIZE = 36;
-    private static final int APK_MDPI_SIZE = 48;
-    private static final int APK_HDPI_SIZE = 72;
-    private static final int APK_XHDPI_SIZE = 96;
-    private static final int APK_XXHDPI_SIZE = 144;
     private static final String APK_XFORM_FILE_LOCAL = "/assets/xforms/sample.xml";
     private static final String SECURE_APP_PROJECT_DIRECTORY = "secure-app";
     private static final String GRADLE_GENERATED_SETTINGS_FILE = "generated.build.gradle";
@@ -179,13 +180,20 @@ public class BuildingApkController extends WebMvcConfigurerAdapter
 	private static void resizeAndSaveImage(File baseBuildDir, String appIconLocation, int resizeValue, String apkFileName)
 			throws IOException
 	{
+		resizeAndSavePngImage(baseBuildDir, appIconLocation, resizeValue, apkFileName);
+	}
+
+	public static File resizeAndSavePngImage(File baseBuildDir, String appIconLocation, int resizeValue, String apkFileName)
+			throws IOException
+	{
 		File source = new File(appIconLocation);
 		BufferedImage originalImage = ImageIO.read(source);
 		BufferedImage scaledImg = Scalr.resize(originalImage, Scalr.Mode.AUTOMATIC, resizeValue, resizeValue);
 		File destination = new File(baseBuildDir, apkFileName + LOGO_NAME_PNG);
 		ImageIO.write(scaledImg, PNG_TYPE, destination);
+		return destination;
 	}
-
+	
 	static private void updateGradleSettings(File baseBuildDir, AppConfiguration config) throws IOException
 	{
 		StringBuilder data = new StringBuilder("");
