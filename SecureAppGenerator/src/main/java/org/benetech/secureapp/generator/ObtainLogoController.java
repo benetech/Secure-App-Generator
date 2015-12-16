@@ -45,7 +45,6 @@ import org.springframework.web.servlet.config.annotation.WebMvcConfigurerAdapter
 public class ObtainLogoController extends WebMvcConfigurerAdapter
 {
 	private static final String LOGO_FILE_NAME = "companyLogo";  
-	private static final String IMAGE_PNG = "image/png";
 	private static final String PNG_EXT = ".png";
 
 	@RequestMapping(value=WebPage.OBTAIN_LOGO, method=RequestMethod.GET)
@@ -75,14 +74,7 @@ public class ObtainLogoController extends WebMvcConfigurerAdapter
             		File tempIconLocation = File.createTempFile(LOGO_FILE_NAME, PNG_EXT);
             		Logger.logVerbose(session, "Uploaded Icon Location" + tempIconLocation.getAbsolutePath());
                	tempIconLocation.deleteOnExit();
-            		if(!iconFile.getContentType().contains(IMAGE_PNG))
-            		{
-            			Logger.log(session, "Non-PNG Logo Image: " + iconFile.getContentType());
-            	      	appConfig.setAppIconError("logo_file_type_invalid");
-            			model.addAttribute(SessionAttributes.APP_CONFIG, appConfig);
-         			return WebPage.OBTAIN_LOGO; 
-            		}
-             	
+              	
             		SecureAppGeneratorApplication.saveMultiPartFileToLocation(iconFile, tempIconLocation);
             		AppConfiguration config = (AppConfiguration)session.getAttribute(SessionAttributes.APP_CONFIG);
             		config.setAppIconLocalFileLocation(tempIconLocation.getAbsolutePath());

@@ -26,8 +26,12 @@ Boston, MA 02111-1307, USA.
 package org.benetech.secureapp.generator;
 
 import java.awt.image.BufferedImage;
+import java.io.BufferedInputStream;
 import java.io.File;
+import java.io.FileInputStream;
 import java.io.IOException;
+import java.io.InputStream;
+import java.net.URLConnection;
 
 import javax.imageio.ImageIO;
 
@@ -101,6 +105,10 @@ public class TestImageResize extends TestCaseEnhanced
 		BufferedImage retrievedImage = ImageIO.read(destination);
 		assertEquals("retrieved Image height not scaled correctly?", size, retrievedImage.getHeight());
 		assertEquals("retrieved Image width not scaled correctly?", size, retrievedImage.getWidth());
+		InputStream is = new BufferedInputStream(new FileInputStream(destination));
+		String mimeType = URLConnection.guessContentTypeFromStream(is);
+		is.close();
+		assertTrue(mimeType.contains("image/png"));
 	}
 
 }
