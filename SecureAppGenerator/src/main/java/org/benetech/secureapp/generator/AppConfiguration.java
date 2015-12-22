@@ -27,7 +27,7 @@ package org.benetech.secureapp.generator;
 
 public class AppConfiguration
 {
-	private static final String VERSION = "1.0 Beta 47";
+	private static final String VERSION = "1.0 Beta 48";
 	private static final char DASH_CHAR = '-';
 	private static final String APK_EXTENSION = ".apk";
 	private static final String DEBUG_APK_EXTENSION = "-release" + APK_EXTENSION;
