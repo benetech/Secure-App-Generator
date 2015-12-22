@@ -50,7 +50,16 @@ abstract public class AbstractLoginActivity extends Activity implements ICacheWo
     protected void onPause() {
         super.onPause();
 
+        safelyDismissProgressDialog();
+
         getCacheWordActivityHandler().disconnectFromService();
+    }
+
+    @Override
+    public void onDestroy(){
+        super.onDestroy();
+
+        safelyDismissProgressDialog();
     }
 
     protected CacheWordHandler getCacheWordActivityHandler() {
@@ -116,6 +125,12 @@ abstract public class AbstractLoginActivity extends Activity implements ICacheWo
         }
     }
 
+    private void safelyDismissProgressDialog() {
+        if (getProgressDialogHandler().isShowing()){
+            getProgressDialogHandler().dismissProgressDialog();
+        }
+    }
+
     protected void postMountStorageExecute() {
         dismissProgressDialog();
         startMainActivity();
@@ -126,7 +141,8 @@ abstract public class AbstractLoginActivity extends Activity implements ICacheWo
     }
 
     protected void dismissProgressDialog() {
-        getProgressDialogHandler().dismissProgressDialog();
+       if (getProgressDialogHandler().isShowing())
+            getProgressDialogHandler().dismissProgressDialog();
     }
 
     private ProgressDialogHandler getProgressDialogHandler() {

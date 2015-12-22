@@ -67,6 +67,7 @@ public class CreateMartusCryptoKeyPairTask extends AsyncTask<Object, Void, Boole
     protected void onPostExecute(Boolean success) {
         super.onPostExecute(success);
 
-        if (success) mCallback.onCreateKeyPairSuccess();
+        if (success)
+            mCallback.onCreateKeyPairSuccess();
     }
 }

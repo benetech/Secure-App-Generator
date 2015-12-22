@@ -67,7 +67,7 @@
     <string name="xforms_missing_required_field">لا يمكن الرفع :\n هناك حقول إجبارية ناقصة</string>
     <string name="hint_password_field">كلمة السر</string>
     <string name="hint_confirm_password_field">تأكيد كلمة السر</string>
-    <string name="label_enter_your_password">أدخل كلمة المرور للمتابعة</string>
+    <string name="label_enter_your_password">أدخل كلمة السر للمتابعة</string>
     <!--Override Cacheword-->
     <string name="cacheword_notification_cached_title">فُكَّ قفل الحساب</string>
     <string name="cacheword_notification_cached">إنَّ نموذج secureApp غير مقفل. المس للقفل.</string>
