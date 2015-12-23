@@ -170,17 +170,11 @@ public class BuildingApkController extends WebMvcConfigurerAdapter
 
 	static private void copyIconToApkBuild(File baseBuildDir, String appIconLocation) throws IOException
 	{
-		resizeAndSaveImage(baseBuildDir, appIconLocation, APK_NODPI_SIZE, APK_NODPI_FILE_LOCAL);
-		resizeAndSaveImage(baseBuildDir, appIconLocation, APK_MDPI_SIZE, APK_MDPI_FILE_LOCAL);
-		resizeAndSaveImage(baseBuildDir, appIconLocation, APK_HDPI_SIZE, APK_HDPI_FILE_LOCAL);
-		resizeAndSaveImage(baseBuildDir, appIconLocation, APK_XHDPI_SIZE, APK_XHDPI_FILE_LOCAL);
-		resizeAndSaveImage(baseBuildDir, appIconLocation, APK_XXHDPI_SIZE, APK_XXHDPI_FILE_LOCAL);
-	}
-
-	private static void resizeAndSaveImage(File baseBuildDir, String appIconLocation, int resizeValue, String apkFileName)
-			throws IOException
-	{
-		resizeAndSavePngImage(baseBuildDir, appIconLocation, resizeValue, apkFileName);
+		resizeAndSavePngImage(baseBuildDir, appIconLocation, APK_NODPI_SIZE, APK_NODPI_FILE_LOCAL);
+		resizeAndSavePngImage(baseBuildDir, appIconLocation, APK_MDPI_SIZE, APK_MDPI_FILE_LOCAL);
+		resizeAndSavePngImage(baseBuildDir, appIconLocation, APK_HDPI_SIZE, APK_HDPI_FILE_LOCAL);
+		resizeAndSavePngImage(baseBuildDir, appIconLocation, APK_XHDPI_SIZE, APK_XHDPI_FILE_LOCAL);
+		resizeAndSavePngImage(baseBuildDir, appIconLocation, APK_XXHDPI_SIZE, APK_XXHDPI_FILE_LOCAL);
 	}
 
 	public static File resizeAndSavePngImage(File baseBuildDir, String appIconLocation, int resizeValue, String apkFileName)
