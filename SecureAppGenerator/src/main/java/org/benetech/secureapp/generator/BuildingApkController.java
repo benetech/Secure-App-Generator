@@ -133,17 +133,15 @@ public class BuildingApkController extends WebMvcConfigurerAdapter
 			Fdroid.copyApkToFDroid(session, renamedApk);
 		model.addAttribute(SessionAttributes.APP_CONFIG, config);
 		session.setAttribute(SessionAttributes.APP_CONFIG, config);
-	//		try
-	//		{
-	//			TODO: add this back once tested on server.			
-	//			if(secureAppBuildDir != null)
-	//				FileUtils.deleteDirectory(secureAppBuildDir);
-	//		}
-	//		catch (IOException e)
-	//		{
-	//			Logger.logException(e);			
-	//		}			
-	//	}
+		try
+		{
+			if(secureAppBuildDir != null)
+				FileUtils.deleteDirectory(secureAppBuildDir.getParentFile());
+		}
+		catch (IOException e)
+		{
+			Logger.logException(session, e);			
+		}			
 	}
 	
 
