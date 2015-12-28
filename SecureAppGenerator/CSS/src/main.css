@@ -111,11 +111,6 @@ form{
     font-size: 22px;
 }
 
-.summary_logo_size {
-	max-height: 70px;
-	max-width: 70px;
-}
-
 .cellphone_title {
     position: absolute;
     top: 101px;
@@ -198,6 +193,11 @@ form{
     font-size: 24px;
     color: lightgray;
   }
+
+.summary_logo_size {
+	max-height: 33px;
+	max-width: 33px;
+}
 
 .page_title {
     position: absolute;

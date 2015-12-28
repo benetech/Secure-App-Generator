@@ -46,6 +46,7 @@ public class ObtainLogoController extends WebMvcConfigurerAdapter
 {
 	private static final String LOGO_FILE_NAME = "companyLogo";  
 	private static final String PNG_EXT = ".png";
+	private static final int CELLPHONE_LOGO_SIZE = 33; //used in CSS .cellphone_logo_size
 
 	@RequestMapping(value=WebPage.OBTAIN_LOGO, method=RequestMethod.GET)
     public String directError(HttpSession session, Model model) 
@@ -72,13 +73,17 @@ public class ObtainLogoController extends WebMvcConfigurerAdapter
             	
             		//String dataRootDirectory = System.getenv(SecureAppGeneratorApplication.SAG_DATA_DIR_ENV);
             		File tempIconLocation = File.createTempFile(LOGO_FILE_NAME, PNG_EXT);
-            		Logger.logVerbose(session, "Uploaded Icon Location" + tempIconLocation.getAbsolutePath());
+            		String logoAbsolutePath = tempIconLocation.getAbsolutePath();
+				Logger.logVerbose(session, "Uploaded Icon Location" + logoAbsolutePath);
                	tempIconLocation.deleteOnExit();
               	
             		SecureAppGeneratorApplication.saveMultiPartFileToLocation(iconFile, tempIconLocation);
             		AppConfiguration config = (AppConfiguration)session.getAttribute(SessionAttributes.APP_CONFIG);
-            		config.setAppIconLocalFileLocation(tempIconLocation.getAbsolutePath());
-            		config.setAppIconBase64Data(SecureAppGeneratorApplication.getBase64DataFromFile(tempIconLocation.getAbsoluteFile()));
+            		config.setAppIconLocalFileLocation(logoAbsolutePath);
+            		File basedirIcon = tempIconLocation.getParentFile();
+            		File resizedIconForWebPages = BuildingApkController.resizeAndSavePngImage(basedirIcon, logoAbsolutePath, CELLPHONE_LOGO_SIZE, LOGO_FILE_NAME);
+            		resizedIconForWebPages.deleteOnExit();
+            		config.setAppIconBase64Data(SecureAppGeneratorApplication.getBase64DataFromFile(resizedIconForWebPages));
             		session.setAttribute(SessionAttributes.APP_CONFIG, config);
             } 
             catch (Exception e) 
