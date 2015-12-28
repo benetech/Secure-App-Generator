@@ -81,7 +81,7 @@ public class ObtainLogoController extends WebMvcConfigurerAdapter
             		AppConfiguration config = (AppConfiguration)session.getAttribute(SessionAttributes.APP_CONFIG);
             		config.setAppIconLocalFileLocation(logoAbsolutePath);
             		File basedirIcon = tempIconLocation.getParentFile();
-            		File resizedIconForWebPages = BuildingApkController.resizeAndSavePngImage(basedirIcon, logoAbsolutePath, CELLPHONE_LOGO_SIZE, LOGO_FILE_NAME);
+            		File resizedIconForWebPages = BuildingApkController.resizeAndSavePngImage(basedirIcon, logoAbsolutePath, CELLPHONE_LOGO_SIZE, tempIconLocation.getName());
             		resizedIconForWebPages.deleteOnExit();
             		config.setAppIconBase64Data(SecureAppGeneratorApplication.getBase64DataFromFile(resizedIconForWebPages));
             		session.setAttribute(SessionAttributes.APP_CONFIG, config);
