@@ -30,8 +30,6 @@ import java.io.File;
 import java.io.IOException;
 import java.net.MalformedURLException;
 import java.nio.file.Files;
-import java.nio.file.Path;
-import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
@@ -104,7 +102,6 @@ import org.xml.sax.SAXException;
 public class ObtainXFormController extends WebMvcConfigurerAdapter
 {
 	private static final String XML_TYPE = "xml";
-	private static final String XML_FILE_LOCATION = SecureAppGeneratorApplication.getStaticWebDirectory() + "/xFormToUse.xml";  //TODO this will be based on build directory for this session
 	private static final String XFORM_FILE_EXTENSION = ".xml";
 	private static final String XFORMS_DEFAULT_DIRECTORY = SecureAppGeneratorApplication.getStaticWebDirectory() + "/xforms";
 	private static final int NO_PATH_SEPARATOR_FOUND = -1;
@@ -130,15 +127,16 @@ public class ObtainXFormController extends WebMvcConfigurerAdapter
 	@RequestMapping(value=WebPage.OBTAIN_XFORM_NEXT, method=RequestMethod.POST)
     public String retrieveXForm(HttpSession session, @RequestParam("xmlCustomFile") MultipartFile xmlFile, @RequestParam("selectedForm") String formLocation, Model model, AppConfiguration appConfig)
     {
-		Path xFormBuildPath = Paths.get(XML_FILE_LOCATION);
 		String xFormLocation = null;
 		String xFormName = null;
+		File xFormFile = null;
 		if (xmlFile.isEmpty()) 
         {
-			if(!copyXFormsFileSelectedToBuildDirectory(session, formLocation))
+			xFormFile = copyXFormsFileSelectedToTempFile(session, formLocation);
+			if(xFormFile == null)
 				return WebPage.ERROR; 
 
-            xFormLocation = xFormBuildPath.getFileName().toString();
+            xFormLocation = xFormFile.getAbsolutePath();
 			xFormName = getFormNameOnly(formLocation);
         }
         else
@@ -150,19 +148,18 @@ public class ObtainXFormController extends WebMvcConfigurerAdapter
             			Logger.log(session, "Non-XML xForm: " + xmlFile.getContentType());
              		return returnLocalizedErrorMessage(model, appConfig, "xform_file_type_invalid"); 
             		}
-            		SecureAppGeneratorApplication.saveMultiPartFileToLocation(xmlFile, xFormBuildPath.toFile());
-                Logger.logVerbose(session, "Uploaded XFORM Location" + xFormBuildPath.toString());
-  
-                xFormLocation = xFormBuildPath.getFileName().toString();
     				xFormName = getFormNameOnly(xmlFile.getOriginalFilename());
-
-              } 
+    				xFormFile = File.createTempFile(xFormName, XFORM_FILE_EXTENSION);
+            		SecureAppGeneratorApplication.saveMultiPartFileToLocation(xmlFile, xFormFile);
+                xFormLocation = xFormFile.getAbsolutePath();
+                Logger.logVerbose(session, "Uploaded XFORM Location = " + xFormLocation);
+            } 
             catch (Exception e) 
             {
             		Logger.logException(session, e);
             		try
 				{
-					Files.delete(xFormBuildPath);
+					Files.delete(xFormFile.toPath());
 				}
 				catch (IOException e1)
 				{
@@ -174,7 +171,7 @@ public class ObtainXFormController extends WebMvcConfigurerAdapter
 		
 		try
 		{
-			isValidXForm();
+			isValidXForm(xFormFile);
 		}
 		catch (Exception e)
 		{
@@ -189,9 +186,8 @@ public class ObtainXFormController extends WebMvcConfigurerAdapter
 		return WebPage.OBTAIN_CLIENT_TOKEN;
     }
 
-	private void isValidXForm() throws Exception
+	private void isValidXForm(File xformFile) throws Exception
 	{
-		File xformFile = new File(XML_FILE_LOCATION);
 		StringBuilder fieldErrors = isXFormValid(xformFile);
         if(fieldErrors.length() != 0)
     			throw new Exception(SecureAppGeneratorApplication.getLocalizedErrorMessageNoPrefix("xform_field_error") + " " + fieldErrors.toString());
@@ -411,20 +407,20 @@ public class ObtainXFormController extends WebMvcConfigurerAdapter
 		return WebPage.OBTAIN_XFORM;
 	}
 
-	public boolean copyXFormsFileSelectedToBuildDirectory(HttpSession session, String formLocation)
+	public File copyXFormsFileSelectedToTempFile(HttpSession session, String formLocation)
 	{
-		File source = new File(formLocation);
-		File destination = new File(XML_FILE_LOCATION);
 		try
 		{
+			File source = new File(formLocation);
+			File destination = File.createTempFile(source.getName(), XFORM_FILE_EXTENSION);
 			FileUtils.copyFile(source, destination);
-			return true;
+			return destination;
 		}
 		catch (IOException e)
 		{
 			Logger.logException(session, e);
     			SecureAppGeneratorApplication.setInvalidResults(session, "failed_copy_file", e);
-		    return false;
+		    return null;
 		}
 	}
 	

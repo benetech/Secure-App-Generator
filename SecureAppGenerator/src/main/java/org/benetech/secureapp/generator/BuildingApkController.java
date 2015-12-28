@@ -138,6 +138,7 @@ public class BuildingApkController extends WebMvcConfigurerAdapter
 		{
 			if(secureAppBuildDir != null)
 				FileUtils.deleteDirectory(secureAppBuildDir.getParentFile());
+			//TODO delete XForm
 		}
 		catch (IOException e)
 		{
@@ -162,7 +163,7 @@ public class BuildingApkController extends WebMvcConfigurerAdapter
 
 	static private void copyFormToApkBuild(File baseBuildDir, String appXFormLocation) throws IOException
 	{
-		File source = new File(SecureAppGeneratorApplication.getStaticWebDirectory(), appXFormLocation);
+		File source = new File(appXFormLocation);
 		File destination = new File(baseBuildDir, APK_XFORM_FILE_LOCAL);
 		FileUtils.copyFile(source, destination);
 	}
