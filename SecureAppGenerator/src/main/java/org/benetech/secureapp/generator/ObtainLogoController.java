@@ -25,9 +25,13 @@ Boston, MA 02111-1307, USA.
 
 package org.benetech.secureapp.generator;
 
+import java.io.BufferedInputStream;
 import java.io.File;
+import java.io.FileInputStream;
 import java.io.IOException;
+import java.io.InputStream;
 import java.net.MalformedURLException;
+import java.net.URLConnection;
 import java.util.Map;
 
 import javax.servlet.http.HttpSession;
@@ -47,6 +51,8 @@ public class ObtainLogoController extends WebMvcConfigurerAdapter
 	private static final String LOGO_FILE_NAME = "companyLogo";  
 	private static final String PNG_EXT = ".png";
 	private static final int CELLPHONE_LOGO_SIZE = 33; //used in CSS .cellphone_logo_size
+	private static final long MAX_IMAGE_SIZE = 2097152;
+	private static final String IMAGE_PNG = "image/png";
 
 	@RequestMapping(value=WebPage.OBTAIN_LOGO, method=RequestMethod.GET)
     public String directError(HttpSession session, Model model) 
@@ -70,8 +76,14 @@ public class ObtainLogoController extends WebMvcConfigurerAdapter
          {
             try 
             {
-            	
-            		//String dataRootDirectory = System.getenv(SecureAppGeneratorApplication.SAG_DATA_DIR_ENV);
+            		if(iconFile.getSize() > MAX_IMAGE_SIZE)
+            		{
+            			Logger.log(session, "Error Logo exceeded max size: " + iconFile.getSize());
+            	      	appConfig.setAppIconError("logo_file_size");
+            			model.addAttribute(SessionAttributes.APP_CONFIG, appConfig);
+         			return WebPage.OBTAIN_LOGO; 
+            		}
+
             		File tempIconLocation = File.createTempFile(LOGO_FILE_NAME, PNG_EXT);
             		String logoAbsolutePath = tempIconLocation.getAbsolutePath();
 				Logger.logVerbose(session, "Uploaded Icon Location" + logoAbsolutePath);
@@ -81,15 +93,29 @@ public class ObtainLogoController extends WebMvcConfigurerAdapter
             		AppConfiguration config = (AppConfiguration)session.getAttribute(SessionAttributes.APP_CONFIG);
             		config.setAppIconLocalFileLocation(logoAbsolutePath);
             		File basedirIcon = tempIconLocation.getParentFile();
-            		File resizedIconForWebPages = BuildingApkController.resizeAndSavePngImage(basedirIcon, logoAbsolutePath, CELLPHONE_LOGO_SIZE, tempIconLocation.getName());
-            		config.setAppIconBase64Data(SecureAppGeneratorApplication.getBase64DataFromFile(resizedIconForWebPages));
+            		File resizedIconForWebPages = null;
+            		try
+				{
+					resizedIconForWebPages = BuildingApkController.resizeAndSavePngImage(basedirIcon, logoAbsolutePath, CELLPHONE_LOGO_SIZE, tempIconLocation.getName());
+				}
+				catch (Exception e)
+				{
+        				Logger.logException(session, e);
+				}
+            		if(unableToResizeToPngImage(session, resizedIconForWebPages))
+            		{
+            			Logger.log(session, "Error Non-PNG Logo Image: " + iconFile.getContentType());
+            	      	appConfig.setAppIconError("logo_file_type_invalid");
+            			model.addAttribute(SessionAttributes.APP_CONFIG, appConfig);
+         			return WebPage.OBTAIN_LOGO; 
+            		}
+             	config.setAppIconBase64Data(SecureAppGeneratorApplication.getBase64DataFromFile(resizedIconForWebPages));
              	resizedIconForWebPages.delete();
             		session.setAttribute(SessionAttributes.APP_CONFIG, config);
             } 
             catch (Exception e) 
             {
             		Logger.logException(session, e);
-            		
             		SecureAppGeneratorApplication.setInvalidResults(session, "upload_logo_failed", e);
                 return WebPage.ERROR;
             }
@@ -97,6 +123,26 @@ public class ObtainLogoController extends WebMvcConfigurerAdapter
  		model.addAttribute(SessionAttributes.APP_CONFIG, appConfig);
        return WebPage.OBTAIN_XFORM;
     }
+
+	private boolean unableToResizeToPngImage(HttpSession session, File resizedIconForWebPages)
+	{
+		try
+		{
+			if(resizedIconForWebPages != null && resizedIconForWebPages.exists())
+			{
+				InputStream is = new BufferedInputStream(new FileInputStream(resizedIconForWebPages));
+				String mimeType = URLConnection.guessContentTypeFromStream(is);
+				is.close();
+				if(mimeType.contains(IMAGE_PNG))
+					return false;
+			}
+		}
+		catch (Exception e)
+		{
+    			Logger.logException(session, e);
+		}
+		return true;
+	}
 	
 	public static void deleteLogo(AppConfiguration appConfig)
 	{
