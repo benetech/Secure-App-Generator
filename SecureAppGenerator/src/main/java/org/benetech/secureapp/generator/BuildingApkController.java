@@ -125,6 +125,7 @@ public class BuildingApkController extends WebMvcConfigurerAdapter
 		updateApkSettings(secureAppBuildDir, config);
 		updateGradleSettings(secureAppBuildDir, config);
 		copyIconToApkBuild(secureAppBuildDir, config.getAppIconLocalFileLocation());
+		ObtainLogoController.deleteLogo(config);
 		copyFormToApkBuild(secureAppBuildDir, config.getAppXFormLocation());
 		File apkCreated = buildApk(session, secureAppBuildDir, config);
 		File renamedApk = renameApk(apkCreated, config);

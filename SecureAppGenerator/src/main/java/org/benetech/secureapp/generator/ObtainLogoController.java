@@ -66,7 +66,7 @@ public class ObtainLogoController extends WebMvcConfigurerAdapter
 	@RequestMapping(value=WebPage.OBTAIN_LOGO_NEXT, method=RequestMethod.POST)
     public String retrieveLogo(HttpSession session, @RequestParam("pngFile") MultipartFile iconFile, Model model, AppConfiguration appConfig)
     {
-        if (!iconFile.isEmpty()) 
+       if (!iconFile.isEmpty()) 
          {
             try 
             {
@@ -82,8 +82,8 @@ public class ObtainLogoController extends WebMvcConfigurerAdapter
             		config.setAppIconLocalFileLocation(logoAbsolutePath);
             		File basedirIcon = tempIconLocation.getParentFile();
             		File resizedIconForWebPages = BuildingApkController.resizeAndSavePngImage(basedirIcon, logoAbsolutePath, CELLPHONE_LOGO_SIZE, tempIconLocation.getName());
-            		resizedIconForWebPages.deleteOnExit();
             		config.setAppIconBase64Data(SecureAppGeneratorApplication.getBase64DataFromFile(resizedIconForWebPages));
+             	resizedIconForWebPages.delete();
             		session.setAttribute(SessionAttributes.APP_CONFIG, config);
             } 
             catch (Exception e) 
@@ -93,10 +93,21 @@ public class ObtainLogoController extends WebMvcConfigurerAdapter
             		SecureAppGeneratorApplication.setInvalidResults(session, "upload_logo_failed", e);
                 return WebPage.ERROR;
             }
-        } 
-		model.addAttribute(SessionAttributes.APP_CONFIG, appConfig);
+        }
+ 		model.addAttribute(SessionAttributes.APP_CONFIG, appConfig);
        return WebPage.OBTAIN_XFORM;
     }
+	
+	public static void deleteLogo(AppConfiguration appConfig)
+	{
+		String appIconLocation = appConfig.getAppIconLocalFileLocation();
+		if(appIconLocation == null)
+			return;
+		if(appIconLocation.contains(SecureAppGeneratorApplication.DEFAULT_APP_ICON_LOCATION))
+			return;
+		File originalLogo = new File(appIconLocation);
+		originalLogo.delete();
+	}
 	
 	//NOTE: Needed due to how page is called from another page 
 	@ModelAttribute("formsImpMap")

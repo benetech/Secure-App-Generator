@@ -121,6 +121,7 @@ public class ObtainXFormController extends WebMvcConfigurerAdapter
     public String goBack(HttpSession session, Model model) throws Exception 
     {
 		AppConfiguration config = (AppConfiguration) session.getAttribute(SessionAttributes.APP_CONFIG);
+		ObtainLogoController.deleteLogo(config);
 		SecureAppGeneratorApplication.setDefaultIconForSession(session, config);
 		model.addAttribute(SessionAttributes.APP_CONFIG, config);
 		return WebPage.OBTAIN_LOGO;
