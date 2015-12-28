@@ -127,7 +127,6 @@ public class ObtainXFormController extends WebMvcConfigurerAdapter
 	@RequestMapping(value=WebPage.OBTAIN_XFORM_NEXT, method=RequestMethod.POST)
     public String retrieveXForm(HttpSession session, @RequestParam("xmlCustomFile") MultipartFile xmlFile, @RequestParam("selectedForm") String formLocation, Model model, AppConfiguration appConfig)
     {
-		String xFormLocation = null;
 		String xFormName = null;
 		File xFormFile = null;
 		if (xmlFile.isEmpty()) 
@@ -135,8 +134,6 @@ public class ObtainXFormController extends WebMvcConfigurerAdapter
 			xFormFile = copyXFormsFileSelectedToTempFile(session, formLocation);
 			if(xFormFile == null)
 				return WebPage.ERROR; 
-
-            xFormLocation = xFormFile.getAbsolutePath();
 			xFormName = getFormNameOnly(formLocation);
         }
         else
@@ -151,20 +148,12 @@ public class ObtainXFormController extends WebMvcConfigurerAdapter
     				xFormName = getFormNameOnly(xmlFile.getOriginalFilename());
     				xFormFile = File.createTempFile(xFormName, XFORM_FILE_EXTENSION);
             		SecureAppGeneratorApplication.saveMultiPartFileToLocation(xmlFile, xFormFile);
-                xFormLocation = xFormFile.getAbsolutePath();
-                Logger.logVerbose(session, "Uploaded XFORM Location = " + xFormLocation);
+                Logger.logVerbose(session, "Uploaded XFORM Location = " + xFormFile.getAbsolutePath());
             } 
             catch (Exception e) 
             {
             		Logger.logException(session, e);
-            		try
-				{
-					Files.delete(xFormFile.toPath());
-				}
-				catch (IOException e1)
-				{
-					Logger.logException(session, e1);
-				}
+        			xFormFile.delete();
             		return returnLocalizedErrorMessage(model, appConfig, "xform_upload_failed"); 
             }
         }
@@ -179,7 +168,7 @@ public class ObtainXFormController extends WebMvcConfigurerAdapter
 		}
 		
 		AppConfiguration config = (AppConfiguration)session.getAttribute(SessionAttributes.APP_CONFIG);
-		config.setAppXFormLocation(xFormLocation);
+		config.setAppXFormFile(xFormFile);
 		config.setAppXFormName(xFormName);
 		session.setAttribute(SessionAttributes.APP_CONFIG, config);
 		model.addAttribute(SessionAttributes.APP_CONFIG, config);

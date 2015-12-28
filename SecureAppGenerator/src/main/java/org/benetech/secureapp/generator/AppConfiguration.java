@@ -25,6 +25,8 @@ Boston, MA 02111-1307, USA.
 
 package org.benetech.secureapp.generator;
 
+import java.io.File;
+
 public class AppConfiguration
 {
 	private static final String VERSION = "1.0 Beta 49";
@@ -46,7 +48,7 @@ public class AppConfiguration
 	private String appIconBase64Data;
 	private String appIconError;
 	private String appXFormName;
-	private String appXFormLocation;
+	private File appXFormFile;
 	private String appXFormError;
 	private String clientToken;
 	private String clientTokenError;
@@ -133,7 +135,7 @@ public class AppConfiguration
 	@Override
 	public String toString()
 	{
-		return "Name: " + appName + ", Icon Loc: " + appIconLocation + ", XForm Loc: " + appXFormLocation;
+		return "Name: " + appName + ", Icon Loc: " + appIconLocation + ", XForm Loc: " + appXFormFile.getAbsolutePath();
 	}
 
 	public String getAppIconError()
@@ -156,14 +158,14 @@ public class AppConfiguration
 		this.appXFormName = appXFormName;
 	}
 
-	public String getAppXFormLocation()
+	public File getAppXFormFile()
 	{
-		return appXFormLocation;
+		return appXFormFile;
 	}
 
-	public void setAppXFormLocation(String appXFormLocation)
+	public void setAppXFormFile(File appXFormFile)
 	{
-		this.appXFormLocation = appXFormLocation;
+		this.appXFormFile = appXFormFile;
 	}
 
 	public String getAppXFormError()

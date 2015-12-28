@@ -126,7 +126,9 @@ public class BuildingApkController extends WebMvcConfigurerAdapter
 		updateGradleSettings(secureAppBuildDir, config);
 		copyIconToApkBuild(secureAppBuildDir, config.getAppIconLocalFileLocation());
 		ObtainLogoController.deleteLogo(config);
-		copyFormToApkBuild(secureAppBuildDir, config.getAppXFormLocation());
+		File appXFormFileToUse = config.getAppXFormFile();
+		appXFormFileToUse.deleteOnExit();
+		copyFormToApkBuild(secureAppBuildDir, appXFormFileToUse);
 		File apkCreated = buildApk(session, secureAppBuildDir, config);
 		File renamedApk = renameApk(apkCreated, config);
 		copyApkToDownloads(session, renamedApk);
@@ -138,7 +140,7 @@ public class BuildingApkController extends WebMvcConfigurerAdapter
 		{
 			if(secureAppBuildDir != null)
 				FileUtils.deleteDirectory(secureAppBuildDir.getParentFile());
-			//TODO delete XForm
+			appXFormFileToUse.delete();
 		}
 		catch (IOException e)
 		{
@@ -161,11 +163,10 @@ public class BuildingApkController extends WebMvcConfigurerAdapter
 		return new File(baseBuildDir, SECURE_APP_PROJECT_DIRECTORY);
 	}
 
-	static private void copyFormToApkBuild(File baseBuildDir, String appXFormLocation) throws IOException
+	static private void copyFormToApkBuild(File baseBuildDir, File appXFormFile) throws IOException
 	{
-		File source = new File(appXFormLocation);
 		File destination = new File(baseBuildDir, APK_XFORM_FILE_LOCAL);
-		FileUtils.copyFile(source, destination);
+		FileUtils.copyFile(appXFormFile, destination);
 	}
 
 	static private void copyIconToApkBuild(File baseBuildDir, String appIconLocation) throws IOException
