@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources xmlns:android="http://schemas.android.com/apk/res/android">
 
-    <style name="VitalVoices.Theme" parent="android:Theme.Holo.Light">
+    <style name="VitalVoices.Theme" parent="android:Theme.Holo.Light.DarkActionBar">
         <item name="android:buttonStyle">@style/VitalVoices.Widget.Button</item>
         <item name="android:actionBarStyle">@style/VitalVoices.Widget.ActionBar</item>
         <item name="android:actionBarTabTextStyle">@style/VitalVoicesActionBarTabText</item>
