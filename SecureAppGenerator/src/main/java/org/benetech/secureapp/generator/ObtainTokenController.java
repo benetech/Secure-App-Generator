@@ -98,6 +98,7 @@ public class ObtainTokenController extends WebMvcConfigurerAdapter
 		{
 			try
 			{
+				SagLogger.logInfo(session, "Obtaining Token from "+ServerConstants.getCurrentServerIp());
 				getClientPublicKeyFromToken(session, appConfig);
 				updateServerConfiguration(session);
 				updateApkVersionInfoAndName(session);
@@ -107,7 +108,8 @@ public class ObtainTokenController extends WebMvcConfigurerAdapter
 			}
 			catch (TokenNotFoundException e)
 			{
-				SagLogger.logDebug(session, "Token Not Found on Server.");
+				String tokenString = appConfig.getClientToken().trim();
+				SagLogger.logDebug(session, "Token Not Found on Server.:"+tokenString);
 				appConfig.setClientTokenError("token_not_found");
 			}
 			catch (S3Exception e)
