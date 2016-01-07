@@ -46,23 +46,23 @@ public class TestAppNameValidation extends TestCaseEnhanced
 	{	
 		AppConfiguration appConfig = new AppConfiguration();
 		assertNull("no initial error msg",  appConfig.getAppNameError());
-		assertFalse("Not configured valid app name?", nameAppController.validateAppName(appConfig));
+		assertFalse("Not configured valid app name?", nameAppController.validateAppName(null, appConfig));
 		assertEquals("Incorrect error msg for not initalized appConfig with no Name", getLocalizedMessage("app_name_length"), appConfig.getAppNameError());
 		appConfig.setAppName(VALID_NAME);
 		assertEquals("App Name different?", VALID_NAME, appConfig.getAppName());
 		assertEquals("Short App name different?", VALID_NAME, appConfig.getAppNameShort());
-		assertTrue("Correct app name not valid?", nameAppController.validateAppName(appConfig));
+		assertTrue("Correct app name not valid?", nameAppController.validateAppName(null, appConfig));
 		appConfig.setAppName(NAME_TOO_SHORT);
-		assertFalse("App Name should be too short.", nameAppController.validateAppName(appConfig));
+		assertFalse("App Name should be too short.", nameAppController.validateAppName(null, appConfig));
 		assertEquals("error message for short name incorrect?", getLocalizedMessage("app_name_length"), appConfig.getAppNameError());
 		appConfig.setAppName(NAME_TOO_LONG);
-		assertFalse("App Name should be too long.", nameAppController.validateAppName(appConfig));
+		assertFalse("App Name should be too long.", nameAppController.validateAppName(null, appConfig));
 		assertEquals("error message for long name incorrect?", getLocalizedMessage("app_name_length"), appConfig.getAppNameError());
 		appConfig.setAppName(NAME_STARTING_WITH_A_NUMBER);
-		assertFalse("App Name starting with a Number", nameAppController.validateAppName(appConfig));
+		assertFalse("App Name starting with a Number", nameAppController.validateAppName(null, appConfig));
 		assertEquals("error message for name beginning with a number incorrect?", getLocalizedMessage("app_name_numeric"), appConfig.getAppNameError());
 		appConfig.setAppName(VALID_NAME_WITH_EXTRA_SPACES);
-		assertTrue("App name with beginning/ending spaces not valid?", nameAppController.validateAppName(appConfig));
+		assertTrue("App name with beginning/ending spaces not valid?", nameAppController.validateAppName(null, appConfig));
 		assertEquals("Did not strip extra spaces from app name??", VALID_NAME, appConfig.getAppName());
 		String illegalCharacters = "^!\"#$%&'()-\\.[]*+,/:;<=>?@`{|}~$";
 		char[] charArray = illegalCharacters.toCharArray();
@@ -92,7 +92,7 @@ public class TestAppNameValidation extends TestCaseEnhanced
 	private void testIllegalCharacter(AppConfiguration appConfig, char illegalCharacter)
 	{
 		appConfig.setAppName("My" + illegalCharacter + "App" );
-		assertFalse("App Name with illegal character:"+illegalCharacter , nameAppController.validateAppName(appConfig));
+		assertFalse("App Name with illegal character:"+illegalCharacter , nameAppController.validateAppName(null, appConfig));
 		assertEquals("error message incorrect for illegal character:" + illegalCharacter, getLocalizedMessage("app_name_characters"), appConfig.getAppNameError());
 	}
 
