@@ -32,34 +32,35 @@ import java.util.concurrent.TimeUnit;
 
 import javax.servlet.http.HttpSession;
 
-import org.martus.common.MartusLogger;
+import org.apache.log4j.Logger;
 
 public class SagLogger
 {
+	  static Logger log = Logger.getLogger("SecureAppGenerator");
+	
 	public static synchronized void logDebug(HttpSession session, String text)
 	{
-		logInfo(session, text);
+		log.debug(getMsgIncludingSessionIdIfPresent(session, text));
 	}
 
 	public static synchronized void logInfo(HttpSession session, String text)
 	{
-		MartusLogger.log(getMsgIncludingSessionIdIfPresent(session, text));
+		log.info(getMsgIncludingSessionIdIfPresent(session, text));
 	}
 
 	public static void logException(HttpSession session, Exception e)
 	{
-		logError(session, "Exception");
-		MartusLogger.logException(e);
+		log.error(getMsgIncludingSessionIdIfPresent(session, "Exception"), e);
 	}
 
 	public static synchronized void logError(HttpSession session, String errorMsg)
 	{
-		MartusLogger.logError(getMsgIncludingSessionIdIfPresent(session, errorMsg));
+		log.error(getMsgIncludingSessionIdIfPresent(session, errorMsg));
 	}
 
 	public static synchronized void logWarning(HttpSession session, String warningMsg)
 	{
-		MartusLogger.logWarning(getMsgIncludingSessionIdIfPresent(session, warningMsg));
+		log.warn(getMsgIncludingSessionIdIfPresent(session, warningMsg));
 	}
 	
 	public static synchronized void logProcess(HttpSession session, Process p) throws IOException
