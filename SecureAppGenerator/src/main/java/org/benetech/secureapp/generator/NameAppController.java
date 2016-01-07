@@ -40,6 +40,7 @@ public class NameAppController extends WebMvcConfigurerAdapter
 	@RequestMapping(value=WebPage.NAME_APP, method=RequestMethod.GET)
     public String directError(HttpSession session, Model model) 
     {
+		SagLogger.logWarning(session, "NAME_APP Get Request");
 		SecureAppGeneratorApplication.setInvalidResults(session);
         return WebPage.ERROR;
     }

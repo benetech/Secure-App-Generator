@@ -95,6 +95,7 @@ public class BuildingApkController extends WebMvcConfigurerAdapter
 	@RequestMapping(value=WebPage.BUILDING_APK, method=RequestMethod.GET)
     public String directError(HttpSession session, Model model) 
     {
+		SagLogger.logWarning(session, "BUILDING_APK Get Request");
 		SecureAppGeneratorApplication.setInvalidResults(session);
         return WebPage.ERROR;
     }

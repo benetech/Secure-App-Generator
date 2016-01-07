@@ -39,6 +39,7 @@ public class SummaryController extends WebMvcConfigurerAdapter
     @RequestMapping(value=WebPage.SUMMARY, method=RequestMethod.GET)
     public String directError(HttpSession session, Model model) 
     {
+		SagLogger.logWarning(session, "SUMMARY Get Request");
 		SecureAppGeneratorApplication.setInvalidResults(session);
         return WebPage.ERROR;
     }
