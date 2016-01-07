@@ -238,14 +238,12 @@ public class BuildingApkController extends WebMvcConfigurerAdapter
 	static private File buildApk(final HttpSession session, final File baseBuildDir, final AppConfiguration config) throws IOException, InterruptedException, BuildException
 	{
 		Logger.log(session, "Building " + config.getApkName());
-		Logger.logMemoryStatistics();
 		String includeLogging = "";
 		includeLogging = GRADLE_BUILD_COMMAND_LOGGING;
 		String gradleCommand = SecureAppGeneratorApplication.getGadleDirectory() + GRADLE_EXE + GRADLE_PARAMETERS + baseBuildDir + includeLogging + GRADLE_BUILD_COMMAND_RELEASE;
 		long startTime = System.currentTimeMillis();
 		int returnCode = SecureAppGeneratorApplication.executeCommand(session, gradleCommand, null);
   		long endTime = System.currentTimeMillis();
-		Logger.logMemoryStatistics();
   		String timeToBuild = Logger.getElapsedTime(startTime, endTime);
 
     		if(returnCode != EXIT_VALUE_GRADLE_SUCCESS)

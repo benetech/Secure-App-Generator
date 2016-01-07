@@ -36,13 +36,9 @@ import org.martus.common.MartusLogger;
 
 public class Logger
 {
-	private static final String VERBOSE_DEBUGGING_ON = "true";
-	private static final String DEBUG_VERBOSE_ENV = "SAG_DEBUG_VERBOSE";
-
 	public static synchronized void logVerbose(HttpSession session, String text)
 	{
-		if(verboseLogging())
-			log(session, text);
+		log(session, text);
 	}
 
 	public static synchronized void log(HttpSession session, String text)
@@ -91,12 +87,6 @@ public class Logger
 		input.close();
 	}
 	
-	private static boolean verboseLogging()
-	{
-  		String verbose = System.getenv(DEBUG_VERBOSE_ENV);
-  		return(verbose != null && verbose.toLowerCase().equals(VERBOSE_DEBUGGING_ON));
-	}
-
 	public static String getElapsedTime(long startTime, long endTime)
 	{
 		long elapsedTime = endTime-startTime;
@@ -106,11 +96,5 @@ public class Logger
    			    TimeUnit.MILLISECONDS.toSeconds(elapsedTime) - 
    			    TimeUnit.MINUTES.toSeconds(TimeUnit.MILLISECONDS.toMinutes(elapsedTime)));
 		return timeToBuild;
-	}
-	
-	public static void logMemoryStatistics()
-	{
-		if(verboseLogging())
-			MartusLogger.logMemoryStatistics();
 	}
 }
