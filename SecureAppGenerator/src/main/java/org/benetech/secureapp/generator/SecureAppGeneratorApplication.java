@@ -97,7 +97,7 @@ public class SecureAppGeneratorApplication extends SpringBootServletInitializer
 	static String getGadleDirectory()
 	{
    		String dataRootDirectory = System.getenv(SecureAppGeneratorApplication.GRADLE_HOME_ENV);
-   		Logger.logVerbose(null, "Gradle Dir:"+dataRootDirectory);
+   		Logger.logDebug(null, "Gradle Dir:"+dataRootDirectory);
    		return dataRootDirectory;
 	}
 	
@@ -156,7 +156,7 @@ public class SecureAppGeneratorApplication extends SpringBootServletInitializer
 
 	static public int executeCommand(HttpSession session, String command, File initialDirectory) throws IOException, InterruptedException
 	{
-		Logger.logVerbose(session, "Exec Command:" + command);
+		Logger.logDebug(session, "Exec Command:" + command);
 		Runtime rt = Runtime.getRuntime();
 		Process p = rt.exec(command, null, initialDirectory);
 		Logger.logProcess(session, p);		

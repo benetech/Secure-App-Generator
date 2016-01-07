@@ -148,7 +148,7 @@ public class ObtainXFormController extends WebMvcConfigurerAdapter
     				xFormName = getFormNameOnly(xmlFile.getOriginalFilename());
     				xFormFile = File.createTempFile(xFormName, XFORM_FILE_EXTENSION);
             		SecureAppGeneratorApplication.saveMultiPartFileToLocation(xmlFile, xFormFile);
-                Logger.logVerbose(session, "Uploaded XFORM Location = " + xFormFile.getAbsolutePath());
+                Logger.logDebug(session, "Uploaded XFORM Location = " + xFormFile.getAbsolutePath());
             } 
             catch (Exception e) 
             {

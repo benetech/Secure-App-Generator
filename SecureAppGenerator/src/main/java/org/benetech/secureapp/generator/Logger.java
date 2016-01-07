@@ -36,7 +36,7 @@ import org.martus.common.MartusLogger;
 
 public class Logger
 {
-	public static synchronized void logVerbose(HttpSession session, String text)
+	public static synchronized void logDebug(HttpSession session, String text)
 	{
 		log(session, text);
 	}
@@ -72,18 +72,18 @@ public class Logger
 	public static synchronized void logProcess(HttpSession session, Process p) throws IOException
 	{
 		String line;
-		logVerbose(session, "Exec Output:");
+		logDebug(session, "Exec Output:");
 		BufferedReader input = new BufferedReader(new InputStreamReader(p.getInputStream()));
 		BufferedReader error = new BufferedReader(new InputStreamReader(p.getErrorStream()));
 		while ((line = input.readLine()) != null) 
 		{
-			logVerbose(session, "  |" + line);
+			logDebug(session, "  |" + line);
 		}
 		while ((line = error.readLine()) != null) 
 		{
-			logVerbose(session, "  ||" + line);
+			logDebug(session, "  ||" + line);
 		}		
-		logVerbose(session, "Done.");
+		logDebug(session, "Done.");
 		input.close();
 	}
 	

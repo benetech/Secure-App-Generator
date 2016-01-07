@@ -106,7 +106,7 @@ public class ObtainTokenController extends WebMvcConfigurerAdapter
 			}
 			catch (TokenNotFoundException e)
 			{
-				Logger.logVerbose(session, "Token Not Found on Server.");
+				Logger.logDebug(session, "Token Not Found on Server.");
 				appConfig.setClientTokenError("token_not_found");
 			}
 			catch (S3Exception e)
@@ -200,9 +200,9 @@ public class ObtainTokenController extends WebMvcConfigurerAdapter
 			{
 				try
 				{
-					Logger.logVerbose(session, "reading keypair: " + SAG_KEYPAIR_DIRECTORY);
+					Logger.logDebug(session, "reading keypair: " + SAG_KEYPAIR_DIRECTORY);
 					security.readKeyPair(keyPair, SAG_KEYPAIR_PASSWORD.toCharArray());
-					Logger.logVerbose(session, "read keypair");
+					Logger.logDebug(session, "read keypair");
 					createNewKeypair = false;
 				}
 				catch (Exception e)
@@ -246,7 +246,7 @@ public class ObtainTokenController extends WebMvcConfigurerAdapter
  			String AccountId = singleAccountId.get(0);
 	 		config.setClientPublicKey(AccountId);
 			config.setClientPublicCode(MartusCrypto.computeFormattedPublicCode40(AccountId));
-			Logger.logVerbose(session, "Account Found:" + config.getClientPublicCode());
+			Logger.logDebug(session, "Account Found:" + config.getClientPublicCode());
 		}
 		catch (CreateDigestException | CheckDigitInvalidException e)
 		{

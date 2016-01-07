@@ -59,7 +59,7 @@ public class SummaryController extends WebMvcConfigurerAdapter
 		AppConfiguration appConfig = (AppConfiguration) session.getAttribute(SessionAttributes.APP_CONFIG);
 		String apkUrl = AmazonS3Utils.getApkUrl(appConfig.getApkName());
 		appConfig.setApkURL(apkUrl);
-		Logger.logVerbose(session, "URL to apk = " + apkUrl);
+		Logger.logDebug(session, "URL to apk = " + apkUrl);
 		model.addAttribute(SessionAttributes.APP_CONFIG, appConfig);
 		session.setAttribute(SessionAttributes.APP_CONFIG, appConfig);
 		BuildingApkController.startTheBuild(session, model);

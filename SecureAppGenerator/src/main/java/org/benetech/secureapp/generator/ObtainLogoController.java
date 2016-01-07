@@ -86,7 +86,7 @@ public class ObtainLogoController extends WebMvcConfigurerAdapter
 
             		File tempIconLocation = File.createTempFile(LOGO_FILE_NAME, PNG_EXT);
             		String logoAbsolutePath = tempIconLocation.getAbsolutePath();
-				Logger.logVerbose(session, "Uploaded Icon Location" + logoAbsolutePath);
+				Logger.logDebug(session, "Uploaded Icon Location" + logoAbsolutePath);
                	tempIconLocation.deleteOnExit();
               	
             		SecureAppGeneratorApplication.saveMultiPartFileToLocation(iconFile, tempIconLocation);

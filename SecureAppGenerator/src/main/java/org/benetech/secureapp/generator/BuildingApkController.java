@@ -260,9 +260,9 @@ public class BuildingApkController extends WebMvcConfigurerAdapter
 
 	static public void copyApkToDownloads(final HttpSession session, final File apkFile) throws S3Exception
 	{
-		Logger.logVerbose(session, "Uploading APK To S3");
+		Logger.logDebug(session, "Uploading APK To S3");
 		AmazonS3Utils.uploadToAmazonS3(session, apkFile);
-		Logger.logVerbose(session, "Upload Complete.");
+		Logger.logDebug(session, "Upload Complete.");
 	}
 	
 	static private void copyDefaultBuildFilesToStagingArea(HttpSession session, File baseBuildDir) throws IOException
