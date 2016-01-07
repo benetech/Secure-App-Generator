@@ -38,10 +38,10 @@ public class Logger
 {
 	public static synchronized void logDebug(HttpSession session, String text)
 	{
-		log(session, text);
+		logInfo(session, text);
 	}
 
-	public static synchronized void log(HttpSession session, String text)
+	public static synchronized void logInfo(HttpSession session, String text)
 	{
 		MartusLogger.log(getMsgIncludingSessionIdIfPresent(session, text));
 	}

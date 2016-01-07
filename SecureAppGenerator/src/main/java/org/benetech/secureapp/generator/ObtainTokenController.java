@@ -214,7 +214,7 @@ public class ObtainTokenController extends WebMvcConfigurerAdapter
  			
 			if(createNewKeypair)
 			{
-				Logger.log(session, "Creating new SAG Keypair");
+				Logger.logInfo(session, "Creating new SAG Keypair");
 				File keyPairDir = new File(SAG_KEYPAIR_DIRECTORY);
 				if(!keyPairDir.exists())
 					keyPairDir.mkdirs();
@@ -223,7 +223,7 @@ public class ObtainTokenController extends WebMvcConfigurerAdapter
 				security.writeKeyPair(outputStream, SAG_KEYPAIR_PASSWORD.toCharArray());
 				outputStream.flush();
 				outputStream.close();
-				Logger.log(session, "Created Keypair");
+				Logger.logInfo(session, "Created Keypair");
 			}
 			String tokenString = appConfig.getClientToken();
 			MartusAccountAccessToken accessToken = new MartusAccountAccessToken(tokenString);

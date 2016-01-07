@@ -142,7 +142,7 @@ public class ObtainXFormController extends WebMvcConfigurerAdapter
             {
             		if(!xmlFile.getContentType().contains(XML_TYPE))
             		{
-            			Logger.log(session, "Non-XML xForm: " + xmlFile.getContentType());
+            			Logger.logInfo(session, "Non-XML xForm: " + xmlFile.getContentType());
              		return returnLocalizedErrorMessage(model, appConfig, "xform_file_type_invalid"); 
             		}
     				xFormName = getFormNameOnly(xmlFile.getOriginalFilename());

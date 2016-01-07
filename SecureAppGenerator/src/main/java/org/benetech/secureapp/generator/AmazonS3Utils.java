@@ -94,7 +94,7 @@ public class AmazonS3Utils
 			acl.grantPermission(GroupGrantee.AllUsers, Permission.Read);
 			s3client.putObject(new PutObjectRequest(bucketName, getAPKDownloadFilePathWithFile(fileToUpload.getName()),  fileToUpload).withAccessControlList(acl));
 
-			Logger.log(session, "Finished uploading to S3");
+			Logger.logInfo(session, "Finished uploading to S3");
 		}
 		catch (Exception e)
 		{
@@ -163,7 +163,7 @@ public class AmazonS3Utils
 	static private String getDownloadS3Bucket()
 	{
 		String bucket = System.getenv(AMAZON_S3_DOWNLOAD_BUCKET_ENV);
-		Logger.log(null, "Bucket =" + bucket);
+		Logger.logInfo(null, "Bucket =" + bucket);
   		return bucket;
 	}
 	

@@ -237,7 +237,7 @@ public class BuildingApkController extends WebMvcConfigurerAdapter
 
 	static private File buildApk(final HttpSession session, final File baseBuildDir, final AppConfiguration config) throws IOException, InterruptedException, BuildException
 	{
-		Logger.log(session, "Building " + config.getApkName());
+		Logger.logInfo(session, "Building " + config.getApkName());
 		String includeLogging = "";
 		includeLogging = GRADLE_BUILD_COMMAND_LOGGING;
 		String gradleCommand = SecureAppGeneratorApplication.getGadleDirectory() + GRADLE_EXE + GRADLE_PARAMETERS + baseBuildDir + includeLogging + GRADLE_BUILD_COMMAND_RELEASE;
@@ -252,7 +252,7 @@ public class BuildingApkController extends WebMvcConfigurerAdapter
 	   		throw new BuildException("Error creating APK");
    		}
     		
-  		Logger.log(session, "Build succeeded:" + timeToBuild);
+  		Logger.logInfo(session, "Build succeeded:" + timeToBuild);
   		String tempaApkBuildFileDirectory = baseBuildDir.getAbsolutePath() + APK_LOCAL_FILE_DIRECTORY;
 		File appFileCreated = new File(tempaApkBuildFileDirectory, config.getGradleApkRawBuildFileName());
 		return appFileCreated;
@@ -268,7 +268,7 @@ public class BuildingApkController extends WebMvcConfigurerAdapter
 	static private void copyDefaultBuildFilesToStagingArea(HttpSession session, File baseBuildDir) throws IOException
 	{
 		File source = new File(SecureAppGeneratorApplication.getOriginalBuildDirectory());
-		Logger.log(session, "Copying Build directory, from:" + source.getAbsolutePath() + " to: "+ baseBuildDir.getAbsolutePath());
+		Logger.logInfo(session, "Copying Build directory, from:" + source.getAbsolutePath() + " to: "+ baseBuildDir.getAbsolutePath());
 		FileUtils.copyDirectory(source, baseBuildDir);
 	}
 

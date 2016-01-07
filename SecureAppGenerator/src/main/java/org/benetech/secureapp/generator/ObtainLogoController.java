@@ -78,7 +78,7 @@ public class ObtainLogoController extends WebMvcConfigurerAdapter
             {
             		if(iconFile.getSize() > MAX_IMAGE_SIZE)
             		{
-            			Logger.log(session, "Error Logo exceeded max size: " + iconFile.getSize());
+            			Logger.logInfo(session, "Error Logo exceeded max size: " + iconFile.getSize());
             	      	appConfig.setAppIconError("logo_file_size");
             			model.addAttribute(SessionAttributes.APP_CONFIG, appConfig);
          			return WebPage.OBTAIN_LOGO; 
@@ -104,7 +104,7 @@ public class ObtainLogoController extends WebMvcConfigurerAdapter
 				}
             		if(unableToResizeToPngImage(session, resizedIconForWebPages))
             		{
-            			Logger.log(session, "Error Non-PNG Logo Image: " + iconFile.getContentType());
+            			Logger.logInfo(session, "Error Non-PNG Logo Image: " + iconFile.getContentType());
             	      	appConfig.setAppIconError("logo_file_type_invalid");
             			model.addAttribute(SessionAttributes.APP_CONFIG, appConfig);
          			return WebPage.OBTAIN_LOGO; 
