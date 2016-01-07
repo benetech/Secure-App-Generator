@@ -46,13 +46,6 @@ public class Logger
 		MartusLogger.log(getMsgIncludingSessionIdIfPresent(session, text));
 	}
 
-	private static String getMsgIncludingSessionIdIfPresent(HttpSession session, String text)
-	{
-		if(session != null)
-			return session.getId() + " | " + text;
-		return text;
-	}
-
 	public static void logException(HttpSession session, Exception e)
 	{
 		logError(session, "Exception");
@@ -96,5 +89,12 @@ public class Logger
    			    TimeUnit.MILLISECONDS.toSeconds(elapsedTime) - 
    			    TimeUnit.MINUTES.toSeconds(TimeUnit.MILLISECONDS.toMinutes(elapsedTime)));
 		return timeToBuild;
+	}
+	
+	private static String getMsgIncludingSessionIdIfPresent(HttpSession session, String text)
+	{
+		if(session != null)
+			return session.getId() + " | " + text;
+		return text;
 	}
 }
