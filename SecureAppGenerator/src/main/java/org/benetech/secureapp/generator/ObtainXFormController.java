@@ -142,17 +142,17 @@ public class ObtainXFormController extends WebMvcConfigurerAdapter
             {
             		if(!xmlFile.getContentType().contains(XML_TYPE))
             		{
-            			Logger.logInfo(session, "Non-XML xForm: " + xmlFile.getContentType());
+            			SagLogger.logInfo(session, "Non-XML xForm: " + xmlFile.getContentType());
              		return returnLocalizedErrorMessage(model, appConfig, "xform_file_type_invalid"); 
             		}
     				xFormName = getFormNameOnly(xmlFile.getOriginalFilename());
     				xFormFile = File.createTempFile(xFormName, XFORM_FILE_EXTENSION);
             		SecureAppGeneratorApplication.saveMultiPartFileToLocation(xmlFile, xFormFile);
-                Logger.logDebug(session, "Uploaded XFORM Location = " + xFormFile.getAbsolutePath());
+                SagLogger.logDebug(session, "Uploaded XFORM Location = " + xFormFile.getAbsolutePath());
             } 
             catch (Exception e) 
             {
-            		Logger.logException(session, e);
+            		SagLogger.logException(session, e);
         			xFormFile.delete();
             		return returnLocalizedErrorMessage(model, appConfig, "xform_upload_failed"); 
             }
@@ -407,7 +407,7 @@ public class ObtainXFormController extends WebMvcConfigurerAdapter
 		}
 		catch (IOException e)
 		{
-			Logger.logException(session, e);
+			SagLogger.logException(session, e);
     			SecureAppGeneratorApplication.setInvalidResults(session, "failed_copy_file", e);
 		    return null;
 		}

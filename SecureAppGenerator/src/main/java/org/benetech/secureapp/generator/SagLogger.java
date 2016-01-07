@@ -34,7 +34,7 @@ import javax.servlet.http.HttpSession;
 
 import org.martus.common.MartusLogger;
 
-public class Logger
+public class SagLogger
 {
 	public static synchronized void logDebug(HttpSession session, String text)
 	{
