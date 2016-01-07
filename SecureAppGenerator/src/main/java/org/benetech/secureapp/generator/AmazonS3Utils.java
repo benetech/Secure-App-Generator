@@ -98,6 +98,7 @@ public class AmazonS3Utils
 		}
 		catch (Exception e)
 		{
+			SagLogger.logException(session, e);
 			throw new S3Exception(e);
 		}
 	}
