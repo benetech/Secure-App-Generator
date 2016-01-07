@@ -92,7 +92,6 @@ public class ObtainTokenController extends WebMvcConfigurerAdapter
     }
 	
 	@RequestMapping(value=WebPage.OBTAIN_CLIENT_TOKEN_NEXT, method=RequestMethod.POST)
-	
 	public String nextPage(HttpSession session, Model model, AppConfiguration appConfig) 
     {
 		if(isValidToken(session, appConfig)) 
@@ -103,6 +102,7 @@ public class ObtainTokenController extends WebMvcConfigurerAdapter
 				updateServerConfiguration(session);
 				updateApkVersionInfoAndName(session);
 				model.addAttribute(SessionAttributes.APP_CONFIG, appConfig);
+				SagLogger.logInfo(session, "Token Found");
 				return WebPage.SUMMARY;
 			}
 			catch (TokenNotFoundException e)
