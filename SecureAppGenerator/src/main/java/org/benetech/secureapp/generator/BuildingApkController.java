@@ -34,7 +34,6 @@ import javax.servlet.http.HttpSession;
 
 import org.apache.commons.io.FileUtils;
 import org.benetech.secureapp.generator.AmazonS3Utils.S3Exception;
-import org.benetech.secureapp.generator.BuildException;
 import org.imgscalr.Scalr;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -59,7 +58,7 @@ public class BuildingApkController extends WebMvcConfigurerAdapter
 
     private static final String APP_NAME_XML = "appName";
 	private static final String APP_CUSTOM_APPLICATION_ID_XML = "customApplicationId";
-	private static final String APP_BASE_APPLICATION_ID = "org.benetech.secureapp.";
+	public static final String APP_BASE_APPLICATION_ID = "org.benetech.secureapp.";
 	private static final String VERSION_SAG_BUILD_XML = "versionSagBuild";
     private static final String LOGO_NAME_PNG = "ic_launcher_secure_app.png";
 	private static final String XML_DESKTOP_PUBLIC_KEY = "public_key_desktop";
@@ -201,12 +200,35 @@ public class BuildingApkController extends WebMvcConfigurerAdapter
 		appendGradleValue(data, VERSION_BUILD_XML, config.getApkVersionBuild());
 		appendGradleValue(data, VERSION_SAG_BUILD_XML, config.getApkSagVersionBuild());
 		appendGradleValue(data, APP_NAME_XML, config.getAppName());
-		appendGradleValue(data, APP_CUSTOM_APPLICATION_ID_XML, APP_BASE_APPLICATION_ID + config.getAppNameWithoutSpaces());
+		String uniqueAppId = getUniqueAppId(config.getAppNameWithoutSpaces());
+		appendGradleValue(data, APP_CUSTOM_APPLICATION_ID_XML, uniqueAppId);
 
 		File apkResourseFile = new File(baseBuildDir, GRADLE_GENERATED_SETTINGS_FILE);
   		SecureAppGeneratorApplication.writeDataToFile(apkResourseFile, data);
  	}
 		
+	public static String getUniqueAppId(String appNameWithoutSpaces)
+	{
+		String hashName = APP_BASE_APPLICATION_ID;
+		hashName += convertToAlpha(appNameWithoutSpaces.hashCode());
+		hashName += ".";
+		hashName += convertToAlpha(System.currentTimeMillis());
+		return hashName;
+	}
+
+	private static String convertToAlpha(long value)
+	{
+		String currentTime = String.valueOf(Math.abs(value));
+		String characterOnly = "";
+		for(int i = 0; i < currentTime.length(); ++i)
+		{
+			char tmp = currentTime.charAt(i);
+			tmp += 17;
+			characterOnly += tmp;
+		}
+		return characterOnly;
+	}
+
 	static private void updateApkSettings(File baseBuildDir, AppConfiguration config) throws IOException
 	{
 		StringBuilder data = new StringBuilder("<?xml version=\"1.0\" encoding=\"utf-8\"?>\n");

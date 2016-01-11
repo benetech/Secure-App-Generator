@@ -81,21 +81,9 @@ public class NameAppController extends WebMvcConfigurerAdapter
 			return false;
 		}
 		
-		if(startsWithNumber(name))
-		{
-			SagLogger.logWarning(session, "App Name:startsWithNumber");
-			appConfig.setAppNameError("app_name_numeric");
-			return false;
-		}
-		if (!name.matches("^[^!\"#$%&'()\\[\\]*.+,/:;<=>?@\\^`{|}~]+$")) 
+		if (!name.matches("^[^!\"#$%&'\\[\\]*.+,/:;<=>?@\\^`{|}~]+$")) 
 		{
 			SagLogger.logWarning(session, "App Name:invalid char");
-			appConfig.setAppNameError("app_name_characters");
-			return false;
-		}
-		if(name.indexOf('-')>=0)//FixMe: Regex did not work for some reason
-		{
-			SagLogger.logWarning(session, "App Name:invalid char -");
 			appConfig.setAppNameError("app_name_characters");
 			return false;
 		}
@@ -108,14 +96,4 @@ public class NameAppController extends WebMvcConfigurerAdapter
 		appConfig.setAppNameError(null);
 		return true;
 	}
-	
-	public boolean startsWithNumber(String str)
-	{
-	    char[] c = str.toCharArray();
-	    if (!Character.isDigit(c[0])) 
-	        	return false;
-	    return true;
-	}
-	
-
 }

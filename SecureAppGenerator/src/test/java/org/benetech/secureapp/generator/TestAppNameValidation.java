@@ -59,12 +59,12 @@ public class TestAppNameValidation extends TestCaseEnhanced
 		assertFalse("App Name should be too long.", nameAppController.validateAppName(null, appConfig));
 		assertEquals("error message for long name incorrect?", getLocalizedMessage("app_name_length"), appConfig.getAppNameError());
 		appConfig.setAppName(NAME_STARTING_WITH_A_NUMBER);
-		assertFalse("App Name starting with a Number", nameAppController.validateAppName(null, appConfig));
-		assertEquals("error message for name beginning with a number incorrect?", getLocalizedMessage("app_name_numeric"), appConfig.getAppNameError());
+		assertTrue("App Name starting with a Number is now allowed", nameAppController.validateAppName(null, appConfig));
+		assertNull("error message for name beginning with a number incorrect?", appConfig.getAppNameError());
 		appConfig.setAppName(VALID_NAME_WITH_EXTRA_SPACES);
 		assertTrue("App name with beginning/ending spaces not valid?", nameAppController.validateAppName(null, appConfig));
 		assertEquals("Did not strip extra spaces from app name??", VALID_NAME, appConfig.getAppName());
-		String illegalCharacters = "^!\"#$%&'()-\\.[]*+,/:;<=>?@`{|}~$";
+		String illegalCharacters = "^!\"#$%&'\\.[]*+,/:;<=>?@`{|}~$";
 		char[] charArray = illegalCharacters.toCharArray();
 		for(int i = 0; i < illegalCharacters.length(); ++i)
 		{
@@ -86,14 +86,38 @@ public class TestAppNameValidation extends TestCaseEnhanced
 		appConfig.setAppName(LONG_ARABIC_NAME);
 		assertEquals("Arabic App Name different?", LONG_ARABIC_NAME, appConfig.getAppName());
 		assertEquals("Arabic Short App name different?", SHORT_ARABIC_NAME, appConfig.getAppNameShort());
+
 	}
-	//TODO add test for following illegal characters [^!\"#$%&'()\\[\\]*+,/:;<=>?@\\^`{|}~]+$
 
 	private void testIllegalCharacter(AppConfiguration appConfig, char illegalCharacter)
 	{
 		appConfig.setAppName("My" + illegalCharacter + "App" );
 		assertFalse("App Name with illegal character:"+illegalCharacter , nameAppController.validateAppName(null, appConfig));
 		assertEquals("error message incorrect for illegal character:" + illegalCharacter, getLocalizedMessage("app_name_characters"), appConfig.getAppNameError());
+	}
+	
+	public void testAppId() throws Exception
+	{
+		String appName = "MyApp1";
+		String firstAppId = BuildingApkController.getUniqueAppId(appName);
+		Thread.sleep(1);
+		String secondAppId = BuildingApkController.getUniqueAppId(appName);
+		assertNotEquals(firstAppId, secondAppId);
+		assertStartsWith(BuildingApkController.APP_BASE_APPLICATION_ID, firstAppId);
+		assertTrue("UniqueId must not contain characters other than (A-z and .)", checkUniqueIdForInvalidCharacters(firstAppId));
+	}
+
+	private boolean checkUniqueIdForInvalidCharacters(String id)
+	{
+		for(int i=0; i < id.length(); ++i)
+		{
+			char charAt = id.charAt(i);
+			if(charAt == '.')
+				continue;
+			if(!Character.isLetter(charAt))
+				return false;
+		}
+		return true;
 	}
 
 	public String getLocalizedMessage(String msg)
