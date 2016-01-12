@@ -73,11 +73,17 @@ public class SecureFileStorageManager {
         try
         {
             VirtualFileSystem.get().unmount();
+			if (VirtualFileSystem.get().isMounted())
+				throw new Exception("Failed to unmount secure file system");
         }
-        catch (IllegalStateException ise)
-        {
-            Log.d("IOCipher","error unmounting - still active?",ise);
-        }
+		catch (IllegalStateException e)
+		{
+			Log.e("IOCipher","error unmounting - still active?", e);
+		}
+		catch (Exception e )
+		{
+			Log.e(TAG, e.getMessage(), e);
+		}
 	}
 
 	public boolean isFilesystemMounted() {

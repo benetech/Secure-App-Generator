@@ -1,10 +1,13 @@
 package org.benetech.secureapp.application;
 
+import android.app.Activity;
 import android.content.Context;
 import android.support.multidex.MultiDex;
 import android.util.Log;
 
 import org.benetech.secureapp.R;
+import org.benetech.secureapp.activities.AppTimoutManager;
+import org.benetech.secureapp.activities.LogoutActivityHandler;
 import org.benetech.secureapp.activities.MainActivity;
 import org.benetech.secureapp.collect.io.SecureFileStorageManager;
 import org.martus.android.library.io.SecureFile;
@@ -23,6 +26,7 @@ public class MainApplication extends Collect {
     private static SecureFileStorageManager sSecureStorage;
     private static int sNumSecureStorageHolds;
     private static final String SECURE_STORAGE_FOLDER_NAME = "secureStorage";
+    private AppTimoutManager appTimeoutManager;
 
     @Override
     protected void attachBaseContext(Context base) {
@@ -38,6 +42,7 @@ public class MainApplication extends Collect {
         // Assign a path on this application's internal storage for the secure filesystem
 
         sSecureStoragePath = new File(this.getFilesDir(), SECURE_STORAGE_FOLDER_NAME).getAbsolutePath();
+        appTimeoutManager = new AppTimoutManager(this);
     }
 
     public void mountSecureStorage(CacheWordHandler cacheWordActivityHandler) {
@@ -77,5 +82,13 @@ public class MainApplication extends Collect {
     	} else {
     		Log.w(TAG, getString(R.string.error_message_unmountSecureStorage_called_with_no_storage_mounted));
     	}
+    }
+
+    public void resetInactivityTimer() {
+        appTimeoutManager.resetInactivityTimer();
+    }
+
+    public void registerLogoutHandler(LogoutActivityHandler logoutActivityHandler) {
+        appTimeoutManager.registerLogoutHandler(logoutActivityHandler);
     }
 }

@@ -46,7 +46,7 @@ import info.guardianproject.cacheword.CacheWordHandler;
 import info.guardianproject.cacheword.ICacheWordSubscriber;
 
 
-public class MainActivity extends ListActivity implements ICacheWordSubscriber, FormAdapterItemClickListener, LoaderCallbacks<Cursor>, MartusUploadManager.MartusUploadManagerCallback {
+public class MainActivity extends ListActivity implements ICacheWordSubscriber, FormAdapterItemClickListener, LoaderCallbacks<Cursor>, MartusUploadManager.MartusUploadManagerCallback, LogoutActivityHandler {
 
     private static final String TAG = "MainActivity";
     private CacheWordHandler cacheWordActivityHandler;
@@ -69,12 +69,29 @@ public class MainActivity extends ListActivity implements ICacheWordSubscriber, 
 
         enableOdkSwipeAndButtonNavigations();
         setTitle(getString(R.string.app_name));
+        ((MainApplication)getApplication()).registerLogoutHandler(this);
+    }
+
+    @Override
+    public void onUserInteraction() {
+        ((MainApplication)getApplication()).resetInactivityTimer();
+
+        super.onUserInteraction();
+    }
+
+    @Override
+    public void logout() {
+        cacheWordActivityHandler.lock();
+        cacheWordActivityHandler.disconnectFromService();
+
+        Intent intent = new Intent(this, LoginActivity.class);
+        finish();
+        startActivity(intent);
     }
 
     @Override
     public void onBackPressed() {
-        cacheWordActivityHandler.lock();
-        cacheWordActivityHandler.disconnectFromService();
+        logout();
 
         super.onBackPressed();
     }
