@@ -78,7 +78,7 @@ public class ObtainLogoController extends WebMvcConfigurerAdapter
             {
             		if(iconFile.getSize() > MAX_IMAGE_SIZE)
             		{
-            			Logger.logInfo(session, "Error Logo exceeded max size: " + iconFile.getSize());
+            			SagLogger.logInfo(session, "Error Logo exceeded max size: " + iconFile.getSize());
             	      	appConfig.setAppIconError("logo_file_size");
             			model.addAttribute(SessionAttributes.APP_CONFIG, appConfig);
          			return WebPage.OBTAIN_LOGO; 
@@ -86,7 +86,7 @@ public class ObtainLogoController extends WebMvcConfigurerAdapter
 
             		File tempIconLocation = File.createTempFile(LOGO_FILE_NAME, PNG_EXT);
             		String logoAbsolutePath = tempIconLocation.getAbsolutePath();
-				Logger.logDebug(session, "Uploaded Icon Location" + logoAbsolutePath);
+				SagLogger.logDebug(session, "Uploaded Icon Location" + logoAbsolutePath);
                	tempIconLocation.deleteOnExit();
               	
             		SecureAppGeneratorApplication.saveMultiPartFileToLocation(iconFile, tempIconLocation);
@@ -100,11 +100,11 @@ public class ObtainLogoController extends WebMvcConfigurerAdapter
 				}
 				catch (Exception e)
 				{
-        				Logger.logException(session, e);
+        				SagLogger.logException(session, e);
 				}
             		if(unableToResizeToPngImage(session, resizedIconForWebPages))
             		{
-            			Logger.logInfo(session, "Error Non-PNG Logo Image: " + iconFile.getContentType());
+            			SagLogger.logInfo(session, "Error Non-PNG Logo Image: " + iconFile.getContentType());
             	      	appConfig.setAppIconError("logo_file_type_invalid");
             			model.addAttribute(SessionAttributes.APP_CONFIG, appConfig);
          			return WebPage.OBTAIN_LOGO; 
@@ -115,7 +115,7 @@ public class ObtainLogoController extends WebMvcConfigurerAdapter
             } 
             catch (Exception e) 
             {
-            		Logger.logException(session, e);
+            		SagLogger.logException(session, e);
             		SecureAppGeneratorApplication.setInvalidResults(session, "upload_logo_failed", e);
                 return WebPage.ERROR;
             }
@@ -139,7 +139,7 @@ public class ObtainLogoController extends WebMvcConfigurerAdapter
 		}
 		catch (Exception e)
 		{
-    			Logger.logException(session, e);
+    			SagLogger.logException(session, e);
 		}
 		return true;
 	}

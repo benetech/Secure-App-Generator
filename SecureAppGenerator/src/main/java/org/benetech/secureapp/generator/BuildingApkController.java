@@ -144,7 +144,7 @@ public class BuildingApkController extends WebMvcConfigurerAdapter
 		}
 		catch (IOException e)
 		{
-			Logger.logException(session, e);			
+			SagLogger.logException(session, e);			
 		}			
 	}
 	
@@ -237,22 +237,22 @@ public class BuildingApkController extends WebMvcConfigurerAdapter
 
 	static private File buildApk(final HttpSession session, final File baseBuildDir, final AppConfiguration config) throws IOException, InterruptedException, BuildException
 	{
-		Logger.logInfo(session, "Building " + config.getApkName());
+		SagLogger.logInfo(session, "Building " + config.getApkName());
 		String includeLogging = "";
 		includeLogging = GRADLE_BUILD_COMMAND_LOGGING;
 		String gradleCommand = SecureAppGeneratorApplication.getGadleDirectory() + GRADLE_EXE + GRADLE_PARAMETERS + baseBuildDir + includeLogging + GRADLE_BUILD_COMMAND_RELEASE;
 		long startTime = System.currentTimeMillis();
 		int returnCode = SecureAppGeneratorApplication.executeCommand(session, gradleCommand, null);
   		long endTime = System.currentTimeMillis();
-  		String timeToBuild = Logger.getElapsedTime(startTime, endTime);
+  		String timeToBuild = SagLogger.getElapsedTime(startTime, endTime);
 
     		if(returnCode != EXIT_VALUE_GRADLE_SUCCESS)
    		{
-   			Logger.logError(session, "Build return code:" + returnCode);
+   			SagLogger.logError(session, "Build return code:" + returnCode);
 	   		throw new BuildException("Error creating APK");
    		}
     		
-  		Logger.logInfo(session, "Build succeeded:" + timeToBuild);
+  		SagLogger.logInfo(session, "Build succeeded:" + timeToBuild);
   		String tempaApkBuildFileDirectory = baseBuildDir.getAbsolutePath() + APK_LOCAL_FILE_DIRECTORY;
 		File appFileCreated = new File(tempaApkBuildFileDirectory, config.getGradleApkRawBuildFileName());
 		return appFileCreated;
@@ -260,15 +260,15 @@ public class BuildingApkController extends WebMvcConfigurerAdapter
 
 	static public void copyApkToDownloads(final HttpSession session, final File apkFile) throws S3Exception
 	{
-		Logger.logDebug(session, "Uploading APK To S3");
+		SagLogger.logDebug(session, "Uploading APK To S3");
 		AmazonS3Utils.uploadToAmazonS3(session, apkFile);
-		Logger.logDebug(session, "Upload Complete.");
+		SagLogger.logDebug(session, "Upload Complete.");
 	}
 	
 	static private void copyDefaultBuildFilesToStagingArea(HttpSession session, File baseBuildDir) throws IOException
 	{
 		File source = new File(SecureAppGeneratorApplication.getOriginalBuildDirectory());
-		Logger.logInfo(session, "Copying Build directory, from:" + source.getAbsolutePath() + " to: "+ baseBuildDir.getAbsolutePath());
+		SagLogger.logInfo(session, "Copying Build directory, from:" + source.getAbsolutePath() + " to: "+ baseBuildDir.getAbsolutePath());
 		FileUtils.copyDirectory(source, baseBuildDir);
 	}
 
@@ -300,7 +300,7 @@ public class BuildingApkController extends WebMvcConfigurerAdapter
 			}
 			catch (Exception e)
 			{
-				Logger.logException(session, e);
+				SagLogger.logException(session, e);
 				config.setApkBuildError("generating_apk");
 			}
 			model.addAttribute(SessionAttributes.APP_CONFIG, config);

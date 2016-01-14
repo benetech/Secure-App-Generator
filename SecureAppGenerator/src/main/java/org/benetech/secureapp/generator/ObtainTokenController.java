@@ -106,22 +106,22 @@ public class ObtainTokenController extends WebMvcConfigurerAdapter
 			}
 			catch (TokenNotFoundException e)
 			{
-				Logger.logDebug(session, "Token Not Found on Server.");
+				SagLogger.logDebug(session, "Token Not Found on Server.");
 				appConfig.setClientTokenError("token_not_found");
 			}
 			catch (S3Exception e)
 			{
-				Logger.logException(session, e);
+				SagLogger.logException(session, e);
 				appConfig.setClientTokenError("server_s3");
 			}
 			catch (AuthorizationFailedException e)
 			{
-				Logger.logException(session, e);
+				SagLogger.logException(session, e);
 				appConfig.setClientTokenError("crypto_authorization_failed");
 			}
 			catch (Exception e)
 			{
-				Logger.logException(session, e);
+				SagLogger.logException(session, e);
 				appConfig.setClientTokenError("server_token");
 			}
 		}
@@ -200,21 +200,21 @@ public class ObtainTokenController extends WebMvcConfigurerAdapter
 			{
 				try
 				{
-					Logger.logDebug(session, "reading keypair: " + SAG_KEYPAIR_DIRECTORY);
+					SagLogger.logDebug(session, "reading keypair: " + SAG_KEYPAIR_DIRECTORY);
 					security.readKeyPair(keyPair, SAG_KEYPAIR_PASSWORD.toCharArray());
-					Logger.logDebug(session, "read keypair");
+					SagLogger.logDebug(session, "read keypair");
 					createNewKeypair = false;
 				}
 				catch (Exception e)
 				{
-					Logger.logException(session, e);
+					SagLogger.logException(session, e);
 					createNewKeypair = true;
 				}
 			}
  			
 			if(createNewKeypair)
 			{
-				Logger.logInfo(session, "Creating new SAG Keypair");
+				SagLogger.logInfo(session, "Creating new SAG Keypair");
 				File keyPairDir = new File(SAG_KEYPAIR_DIRECTORY);
 				if(!keyPairDir.exists())
 					keyPairDir.mkdirs();
@@ -223,7 +223,7 @@ public class ObtainTokenController extends WebMvcConfigurerAdapter
 				security.writeKeyPair(outputStream, SAG_KEYPAIR_PASSWORD.toCharArray());
 				outputStream.flush();
 				outputStream.close();
-				Logger.logInfo(session, "Created Keypair");
+				SagLogger.logInfo(session, "Created Keypair");
 			}
 			String tokenString = appConfig.getClientToken();
 			MartusAccountAccessToken accessToken = new MartusAccountAccessToken(tokenString);
@@ -236,7 +236,7 @@ public class ObtainTokenController extends WebMvcConfigurerAdapter
  				throw new ServerCallFailedException();
  			if(!response.getResultCode().equals(NetworkInterfaceConstants.OK))
  			{
- 				Logger.logError(session, "Token Network returncode:" +response.getResultCode());
+ 				SagLogger.logError(session, "Token Network returncode:" +response.getResultCode());
  				throw new ServerNotAvailableException();
  			}
  			
@@ -246,11 +246,11 @@ public class ObtainTokenController extends WebMvcConfigurerAdapter
  			String AccountId = singleAccountId.get(0);
 	 		config.setClientPublicKey(AccountId);
 			config.setClientPublicCode(MartusCrypto.computeFormattedPublicCode40(AccountId));
-			Logger.logDebug(session, "Account Found:" + config.getClientPublicCode());
+			SagLogger.logDebug(session, "Account Found:" + config.getClientPublicCode());
 		}
 		catch (CreateDigestException | CheckDigitInvalidException e)
 		{
-			Logger.logException(session, e);
+			SagLogger.logException(session, e);
 			throw new TokenNotFoundException();
 		}
  		session.setAttribute(SessionAttributes.APP_CONFIG, config);
@@ -267,7 +267,7 @@ public class ObtainTokenController extends WebMvcConfigurerAdapter
 		}
 		catch (TokenInvalidException e)
 		{
-			Logger.logError(session, "Token invalid:" + tokenString);
+			SagLogger.logError(session, "Token invalid:" + tokenString);
 			appConfig.setClientTokenError("token_invalid");
 			return false;
 		}
