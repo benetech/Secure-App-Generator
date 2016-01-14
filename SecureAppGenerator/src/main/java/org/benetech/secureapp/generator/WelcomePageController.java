@@ -41,7 +41,6 @@ public class WelcomePageController extends WebMvcConfigurerAdapter
 	String index(HttpSession session) throws Exception 
 	{
 		initialSetup(session);
-		SagLogger.logInfo(session, "Starting SAG");
 	    return WebPage.WELCOME;
 	}
 
