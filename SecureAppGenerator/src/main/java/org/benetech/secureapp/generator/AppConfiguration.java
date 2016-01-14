@@ -29,7 +29,7 @@ import java.io.File;
 
 public class AppConfiguration
 {
-	private static final String VERSION = "1.0 Beta 52";
+	private static final String VERSION = "1.0 Beta 52b";
 	private static final char DASH_CHAR = '-';
 	private static final String APK_EXTENSION = ".apk";
 	private static final String DEBUG_APK_EXTENSION = "-release" + APK_EXTENSION;

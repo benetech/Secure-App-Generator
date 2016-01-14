@@ -100,16 +100,13 @@ public class BuildingApkController extends WebMvcConfigurerAdapter
     }
 
 	@RequestMapping(value=WebPage.BUILDING_APK_NEXT, method=RequestMethod.POST)	
-	public String finishedBuild(HttpSession session, Model model) throws Exception 
+	public String initiateBuild(HttpSession session, Model model) throws Exception 
     {
 		AppConfiguration config = (AppConfiguration)session.getAttribute(SessionAttributes.APP_CONFIG);
 		model.addAttribute(SessionAttributes.APP_CONFIG, config);
 		if(config.getApkBuildError() == null)
-		{
-			SagLogger.logInfo(session, "Finished SAG");
 			return WebPage.FINAL;
-		}
-		SagLogger.logError(session, "SAG Build Failed.");
+
 		SecureAppGeneratorApplication.setInvalidResults(session, config.getApkBuildError());
 		return WebPage.ERROR;
     }
