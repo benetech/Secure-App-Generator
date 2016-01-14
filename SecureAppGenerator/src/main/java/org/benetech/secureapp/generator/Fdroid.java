@@ -56,7 +56,7 @@ public class Fdroid
 			File baseDir = setupTempFDroidRepo(session);
 			File repoDir = new File(baseDir, FDROID_REPO_DIR);
 			File destination = new File(repoDir, apkCreated.getName());
-			Logger.log(session, "Copy to FDroid Repo: "+ destination.getAbsolutePath());
+			Logger.logInfo(session, "Copy to FDroid Repo: "+ destination.getAbsolutePath());
 			FileUtils.copyFile(apkCreated, destination);
 			destination.setExecutable(true);
 			destination.setWritable(true);
@@ -71,7 +71,7 @@ public class Fdroid
 			SecureAppGeneratorApplication.executeCommand(session, fDroidCommand, baseDir);
 	  		long endTime = System.currentTimeMillis();
 	  		String timeToBuild = Logger.getElapsedTime(startTime, endTime);
-	  		Logger.log(session, "Fdroid Build took" + timeToBuild);
+	  		Logger.logInfo(session, "Fdroid Build took" + timeToBuild);
 		}
 		finally
 		{

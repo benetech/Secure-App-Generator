@@ -36,25 +36,14 @@ import org.martus.common.MartusLogger;
 
 public class Logger
 {
-	private static final String VERBOSE_DEBUGGING_ON = "true";
-	private static final String DEBUG_VERBOSE_ENV = "SAG_DEBUG_VERBOSE";
-
-	public static synchronized void logVerbose(HttpSession session, String text)
+	public static synchronized void logDebug(HttpSession session, String text)
 	{
-		if(verboseLogging())
-			log(session, text);
+		logInfo(session, text);
 	}
 
-	public static synchronized void log(HttpSession session, String text)
+	public static synchronized void logInfo(HttpSession session, String text)
 	{
 		MartusLogger.log(getMsgIncludingSessionIdIfPresent(session, text));
-	}
-
-	private static String getMsgIncludingSessionIdIfPresent(HttpSession session, String text)
-	{
-		if(session != null)
-			return session.getId() + " | " + text;
-		return text;
 	}
 
 	public static void logException(HttpSession session, Exception e)
@@ -76,27 +65,21 @@ public class Logger
 	public static synchronized void logProcess(HttpSession session, Process p) throws IOException
 	{
 		String line;
-		logVerbose(session, "Exec Output:");
+		logDebug(session, "Exec Output:");
 		BufferedReader input = new BufferedReader(new InputStreamReader(p.getInputStream()));
 		BufferedReader error = new BufferedReader(new InputStreamReader(p.getErrorStream()));
 		while ((line = input.readLine()) != null) 
 		{
-			logVerbose(session, "  |" + line);
+			logDebug(session, "  |" + line);
 		}
 		while ((line = error.readLine()) != null) 
 		{
-			logVerbose(session, "  ||" + line);
+			logDebug(session, "  ||" + line);
 		}		
-		logVerbose(session, "Done.");
+		logDebug(session, "Done.");
 		input.close();
 	}
 	
-	private static boolean verboseLogging()
-	{
-  		String verbose = System.getenv(DEBUG_VERBOSE_ENV);
-  		return(verbose != null && verbose.toLowerCase().equals(VERBOSE_DEBUGGING_ON));
-	}
-
 	public static String getElapsedTime(long startTime, long endTime)
 	{
 		long elapsedTime = endTime-startTime;
@@ -108,9 +91,10 @@ public class Logger
 		return timeToBuild;
 	}
 	
-	public static void logMemoryStatistics()
+	private static String getMsgIncludingSessionIdIfPresent(HttpSession session, String text)
 	{
-		if(verboseLogging())
-			MartusLogger.logMemoryStatistics();
+		if(session != null)
+			return session.getId() + " | " + text;
+		return text;
 	}
 }

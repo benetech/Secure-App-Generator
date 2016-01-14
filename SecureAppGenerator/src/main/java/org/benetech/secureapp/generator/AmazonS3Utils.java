@@ -86,7 +86,7 @@ public class AmazonS3Utils
 		{
 			AmazonS3 s3client = getS3();
 			String bucketName = getDownloadS3Bucket();
-			Logger.logVerbose(session, "S3BucketName = " + bucketName);
+			Logger.logDebug(session, "S3BucketName = " + bucketName);
 			if(!s3client.doesBucketExist(bucketName))
 				Logger.logError(session, "Does not exist?  S3 Bucket :" + bucketName);
 
@@ -94,7 +94,7 @@ public class AmazonS3Utils
 			acl.grantPermission(GroupGrantee.AllUsers, Permission.Read);
 			s3client.putObject(new PutObjectRequest(bucketName, getAPKDownloadFilePathWithFile(fileToUpload.getName()),  fileToUpload).withAccessControlList(acl));
 
-			Logger.log(session, "Finished uploading to S3");
+			Logger.logInfo(session, "Finished uploading to S3");
 		}
 		catch (Exception e)
 		{
@@ -122,18 +122,18 @@ public class AmazonS3Utils
 			AmazonS3 s3 = getS3();
 			ObjectListing listing = s3.listObjects(getDownloadS3Bucket(), AMAZON_DOWNLOADS_DIRECTORY);
 			List<S3ObjectSummary> summaries = listing.getObjectSummaries();
-			Logger.logVerbose(session, "S3 ListObjects");
+			Logger.logDebug(session, "S3 ListObjects");
 
 			while (listing.isTruncated()) 
 			{
 			   listing = s3.listNextBatchOfObjects (listing);
 			   summaries.addAll (listing.getObjectSummaries());
 			}
-			Logger.logVerbose(session, "S3 Summaries Added");
+			Logger.logDebug(session, "S3 Summaries Added");
 			
 			if(!summaries.isEmpty())
 			{
-				Logger.logVerbose(session, "S3 Summarys Found:" + summaries.size());
+				Logger.logDebug(session, "S3 Summarys Found:" + summaries.size());
 				for (Iterator<S3ObjectSummary> iterator = summaries.iterator(); iterator.hasNext();)
 				{
 					S3ObjectSummary currentApk = iterator.next();
@@ -163,7 +163,7 @@ public class AmazonS3Utils
 	static private String getDownloadS3Bucket()
 	{
 		String bucket = System.getenv(AMAZON_S3_DOWNLOAD_BUCKET_ENV);
-		Logger.log(null, "Bucket =" + bucket);
+		Logger.logInfo(null, "Bucket =" + bucket);
   		return bucket;
 	}
 	
@@ -184,7 +184,7 @@ public class AmazonS3Utils
 
 	public static void addS3DataToFdroidConfig(HttpSession session, File config) throws FileNotFoundException, UnsupportedEncodingException, IOException
 	{
-		Logger.logVerbose(session, "Adding S3 info to File: "+config.getAbsolutePath());
+		Logger.logDebug(session, "Adding S3 info to File: "+config.getAbsolutePath());
 		StringBuilder awsData = new StringBuilder();
 		addKeyValuePair(awsData, "awsbucket", getDownloadS3Bucket());
 		addKeyValuePair(awsData, "awsaccesskeyid", getAwsKey());
