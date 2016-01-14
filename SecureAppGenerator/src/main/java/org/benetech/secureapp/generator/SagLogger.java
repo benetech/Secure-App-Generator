@@ -32,33 +32,34 @@ import java.util.concurrent.TimeUnit;
 
 import javax.servlet.http.HttpSession;
 
-import org.apache.log4j.Logger;
+import org.martus.common.MartusLogger;
 
 public class SagLogger
 {
 	public static synchronized void logDebug(HttpSession session, String text)
 	{
-		Logger.getLogger("SecureAppGenerator").debug(getMsgIncludingSessionIdIfPresent(session, text));
+		logInfo(session, text);
 	}
 
 	public static synchronized void logInfo(HttpSession session, String text)
 	{
-		Logger.getLogger("SecureAppGenerator").info(getMsgIncludingSessionIdIfPresent(session, text));
+		MartusLogger.log(getMsgIncludingSessionIdIfPresent(session, text));
 	}
 
 	public static void logException(HttpSession session, Exception e)
 	{
-		Logger.getLogger("SecureAppGenerator").error(getMsgIncludingSessionIdIfPresent(session, "Exception"), e);
+		logError(session, "Exception");
+		MartusLogger.logException(e);
 	}
 
 	public static synchronized void logError(HttpSession session, String errorMsg)
 	{
-		Logger.getLogger("SecureAppGenerator").error(getMsgIncludingSessionIdIfPresent(session, errorMsg));
+		MartusLogger.logError(getMsgIncludingSessionIdIfPresent(session, errorMsg));
 	}
 
 	public static synchronized void logWarning(HttpSession session, String warningMsg)
 	{
-		Logger.getLogger("SecureAppGenerator").warn(getMsgIncludingSessionIdIfPresent(session, warningMsg));
+		MartusLogger.logWarning(getMsgIncludingSessionIdIfPresent(session, warningMsg));
 	}
 	
 	public static synchronized void logProcess(HttpSession session, Process p) throws IOException
