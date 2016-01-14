@@ -46,7 +46,7 @@ import info.guardianproject.cacheword.CacheWordHandler;
 import info.guardianproject.cacheword.ICacheWordSubscriber;
 
 
-public class MainActivity extends ListActivity implements ICacheWordSubscriber, FormAdapterItemClickListener, LoaderCallbacks<Cursor>, MartusUploadManager.MartusUploadManagerCallback {
+public class MainActivity extends ListActivity implements ICacheWordSubscriber, FormAdapterItemClickListener, LoaderCallbacks<Cursor>, MartusUploadManager.MartusUploadManagerCallback, LogoutActivityHandler {
 
     private static final String TAG = "MainActivity";
     private CacheWordHandler cacheWordActivityHandler;
@@ -69,12 +69,29 @@ public class MainActivity extends ListActivity implements ICacheWordSubscriber, 
 
         enableOdkSwipeAndButtonNavigations();
         setTitle(getString(R.string.app_name));
+        ((MainApplication)getApplication()).registerLogoutHandler(this);
+    }
+
+    @Override
+    public void onUserInteraction() {
+        ((MainApplication)getApplication()).resetInactivityTimer();
+
+        super.onUserInteraction();
+    }
+
+    @Override
+    public void logout() {
+        cacheWordActivityHandler.lock();
+        cacheWordActivityHandler.disconnectFromService();
+
+        Intent intent = new Intent(this, LoginActivity.class);
+        finish();
+        startActivity(intent);
     }
 
     @Override
     public void onBackPressed() {
-        cacheWordActivityHandler.lock();
-        cacheWordActivityHandler.disconnectFromService();
+        logout();
 
         super.onBackPressed();
     }
@@ -359,6 +376,11 @@ public class MainActivity extends ListActivity implements ICacheWordSubscriber, 
             return true;
         }
 
+        if (id == R.id.menu_item_export_all_records) {
+            exportRecordAllRecords();
+            return true;
+        }
+
         return super.onOptionsItemSelected(item);
     }
 
@@ -387,5 +409,28 @@ public class MainActivity extends ListActivity implements ICacheWordSubscriber, 
         }
 
         Toast.makeText(context, versionLabel, Toast.LENGTH_LONG).show();
+    }
+
+    public void exportRecordAllRecords() {
+        Cursor cursor = getContentResolver().query(InstanceProviderAPI.InstanceColumns.CONTENT_URI, null, null, null, null);
+        cursor.moveToFirst();
+
+        for(cursor.moveToFirst();!cursor.isAfterLast();cursor.moveToNext()) {
+            int formLabelColumnIndex = cursor.getColumnIndex(InstanceProviderAPI.InstanceColumns.DISPLAY_NAME);
+            int displaySubTextColumnIndex = cursor.getColumnIndex(InstanceProviderAPI.InstanceColumns.DISPLAY_SUBTEXT);
+            int instancefilepathColumnIndex = cursor.getColumnIndex(InstanceProviderAPI.InstanceColumns.INSTANCE_FILE_PATH);
+            int formIdColumnIndex = cursor.getColumnIndex(InstanceProviderAPI.InstanceColumns._ID);
+            int formAuthorColumnIndex = cursor.getColumnIndex(InstanceProviderAPI.InstanceColumns.FORM_INSTANCE_AUTHOR);
+            int formOrganizationColumnIndex = cursor.getColumnIndex(InstanceProviderAPI.InstanceColumns.FORM_INSTANCE_ORGANIZATION);
+
+            Intent intent = new Intent(this, BulletinToMbaFileExporter.class);
+            intent.putExtra(MartusUploadManager.BULLETIN_DISPLAY_NAME_TAG, cursor.getString(formLabelColumnIndex));
+            intent.putExtra(MartusUploadManager.BULLETIN_SUB_DISPLAY_NAME_TAG, cursor.getString(displaySubTextColumnIndex));
+            intent.putExtra(MartusUploadManager.BULLETIN_ISTANCE_FILE_PATH_TAG, cursor.getString(instancefilepathColumnIndex));
+            intent.putExtra(MartusUploadManager.BULLETIN_FORM_ID_TAG, cursor.getString(formIdColumnIndex));
+            intent.putExtra(MartusUploadManager.BULLETIN_AUTHOR_TAG, cursor.getString(formAuthorColumnIndex));
+            intent.putExtra(MartusUploadManager.BULLETIN_ORGANIZATION_TAG, cursor.getString(formOrganizationColumnIndex));
+            startActivity(intent);
+        }
     }
 }

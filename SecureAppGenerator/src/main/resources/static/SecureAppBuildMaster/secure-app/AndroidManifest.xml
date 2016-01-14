@@ -98,6 +98,11 @@
         </activity>
 
         <activity
+            android:name=".activities.BulletinToMbaFileExporter"
+            android:windowSoftInputMode="adjustResize" >
+        </activity>
+
+        <activity
             android:name=".activities.ManageAttachmentsActivty"
             android:windowSoftInputMode="adjustResize">
         </activity>

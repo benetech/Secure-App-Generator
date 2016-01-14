@@ -70,6 +70,7 @@
     <string name="hint_password_field">Password</string>
     <string name="hint_confirm_password_field">Confirm Password</string>
     <string name="label_enter_your_password">Enter your password to proceed</string>
+    <string name="menu_item_export_all_records">Export All</string>
 
     <!-- Override Cacheword -->
     <string name="cacheword_notification_cached_title">Account Unlocked</string>
