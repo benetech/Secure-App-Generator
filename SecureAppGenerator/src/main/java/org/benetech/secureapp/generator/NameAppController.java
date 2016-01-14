@@ -40,6 +40,7 @@ public class NameAppController extends WebMvcConfigurerAdapter
 	@RequestMapping(value=WebPage.NAME_APP, method=RequestMethod.GET)
     public String directError(HttpSession session, Model model) 
     {
+		SagLogger.logWarning(session, "NAME_APP Get Request");
 		SecureAppGeneratorApplication.setInvalidResults(session);
         return WebPage.ERROR;
     }
@@ -57,7 +58,7 @@ public class NameAppController extends WebMvcConfigurerAdapter
 	public String nextPage(HttpSession session, Model model, AppConfiguration appConfig) throws Exception 
     {
 		SecureAppGeneratorApplication.setDefaultIconForSession(session, appConfig);
-		if (!validateAppName(appConfig)) 
+		if (!validateAppName(session, appConfig)) 
 		{
 			model.addAttribute(SessionAttributes.APP_CONFIG, appConfig);
 			SecureAppGeneratorApplication.setSessionFromConfig(session, appConfig);
@@ -68,48 +69,31 @@ public class NameAppController extends WebMvcConfigurerAdapter
         return WebPage.OBTAIN_LOGO;
     }
 
-	public boolean validateAppName(AppConfiguration appConfig)
+	public boolean validateAppName(HttpSession session, AppConfiguration appConfig)
 	{
 		String name = appConfig.getAppName().trim();
 		appConfig.setAppName(name);
 		int length = name.length();
 		if(length<3 || length>30)
 		{
+			SagLogger.logWarning(session, "App Name:Length");
 			appConfig.setAppNameError("app_name_length");
 			return false;
 		}
 		
-		if(startsWithNumber(name))
+		if (!name.matches("^[^!\"#$%&'\\[\\]*.+,/:;<=>?@\\^`{|}~]+$")) 
 		{
-			appConfig.setAppNameError("app_name_numeric");
-			return false;
-		}
-		if (!name.matches("^[^!\"#$%&'()\\[\\]*.+,/:;<=>?@\\^`{|}~]+$")) 
-		{
-			appConfig.setAppNameError("app_name_characters");
-			return false;
-		}
-		if(name.indexOf('-')>=0)//FixMe: Regex did not work for some reason
-		{
+			SagLogger.logWarning(session, "App Name:invalid char");
 			appConfig.setAppNameError("app_name_characters");
 			return false;
 		}
 		if(name.indexOf('\\')>=0)//FixMe: Regex didn't work for some reason
 		{
+			SagLogger.logWarning(session, "App Name:invalid char \\");
 			appConfig.setAppNameError("app_name_characters");
 			return false;
 		}
 		appConfig.setAppNameError(null);
 		return true;
 	}
-	
-	public boolean startsWithNumber(String str)
-	{
-	    char[] c = str.toCharArray();
-	    if (!Character.isDigit(c[0])) 
-	        	return false;
-	    return true;
-	}
-	
-
 }

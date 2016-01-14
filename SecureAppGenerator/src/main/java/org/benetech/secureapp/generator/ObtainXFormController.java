@@ -110,6 +110,7 @@ public class ObtainXFormController extends WebMvcConfigurerAdapter
 	@RequestMapping(value=WebPage.OBTAIN_XFORM, method=RequestMethod.GET)
     public String directError(HttpSession session, Model model) 
     {
+		SagLogger.logWarning(session, "OBTAIN_XFORM Get Request");
 		SecureAppGeneratorApplication.setInvalidResults(session);
         return WebPage.ERROR;
     }
@@ -133,7 +134,10 @@ public class ObtainXFormController extends WebMvcConfigurerAdapter
         {
 			xFormFile = copyXFormsFileSelectedToTempFile(session, formLocation);
 			if(xFormFile == null)
+			{
+				SagLogger.logError(session, "Default Form not found? :"+formLocation);
 				return WebPage.ERROR; 
+			}
 			xFormName = getFormNameOnly(formLocation);
         }
         else
@@ -148,7 +152,7 @@ public class ObtainXFormController extends WebMvcConfigurerAdapter
     				xFormName = getFormNameOnly(xmlFile.getOriginalFilename());
     				xFormFile = File.createTempFile(xFormName, XFORM_FILE_EXTENSION);
             		SecureAppGeneratorApplication.saveMultiPartFileToLocation(xmlFile, xFormFile);
-                SagLogger.logDebug(session, "Uploaded XFORM Location = " + xFormFile.getAbsolutePath());
+                SagLogger.logInfo(session, "Uploaded Custom XFORM Location = " + xFormFile.getAbsolutePath());
             } 
             catch (Exception e) 
             {
@@ -164,7 +168,9 @@ public class ObtainXFormController extends WebMvcConfigurerAdapter
 		}
 		catch (Exception e)
 		{
-       		return returnRawErrorMessage(model, appConfig, SecureAppGeneratorApplication.getLocalizedErrorMessage("xform_invalid", e)); 
+       		String localizedErrorMessage = SecureAppGeneratorApplication.getLocalizedErrorMessage("xform_invalid", e);
+			SagLogger.logWarning(session, "Custom xForm Invalid: " + localizedErrorMessage);
+       		return returnRawErrorMessage(model, appConfig, localizedErrorMessage); 
 		}
 		
 		AppConfiguration config = (AppConfiguration)session.getAttribute(SessionAttributes.APP_CONFIG);

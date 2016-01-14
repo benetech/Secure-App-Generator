@@ -39,6 +39,7 @@ public class FinalPageController extends WebMvcConfigurerAdapter
 	@RequestMapping(value=WebPage.FINAL, method=RequestMethod.GET)
     public String directError(HttpSession session, Model model) 
     {
+		SagLogger.logWarning(session, "FINAL Get Request");
 		SecureAppGeneratorApplication.setInvalidResults(session);
         return WebPage.ERROR;
     }

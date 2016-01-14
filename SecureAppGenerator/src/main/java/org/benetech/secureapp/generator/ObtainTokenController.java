@@ -72,6 +72,7 @@ public class ObtainTokenController extends WebMvcConfigurerAdapter
 	@RequestMapping(value=WebPage.OBTAIN_CLIENT_TOKEN, method=RequestMethod.GET)
     public String directError(HttpSession session, Model model) 
     {
+		SagLogger.logWarning(session, "OBTAIN_CLIENT_TOKEN Get Request");
 		SecureAppGeneratorApplication.setInvalidResults(session);
         return WebPage.ERROR;
     }
@@ -91,22 +92,24 @@ public class ObtainTokenController extends WebMvcConfigurerAdapter
     }
 	
 	@RequestMapping(value=WebPage.OBTAIN_CLIENT_TOKEN_NEXT, method=RequestMethod.POST)
-	
 	public String nextPage(HttpSession session, Model model, AppConfiguration appConfig) 
     {
 		if(isValidToken(session, appConfig)) 
 		{
 			try
 			{
+				SagLogger.logInfo(session, "Obtaining Token from "+ServerConstants.getCurrentServerIp());
 				getClientPublicKeyFromToken(session, appConfig);
 				updateServerConfiguration(session);
 				updateApkVersionInfoAndName(session);
 				model.addAttribute(SessionAttributes.APP_CONFIG, appConfig);
+				SagLogger.logInfo(session, "Token Found");
 				return WebPage.SUMMARY;
 			}
 			catch (TokenNotFoundException e)
 			{
-				SagLogger.logDebug(session, "Token Not Found on Server.");
+				String tokenString = appConfig.getClientToken().trim();
+				SagLogger.logDebug(session, "Token Not Found on Server.:"+tokenString);
 				appConfig.setClientTokenError("token_not_found");
 			}
 			catch (S3Exception e)

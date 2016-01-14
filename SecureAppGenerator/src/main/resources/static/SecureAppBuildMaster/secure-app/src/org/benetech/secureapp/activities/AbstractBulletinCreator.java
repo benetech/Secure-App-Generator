@@ -25,7 +25,6 @@ import org.martus.android.library.common.dialog.IndeterminateProgressDialog;
 import org.martus.android.library.exceptions.XFormsConstraintViolationException;
 import org.martus.android.library.exceptions.XFormsMissingRequiredFieldException;
 import org.martus.android.library.io.SecureFile;
-import org.martus.android.library.utilities.BulletinZipper;
 import org.martus.common.HeadquartersKey;
 import org.martus.common.HeadquartersKeys;
 import org.martus.common.MartusXml;
@@ -37,6 +36,7 @@ import org.martus.util.xml.XmlUtilities;
 import org.odk.collect.android.listeners.FormLoaderListener;
 import org.odk.collect.android.provider.FormsProviderAPI;
 import org.odk.collect.android.provider.InstanceProviderAPI;
+import org.odk.collect.android.tasks.FormLoaderTask;
 
 import java.util.ArrayList;
 
@@ -45,12 +45,9 @@ import java.util.ArrayList;
  */
 abstract public class AbstractBulletinCreator extends SherlockFragmentActivity implements FormLoaderListener,
                                                                                           IndeterminateProgressDialog.IndeterminateProgressDialogListener,
-                                                                                          DeterminateProgressDialog.DeterminateProgressDialogListener,
-                                                                                          BulletinZipper {
+                                                                                          DeterminateProgressDialog.DeterminateProgressDialogListener {
 
     private static final String TAG = "AbstractBulletinCreator";
-
-    public static final String MBA_FILE_EXTENSION = ".mba";
     protected SecureMobileClientBulletinStore store;
     protected IndeterminateProgressDialog indeterminateDialog;
     protected DeterminateProgressDialog determinateDialog;
@@ -213,13 +210,6 @@ abstract public class AbstractBulletinCreator extends SherlockFragmentActivity i
         }
 
         return  jpegFiles;
-    }
-
-    protected void handleException(Exception e, int id, String msg) {
-        indeterminateDialog.dismissAllowingStateLoss();
-        finish();
-        Toast.makeText(this, getString(id), Toast.LENGTH_LONG).show();
-        Log.w(TAG, msg, e);
     }
 
     private String getDesktopPublicKey() {

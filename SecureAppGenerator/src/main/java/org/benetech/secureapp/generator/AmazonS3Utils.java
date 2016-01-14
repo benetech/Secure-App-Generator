@@ -86,7 +86,6 @@ public class AmazonS3Utils
 		{
 			AmazonS3 s3client = getS3();
 			String bucketName = getDownloadS3Bucket();
-			SagLogger.logDebug(session, "S3BucketName = " + bucketName);
 			if(!s3client.doesBucketExist(bucketName))
 				SagLogger.logError(session, "Does not exist?  S3 Bucket :" + bucketName);
 
@@ -98,6 +97,7 @@ public class AmazonS3Utils
 		}
 		catch (Exception e)
 		{
+			SagLogger.logException(session, e);
 			throw new S3Exception(e);
 		}
 	}
@@ -163,7 +163,7 @@ public class AmazonS3Utils
 	static private String getDownloadS3Bucket()
 	{
 		String bucket = System.getenv(AMAZON_S3_DOWNLOAD_BUCKET_ENV);
-		SagLogger.logInfo(null, "Bucket =" + bucket);
+		SagLogger.logDebug(null, "Bucket =" + bucket);
   		return bucket;
 	}
 	
