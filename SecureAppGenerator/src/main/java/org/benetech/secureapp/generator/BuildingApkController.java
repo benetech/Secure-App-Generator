@@ -139,16 +139,17 @@ public class BuildingApkController extends WebMvcConfigurerAdapter
 			Fdroid.copyApkToFDroid(session, renamedApk);
 		model.addAttribute(SessionAttributes.APP_CONFIG, config);
 		session.setAttribute(SessionAttributes.APP_CONFIG, config);
-		try
-		{
-			if(secureAppBuildDir != null)
-				FileUtils.deleteDirectory(secureAppBuildDir.getParentFile());
-			appXFormFileToUse.delete();
-		}
-		catch (IOException e)
-		{
-			SagLogger.logException(session, e);			
-		}			
+	//TODO this may cause issues on Server.
+//		try
+//		{
+//			if(secureAppBuildDir != null)
+//				FileUtils.deleteDirectory(secureAppBuildDir.getParentFile());
+//			appXFormFileToUse.delete();
+//		}
+//		catch (IOException e)
+//		{
+//			SagLogger.logException(session, e);			
+//		}			
 	}
 	
 
