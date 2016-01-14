@@ -45,7 +45,7 @@ public class BulletinActivity extends AbstractBulletinCreator implements Bulleti
 
         //turn off user inactivity checking during zipping and encrypting of file
         final AsyncTask<Object, Integer, File> zipTask = new ZipBulletinTask(bulletin, this);
-        zipTask.execute(getApplication().getCacheDir(), store, ".zip");
+        zipTask.execute(getApplication().getCacheDir(), store);
     }
 
     @Override
@@ -170,6 +170,13 @@ public class BulletinActivity extends AbstractBulletinCreator implements Bulleti
             handleException(e, R.string.failure_zipping_bulletin, getString(R.string.error_message_exception_thrown_trying_to_populate_record));
             Log.e(TAG, getString(R.string.error_message_exception_thrown_trying_to_populate_record), e);
         }
+    }
+
+    private void handleException(Exception e, int id, String msg) {
+        indeterminateDialog.dismissAllowingStateLoss();
+        finish();
+        Toast.makeText(this, getString(id), Toast.LENGTH_LONG).show();
+        Log.w(TAG, msg, e);
     }
 
     private String getServerIp(){
