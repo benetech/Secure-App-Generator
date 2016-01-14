@@ -41,7 +41,6 @@ public class WelcomePageController extends WebMvcConfigurerAdapter
 	String index(HttpSession session) throws Exception 
 	{
 		initialSetup(session);
-		SagLogger.logInfo(session, "Starting SAG");
 	    return WebPage.WELCOME;
 	}
 
@@ -61,7 +60,6 @@ public class WelcomePageController extends WebMvcConfigurerAdapter
 	@RequestMapping(value=WebPage.WELCOME, method=RequestMethod.GET)
     public String directError(HttpSession session, Model model) 
     {
-		SagLogger.logWarning(session, "WELCOME Get Request");
 		SecureAppGeneratorApplication.setInvalidResults(session);
         return WebPage.ERROR;
     }

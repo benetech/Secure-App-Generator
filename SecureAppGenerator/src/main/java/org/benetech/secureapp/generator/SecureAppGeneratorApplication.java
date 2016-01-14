@@ -84,7 +84,7 @@ public class SecureAppGeneratorApplication extends SpringBootServletInitializer
 		}
 		catch (IOException e)
 		{
-			SagLogger.logException(null, e);
+			Logger.logException(null, e);
 			return new File("/static");
 		}
 	}
@@ -97,7 +97,7 @@ public class SecureAppGeneratorApplication extends SpringBootServletInitializer
 	static String getGadleDirectory()
 	{
    		String dataRootDirectory = System.getenv(SecureAppGeneratorApplication.GRADLE_HOME_ENV);
-   		SagLogger.logDebug(null, "Gradle Dir:"+dataRootDirectory);
+   		Logger.logVerbose(null, "Gradle Dir:"+dataRootDirectory);
    		return dataRootDirectory;
 	}
 	
@@ -156,10 +156,10 @@ public class SecureAppGeneratorApplication extends SpringBootServletInitializer
 
 	static public int executeCommand(HttpSession session, String command, File initialDirectory) throws IOException, InterruptedException
 	{
-		SagLogger.logDebug(session, "Exec Command:" + command);
+		Logger.logVerbose(session, "Exec Command:" + command);
 		Runtime rt = Runtime.getRuntime();
 		Process p = rt.exec(command, null, initialDirectory);
-		SagLogger.logProcess(session, p);		
+		Logger.logProcess(session, p);		
 		p.waitFor();
 		return p.exitValue();
 	}

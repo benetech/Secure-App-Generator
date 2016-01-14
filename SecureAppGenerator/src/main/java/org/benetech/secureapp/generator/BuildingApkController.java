@@ -34,6 +34,7 @@ import javax.servlet.http.HttpSession;
 
 import org.apache.commons.io.FileUtils;
 import org.benetech.secureapp.generator.AmazonS3Utils.S3Exception;
+import org.benetech.secureapp.generator.BuildException;
 import org.imgscalr.Scalr;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -58,7 +59,7 @@ public class BuildingApkController extends WebMvcConfigurerAdapter
 
     private static final String APP_NAME_XML = "appName";
 	private static final String APP_CUSTOM_APPLICATION_ID_XML = "customApplicationId";
-	public static final String APP_BASE_APPLICATION_ID = "org.benetech.secureapp.";
+	private static final String APP_BASE_APPLICATION_ID = "org.benetech.secureapp.";
 	private static final String VERSION_SAG_BUILD_XML = "versionSagBuild";
     private static final String LOGO_NAME_PNG = "ic_launcher_secure_app.png";
 	private static final String XML_DESKTOP_PUBLIC_KEY = "public_key_desktop";
@@ -94,22 +95,18 @@ public class BuildingApkController extends WebMvcConfigurerAdapter
 	@RequestMapping(value=WebPage.BUILDING_APK, method=RequestMethod.GET)
     public String directError(HttpSession session, Model model) 
     {
-		SagLogger.logWarning(session, "BUILDING_APK Get Request");
 		SecureAppGeneratorApplication.setInvalidResults(session);
         return WebPage.ERROR;
     }
 
 	@RequestMapping(value=WebPage.BUILDING_APK_NEXT, method=RequestMethod.POST)	
-	public String finishedBuild(HttpSession session, Model model) throws Exception 
+	public String initiateBuild(HttpSession session, Model model) throws Exception 
     {
 		AppConfiguration config = (AppConfiguration)session.getAttribute(SessionAttributes.APP_CONFIG);
 		model.addAttribute(SessionAttributes.APP_CONFIG, config);
 		if(config.getApkBuildError() == null)
-		{
-			SagLogger.logInfo(session, "Finished SAG");
 			return WebPage.FINAL;
-		}
-		SagLogger.logError(session, "SAG Build Failed.");
+
 		SecureAppGeneratorApplication.setInvalidResults(session, config.getApkBuildError());
 		return WebPage.ERROR;
     }
@@ -139,17 +136,16 @@ public class BuildingApkController extends WebMvcConfigurerAdapter
 			Fdroid.copyApkToFDroid(session, renamedApk);
 		model.addAttribute(SessionAttributes.APP_CONFIG, config);
 		session.setAttribute(SessionAttributes.APP_CONFIG, config);
-	//TODO this may cause issues on Server.
-//		try
-//		{
-//			if(secureAppBuildDir != null)
-//				FileUtils.deleteDirectory(secureAppBuildDir.getParentFile());
-//			appXFormFileToUse.delete();
-//		}
-//		catch (IOException e)
-//		{
-//			SagLogger.logException(session, e);			
-//		}			
+		try
+		{
+			if(secureAppBuildDir != null)
+				FileUtils.deleteDirectory(secureAppBuildDir.getParentFile());
+			appXFormFileToUse.delete();
+		}
+		catch (IOException e)
+		{
+			Logger.logException(session, e);			
+		}			
 	}
 	
 
@@ -201,35 +197,12 @@ public class BuildingApkController extends WebMvcConfigurerAdapter
 		appendGradleValue(data, VERSION_BUILD_XML, config.getApkVersionBuild());
 		appendGradleValue(data, VERSION_SAG_BUILD_XML, config.getApkSagVersionBuild());
 		appendGradleValue(data, APP_NAME_XML, config.getAppName());
-		String uniqueAppId = getUniqueAppId(config.getAppNameWithoutSpaces());
-		appendGradleValue(data, APP_CUSTOM_APPLICATION_ID_XML, uniqueAppId);
+		appendGradleValue(data, APP_CUSTOM_APPLICATION_ID_XML, APP_BASE_APPLICATION_ID + config.getAppNameWithoutSpaces());
 
 		File apkResourseFile = new File(baseBuildDir, GRADLE_GENERATED_SETTINGS_FILE);
   		SecureAppGeneratorApplication.writeDataToFile(apkResourseFile, data);
  	}
 		
-	public static String getUniqueAppId(String appNameWithoutSpaces)
-	{
-		String hashName = APP_BASE_APPLICATION_ID;
-		hashName += convertToAlpha(appNameWithoutSpaces.hashCode());
-		hashName += ".";
-		hashName += convertToAlpha(System.currentTimeMillis());
-		return hashName;
-	}
-
-	private static String convertToAlpha(long value)
-	{
-		String currentTime = String.valueOf(Math.abs(value));
-		String characterOnly = "";
-		for(int i = 0; i < currentTime.length(); ++i)
-		{
-			char tmp = currentTime.charAt(i);
-			tmp += 17;
-			characterOnly += tmp;
-		}
-		return characterOnly;
-	}
-
 	static private void updateApkSettings(File baseBuildDir, AppConfiguration config) throws IOException
 	{
 		StringBuilder data = new StringBuilder("<?xml version=\"1.0\" encoding=\"utf-8\"?>\n");
@@ -264,22 +237,24 @@ public class BuildingApkController extends WebMvcConfigurerAdapter
 
 	static private File buildApk(final HttpSession session, final File baseBuildDir, final AppConfiguration config) throws IOException, InterruptedException, BuildException
 	{
-		SagLogger.logInfo(session, "Building " + config.getApkName());
+		Logger.log(session, "Building " + config.getApkName());
+		Logger.logMemoryStatistics();
 		String includeLogging = "";
 		includeLogging = GRADLE_BUILD_COMMAND_LOGGING;
 		String gradleCommand = SecureAppGeneratorApplication.getGadleDirectory() + GRADLE_EXE + GRADLE_PARAMETERS + baseBuildDir + includeLogging + GRADLE_BUILD_COMMAND_RELEASE;
 		long startTime = System.currentTimeMillis();
 		int returnCode = SecureAppGeneratorApplication.executeCommand(session, gradleCommand, null);
   		long endTime = System.currentTimeMillis();
-  		String timeToBuild = SagLogger.getElapsedTime(startTime, endTime);
+		Logger.logMemoryStatistics();
+  		String timeToBuild = Logger.getElapsedTime(startTime, endTime);
 
     		if(returnCode != EXIT_VALUE_GRADLE_SUCCESS)
    		{
-   			SagLogger.logError(session, "Build return code:" + returnCode);
+   			Logger.logError(session, "Build return code:" + returnCode);
 	   		throw new BuildException("Error creating APK");
    		}
     		
-  		SagLogger.logInfo(session, "Build succeeded:" + timeToBuild);
+  		Logger.log(session, "Build succeeded:" + timeToBuild);
   		String tempaApkBuildFileDirectory = baseBuildDir.getAbsolutePath() + APK_LOCAL_FILE_DIRECTORY;
 		File appFileCreated = new File(tempaApkBuildFileDirectory, config.getGradleApkRawBuildFileName());
 		return appFileCreated;
@@ -287,15 +262,15 @@ public class BuildingApkController extends WebMvcConfigurerAdapter
 
 	static public void copyApkToDownloads(final HttpSession session, final File apkFile) throws S3Exception
 	{
-		SagLogger.logDebug(session, "Uploading APK To S3");
+		Logger.logVerbose(session, "Uploading APK To S3");
 		AmazonS3Utils.uploadToAmazonS3(session, apkFile);
-		SagLogger.logDebug(session, "Upload Complete.");
+		Logger.logVerbose(session, "Upload Complete.");
 	}
 	
 	static private void copyDefaultBuildFilesToStagingArea(HttpSession session, File baseBuildDir) throws IOException
 	{
 		File source = new File(SecureAppGeneratorApplication.getOriginalBuildDirectory());
-		SagLogger.logInfo(session, "Copying Build directory, from:" + source.getAbsolutePath() + " to: "+ baseBuildDir.getAbsolutePath());
+		Logger.log(session, "Copying Build directory, from:" + source.getAbsolutePath() + " to: "+ baseBuildDir.getAbsolutePath());
 		FileUtils.copyDirectory(source, baseBuildDir);
 	}
 
@@ -327,7 +302,7 @@ public class BuildingApkController extends WebMvcConfigurerAdapter
 			}
 			catch (Exception e)
 			{
-				SagLogger.logException(session, e);
+				Logger.logException(session, e);
 				config.setApkBuildError("generating_apk");
 			}
 			model.addAttribute(SessionAttributes.APP_CONFIG, config);
