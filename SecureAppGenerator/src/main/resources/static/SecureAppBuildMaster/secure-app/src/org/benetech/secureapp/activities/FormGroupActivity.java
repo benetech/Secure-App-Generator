@@ -51,7 +51,7 @@ public class FormGroupActivity extends FormHierarchyActivity {
     /** Every time the Form Title EditText is changed mFormTitleNeedsSaving is set true.
      *
      * Both the IME_ACTION on mFormTitle (Keyboard "Done") and {@link #onPause()} will check
-     * if mFormTitleNeedsSaving is true at their invocation, calling {@link #saveFormTitle(String)}
+     * if mFormTitleNeedsSaving is true at their invocation, calling {@link #saveFormTitle()}
      * if appropriate.
      */
     private TextWatcher mFormTitleWatcher = new TextWatcher() {
@@ -104,7 +104,7 @@ public class FormGroupActivity extends FormHierarchyActivity {
             @Override
             public boolean onEditorAction(TextView v, int actionId, KeyEvent event) {
                 if (mFormTitleNeedsSaving)
-                    saveFormTitle(v.getText().toString());
+                    saveFormTitle();
 
                 return false;
             }
@@ -115,7 +115,7 @@ public class FormGroupActivity extends FormHierarchyActivity {
     public void onPause() {
         super.onPause();
         if (mFormTitleNeedsSaving)
-            saveFormTitle(mFormTitle.getText().toString());
+            saveFormTitle();
     }
 
     /**
@@ -152,12 +152,12 @@ public class FormGroupActivity extends FormHierarchyActivity {
         return value != null && value.length() > 0;
     }
 
-    private void saveFormTitle(String title) {
+    private void saveFormTitle() {
         mFormTitleNeedsSaving = false;
         if (isDatabaseEmpty())
-            insertNewRow(title);
+            insertNewRow();
         else
-            updateExistingRow(title);
+            updateExistingRow();
     }
 
     private boolean isDatabaseEmpty() {
@@ -178,17 +178,17 @@ public class FormGroupActivity extends FormHierarchyActivity {
         return Collect.getInstance().getFormController().getInstancePath().getAbsolutePath();
     }
 
-    private void updateExistingRow(String title) {
+    private void updateExistingRow() {
         String path = getInstancePath();
         ContentValues updatedValues = new ContentValues();
-        updatedValues.put(InstanceProviderAPI.InstanceColumns.DISPLAY_NAME, title);
+        updatedValues.put(InstanceProviderAPI.InstanceColumns.DISPLAY_NAME, mFormTitle.getText().toString());
         updatedValues.put(InstanceProviderAPI.InstanceColumns.FORM_INSTANCE_AUTHOR, mFormAuthor.getText().toString());
         updatedValues.put(InstanceProviderAPI.InstanceColumns.FORM_INSTANCE_ORGANIZATION, mFormOrganization.getText().toString());
 
         getContentResolver().update(InstanceProviderAPI.InstanceColumns.CONTENT_URI, updatedValues, InstanceProviderAPI.InstanceColumns.INSTANCE_FILE_PATH + "=?", new String[]{path,});
     }
 
-    private void insertNewRow(String title) {
+    private void insertNewRow() {
         Cursor cursor = Collect.getInstance().getContentResolver().query(FormsProviderAPI.FormsColumns.CONTENT_URI, null, null, null, null);
         cursor.moveToFirst();
         String jrformid = cursor.getString(cursor.getColumnIndex(FormsProviderAPI.FormsColumns.JR_FORM_ID));
@@ -200,7 +200,7 @@ public class FormGroupActivity extends FormHierarchyActivity {
 
         String path = getInstancePath();
         ContentValues values = new ContentValues();
-        values.put(InstanceProviderAPI.InstanceColumns.DISPLAY_NAME, title);
+        values.put(InstanceProviderAPI.InstanceColumns.DISPLAY_NAME, mFormTitle.getText().toString());
         values.put(InstanceProviderAPI.InstanceColumns.FORM_INSTANCE_AUTHOR, mFormAuthor.getText().toString());
         values.put(InstanceProviderAPI.InstanceColumns.FORM_INSTANCE_ORGANIZATION, mFormOrganization.getText().toString());
 
@@ -400,7 +400,7 @@ public class FormGroupActivity extends FormHierarchyActivity {
     @Override
     public void onBackPressed() {
         if (mFormTitleNeedsSaving) {
-            saveFormTitle(mFormTitle.getText().toString());
+            saveFormTitle();
         }
 
         // Go back to MainActivity

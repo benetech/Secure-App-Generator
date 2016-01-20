@@ -121,7 +121,7 @@ public class BulletinActivity extends AbstractBulletinCreator implements Bulleti
                 InstanceProviderAPI.InstanceColumns._ID + " = ?",
                 new String[]{formId});
 
-        Log.i(TAG,  getString(R.string.error_message_instance_form_deleted_delete_count, deleteCount));
+        Log.i(TAG, getString(R.string.error_message_instance_form_deleted_delete_count, deleteCount));
         cursor.close();
     }
 
@@ -178,5 +178,10 @@ public class BulletinActivity extends AbstractBulletinCreator implements Bulleti
 
     private String getServerPublicKey() {
         return getString(R.string.martus_server_public_key);
+    }
+
+    @Override
+    public String getIndeterminateDialogMessage() {
+        return getString(R.string.preparing_record_for_upload);
     }
 }

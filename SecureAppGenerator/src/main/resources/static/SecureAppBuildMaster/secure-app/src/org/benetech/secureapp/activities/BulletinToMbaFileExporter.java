@@ -84,6 +84,11 @@ public class BulletinToMbaFileExporter extends AbstractBulletinCreator {
     }
 
     @Override
+    public String getIndeterminateDialogMessage() {
+        return getString(R.string.preparing_record_for_export);
+    }
+
+    @Override
     public void onProgressUpdate(int i) {
 
     }

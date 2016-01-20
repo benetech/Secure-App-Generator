@@ -235,11 +235,6 @@ abstract public class AbstractBulletinCreator extends SherlockFragmentActivity i
     }
 
     @Override
-    public String getIndeterminateDialogMessage() {
-        return getString(R.string.preparing_record_for_upload);
-    }
-
-    @Override
     public String getDeterminateDialogMessage() {
         return getString(R.string.uploading_record);
     }

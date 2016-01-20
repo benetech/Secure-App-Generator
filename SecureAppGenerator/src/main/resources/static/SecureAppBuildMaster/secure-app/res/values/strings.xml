@@ -46,8 +46,9 @@
     <string name="label_no_images_in_gallery">No Pictures</string>
     <string name="form_author_field_hint">Form Author</string>
     <string name="form_organization_field_hint">Form Organization</string>
-    <string name="label_auto_generated_orphan_group_name">UNNAMED</string>
+    <string name="label_auto_generated_orphan_group_name">+</string>
     <string name="preparing_record_for_upload">Preparing record for upload</string>
+    <string name="preparing_record_for_export">Preparing record for export</string>
     <string name="uploading_record">Uploading record...</string>
     <string name="could_not_delete_attachment">Could not delete attachment: %1$s</string>
     <string name="show_version">Show Version</string>
@@ -70,7 +71,7 @@
     <string name="hint_password_field">Password</string>
     <string name="hint_confirm_password_field">Confirm Password</string>
     <string name="label_enter_your_password">Enter your password to proceed</string>
-    <string name="menu_item_export_all_records">Export All</string>
+    <string name="menu_item_export_all_records">Export all records</string>
 
     <!-- Override Cacheword -->
     <string name="cacheword_notification_cached_title">Account Unlocked</string>
