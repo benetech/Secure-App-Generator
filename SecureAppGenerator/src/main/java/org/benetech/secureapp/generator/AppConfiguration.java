@@ -1,7 +1,7 @@
 /*
 
 Martus(TM) is a trademark of Beneficent Technology, Inc. 
-This software is (c) Copyright 2015, Beneficent Technology, Inc.
+This software is (c) Copyright 2015-2016, Beneficent Technology, Inc.
 
 Martus is free software; you can redistribute it and/or
 modify it under the terms of the GNU General Public License
@@ -30,6 +30,7 @@ import java.io.File;
 public class AppConfiguration
 {
 	private static final String VERSION = "1.0 Beta 61";
+	private static final String COPY_RIGHT = "Copyright 2015-2016, Beneficent Technology, Inc.";
 	private static final char DASH_CHAR = '-';
 	private static final String APK_EXTENSION = ".apk";
 	private static final String DEBUG_APK_EXTENSION = "-release" + APK_EXTENSION;
@@ -64,6 +65,7 @@ public class AppConfiguration
 	private String apkBuildError;
 	private String apkURL;
 	private String apkBuildResult;
+	private String copyright;
 	
 	public AppConfiguration()
 	{
@@ -74,6 +76,7 @@ public class AppConfiguration
 	{
 		resetVersion();
 		apkBuildResult = APK_NOT_BUILT;
+		copyright = COPY_RIGHT;
 		appName = "";
 	}
 
@@ -380,4 +383,8 @@ public class AppConfiguration
 		this.apkBuildResult = apkBuildResult;
 	}
 
+	public String getCopyright()
+	{
+		return COPY_RIGHT;
+	}
 }
