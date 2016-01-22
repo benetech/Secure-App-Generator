@@ -1,3 +1,28 @@
+/*
+ * The Martus(tm) free, social justice documentation and
+ * monitoring software. Copyright (C) 2016, Beneficent
+ * Technology, Inc. (Benetech).
+ *
+ * Martus is free software; you can redistribute it and/or
+ * modify it under the terms of the GNU General Public License
+ * as published by the Free Software Foundation; either
+ * version 2 of the License, or (at your option) any later
+ * version with the additions and exceptions described in the
+ * accompanying Martus license file entitled "license.txt".
+ *
+ * It is distributed WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+ * IMPLIED, including warranties of fitness of purpose or
+ * merchantability.  See the accompanying Martus License and
+ * GPL license for more details on the required license terms
+ * for this software.
+ *
+ * You should have received a copy of the GNU General Public
+ * License along with this program; if not, write to the Free
+ * Software Foundation, Inc., 59 Temple Place - Suite 330,
+ * Boston, MA 02111-1307, USA.
+ *
+ */
+
 package org.benetech.secureapp.activities;
 
 import android.app.Activity;
@@ -84,6 +109,7 @@ public class MainActivity extends ListActivity implements ICacheWordSubscriber, 
     public void logout() {
         cacheWordActivityHandler.lock();
         cacheWordActivityHandler.disconnectFromService();
+        AppConfig.getInstance(getApplication()).getCrypto().clearKeyPair();
 
         Intent intent = new Intent(this, LoginActivity.class);
         finish();
@@ -427,16 +453,18 @@ public class MainActivity extends ListActivity implements ICacheWordSubscriber, 
             int displaySubTextColumnIndex = cursor.getColumnIndex(InstanceProviderAPI.InstanceColumns.DISPLAY_SUBTEXT);
             int instancefilepathColumnIndex = cursor.getColumnIndex(InstanceProviderAPI.InstanceColumns.INSTANCE_FILE_PATH);
             int formIdColumnIndex = cursor.getColumnIndex(InstanceProviderAPI.InstanceColumns._ID);
-            int formAuthorColumnIndex = cursor.getColumnIndex(InstanceProviderAPI.InstanceColumns.FORM_INSTANCE_AUTHOR);
-            int formOrganizationColumnIndex = cursor.getColumnIndex(InstanceProviderAPI.InstanceColumns.FORM_INSTANCE_ORGANIZATION);
+
+            SharedPreferences sharedPref = getApplicationContext().getSharedPreferences(AccountInformationActivity.PRFERENCES_FILE_NAME, Context.MODE_PRIVATE);
+            String authorName = sharedPref.getString(AccountInformationActivity.AUTHOR_PREFERENCES_KEY, "");
+            String organizationName = sharedPref.getString(AccountInformationActivity.ORGANIZATION_PREFRENCES_KEY, "");
 
             Intent intent = new Intent(this, BulletinToMbaFileExporter.class);
             intent.putExtra(MartusUploadManager.BULLETIN_DISPLAY_NAME_TAG, cursor.getString(formLabelColumnIndex));
             intent.putExtra(MartusUploadManager.BULLETIN_SUB_DISPLAY_NAME_TAG, cursor.getString(displaySubTextColumnIndex));
             intent.putExtra(MartusUploadManager.BULLETIN_ISTANCE_FILE_PATH_TAG, cursor.getString(instancefilepathColumnIndex));
             intent.putExtra(MartusUploadManager.BULLETIN_FORM_ID_TAG, cursor.getString(formIdColumnIndex));
-            intent.putExtra(MartusUploadManager.BULLETIN_AUTHOR_TAG, cursor.getString(formAuthorColumnIndex));
-            intent.putExtra(MartusUploadManager.BULLETIN_ORGANIZATION_TAG, cursor.getString(formOrganizationColumnIndex));
+            intent.putExtra(MartusUploadManager.BULLETIN_AUTHOR_TAG, authorName);
+            intent.putExtra(MartusUploadManager.BULLETIN_ORGANIZATION_TAG, organizationName);
             startActivity(intent);
         }
     }

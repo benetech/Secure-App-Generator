@@ -45,9 +45,9 @@ public class AccountInformationActivity extends Activity {
     private TextView authorTextView;
     private TextView organizationTextView;
 
-    private static final String PRFERENCES_FILE_NAME = "account_information_pref_file";
-    private static final String ORGANIZATION_PREFRENCES_KEY = "organization_key";
-    private static final String AUTHOR_PREFERENCES_KEY = "author_key";
+    public static final String PRFERENCES_FILE_NAME = "account_information_pref_file";
+    public static final String ORGANIZATION_PREFRENCES_KEY = "organization_key";
+    public static final String AUTHOR_PREFERENCES_KEY = "author_key";
 
     @Override
     public void onCreate(Bundle savedInstanceState) {

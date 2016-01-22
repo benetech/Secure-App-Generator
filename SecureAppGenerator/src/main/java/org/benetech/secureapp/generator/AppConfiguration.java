@@ -29,7 +29,7 @@ import java.io.File;
 
 public class AppConfiguration
 {
-	private static final String VERSION = "SAG Beta 62";
+	private static final String VERSION = "SAG Beta 63";
 	private static final String COPY_RIGHT = "This website is &#169; Copyright 2015-2016, Beneficent Technology, Inc.";
 	private static final char DASH_CHAR = '-';
 	private static final String APK_EXTENSION = ".apk";
