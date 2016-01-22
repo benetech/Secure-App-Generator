@@ -29,8 +29,8 @@ import java.io.File;
 
 public class AppConfiguration
 {
-	private static final String VERSION = "1.0 Beta 62";
-	private static final String COPY_RIGHT = "Copyright 2015-2016, Beneficent Technology, Inc.";
+	private static final String VERSION = "SAG Beta 62";
+	private static final String COPY_RIGHT = "This website is &#169; Copyright 2015-2016, Beneficent Technology, Inc.";
 	private static final char DASH_CHAR = '-';
 	private static final String APK_EXTENSION = ".apk";
 	private static final String DEBUG_APK_EXTENSION = "-release" + APK_EXTENSION;

@@ -34,15 +34,10 @@ form{
     color: yellow;
 }
 
-.copyright_symbol_location{
-    position: absolute;
-    top: 625px;
-    left: 10px;	
-}
 .copyright_area {
     position: absolute;
     top: 625px;
-    left: 25px;
+    left: 10px;
  } 
  
 .ProgressCircleInfo{
