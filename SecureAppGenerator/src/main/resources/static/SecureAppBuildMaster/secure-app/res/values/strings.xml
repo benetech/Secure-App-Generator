@@ -72,6 +72,8 @@
     <string name="hint_confirm_password_field">Confirm Password</string>
     <string name="label_enter_your_password">Enter your password to proceed</string>
     <string name="menu_item_export_all_records">Export all records</string>
+    <string name="menu_item_account_information">Account Information</string>
+    <string name="button_label_save_account_information">Save</string>
 
     <!-- Override Cacheword -->
     <string name="cacheword_notification_cached_title">Account Unlocked</string>
@@ -91,5 +93,6 @@
     <string name="content_description_manage_attachments">manage attachments</string>
     <string name="content_description_delete_attachment">delete attachment</string>
     <string name="content_description_attachments_list">list of attachments</string>
+    <string name="content_description_save_account_information_button">Save account information</string>
 
 </resources>

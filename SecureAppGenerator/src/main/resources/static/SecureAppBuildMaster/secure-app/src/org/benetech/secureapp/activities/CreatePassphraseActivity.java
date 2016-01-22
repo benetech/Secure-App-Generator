@@ -1,6 +1,7 @@
 package org.benetech.secureapp.activities;
 
 import android.app.Application;
+import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.os.Environment;
@@ -254,6 +255,11 @@ public class CreatePassphraseActivity extends AbstractLoginActivity implements I
         Util.showErrorMessage(this, getString(org.benetech.secureapp.R.string.keypair_creation_failed));
     }
 
+    private void startSetupAccountActivity() {
+        Intent intent = new Intent(this, AccountInformationActivity.class);
+        startActivity(intent);
+    }
+
     /** Callback for CreateMartusCryptoKeyPairTask */
     private CreateMartusCryptoKeyPairTask.CreateMartusCryptoKeyPairCallback mCreateMartusCryptoKeyPairCallback = new CreateMartusCryptoKeyPairTask.CreateMartusCryptoKeyPairCallback() {
         @Override
@@ -265,7 +271,7 @@ public class CreatePassphraseActivity extends AbstractLoginActivity implements I
         @Override
         public void onCreateKeyPairSuccess() {
             dismissProgressDialog();
-            startMainActivity();
+            startSetupAccountActivity();
         }
     };
 }

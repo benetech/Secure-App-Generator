@@ -43,8 +43,6 @@ public class FormGroupActivity extends FormHierarchyActivity {
     protected static final int GROUP = 555;
 
     private EditText mFormTitle;
-    private EditText mFormAuthor;
-    private EditText mFormOrganization;
     private boolean mFormTitleNeedsSaving;
     private ProgressDialogHandler mProgressDialogHandler;
 
@@ -81,20 +79,11 @@ public class FormGroupActivity extends FormHierarchyActivity {
         // invalidates any View references made there.
         setContentView(R.layout.form_group_layout);
         mFormTitle = (EditText) findViewById(R.id.formTitle);
-        mFormAuthor = (EditText) findViewById(R.id.authorField);
-        mFormOrganization = (EditText) findViewById(R.id.organizationField);
 
         setFormTitle();
-        setFormAuthor();
-        setFormOrganization();
-
         addFormFieldEditorActionListener(mFormTitle);
-        addFormFieldEditorActionListener(mFormAuthor);
-        addFormFieldEditorActionListener(mFormOrganization);
 
         this.mFormTitle.addTextChangedListener(mFormTitleWatcher);
-        mFormAuthor.addTextChangedListener(mFormTitleWatcher);
-        mFormOrganization.addTextChangedListener(mFormTitleWatcher);
 
         mProgressDialogHandler = new ProgressDialogHandler(this);
     }
@@ -130,16 +119,6 @@ public class FormGroupActivity extends FormHierarchyActivity {
             // For ActionBar use Form title if no instance available
             setTitle(Collect.getInstance().getFormController().getFormTitle());
         }
-    }
-
-    private void setFormAuthor() {
-        String instanceTitle = Util.getFormInstanceAuthor(this);
-        setTextFieldTextSafely(mFormAuthor, instanceTitle);
-    }
-
-    private void setFormOrganization() {
-        String instanceTitle = Util.getFormInstanceOrganization(this);
-        setTextFieldTextSafely(mFormOrganization, instanceTitle);
     }
 
     private void setTextFieldTextSafely(EditText editText, String value) {
@@ -182,8 +161,6 @@ public class FormGroupActivity extends FormHierarchyActivity {
         String path = getInstancePath();
         ContentValues updatedValues = new ContentValues();
         updatedValues.put(InstanceProviderAPI.InstanceColumns.DISPLAY_NAME, mFormTitle.getText().toString());
-        updatedValues.put(InstanceProviderAPI.InstanceColumns.FORM_INSTANCE_AUTHOR, mFormAuthor.getText().toString());
-        updatedValues.put(InstanceProviderAPI.InstanceColumns.FORM_INSTANCE_ORGANIZATION, mFormOrganization.getText().toString());
 
         getContentResolver().update(InstanceProviderAPI.InstanceColumns.CONTENT_URI, updatedValues, InstanceProviderAPI.InstanceColumns.INSTANCE_FILE_PATH + "=?", new String[]{path,});
     }
@@ -201,8 +178,6 @@ public class FormGroupActivity extends FormHierarchyActivity {
         String path = getInstancePath();
         ContentValues values = new ContentValues();
         values.put(InstanceProviderAPI.InstanceColumns.DISPLAY_NAME, mFormTitle.getText().toString());
-        values.put(InstanceProviderAPI.InstanceColumns.FORM_INSTANCE_AUTHOR, mFormAuthor.getText().toString());
-        values.put(InstanceProviderAPI.InstanceColumns.FORM_INSTANCE_ORGANIZATION, mFormOrganization.getText().toString());
 
         values.put(InstanceProviderAPI.InstanceColumns.INSTANCE_FILE_PATH, path);
         values.put(InstanceProviderAPI.InstanceColumns.JR_FORM_ID, jrformid);

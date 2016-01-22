@@ -31,6 +31,7 @@ import org.benetech.secureapp.MartusUploadManager;
 import org.benetech.secureapp.R;
 import org.benetech.secureapp.adapters.FormAdapter;
 import org.benetech.secureapp.adapters.FormAdapter.FormAdapterItemClickListener;
+import org.benetech.secureapp.application.AppConfig;
 import org.benetech.secureapp.application.Constants;
 import org.benetech.secureapp.application.MainApplication;
 import org.martus.android.library.common.dialog.ProgressDialogHandler;
@@ -373,6 +374,12 @@ public class MainActivity extends ListActivity implements ICacheWordSubscriber, 
         }
         if (id == R.id.show_receiving_contact_public_key_menu_item) {
             showReceivingContactPublicKey(this);
+            return true;
+        }
+
+        if (id == R.id.menu_item_account_information) {
+            Intent intent = new Intent(this, AccountInformationActivity.class);
+            startActivity(intent);
             return true;
         }
 

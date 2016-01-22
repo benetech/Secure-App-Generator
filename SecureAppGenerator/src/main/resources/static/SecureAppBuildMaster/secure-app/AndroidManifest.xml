@@ -107,6 +107,10 @@
             android:windowSoftInputMode="adjustResize">
         </activity>
 
+        <activity android:name=".activities.AccountInformationActivity"
+            android:windowSoftInputMode="adjustResize">
+        </activity>
+
         <service android:name="info.guardianproject.cacheword.CacheWordService" />
 
         <!-- Override Library projects that try to contribute LAUNCHER activities -->
