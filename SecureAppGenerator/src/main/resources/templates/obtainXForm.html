@@ -20,7 +20,7 @@
 
 		<div class="textFont cellphone_center_title" align="center"><p/><a th:text="#{text.cellphone_message1}"></a></div>
   		<div class="textFont cellphone_center_data" align="center" th:text="#{text.cellphone_message2}"></div>
-  		<div class="textFont cellphone_center_version" align="right" th:text="${session.appConfig.apkVersionMajor}"></div>
+  		<div class="textFont cellphone_center_version" align="right" th:text="${session.appConfig.apkVersionMajor} + '.' +${session.appConfig.apkVersionMinor} + '.' + ${session.appConfig.apkVersionBuild}+ '.' + ${session.appConfig.apkSagVersionBuild}"></div>
       	<div class="textFont main_title">
      		<div th:text="#{text.title}"/>
 		</div>

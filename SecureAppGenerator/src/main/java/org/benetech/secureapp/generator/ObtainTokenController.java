@@ -29,9 +29,6 @@ import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.net.MalformedURLException;
-import java.nio.file.Files;
-import java.util.Iterator;
-import java.util.List;
 import java.util.Map;
 import java.util.Vector;
 
@@ -135,37 +132,11 @@ public class ObtainTokenController extends WebMvcConfigurerAdapter
 	private void updateApkVersionInfoAndName(HttpSession session) throws IOException, S3Exception
 	{
         AppConfiguration config = (AppConfiguration)session.getAttribute(SessionAttributes.APP_CONFIG);
-        getBuildVersionFromGeneratedSettingsFile(config);
+        AppConfiguration.setBuildVersionFromGeneratedSettingsFile(config);
         String uniqueBuildNumber = AmazonS3Utils.getUniqueBuildNumber(session, config.getApkName());
         config.setApkSagVersionBuild(uniqueBuildNumber);
  		session.setAttribute(SessionAttributes.APP_CONFIG, config);
 	}
-
-	public static void getBuildVersionFromGeneratedSettingsFile(AppConfiguration config) throws IOException
-	{
-		File apkResourseFile = new File(SecureAppGeneratorApplication.getOriginalBuildDirectory(), BuildingApkController.GRADLE_GENERATED_SETTINGS_LOCAL);
-		List<String> lines = Files.readAllLines(apkResourseFile.toPath());
-		for (Iterator<String> iterator = lines.iterator(); iterator.hasNext();)
-		{
-			String currentLine = iterator.next();
-			if(currentLine.contains(BuildingApkController.VERSION_MAJOR_XML))
-		        config.setApkVersionMajor(extractVersionInformationFromLine(currentLine));
-			if(currentLine.contains(BuildingApkController.VERSION_MINOR_XML))
-		        config.setApkVersionMinor(extractVersionInformationFromLine(currentLine));
-			if(currentLine.contains(BuildingApkController.VERSION_BUILD_XML))
-		        config.setApkVersionBuild(extractVersionInformationFromLine(currentLine));
-		}
-	}
-	
-	private static String extractVersionInformationFromLine(String currentLine)
-	{
-		//Line prototype: project.ext.set("versionMajor", "0") 
-		String[] data = currentLine.split("\"");
-		if(data.length < 4)
-			return "0";
-		return data[3];
-	}
-
 
 	private void updateServerConfiguration(HttpSession session)
 	{

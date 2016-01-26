@@ -26,10 +26,14 @@ Boston, MA 02111-1307, USA.
 package org.benetech.secureapp.generator;
 
 import java.io.File;
+import java.io.IOException;
+import java.nio.file.Files;
+import java.util.Iterator;
+import java.util.List;
 
 public class AppConfiguration
 {
-	private static final String VERSION = "SAG Beta 65";
+	private static final String VERSION = "SAG Beta 66";
 	private static final String COPY_RIGHT = "This website is &#169; Copyright 2015-2016, Beneficent Technology, Inc.";
 	private static final char DASH_CHAR = '-';
 	private static final String APK_EXTENSION = ".apk";
@@ -82,7 +86,15 @@ public class AppConfiguration
 
 	public void resetVersion()
 	{
-		setApkVersionMajor(VERSION);
+		setApkSagVersionBuild(VERSION);
+		try
+		{
+			setBuildVersionFromGeneratedSettingsFile(this);
+		}
+		catch (IOException e)
+		{
+			SagLogger.logException(null, e);
+		}
 	}
 	
 	public void setAppName(String appName)
@@ -385,6 +397,34 @@ public class AppConfiguration
 
 	public String getCopyright()
 	{
-		return COPY_RIGHT;
+		return copyright;
 	}
+	
+	public static void setBuildVersionFromGeneratedSettingsFile(AppConfiguration config) throws IOException
+	{
+		File apkResourseFile = new File(SecureAppGeneratorApplication.getOriginalBuildDirectory(), BuildingApkController.GRADLE_GENERATED_SETTINGS_LOCAL);
+		List<String> lines = Files.readAllLines(apkResourseFile.toPath());
+		for (Iterator<String> iterator = lines.iterator(); iterator.hasNext();)
+		{
+			String currentLine = iterator.next();
+			if(currentLine.contains(BuildingApkController.VERSION_MAJOR_XML))
+		        config.setApkVersionMajor(extractVersionInformationFromLine(currentLine));
+			if(currentLine.contains(BuildingApkController.VERSION_MINOR_XML))
+		        config.setApkVersionMinor(extractVersionInformationFromLine(currentLine));
+			if(currentLine.contains(BuildingApkController.VERSION_BUILD_XML))
+		        config.setApkVersionBuild(extractVersionInformationFromLine(currentLine));
+		}
+	}
+
+	private static String extractVersionInformationFromLine(String currentLine)
+	{
+		//Line prototype: project.ext.set("versionMajor", "0") 
+		String[] data = currentLine.split("\"");
+		if(data.length < 4)
+			return "0";
+		return data[3];
+	}
+
+	
+	
 }
