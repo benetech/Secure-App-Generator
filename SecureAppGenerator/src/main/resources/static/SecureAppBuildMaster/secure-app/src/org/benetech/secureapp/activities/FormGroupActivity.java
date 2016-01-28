@@ -1,28 +1,3 @@
-/*
- * The Martus(tm) free, social justice documentation and
- * monitoring software. Copyright (C) 2016, Beneficent
- * Technology, Inc. (Benetech).
- *
- * Martus is free software; you can redistribute it and/or
- * modify it under the terms of the GNU General Public License
- * as published by the Free Software Foundation; either
- * version 2 of the License, or (at your option) any later
- * version with the additions and exceptions described in the
- * accompanying Martus license file entitled "license.txt".
- *
- * It is distributed WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
- * IMPLIED, including warranties of fitness of purpose or
- * merchantability.  See the accompanying Martus License and
- * GPL license for more details on the required license terms
- * for this software.
- *
- * You should have received a copy of the GNU General Public
- * License along with this program; if not, write to the Free
- * Software Foundation, Inc., 59 Temple Place - Suite 330,
- * Boston, MA 02111-1307, USA.
- *
- */
-
 package org.benetech.secureapp.activities;
 
 import android.content.ContentValues;
@@ -68,13 +43,15 @@ public class FormGroupActivity extends FormHierarchyActivity {
     protected static final int GROUP = 555;
 
     private EditText mFormTitle;
+    private EditText mFormAuthor;
+    private EditText mFormOrganization;
     private boolean mFormTitleNeedsSaving;
     private ProgressDialogHandler mProgressDialogHandler;
 
     /** Every time the Form Title EditText is changed mFormTitleNeedsSaving is set true.
      *
      * Both the IME_ACTION on mFormTitle (Keyboard "Done") and {@link #onPause()} will check
-     * if mFormTitleNeedsSaving is true at their invocation, calling {@link #saveFormTitle()}
+     * if mFormTitleNeedsSaving is true at their invocation, calling {@link #saveFormTitle(String)}
      * if appropriate.
      */
     private TextWatcher mFormTitleWatcher = new TextWatcher() {
@@ -104,11 +81,20 @@ public class FormGroupActivity extends FormHierarchyActivity {
         // invalidates any View references made there.
         setContentView(R.layout.form_group_layout);
         mFormTitle = (EditText) findViewById(R.id.formTitle);
+        mFormAuthor = (EditText) findViewById(R.id.authorField);
+        mFormOrganization = (EditText) findViewById(R.id.organizationField);
 
         setFormTitle();
+        setFormAuthor();
+        setFormOrganization();
+
         addFormFieldEditorActionListener(mFormTitle);
+        addFormFieldEditorActionListener(mFormAuthor);
+        addFormFieldEditorActionListener(mFormOrganization);
 
         this.mFormTitle.addTextChangedListener(mFormTitleWatcher);
+        mFormAuthor.addTextChangedListener(mFormTitleWatcher);
+        mFormOrganization.addTextChangedListener(mFormTitleWatcher);
 
         mProgressDialogHandler = new ProgressDialogHandler(this);
     }
@@ -118,7 +104,7 @@ public class FormGroupActivity extends FormHierarchyActivity {
             @Override
             public boolean onEditorAction(TextView v, int actionId, KeyEvent event) {
                 if (mFormTitleNeedsSaving)
-                    saveFormTitle();
+                    saveFormTitle(v.getText().toString());
 
                 return false;
             }
@@ -129,7 +115,7 @@ public class FormGroupActivity extends FormHierarchyActivity {
     public void onPause() {
         super.onPause();
         if (mFormTitleNeedsSaving)
-            saveFormTitle();
+            saveFormTitle(mFormTitle.getText().toString());
     }
 
     /**
@@ -146,6 +132,16 @@ public class FormGroupActivity extends FormHierarchyActivity {
         }
     }
 
+    private void setFormAuthor() {
+        String instanceTitle = Util.getFormInstanceAuthor(this);
+        setTextFieldTextSafely(mFormAuthor, instanceTitle);
+    }
+
+    private void setFormOrganization() {
+        String instanceTitle = Util.getFormInstanceOrganization(this);
+        setTextFieldTextSafely(mFormOrganization, instanceTitle);
+    }
+
     private void setTextFieldTextSafely(EditText editText, String value) {
         if (isValidValue(value)) {
             editText.setText(value);
@@ -156,12 +152,12 @@ public class FormGroupActivity extends FormHierarchyActivity {
         return value != null && value.length() > 0;
     }
 
-    private void saveFormTitle() {
+    private void saveFormTitle(String title) {
         mFormTitleNeedsSaving = false;
         if (isDatabaseEmpty())
-            insertNewRow();
+            insertNewRow(title);
         else
-            updateExistingRow();
+            updateExistingRow(title);
     }
 
     private boolean isDatabaseEmpty() {
@@ -182,15 +178,17 @@ public class FormGroupActivity extends FormHierarchyActivity {
         return Collect.getInstance().getFormController().getInstancePath().getAbsolutePath();
     }
 
-    private void updateExistingRow() {
+    private void updateExistingRow(String title) {
         String path = getInstancePath();
         ContentValues updatedValues = new ContentValues();
-        updatedValues.put(InstanceProviderAPI.InstanceColumns.DISPLAY_NAME, mFormTitle.getText().toString());
+        updatedValues.put(InstanceProviderAPI.InstanceColumns.DISPLAY_NAME, title);
+        updatedValues.put(InstanceProviderAPI.InstanceColumns.FORM_INSTANCE_AUTHOR, mFormAuthor.getText().toString());
+        updatedValues.put(InstanceProviderAPI.InstanceColumns.FORM_INSTANCE_ORGANIZATION, mFormOrganization.getText().toString());
 
         getContentResolver().update(InstanceProviderAPI.InstanceColumns.CONTENT_URI, updatedValues, InstanceProviderAPI.InstanceColumns.INSTANCE_FILE_PATH + "=?", new String[]{path,});
     }
 
-    private void insertNewRow() {
+    private void insertNewRow(String title) {
         Cursor cursor = Collect.getInstance().getContentResolver().query(FormsProviderAPI.FormsColumns.CONTENT_URI, null, null, null, null);
         cursor.moveToFirst();
         String jrformid = cursor.getString(cursor.getColumnIndex(FormsProviderAPI.FormsColumns.JR_FORM_ID));
@@ -202,7 +200,9 @@ public class FormGroupActivity extends FormHierarchyActivity {
 
         String path = getInstancePath();
         ContentValues values = new ContentValues();
-        values.put(InstanceProviderAPI.InstanceColumns.DISPLAY_NAME, mFormTitle.getText().toString());
+        values.put(InstanceProviderAPI.InstanceColumns.DISPLAY_NAME, title);
+        values.put(InstanceProviderAPI.InstanceColumns.FORM_INSTANCE_AUTHOR, mFormAuthor.getText().toString());
+        values.put(InstanceProviderAPI.InstanceColumns.FORM_INSTANCE_ORGANIZATION, mFormOrganization.getText().toString());
 
         values.put(InstanceProviderAPI.InstanceColumns.INSTANCE_FILE_PATH, path);
         values.put(InstanceProviderAPI.InstanceColumns.JR_FORM_ID, jrformid);
@@ -225,7 +225,7 @@ public class FormGroupActivity extends FormHierarchyActivity {
             // If we're not at the first level, we're inside a repeated group so we want to only display
             // everything enclosed within that group.
             String contextGroupRef = "";
-            formList = new ArrayList();
+            formList = new ArrayList<HierarchyElement>();
 
             // We always want to go back to the beginning of group page.  Group page only displays group fields.
             formController.jumpToIndex(FormIndex.createBeginningOfFormIndex());
@@ -267,9 +267,9 @@ public class FormGroupActivity extends FormHierarchyActivity {
                 String currentRef = formController.getFormIndex().getReference().toString(true);
 
                 // retrieve the current group
-                String currentGroup = (repeatGroupRef == null) ? contextGroupRef : repeatGroupRef;
+                String curGroup = (repeatGroupRef == null) ? contextGroupRef : repeatGroupRef;
 
-                if (!currentRef.startsWith(currentGroup)) {
+                if (!currentRef.startsWith(curGroup)) {
                     // We have left the current group
                     if ( repeatGroupRef == null ) {
                         // We are done.
@@ -305,7 +305,6 @@ public class FormGroupActivity extends FormHierarchyActivity {
                                 while (event == (FormEntryController.EVENT_QUESTION)) {
                                     event = formController.stepToNextEvent(FormController.STEP_INTO_GROUP);
                                 }
-                                continue;
                             }
                         }
 
@@ -401,7 +400,7 @@ public class FormGroupActivity extends FormHierarchyActivity {
     @Override
     public void onBackPressed() {
         if (mFormTitleNeedsSaving) {
-            saveFormTitle();
+            saveFormTitle(mFormTitle.getText().toString());
         }
 
         // Go back to MainActivity

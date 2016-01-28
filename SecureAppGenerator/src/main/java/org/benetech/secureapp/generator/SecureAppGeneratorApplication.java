@@ -1,27 +1,3 @@
-/*
-
-Martus(TM) is a trademark of Beneficent Technology, Inc. 
-This software is (c) Copyright 2015-2016, Beneficent Technology, Inc.
-
-Martus is free software; you can redistribute it and/or
-modify it under the terms of the GNU General Public License
-as published by the Free Software Foundation; either
-version 2 of the License, or (at your option) any later
-version with the additions and exceptions described in the
-accompanying Martus license file entitled "license.txt".
-
-It is distributed WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
-IMPLIED, including warranties of fitness of purpose or
-merchantability.  See the accompanying Martus License and
-GPL license for more details on the required license terms
-for this software.
-
-You should have received a copy of the GNU General Public
-License along with this program; if not, write to the Free
-Software Foundation, Inc., 59 Temple Place - Suite 330,
-Boston, MA 02111-1307, USA.
-
-*/
 package org.benetech.secureapp.generator;
 
 import java.io.BufferedOutputStream;
@@ -31,7 +7,6 @@ import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.OutputStreamWriter;
-import java.io.Serializable;
 import java.io.StringWriter;
 import java.io.UnsupportedEncodingException;
 import java.io.Writer;
@@ -39,7 +14,6 @@ import java.nio.file.Files;
 
 import javax.servlet.http.HttpSession;
 
-import org.apache.logging.log4j.core.Layout;
 import org.martus.common.Base64XmlOutputStream;
 import org.martus.common.XmlWriterFilter;
 import org.springframework.boot.SpringApplication;
@@ -51,8 +25,6 @@ import org.springframework.context.i18n.LocaleContextHolder;
 import org.springframework.context.support.ReloadableResourceBundleMessageSource;
 import org.springframework.core.io.support.PathMatchingResourcePatternResolver;
 import org.springframework.web.multipart.MultipartFile;
-
-import com.vi.aws.logging.log4jappenders.CloudWatchAppender;
 
 
 @SpringBootApplication
@@ -70,7 +42,6 @@ public class SecureAppGeneratorApplication extends SpringBootServletInitializer
 
 	public static void main(String[] args) 
     {
-		//CloudWatchAppender.createAppender("SecureAppGenerator", "SAG_Group_Name", "SAG_Stream_Name", "5", null);
         SpringApplication.run(SecureAppGeneratorApplication.class, args);
     }
 
@@ -113,7 +84,7 @@ public class SecureAppGeneratorApplication extends SpringBootServletInitializer
 		}
 		catch (IOException e)
 		{
-			SagLogger.logException(null, e);
+			Logger.logException(null, e);
 			return new File("/static");
 		}
 	}
@@ -126,7 +97,7 @@ public class SecureAppGeneratorApplication extends SpringBootServletInitializer
 	static String getGadleDirectory()
 	{
    		String dataRootDirectory = System.getenv(SecureAppGeneratorApplication.GRADLE_HOME_ENV);
-   		SagLogger.logDebug(null, "Gradle Dir:"+dataRootDirectory);
+   		Logger.logVerbose(null, "Gradle Dir:"+dataRootDirectory);
    		return dataRootDirectory;
 	}
 	
@@ -185,10 +156,10 @@ public class SecureAppGeneratorApplication extends SpringBootServletInitializer
 
 	static public int executeCommand(HttpSession session, String command, File initialDirectory) throws IOException, InterruptedException
 	{
-		SagLogger.logDebug(session, "Exec Command:" + command);
+		Logger.logVerbose(session, "Exec Command:" + command);
 		Runtime rt = Runtime.getRuntime();
 		Process p = rt.exec(command, null, initialDirectory);
-		SagLogger.logProcess(session, p);		
+		Logger.logProcess(session, p);		
 		p.waitFor();
 		return p.exitValue();
 	}

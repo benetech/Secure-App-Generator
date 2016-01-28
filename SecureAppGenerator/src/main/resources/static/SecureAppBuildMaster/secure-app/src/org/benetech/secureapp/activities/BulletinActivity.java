@@ -1,28 +1,3 @@
-/*
- * The Martus(tm) free, social justice documentation and
- * monitoring software. Copyright (C) 2016, Beneficent
- * Technology, Inc. (Benetech).
- *
- * Martus is free software; you can redistribute it and/or
- * modify it under the terms of the GNU General Public License
- * as published by the Free Software Foundation; either
- * version 2 of the License, or (at your option) any later
- * version with the additions and exceptions described in the
- * accompanying Martus license file entitled "license.txt".
- *
- * It is distributed WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
- * IMPLIED, including warranties of fitness of purpose or
- * merchantability.  See the accompanying Martus License and
- * GPL license for more details on the required license terms
- * for this software.
- *
- * You should have received a copy of the GNU General Public
- * License along with this program; if not, write to the Free
- * Software Foundation, Inc., 59 Temple Place - Suite 330,
- * Boston, MA 02111-1307, USA.
- *
- */
-
 package org.benetech.secureapp.activities;
 
 import android.content.Context;
@@ -70,7 +45,7 @@ public class BulletinActivity extends AbstractBulletinCreator implements Bulleti
 
         //turn off user inactivity checking during zipping and encrypting of file
         final AsyncTask<Object, Integer, File> zipTask = new ZipBulletinTask(bulletin, this);
-        zipTask.execute(getApplication().getCacheDir(), store, ".zip");
+        zipTask.execute(getApplication().getCacheDir(), store);
     }
 
     @Override
@@ -146,7 +121,7 @@ public class BulletinActivity extends AbstractBulletinCreator implements Bulleti
                 InstanceProviderAPI.InstanceColumns._ID + " = ?",
                 new String[]{formId});
 
-        Log.i(TAG, getString(R.string.error_message_instance_form_deleted_delete_count, deleteCount));
+        Log.i(TAG,  getString(R.string.error_message_instance_form_deleted_delete_count, deleteCount));
         cursor.close();
     }
 
@@ -197,16 +172,18 @@ public class BulletinActivity extends AbstractBulletinCreator implements Bulleti
         }
     }
 
+    private void handleException(Exception e, int id, String msg) {
+        indeterminateDialog.dismissAllowingStateLoss();
+        finish();
+        Toast.makeText(this, getString(id), Toast.LENGTH_LONG).show();
+        Log.w(TAG, msg, e);
+    }
+
     private String getServerIp(){
         return getString(R.string.martus_server_ip);
     }
 
     private String getServerPublicKey() {
         return getString(R.string.martus_server_public_key);
-    }
-
-    @Override
-    public String getIndeterminateDialogMessage() {
-        return getString(R.string.preparing_record_for_upload);
     }
 }

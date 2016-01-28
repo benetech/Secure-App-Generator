@@ -22,24 +22,10 @@ form{
 
 .help_area{
     position: absolute;
-    top: 600px;
+    top: 625px;
     left: 10px;
 }  
 
-.copyrightFont {
-	background-color: transparent;
-	font-family: 'Arial Narrow', Arial, sans-serif;
-    font-weight: normal;
-	font-size: 16px;
-    color: yellow;
-}
-
-.copyright_area {
-    position: absolute;
-    top: 625px;
-    left: 10px;
- } 
- 
 .ProgressCircleInfo{
     font-size: 24px;
  	font-family: 'Arial Narrow', Arial, sans-serif;
@@ -173,8 +159,8 @@ form{
     background-color: #4D4D4D;
     color: yellow;
     font-size: 10px;
-  }
-   
+  } 
+  
 .progress_location{
     position: absolute;
     top: 175px;
