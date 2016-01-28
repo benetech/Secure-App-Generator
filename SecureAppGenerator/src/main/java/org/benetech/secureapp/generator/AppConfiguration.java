@@ -1,7 +1,7 @@
 /*
 
 Martus(TM) is a trademark of Beneficent Technology, Inc. 
-This software is (c) Copyright 2015, Beneficent Technology, Inc.
+This software is (c) Copyright 2015-2016, Beneficent Technology, Inc.
 
 Martus is free software; you can redistribute it and/or
 modify it under the terms of the GNU General Public License
@@ -26,10 +26,15 @@ Boston, MA 02111-1307, USA.
 package org.benetech.secureapp.generator;
 
 import java.io.File;
+import java.io.IOException;
+import java.nio.file.Files;
+import java.util.Iterator;
+import java.util.List;
 
 public class AppConfiguration
 {
-	private static final String VERSION = "1.0 Beta 50";
+	private static final String VERSION = "SAG Beta 68";
+	private static final String COPY_RIGHT = "This website is &#169; Copyright 2015-2016, Beneficent Technology, Inc.";
 	private static final char DASH_CHAR = '-';
 	private static final String APK_EXTENSION = ".apk";
 	private static final String DEBUG_APK_EXTENSION = "-release" + APK_EXTENSION;
@@ -64,6 +69,7 @@ public class AppConfiguration
 	private String apkBuildError;
 	private String apkURL;
 	private String apkBuildResult;
+	private String copyright;
 	
 	public AppConfiguration()
 	{
@@ -74,12 +80,21 @@ public class AppConfiguration
 	{
 		resetVersion();
 		apkBuildResult = APK_NOT_BUILT;
+		copyright = COPY_RIGHT;
 		appName = "";
 	}
 
 	public void resetVersion()
 	{
-		setApkVersionMajor(VERSION);
+		setApkSagVersionBuild(VERSION);
+		try
+		{
+			setBuildVersionFromGeneratedSettingsFile(this);
+		}
+		catch (IOException e)
+		{
+			SagLogger.logException(null, e);
+		}
 	}
 	
 	public void setAppName(String appName)
@@ -380,4 +395,36 @@ public class AppConfiguration
 		this.apkBuildResult = apkBuildResult;
 	}
 
+	public String getCopyright()
+	{
+		return copyright;
+	}
+	
+	public static void setBuildVersionFromGeneratedSettingsFile(AppConfiguration config) throws IOException
+	{
+		File apkResourseFile = new File(SecureAppGeneratorApplication.getOriginalBuildDirectory(), BuildingApkController.GRADLE_GENERATED_SETTINGS_LOCAL);
+		List<String> lines = Files.readAllLines(apkResourseFile.toPath());
+		for (Iterator<String> iterator = lines.iterator(); iterator.hasNext();)
+		{
+			String currentLine = iterator.next();
+			if(currentLine.contains(BuildingApkController.VERSION_MAJOR_XML))
+		        config.setApkVersionMajor(extractVersionInformationFromLine(currentLine));
+			if(currentLine.contains(BuildingApkController.VERSION_MINOR_XML))
+		        config.setApkVersionMinor(extractVersionInformationFromLine(currentLine));
+			if(currentLine.contains(BuildingApkController.VERSION_BUILD_XML))
+		        config.setApkVersionBuild(extractVersionInformationFromLine(currentLine));
+		}
+	}
+
+	private static String extractVersionInformationFromLine(String currentLine)
+	{
+		//Line prototype: project.ext.set("versionMajor", "0") 
+		String[] data = currentLine.split("\"");
+		if(data.length < 4)
+			return "0";
+		return data[3];
+	}
+
+	
+	
 }

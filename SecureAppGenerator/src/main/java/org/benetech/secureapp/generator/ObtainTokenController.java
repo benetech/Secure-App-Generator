@@ -1,7 +1,7 @@
 /*
 
 Martus(TM) is a trademark of Beneficent Technology, Inc. 
-This software is (c) Copyright 2015, Beneficent Technology, Inc.
+This software is (c) Copyright 2015-2016, Beneficent Technology, Inc.
 
 Martus is free software; you can redistribute it and/or
 modify it under the terms of the GNU General Public License
@@ -29,9 +29,6 @@ import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.net.MalformedURLException;
-import java.nio.file.Files;
-import java.util.Iterator;
-import java.util.List;
 import java.util.Map;
 import java.util.Vector;
 
@@ -72,6 +69,7 @@ public class ObtainTokenController extends WebMvcConfigurerAdapter
 	@RequestMapping(value=WebPage.OBTAIN_CLIENT_TOKEN, method=RequestMethod.GET)
     public String directError(HttpSession session, Model model) 
     {
+		SagLogger.logWarning(session, "OBTAIN_CLIENT_TOKEN Get Request");
 		SecureAppGeneratorApplication.setInvalidResults(session);
         return WebPage.ERROR;
     }
@@ -91,37 +89,39 @@ public class ObtainTokenController extends WebMvcConfigurerAdapter
     }
 	
 	@RequestMapping(value=WebPage.OBTAIN_CLIENT_TOKEN_NEXT, method=RequestMethod.POST)
-	
 	public String nextPage(HttpSession session, Model model, AppConfiguration appConfig) 
     {
 		if(isValidToken(session, appConfig)) 
 		{
 			try
 			{
+				SagLogger.logInfo(session, "Obtaining Token from "+ServerConstants.getCurrentServerIp());
 				getClientPublicKeyFromToken(session, appConfig);
 				updateServerConfiguration(session);
 				updateApkVersionInfoAndName(session);
 				model.addAttribute(SessionAttributes.APP_CONFIG, appConfig);
+				SagLogger.logInfo(session, "Token Found");
 				return WebPage.SUMMARY;
 			}
 			catch (TokenNotFoundException e)
 			{
-				Logger.logVerbose(session, "Token Not Found on Server.");
+				String tokenString = appConfig.getClientToken().trim();
+				SagLogger.logDebug(session, "Token Not Found on Server.:"+tokenString);
 				appConfig.setClientTokenError("token_not_found");
 			}
 			catch (S3Exception e)
 			{
-				Logger.logException(session, e);
+				SagLogger.logException(session, e);
 				appConfig.setClientTokenError("server_s3");
 			}
 			catch (AuthorizationFailedException e)
 			{
-				Logger.logException(session, e);
+				SagLogger.logException(session, e);
 				appConfig.setClientTokenError("crypto_authorization_failed");
 			}
 			catch (Exception e)
 			{
-				Logger.logException(session, e);
+				SagLogger.logException(session, e);
 				appConfig.setClientTokenError("server_token");
 			}
 		}
@@ -132,37 +132,11 @@ public class ObtainTokenController extends WebMvcConfigurerAdapter
 	private void updateApkVersionInfoAndName(HttpSession session) throws IOException, S3Exception
 	{
         AppConfiguration config = (AppConfiguration)session.getAttribute(SessionAttributes.APP_CONFIG);
-        getBuildVersionFromGeneratedSettingsFile(config);
+        AppConfiguration.setBuildVersionFromGeneratedSettingsFile(config);
         String uniqueBuildNumber = AmazonS3Utils.getUniqueBuildNumber(session, config.getApkName());
         config.setApkSagVersionBuild(uniqueBuildNumber);
  		session.setAttribute(SessionAttributes.APP_CONFIG, config);
 	}
-
-	public static void getBuildVersionFromGeneratedSettingsFile(AppConfiguration config) throws IOException
-	{
-		File apkResourseFile = new File(SecureAppGeneratorApplication.getOriginalBuildDirectory(), BuildingApkController.GRADLE_GENERATED_SETTINGS_LOCAL);
-		List<String> lines = Files.readAllLines(apkResourseFile.toPath());
-		for (Iterator<String> iterator = lines.iterator(); iterator.hasNext();)
-		{
-			String currentLine = iterator.next();
-			if(currentLine.contains(BuildingApkController.VERSION_MAJOR_XML))
-		        config.setApkVersionMajor(extractVersionInformationFromLine(currentLine));
-			if(currentLine.contains(BuildingApkController.VERSION_MINOR_XML))
-		        config.setApkVersionMinor(extractVersionInformationFromLine(currentLine));
-			if(currentLine.contains(BuildingApkController.VERSION_BUILD_XML))
-		        config.setApkVersionBuild(extractVersionInformationFromLine(currentLine));
-		}
-	}
-	
-	private static String extractVersionInformationFromLine(String currentLine)
-	{
-		//Line prototype: project.ext.set("versionMajor", "0") 
-		String[] data = currentLine.split("\"");
-		if(data.length < 4)
-			return "0";
-		return data[3];
-	}
-
 
 	private void updateServerConfiguration(HttpSession session)
 	{
@@ -200,21 +174,21 @@ public class ObtainTokenController extends WebMvcConfigurerAdapter
 			{
 				try
 				{
-					Logger.logVerbose(session, "reading keypair: " + SAG_KEYPAIR_DIRECTORY);
+					SagLogger.logDebug(session, "reading keypair: " + SAG_KEYPAIR_DIRECTORY);
 					security.readKeyPair(keyPair, SAG_KEYPAIR_PASSWORD.toCharArray());
-					Logger.logVerbose(session, "read keypair");
+					SagLogger.logDebug(session, "read keypair");
 					createNewKeypair = false;
 				}
 				catch (Exception e)
 				{
-					Logger.logException(session, e);
+					SagLogger.logException(session, e);
 					createNewKeypair = true;
 				}
 			}
  			
 			if(createNewKeypair)
 			{
-				Logger.log(session, "Creating new SAG Keypair");
+				SagLogger.logInfo(session, "Creating new SAG Keypair");
 				File keyPairDir = new File(SAG_KEYPAIR_DIRECTORY);
 				if(!keyPairDir.exists())
 					keyPairDir.mkdirs();
@@ -223,7 +197,7 @@ public class ObtainTokenController extends WebMvcConfigurerAdapter
 				security.writeKeyPair(outputStream, SAG_KEYPAIR_PASSWORD.toCharArray());
 				outputStream.flush();
 				outputStream.close();
-				Logger.log(session, "Created Keypair");
+				SagLogger.logInfo(session, "Created Keypair");
 			}
 			String tokenString = appConfig.getClientToken();
 			MartusAccountAccessToken accessToken = new MartusAccountAccessToken(tokenString);
@@ -236,7 +210,7 @@ public class ObtainTokenController extends WebMvcConfigurerAdapter
  				throw new ServerCallFailedException();
  			if(!response.getResultCode().equals(NetworkInterfaceConstants.OK))
  			{
- 				Logger.logError(session, "Token Network returncode:" +response.getResultCode());
+ 				SagLogger.logError(session, "Token Network returncode:" +response.getResultCode());
  				throw new ServerNotAvailableException();
  			}
  			
@@ -246,11 +220,11 @@ public class ObtainTokenController extends WebMvcConfigurerAdapter
  			String AccountId = singleAccountId.get(0);
 	 		config.setClientPublicKey(AccountId);
 			config.setClientPublicCode(MartusCrypto.computeFormattedPublicCode40(AccountId));
-			Logger.logVerbose(session, "Account Found:" + config.getClientPublicCode());
+			SagLogger.logDebug(session, "Account Found:" + config.getClientPublicCode());
 		}
 		catch (CreateDigestException | CheckDigitInvalidException e)
 		{
-			Logger.logException(session, e);
+			SagLogger.logException(session, e);
 			throw new TokenNotFoundException();
 		}
  		session.setAttribute(SessionAttributes.APP_CONFIG, config);
@@ -267,7 +241,7 @@ public class ObtainTokenController extends WebMvcConfigurerAdapter
 		}
 		catch (TokenInvalidException e)
 		{
-			Logger.logError(session, "Token invalid:" + tokenString);
+			SagLogger.logError(session, "Token invalid:" + tokenString);
 			appConfig.setClientTokenError("token_invalid");
 			return false;
 		}

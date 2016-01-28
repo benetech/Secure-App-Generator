@@ -8,20 +8,10 @@
     android:orientation="vertical" >
 
     <TextView
-        android:id="@+id/welcomeTitle"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignParentTop="true"
-        android:layout_centerHorizontal="true"
-        android:text="Welcome to secureApp Prototype!"
-        android:textSize="20sp" />
-
-    <TextView
         android:id="@+id/welcomeSubTitle"
         android:paddingTop="8dp"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_below="@id/welcomeTitle"
         android:layout_centerHorizontal="true"
         android:text="Enter a password to get started"
         android:textSize="18sp" />
