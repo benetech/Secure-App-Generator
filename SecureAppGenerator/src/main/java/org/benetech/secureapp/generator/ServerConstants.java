@@ -1,7 +1,7 @@
 /*
 
 Martus(TM) is a trademark of Beneficent Technology, Inc. 
-This software is (c) Copyright 2015, Beneficent Technology, Inc.
+This software is (c) Copyright 2015-2016, Beneficent Technology, Inc.
 
 Martus is free software; you can redistribute it and/or
 modify it under the terms of the GNU General Public License
@@ -26,7 +26,7 @@ Boston, MA 02111-1307, USA.
 package org.benetech.secureapp.generator;
 
 public class ServerConstants {
-	private static final boolean useRealServer = true;
+	private static final boolean useRealServer = false;
 	
     private static final String IP_FOR_SL1_IE_REAL = "54.72.26.74";
     private static final String PUBLIC_KEY_FOR_SL1_IE_REAL =

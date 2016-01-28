@@ -85,6 +85,7 @@
 			<button class="textFont button_next" id="next" name="next" th:text="#{button.buildapp}"/>
 		</form>
 		<div class="helpFont help_area">Need help? Email <a class="url_link" href="mailto:secureApp@benetech.org">secureApp@benetech.org</a></div> 
+  		<div class="copyrightFont copyright_area" align="left" th:utext="${session.appConfig.copyright}"></div>
  	</body>
 </html>
 

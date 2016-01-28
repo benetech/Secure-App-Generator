@@ -1,7 +1,7 @@
 /*
 
 Martus(TM) is a trademark of Beneficent Technology, Inc. 
-This software is (c) Copyright 2015, Beneficent Technology, Inc.
+This software is (c) Copyright 2015-2016, Beneficent Technology, Inc.
 
 Martus is free software; you can redistribute it and/or
 modify it under the terms of the GNU General Public License
@@ -110,6 +110,7 @@ public class ObtainXFormController extends WebMvcConfigurerAdapter
 	@RequestMapping(value=WebPage.OBTAIN_XFORM, method=RequestMethod.GET)
     public String directError(HttpSession session, Model model) 
     {
+		SagLogger.logWarning(session, "OBTAIN_XFORM Get Request");
 		SecureAppGeneratorApplication.setInvalidResults(session);
         return WebPage.ERROR;
     }
@@ -133,7 +134,10 @@ public class ObtainXFormController extends WebMvcConfigurerAdapter
         {
 			xFormFile = copyXFormsFileSelectedToTempFile(session, formLocation);
 			if(xFormFile == null)
+			{
+				SagLogger.logError(session, "Default Form not found? :"+formLocation);
 				return WebPage.ERROR; 
+			}
 			xFormName = getFormNameOnly(formLocation);
         }
         else
@@ -142,17 +146,17 @@ public class ObtainXFormController extends WebMvcConfigurerAdapter
             {
             		if(!xmlFile.getContentType().contains(XML_TYPE))
             		{
-            			Logger.log(session, "Non-XML xForm: " + xmlFile.getContentType());
+            			SagLogger.logInfo(session, "Non-XML xForm: " + xmlFile.getContentType());
              		return returnLocalizedErrorMessage(model, appConfig, "xform_file_type_invalid"); 
             		}
     				xFormName = getFormNameOnly(xmlFile.getOriginalFilename());
     				xFormFile = File.createTempFile(xFormName, XFORM_FILE_EXTENSION);
             		SecureAppGeneratorApplication.saveMultiPartFileToLocation(xmlFile, xFormFile);
-                Logger.logVerbose(session, "Uploaded XFORM Location = " + xFormFile.getAbsolutePath());
+                SagLogger.logInfo(session, "Uploaded Custom XFORM Location = " + xFormFile.getAbsolutePath());
             } 
             catch (Exception e) 
             {
-            		Logger.logException(session, e);
+            		SagLogger.logException(session, e);
         			xFormFile.delete();
             		return returnLocalizedErrorMessage(model, appConfig, "xform_upload_failed"); 
             }
@@ -164,7 +168,9 @@ public class ObtainXFormController extends WebMvcConfigurerAdapter
 		}
 		catch (Exception e)
 		{
-       		return returnRawErrorMessage(model, appConfig, SecureAppGeneratorApplication.getLocalizedErrorMessage("xform_invalid", e)); 
+       		String localizedErrorMessage = SecureAppGeneratorApplication.getLocalizedErrorMessage("xform_invalid", e);
+			SagLogger.logWarning(session, "Custom xForm Invalid: " + localizedErrorMessage);
+       		return returnRawErrorMessage(model, appConfig, localizedErrorMessage); 
 		}
 		
 		AppConfiguration config = (AppConfiguration)session.getAttribute(SessionAttributes.APP_CONFIG);
@@ -407,7 +413,7 @@ public class ObtainXFormController extends WebMvcConfigurerAdapter
 		}
 		catch (IOException e)
 		{
-			Logger.logException(session, e);
+			SagLogger.logException(session, e);
     			SecureAppGeneratorApplication.setInvalidResults(session, "failed_copy_file", e);
 		    return null;
 		}

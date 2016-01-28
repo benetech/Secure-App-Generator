@@ -20,7 +20,7 @@
 
 		<div class="textFont cellphone_center_title" align="center"><p/><a th:text="#{text.cellphone_message1}"></a></div>
   		<div class="textFont cellphone_center_data" align="center" th:text="#{text.cellphone_message2}"></div>
-  		<div class="textFont cellphone_center_version" align="right" th:text="${session.appConfig.apkVersionMajor}"></div>
+  		<div class="textFont cellphone_center_version" align="right" th:text="${session.appConfig.apkVersionMajor} + '.' +${session.appConfig.apkVersionMinor} + '.' + ${session.appConfig.apkVersionBuild}+ '.' + ${session.appConfig.apkSagVersionBuild}"></div>
       	<div class="textFont main_title">
      		<div th:text="#{text.title}"/>
 		</div>
@@ -73,5 +73,6 @@
 		</form>
 		<script src="./js/xFormSelection.js"></script>	
 		<div class="helpFont help_area">Need help? Email <a class="url_link" href="mailto:secureApp@benetech.org">secureApp@benetech.org</a></div> 
+  		<div class="copyrightFont copyright_area" align="left" th:utext="${session.appConfig.copyright}"></div>
 	</body>
 </html>

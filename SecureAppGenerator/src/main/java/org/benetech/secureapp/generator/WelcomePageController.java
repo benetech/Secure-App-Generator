@@ -1,7 +1,7 @@
 /*
 
 Martus(TM) is a trademark of Beneficent Technology, Inc. 
-This software is (c) Copyright 2015, Beneficent Technology, Inc.
+This software is (c) Copyright 2015-2016, Beneficent Technology, Inc.
 
 Martus is free software; you can redistribute it and/or
 modify it under the terms of the GNU General Public License
@@ -60,6 +60,7 @@ public class WelcomePageController extends WebMvcConfigurerAdapter
 	@RequestMapping(value=WebPage.WELCOME, method=RequestMethod.GET)
     public String directError(HttpSession session, Model model) 
     {
+		SagLogger.logWarning(session, "WELCOME Get Request");
 		SecureAppGeneratorApplication.setInvalidResults(session);
         return WebPage.ERROR;
     }

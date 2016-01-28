@@ -1,3 +1,28 @@
+/*
+ * The Martus(tm) free, social justice documentation and
+ * monitoring software. Copyright (C) 2016, Beneficent
+ * Technology, Inc. (Benetech).
+ *
+ * Martus is free software; you can redistribute it and/or
+ * modify it under the terms of the GNU General Public License
+ * as published by the Free Software Foundation; either
+ * version 2 of the License, or (at your option) any later
+ * version with the additions and exceptions described in the
+ * accompanying Martus license file entitled "license.txt".
+ *
+ * It is distributed WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+ * IMPLIED, including warranties of fitness of purpose or
+ * merchantability.  See the accompanying Martus License and
+ * GPL license for more details on the required license terms
+ * for this software.
+ *
+ * You should have received a copy of the GNU General Public
+ * License along with this program; if not, write to the Free
+ * Software Foundation, Inc., 59 Temple Place - Suite 330,
+ * Boston, MA 02111-1307, USA.
+ *
+ */
+
 package org.benetech.secureapp.activities;
 
 import android.content.Context;
@@ -25,6 +50,7 @@ import org.martus.android.library.common.dialog.IndeterminateProgressDialog;
 import org.martus.android.library.exceptions.XFormsConstraintViolationException;
 import org.martus.android.library.exceptions.XFormsMissingRequiredFieldException;
 import org.martus.android.library.io.SecureFile;
+import org.martus.android.library.utilities.BulletinZipper;
 import org.martus.common.HeadquartersKey;
 import org.martus.common.HeadquartersKeys;
 import org.martus.common.MartusXml;
@@ -36,7 +62,6 @@ import org.martus.util.xml.XmlUtilities;
 import org.odk.collect.android.listeners.FormLoaderListener;
 import org.odk.collect.android.provider.FormsProviderAPI;
 import org.odk.collect.android.provider.InstanceProviderAPI;
-import org.odk.collect.android.tasks.FormLoaderTask;
 
 import java.util.ArrayList;
 
@@ -45,9 +70,12 @@ import java.util.ArrayList;
  */
 abstract public class AbstractBulletinCreator extends SherlockFragmentActivity implements FormLoaderListener,
                                                                                           IndeterminateProgressDialog.IndeterminateProgressDialogListener,
-                                                                                          DeterminateProgressDialog.DeterminateProgressDialogListener {
+                                                                                          DeterminateProgressDialog.DeterminateProgressDialogListener,
+                                                                                          BulletinZipper {
 
     private static final String TAG = "AbstractBulletinCreator";
+
+    public static final String MBA_FILE_EXTENSION = ".mba";
     protected SecureMobileClientBulletinStore store;
     protected IndeterminateProgressDialog indeterminateDialog;
     protected DeterminateProgressDialog determinateDialog;
@@ -212,6 +240,13 @@ abstract public class AbstractBulletinCreator extends SherlockFragmentActivity i
         return  jpegFiles;
     }
 
+    protected void handleException(Exception e, int id, String msg) {
+        indeterminateDialog.dismissAllowingStateLoss();
+        finish();
+        Toast.makeText(this, getString(id), Toast.LENGTH_LONG).show();
+        Log.w(TAG, msg, e);
+    }
+
     private String getDesktopPublicKey() {
         return getString(R.string.public_key_desktop);
     }
@@ -222,11 +257,6 @@ abstract public class AbstractBulletinCreator extends SherlockFragmentActivity i
 
     protected MartusSecurity getSecurity() {
         return AppConfig.getInstance(getApplication()).getCrypto();
-    }
-
-    @Override
-    public String getIndeterminateDialogMessage() {
-        return getString(R.string.preparing_record_for_upload);
     }
 
     @Override
