@@ -8,17 +8,12 @@ export SRC=./thirdparty/Vellum;
 export DEST=./thirdparty/Vellum/minified;
 
 
-
 if  [ -d "$DEST/src" ]
 	then
 		echo ""
 	else
 		mkdir $DEST/src
 fi
-
-cp -R $SRC/src/. $DEST/src
-#! TODO you may also want to copy over node_modules as well 
-
 java -jar $MINIFY $SRC/src/base.js -o $DEST/src/base.js
 java -jar $MINIFY $SRC/src/commtrack.js -o $DEST/src/commtrack.js
 java -jar $MINIFY $SRC/src/copy-paste.js -o $DEST/src/copy-paste.js

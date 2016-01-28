@@ -1,41 +1,14 @@
-/*
- * The Martus(tm) free, social justice documentation and
- * monitoring software. Copyright (C) 2016, Beneficent
- * Technology, Inc. (Benetech).
- *
- * Martus is free software; you can redistribute it and/or
- * modify it under the terms of the GNU General Public License
- * as published by the Free Software Foundation; either
- * version 2 of the License, or (at your option) any later
- * version with the additions and exceptions described in the
- * accompanying Martus license file entitled "license.txt".
- *
- * It is distributed WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
- * IMPLIED, including warranties of fitness of purpose or
- * merchantability.  See the accompanying Martus License and
- * GPL license for more details on the required license terms
- * for this software.
- *
- * You should have received a copy of the GNU General Public
- * License along with this program; if not, write to the Free
- * Software Foundation, Inc., 59 Temple Place - Suite 330,
- * Boston, MA 02111-1307, USA.
- *
- */
-
 package org.benetech.secureapp;
 
 import android.app.Activity;
 import android.app.Application;
 import android.content.Context;
 import android.content.Intent;
-import android.content.SharedPreferences;
 import android.database.Cursor;
 import android.os.AsyncTask;
 import android.util.Log;
 import android.widget.Toast;
 
-import org.benetech.secureapp.activities.AccountInformationActivity;
 import org.benetech.secureapp.activities.BulletinActivity;
 import org.benetech.secureapp.activities.Util;
 import org.benetech.secureapp.application.AppConfig;
@@ -284,9 +257,11 @@ public class MartusUploadManager {
         int formIdColumnIndex = form.getColumnIndex(InstanceProviderAPI.InstanceColumns._ID);
         String formId = form.getString(formIdColumnIndex);
 
-        SharedPreferences sharedPref = activity.getApplicationContext().getSharedPreferences(AccountInformationActivity.PRFERENCES_FILE_NAME, Context.MODE_PRIVATE);
-        String authorName = sharedPref.getString(AccountInformationActivity.AUTHOR_PREFERENCES_KEY, "");
-        String organizationName = sharedPref.getString(AccountInformationActivity.ORGANIZATION_PREFRENCES_KEY, "");
+        int formAuthorColumnIndex = form.getColumnIndex(InstanceProviderAPI.InstanceColumns.FORM_INSTANCE_AUTHOR);
+        String authorName = form.getString(formAuthorColumnIndex);
+
+        int formOrganizationColumnIndex = form.getColumnIndex(InstanceProviderAPI.InstanceColumns.FORM_INSTANCE_ORGANIZATION);
+        String organizationName = form.getString(formOrganizationColumnIndex);
 
         Intent intent = new Intent(activity, BulletinActivity.class);
         intent.putExtra(BULLETIN_DISPLAY_NAME_TAG, formDisplayName);

@@ -1,8 +1,7 @@
 <project>
 	<copy file="../../martus-android/settings.gradle" tofile="./src/main/resources/static/SecureAppBuildMaster/settings.gradle"/>
 	<copy file="../../martus-android/build.gradle" tofile="./src/main/resources/static/SecureAppBuildMaster/build.gradle"/>
-  
-  	<delete dir="./src/main/resources/static/SecureAppBuildMaster/secure-app"/>
+
 	<copy todir="./src/main/resources/static/SecureAppBuildMaster/secure-app">
 		<fileset dir="../../martus-android/secure-app"/>
   	</copy>

@@ -46,7 +46,7 @@
     <string name="label_no_images_in_gallery"> لا وجود للصور</string>
     <string name="form_author_field_hint">مؤلف الاستمارة</string>
     <string name="form_organization_field_hint">منظمة الاستمارة</string>
-    <string name="label_auto_generated_orphan_group_name">+</string>
+    <string name="label_auto_generated_orphan_group_name">غير مُسمَّى</string>
     <string name="preparing_record_for_upload">يجري إعداد رفع التسجيل</string>
     <string name="uploading_record">يجري رفع التسجيل...</string>
     <string name="could_not_delete_attachment">لم يتمكن من حذف المرفق : %1$s</string>

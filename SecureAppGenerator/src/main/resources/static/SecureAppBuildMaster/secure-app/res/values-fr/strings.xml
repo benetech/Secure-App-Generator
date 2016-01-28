@@ -46,7 +46,7 @@
     <string name="label_no_images_in_gallery">Aucune photo</string>
     <string name="form_author_field_hint">Auteur du formulaire</string>
     <string name="form_organization_field_hint">Organisation d\'appartenance du formulaire</string>
-    <string name="label_auto_generated_orphan_group_name">+</string>
+    <string name="label_auto_generated_orphan_group_name">SANS NOM</string>
     <string name="preparing_record_for_upload">Préparation du bulletin pour le téléversement</string>
     <string name="uploading_record">Téléversement du bulletin...</string>
     <string name="could_not_delete_attachment">Impossible de supprimer la pièce jointe : %1$s</string>

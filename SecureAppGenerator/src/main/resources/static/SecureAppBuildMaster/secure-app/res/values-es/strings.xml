@@ -46,7 +46,7 @@
     <string name="label_no_images_in_gallery">No hay fotos</string>
     <string name="form_author_field_hint">Autor del formulario</string>
     <string name="form_organization_field_hint">Organización del formulario</string>
-    <string name="label_auto_generated_orphan_group_name">+</string>
+    <string name="label_auto_generated_orphan_group_name">SIN NOMBRE</string>
     <string name="preparing_record_for_upload">Preparando expediente para subida</string>
     <string name="uploading_record">Subiendo expediente...</string>
     <string name="could_not_delete_attachment">No se pudo borrar el adjunto: %1$s</string>
