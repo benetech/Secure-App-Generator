@@ -26,7 +26,6 @@ Boston, MA 02111-1307, USA.
 package org.benetech.secureapp.generator;
 
 public class ServerConstants {
-	private static final boolean useRealServer = false;
 	
     private static final String IP_FOR_SL1_IE_REAL = "54.72.26.74";
     private static final String PUBLIC_KEY_FOR_SL1_IE_REAL =
@@ -52,24 +51,30 @@ public class ServerConstants {
                     + "4JKUG5CJcIybS64ppt8ufCvAEERrZUzrrIDNwv+qob9PYFdiMq1xg+VNrxm"
                     + "/0RXfjwgXxNjDS07MTQc2w/z1egtsDLSi4dALw69nefS0hbZwbv8dIrN23i"
                     + "Hn0FNdbz81l1FrELGyh1hRAgMBAAE=";
-
-
+  
     public static String getCurrentServerIp()
     {
-    		if(useRealServer)
+    		if(usingRealServer())
     			return IP_FOR_SL1_IE_REAL;
        return IP_FOR_SL1_DEV;
     }
 
     public static String getCurrentSeverKey()
     {
-    		if(useRealServer)
+    		if(usingRealServer())
     			return PUBLIC_KEY_FOR_SL1_IE_REAL;
         return PUBLIC_KEY_SL1_DEV;
     }
     
+    //TODO: This works but is not conventional
+    //Bookshare uses a GoldenKey which specifies QA/Staging/Production
+    //We should eventually mimic this instead of relying on
+    //AWS bucket names.
     public static boolean usingRealServer()
     {
-    		return useRealServer;
+   		String bucket = AmazonS3Utils.getDownloadS3Bucket().toLowerCase();
+   		if(bucket.contains("qa"))
+   			return false;
+    		return true;
     }
 }

@@ -64,7 +64,7 @@ public class AmazonS3Utils
 		}
 	}
 	
-	private static final String AMAZON_S3_DOWNLOAD_BUCKET_ENV = "S3_DOWNLOAD_BUCKET";
+	public static final String AMAZON_S3_DOWNLOAD_BUCKET_ENV = "S3_DOWNLOAD_BUCKET";
 	private static final String AMAZON_S3_KEY_ENV = "AWS_KEY";
 	private static final String AMAZON_S3_SECRET_ENV = "AWS_SECRET";
 	private static final String AMAZON_S3_BASE_DIR = "https://s3.amazonaws.com/";
@@ -160,7 +160,7 @@ public class AmazonS3Utils
 		}
 	}
 
-	static private String getDownloadS3Bucket()
+	static public String getDownloadS3Bucket()
 	{
 		String bucket = System.getenv(AMAZON_S3_DOWNLOAD_BUCKET_ENV);
 		SagLogger.logDebug(null, "Bucket =" + bucket);
