@@ -25,14 +25,40 @@
 
 package org.benetech.secureapp.activities;
 
+import android.app.Activity;
 import android.content.Intent;
+import android.os.Bundle;
 
+import info.guardianproject.cacheword.CacheWordHandler;
 import info.guardianproject.cacheword.ICacheWordSubscriber;
 
 /**
  * Created by animal@martus.org on 8/27/14.
  */
-public class CacheWordHandlerActivity extends AbstractCacheWordSubscriberActivity implements ICacheWordSubscriber {
+public class CacheWordHandlerActivity extends Activity implements ICacheWordSubscriber {
+
+    private CacheWordHandler cacheWordActivityHandler;
+
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+
+        cacheWordActivityHandler = new CacheWordHandler(this);
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+
+        getCacheWordActivityHandler().connectToService();
+    }
+
+    @Override
+    protected void onPause() {
+        super.onPause();
+
+        getCacheWordActivityHandler().disconnectFromService();
+    }
 
     @Override
     public void onCacheWordUninitialized() {
@@ -48,5 +74,12 @@ public class CacheWordHandlerActivity extends AbstractCacheWordSubscriberActivit
 
     @Override
     public void onCacheWordOpened() {
+        //NOTE: After we logout and lock, a CacheWord callback calls opened, which we dont want
+        //Calling lock here to generate the onCachWordLocked event.  This might get fixed with a cachword update
+        getCacheWordActivityHandler().lock();
+    }
+
+    protected CacheWordHandler getCacheWordActivityHandler() {
+        return cacheWordActivityHandler;
     }
 }

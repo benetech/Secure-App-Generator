@@ -77,6 +77,7 @@ public class MainActivity extends ListActivity implements ICacheWordSubscriber, 
     private static final String TAG = "MainActivity";
     private CacheWordHandler cacheWordActivityHandler;
     private ProgressDialogHandler mProgressDialogHandler;
+    private boolean isActivityPaused;
     public static final String ATTACHMENTS_FOLDER_NAME = "attachments";
     public static final String GALLARY_FOLDER_NAME = "secureGallary";
     public static final String CURRENT_FORM_ID_TAG = "currentFormId";
@@ -96,6 +97,7 @@ public class MainActivity extends ListActivity implements ICacheWordSubscriber, 
         enableOdkSwipeAndButtonNavigations();
         setTitle(getString(R.string.app_name));
         ((MainApplication)getApplication()).registerLogoutHandler(this);
+        isActivityPaused = false;
     }
 
     @Override
@@ -108,8 +110,11 @@ public class MainActivity extends ListActivity implements ICacheWordSubscriber, 
     @Override
     public void logout() {
         cacheWordActivityHandler.lock();
+        cacheWordActivityHandler.detach();
         cacheWordActivityHandler.disconnectFromService();
         AppConfig.getInstance(getApplication()).getCrypto().clearKeyPair();
+        if (isActivityPaused())
+            return;
 
         Intent intent = new Intent(this, LoginActivity.class);
         finish();
@@ -142,6 +147,7 @@ public class MainActivity extends ListActivity implements ICacheWordSubscriber, 
     protected void onResume() {
         super.onResume();
 
+        isActivityPaused = false;
         cacheWordActivityHandler.connectToService();
     }
 
@@ -149,7 +155,12 @@ public class MainActivity extends ListActivity implements ICacheWordSubscriber, 
     protected void onPause() {
         super.onPause();
 
+        isActivityPaused = true;
         cacheWordActivityHandler.disconnectFromService();
+    }
+
+    private boolean isActivityPaused() {
+        return isActivityPaused;
     }
 
     private void initialiseExistingFormList() {

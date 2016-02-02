@@ -42,9 +42,9 @@ import com.iangclifton.android.floatlabel.FloatLabel;
 
 import org.apache.commons.io.FileUtils;
 import org.benetech.secureapp.R;
-import org.benetech.secureapp.utilities.Utility;
 import org.benetech.secureapp.application.AppConfig;
 import org.benetech.secureapp.tasks.CreateMartusCryptoKeyPairTask;
+import org.benetech.secureapp.utilities.Utility;
 import org.martus.common.crypto.MartusSecurity;
 import org.odk.collect.android.application.Collect;
 
@@ -52,14 +52,13 @@ import java.io.File;
 import java.security.GeneralSecurityException;
 import java.util.Arrays;
 
-import info.guardianproject.cacheword.ICacheWordSubscriber;
 import info.guardianproject.cacheword.Wiper;
 
 /**
  * Created by animal@martus.org on 8/21/14.
  */
 
-public class CreatePassphraseActivity extends AbstractLoginActivity implements ICacheWordSubscriber, TextWatcher {
+public class CreatePassphraseActivity extends AbstractLoginActivity implements TextWatcher {
 
     private static final String TAG = "CreatePassphraseActivity";
     private static final int MIN_PASSPHRASE_LENGTH = 8;

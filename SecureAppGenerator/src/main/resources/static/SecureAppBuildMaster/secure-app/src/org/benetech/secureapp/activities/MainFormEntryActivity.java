@@ -92,8 +92,11 @@ public class MainFormEntryActivity extends FormEntryActivity implements ICacheWo
         mProgressDialogHandler = new ProgressDialogHandler(this);
         super.onCreate(savedInstanceState);
         // Enable "Up" Navigation
-        if (getActionBar() != null)
-            getActionBar().setDisplayHomeAsUpEnabled(true);
+        if (getActionBar() != null) {
+            getActionBar().setDisplayShowHomeEnabled(true);
+            getActionBar().setDisplayHomeAsUpEnabled(false);
+
+        }
         // Note that calling setContentView after super.onCreate
         // invalidates any View references made there. Any persisted views
         // must be re-connected
@@ -461,9 +464,9 @@ public class MainFormEntryActivity extends FormEntryActivity implements ICacheWo
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
-            // Respond to the action bar's Up/Home button
+            // NOTE: We are disabling the navivation. See SAG-355.
+            // Navicating back to groups activity would cause a crash when attemping to go back to a form from groups activity
             case android.R.id.home:
-                NavUtils.navigateUpFromSameTask(this);
                 return true;
         }
         return super.onOptionsItemSelected(item);

@@ -25,10 +25,12 @@
 
 package org.benetech.secureapp.activities;
 
+import android.content.ContentUris;
 import android.content.ContentValues;
 import android.content.Intent;
 import android.database.Cursor;
 import android.graphics.Color;
+import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.app.NavUtils;
 import android.text.Editable;
@@ -98,8 +100,10 @@ public class FormGroupActivity extends FormHierarchyActivity {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         // Enable "Up" Navigation
-        if (getActionBar() != null)
-            getActionBar().setDisplayHomeAsUpEnabled(true);
+        if (getActionBar() != null) {
+            getActionBar().setDisplayShowHomeEnabled(true);
+            getActionBar().setDisplayHomeAsUpEnabled(false);
+        }
         // Note that calling setContentView after super.onCreate
         // invalidates any View references made there.
         setContentView(R.layout.form_group_layout);
