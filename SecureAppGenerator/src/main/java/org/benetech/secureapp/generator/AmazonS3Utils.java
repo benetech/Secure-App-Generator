@@ -89,7 +89,7 @@ public class AmazonS3Utils
 		java.security.Security.setProperty("aws.accessKeyId" , key);	
 		java.security.Security.setProperty("aws.secretKey" , secret);	
 		java.security.Security.setProperty("AWS_ACCESS_KEY_ID" , key);	
-		java.security.Security.setProperty("AWS_SECRET_KEY" , secret);	
+		java.security.Security.setProperty("AWS_SECRET_ACCESS_KEY" , secret);	
 	}
 
 	static public String getBaseUrl()
