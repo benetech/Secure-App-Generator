@@ -73,10 +73,14 @@ public class AmazonS3Utils
 	static public void updateJavaSystemPropertiesForAmazon()
 	{
 		String key = getAwsKey();
-		java.security.Security.setProperty("aws.accessKeyId" , key);	
-
 		String secret = getAwsSecret();
-		java.security.Security.setProperty("aws.secretKey" , secret);	
+		System.setProperty("AWS_ACCESS_KEY_ID", key);
+		System.setProperty("AWS_SECRET_KEY", secret);
+		System.setProperty("aws.accessKeyId", key);
+		System.setProperty("aws.secretKey", secret);
+		
+		//java.security.Security.setProperty("aws.accessKeyId" , key);	
+		//java.security.Security.setProperty("aws.secretKey" , secret);	
 	}
 
 	static public String getBaseUrl()
