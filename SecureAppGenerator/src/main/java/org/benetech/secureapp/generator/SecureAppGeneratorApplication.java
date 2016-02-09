@@ -65,6 +65,7 @@ public class SecureAppGeneratorApplication extends SpringBootServletInitializer
 
 	public static void main(String[] args) 
     {
+		AmazonS3Utils.updateJavaSystemPropertiesForAmazon();
         SpringApplication.run(SecureAppGeneratorApplication.class, args);
     }
 

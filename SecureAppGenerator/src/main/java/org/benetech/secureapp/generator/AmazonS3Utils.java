@@ -65,10 +65,19 @@ public class AmazonS3Utils
 	}
 	
 	public static final String AMAZON_S3_DOWNLOAD_BUCKET_ENV = "S3_DOWNLOAD_BUCKET";
-	private static final String AMAZON_S3_KEY_ENV = "AWS_ACCESS_KEY_ID";
-	private static final String AMAZON_S3_SECRET_ENV = "AWS_SECRET_KEY";
+	private static final String AMAZON_S3_KEY_ENV = "AWS_KEY";
+	private static final String AMAZON_S3_SECRET_ENV = "AWS_SECRET";
 	private static final String AMAZON_S3_BASE_DIR = "https://s3.amazonaws.com/";
 	private static final String AMAZON_DOWNLOADS_DIRECTORY = "downloads/";
+
+	static public void updateJavaSystemPropertiesForAmazon()
+	{
+		String key = getAwsKey();
+		java.security.Security.setProperty("aws.accessKeyId" , key);	
+
+		String secret = getAwsSecret();
+		java.security.Security.setProperty("aws.secretKey" , secret);	
+	}
 
 	static public String getBaseUrl()
 	{
