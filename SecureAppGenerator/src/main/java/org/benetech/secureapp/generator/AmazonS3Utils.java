@@ -32,6 +32,7 @@ import java.io.IOException;
 import java.io.UnsupportedEncodingException;
 import java.util.Iterator;
 import java.util.List;
+import java.util.Properties;
 
 import javax.servlet.http.HttpSession;
 
@@ -78,9 +79,17 @@ public class AmazonS3Utils
 		System.setProperty("AWS_SECRET_KEY", secret);
 		System.setProperty("aws.accessKeyId", key);
 		System.setProperty("aws.secretKey", secret);
-		
-		//java.security.Security.setProperty("aws.accessKeyId" , key);	
-		//java.security.Security.setProperty("aws.secretKey" , secret);	
+
+		Properties p = System.getProperties();
+		p.setProperty("aws.accessKeyId", key);
+		p.setProperty("aws.secretKey", secret);
+		p.setProperty("AWS_ACCESS_KEY_ID", key);
+		p.setProperty("AWS_SECRET_KEY", secret);
+
+		java.security.Security.setProperty("aws.accessKeyId" , key);	
+		java.security.Security.setProperty("aws.secretKey" , secret);	
+		java.security.Security.setProperty("AWS_ACCESS_KEY_ID" , key);	
+		java.security.Security.setProperty("AWS_SECRET_KEY" , secret);	
 	}
 
 	static public String getBaseUrl()
