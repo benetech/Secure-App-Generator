@@ -76,7 +76,7 @@ public class AmazonS3Utils
 		String key = getAwsKey();
 		String secret = getAwsSecret();
 		System.setProperty("AWS_ACCESS_KEY_ID", key);
-		System.setProperty("AWS_SECRET_KEY", secret);
+		System.setProperty("AWS_SECRET_ACCESS_KEY", secret);
 		System.setProperty("aws.accessKeyId", key);
 		System.setProperty("aws.secretKey", secret);
 
@@ -84,7 +84,7 @@ public class AmazonS3Utils
 		p.setProperty("aws.accessKeyId", key);
 		p.setProperty("aws.secretKey", secret);
 		p.setProperty("AWS_ACCESS_KEY_ID", key);
-		p.setProperty("AWS_SECRET_KEY", secret);
+		p.setProperty("AWS_SECRET_ACCESS_KEY", secret);
 
 		java.security.Security.setProperty("aws.accessKeyId" , key);	
 		java.security.Security.setProperty("aws.secretKey" , secret);	
