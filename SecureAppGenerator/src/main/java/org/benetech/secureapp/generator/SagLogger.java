@@ -36,7 +36,8 @@ import org.apache.log4j.Logger;
 
 public class SagLogger
 {
-	  static Logger log = Logger.getLogger("SecureAppGenerator");
+	public static Logger log = Logger.getLogger("SecureAppGenerator");
+	
 	
 	public static synchronized void logDebug(HttpSession session, String text)
 	{

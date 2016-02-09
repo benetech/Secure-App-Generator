@@ -31,7 +31,6 @@ import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.OutputStreamWriter;
-import java.io.Serializable;
 import java.io.StringWriter;
 import java.io.UnsupportedEncodingException;
 import java.io.Writer;
@@ -39,7 +38,6 @@ import java.nio.file.Files;
 
 import javax.servlet.http.HttpSession;
 
-import org.apache.logging.log4j.core.Layout;
 import org.martus.common.Base64XmlOutputStream;
 import org.martus.common.XmlWriterFilter;
 import org.springframework.boot.SpringApplication;
@@ -51,9 +49,6 @@ import org.springframework.context.i18n.LocaleContextHolder;
 import org.springframework.context.support.ReloadableResourceBundleMessageSource;
 import org.springframework.core.io.support.PathMatchingResourcePatternResolver;
 import org.springframework.web.multipart.MultipartFile;
-
-import com.vi.aws.logging.log4jappenders.CloudWatchAppender;
-
 
 @SpringBootApplication
 public class SecureAppGeneratorApplication extends SpringBootServletInitializer 
@@ -70,7 +65,6 @@ public class SecureAppGeneratorApplication extends SpringBootServletInitializer
 
 	public static void main(String[] args) 
     {
-		//CloudWatchAppender.createAppender("SecureAppGenerator", "SAG_Group_Name", "SAG_Stream_Name", "5", null);
         SpringApplication.run(SecureAppGeneratorApplication.class, args);
     }
 
