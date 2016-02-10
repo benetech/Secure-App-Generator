@@ -32,7 +32,6 @@ import java.io.IOException;
 import java.io.UnsupportedEncodingException;
 import java.util.Iterator;
 import java.util.List;
-import java.util.Properties;
 
 import javax.servlet.http.HttpSession;
 
@@ -66,31 +65,14 @@ public class AmazonS3Utils
 	}
 	
 	public static final String AMAZON_S3_DOWNLOAD_BUCKET_ENV = "S3_DOWNLOAD_BUCKET";
-	private static final String AMAZON_S3_KEY_ENV = "AWS_KEY";
-	private static final String AMAZON_S3_SECRET_ENV = "AWS_SECRET";
+
+	private static final String AMAZON_S3_KEY_ENV = "AWS_ACCESS_KEY_ID";
+	private static final String AMAZON_S3_SECRET_ENV = "AWS_SECRET_ACCESS_KEY";
+	private static final String AMAZON_S3_KEY_ENV2 = "AWS_KEY";
+	private static final String AMAZON_S3_SECRET_ENV2 = "AWS_SECRET";
+
 	private static final String AMAZON_S3_BASE_DIR = "https://s3.amazonaws.com/";
 	private static final String AMAZON_DOWNLOADS_DIRECTORY = "downloads/";
-
-	static public void updateJavaSystemPropertiesForAmazon()
-	{
-		String key = getAwsKey();
-		String secret = getAwsSecret();
-		System.setProperty("AWS_ACCESS_KEY_ID", key);
-		System.setProperty("AWS_SECRET_ACCESS_KEY", secret);
-		System.setProperty("aws.accessKeyId", key);
-		System.setProperty("aws.secretKey", secret);
-
-		Properties p = System.getProperties();
-		p.setProperty("aws.accessKeyId", key);
-		p.setProperty("aws.secretKey", secret);
-		p.setProperty("AWS_ACCESS_KEY_ID", key);
-		p.setProperty("AWS_SECRET_ACCESS_KEY", secret);
-
-		java.security.Security.setProperty("aws.accessKeyId" , key);	
-		java.security.Security.setProperty("aws.secretKey" , secret);	
-		java.security.Security.setProperty("AWS_ACCESS_KEY_ID" , key);	
-		java.security.Security.setProperty("AWS_SECRET_ACCESS_KEY" , secret);	
-	}
 
 	static public String getBaseUrl()
 	{
@@ -196,12 +178,18 @@ public class AmazonS3Utils
 
 	static private String getAwsSecret()
 	{
- 		return System.getenv(AMAZON_S3_SECRET_ENV);
+ 		String secret = System.getenv(AMAZON_S3_SECRET_ENV);
+ 		if(secret == null || secret.length() == 0)
+ 			secret = System.getenv(AMAZON_S3_SECRET_ENV2);
+ 		return secret;
 	}
 
 	static private String getAwsKey()
 	{
- 		return System.getenv(AMAZON_S3_KEY_ENV);
+ 		String key = System.getenv(AMAZON_S3_KEY_ENV);
+ 		if(key == null || key.length() == 0)
+ 			key = System.getenv(AMAZON_S3_KEY_ENV2);
+ 		return key;
 	}
 
 	public static void addS3DataToFdroidConfig(HttpSession session, File config) throws FileNotFoundException, UnsupportedEncodingException, IOException
