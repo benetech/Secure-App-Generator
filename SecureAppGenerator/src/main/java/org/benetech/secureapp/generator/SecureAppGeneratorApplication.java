@@ -34,20 +34,12 @@ import java.io.OutputStreamWriter;
 import java.io.StringWriter;
 import java.io.UnsupportedEncodingException;
 import java.io.Writer;
-import java.net.URL;
 import java.nio.file.Files;
 
 import javax.servlet.http.HttpSession;
 
-import ch.qos.logback.classic.LoggerContext;
-import ch.qos.logback.classic.jmx.JMXConfigurator;
-import ch.qos.logback.classic.joran.JoranConfigurator;
-import ch.qos.logback.classic.util.ContextInitializer;
-import ch.qos.logback.core.joran.spi.JoranException;
-import ch.qos.logback.core.util.StatusPrinter;
 import org.martus.common.Base64XmlOutputStream;
 import org.martus.common.XmlWriterFilter;
-import org.slf4j.LoggerFactory;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.boot.builder.SpringApplicationBuilder;
@@ -73,31 +65,9 @@ public class SecureAppGeneratorApplication extends SpringBootServletInitializer
 
 	public static void main(String[] args) 
     {
-//		reloadLogger();
         SpringApplication.run(SecureAppGeneratorApplication.class, args);
     }
 
-<<<<<<< HEAD
-=======
-	public static void reloadLogger() {
-		LoggerContext loggerContext = (LoggerContext) LoggerFactory.getILoggerFactory();
-
-		ContextInitializer ci = new ContextInitializer(loggerContext);
-		URL url = ci.findURLOfDefaultConfigurationFile(true);
-
-		try {
-			JoranConfigurator configurator = new JoranConfigurator();
-			configurator.setContext(loggerContext);
-			loggerContext.reset();
-			configurator.doConfigure(url);
-		} catch (JoranException je) {
-			// StatusPrinter will handle this
-		}
-		StatusPrinter.printInCaseOfErrorsOrWarnings(loggerContext);
-	}
-
-	
->>>>>>> branch 'master' of https://github.com/benetech/Secure-App-Generator.git
 	static void setInvalidResults(HttpSession session) 
 	{
 		setInvalidResults(session, getLocalizedErrorMessage("invalid_request")); 
