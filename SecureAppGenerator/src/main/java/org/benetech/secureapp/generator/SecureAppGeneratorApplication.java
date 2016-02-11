@@ -75,7 +75,7 @@ public class SecureAppGeneratorApplication extends SpringBootServletInitializer
     {
 		System.setProperty("aws.accessKeyId", System.getenv("AWS_KEY"));
 		System.setProperty("aws.secretKey", System.getenv("AWS_SECRET"));
-		reloadLogger();
+//		reloadLogger();
         SpringApplication.run(SecureAppGeneratorApplication.class, args);
     }
 
