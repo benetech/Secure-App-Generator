@@ -57,6 +57,8 @@ public class SecureAppGeneratorApplication extends SpringBootServletInitializer
 	static final String DEFAULT_APP_ICON_LOCATION = "/images/Martus-swoosh-30x30.png";
 	private static final String ICON_LOCAL_File = getStaticWebDirectory() + DEFAULT_APP_ICON_LOCATION;
 	private static final String GRADLE_HOME_ENV = "GRADLE_HOME";
+	private static final String SAG_ENV = "SAG_ENV";
+
 
 	@Override
     protected SpringApplicationBuilder configure(SpringApplicationBuilder application) {
@@ -238,4 +240,15 @@ public class SecureAppGeneratorApplication extends SpringBootServletInitializer
 	{
 		return getMessageSource().getMessage(msgId, null, LocaleContextHolder.getLocale());
 	}
+	
+	public static void logProductionEnviornmentUsed(HttpSession session)
+	{
+		String enviornment = System.getenv(SAG_ENV).toUpperCase();
+		String envLogMsg = "***** " + enviornment + " ****** "+ enviornment + " ******";
+		SagLogger.logInfo(session, envLogMsg);
+		if(ServerConstants.usingRealMartusServer())
+			SagLogger.logInfo(session, "***** Martus PRODUCTION Server *****");
+		else
+			SagLogger.logInfo(session, "***** Martus DEV Server *****");
+	}	
 }

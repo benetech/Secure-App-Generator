@@ -5,7 +5,7 @@
     <include resource="org/springframework/boot/logging/logback/file-appender.xml" />
 
     <appender name="CloudWatchAppender" class="com.brickcommerce.aws.logging.CloudWatchAppender">
-        <logGroupName>SAG_Logs</logGroupName>
+    		<logGroupName>SAG_logs-${SAG_ENV}</logGroupName>
         <region>us-east-1</region>
         <flushPeriod>5</flushPeriod>
         <PatternLayout>

@@ -26,6 +26,6 @@ INCLUDE_FDROID (Optional)
 	true 	= will auto generate an FDroid version
 	false	= (default) skips generating FDroid version
 	
-SAG_DEBUG_VERBOSE (Optional)
-	true 	= logs will contain extra debug information such as command line exec to std.out/err
-	false	= (default) minimal logging
+SAG_ENV
+	dev, qa, staging, live
+	
