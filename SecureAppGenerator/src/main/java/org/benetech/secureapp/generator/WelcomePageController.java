@@ -69,8 +69,19 @@ public class WelcomePageController extends WebMvcConfigurerAdapter
     public String loadAppNamePage(HttpSession session, Model model) throws Exception 
     {
 		initialSetup(session);
+		logServer();
         return WebPage.NAME_APP;
     }
+
+	private void logServer()
+	{
+		if(ServerConstants.isQaAwsServer())
+			SagLogger.logInfo(null, "***** QA ***** QA *****");
+		else if (ServerConstants.isStagingAwsServer())
+			SagLogger.logInfo(null, "***** STAGING ***** STAGING *****");
+		else
+			SagLogger.logInfo(null, "***** PRODUCTION ***** PRODUCTION *****");
+	}
 	
 	@ModelAttribute(SessionAttributes.APP_CONFIG)
 	public AppConfiguration appConfig() 

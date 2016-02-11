@@ -66,7 +66,7 @@ public class SecureAppGeneratorApplication extends SpringBootServletInitializer
 	public static void main(String[] args) 
     {
         SpringApplication.run(SecureAppGeneratorApplication.class, args);
-    }
+     }
 
 	static void setInvalidResults(HttpSession session) 
 	{

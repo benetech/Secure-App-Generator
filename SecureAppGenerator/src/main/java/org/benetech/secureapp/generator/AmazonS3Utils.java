@@ -66,10 +66,8 @@ public class AmazonS3Utils
 	
 	public static final String AMAZON_S3_DOWNLOAD_BUCKET_ENV = "S3_DOWNLOAD_BUCKET";
 
-	private static final String AMAZON_S3_KEY_ENV = "AWS_ACCESS_KEY_ID";
-	private static final String AMAZON_S3_SECRET_ENV = "AWS_SECRET_ACCESS_KEY";
-	private static final String AMAZON_S3_KEY_ENV2 = "AWS_KEY";
-	private static final String AMAZON_S3_SECRET_ENV2 = "AWS_SECRET";
+	private static final String AMAZON_S3_KEY_ENV = "AWS_KEY";
+	private static final String AMAZON_S3_SECRET_ENV = "AWS_SECRET";
 
 	private static final String AMAZON_S3_BASE_DIR = "https://s3.amazonaws.com/";
 	private static final String AMAZON_DOWNLOADS_DIRECTORY = "downloads/";
@@ -178,18 +176,12 @@ public class AmazonS3Utils
 
 	static private String getAwsSecret()
 	{
- 		String secret = System.getenv(AMAZON_S3_SECRET_ENV);
- 		if(secret == null || secret.length() == 0)
- 			secret = System.getenv(AMAZON_S3_SECRET_ENV2);
- 		return secret;
+ 		return System.getenv(AMAZON_S3_SECRET_ENV);
 	}
 
 	static private String getAwsKey()
 	{
- 		String key = System.getenv(AMAZON_S3_KEY_ENV);
- 		if(key == null || key.length() == 0)
- 			key = System.getenv(AMAZON_S3_KEY_ENV2);
- 		return key;
+ 		return System.getenv(AMAZON_S3_KEY_ENV);
 	}
 
 	public static void addS3DataToFdroidConfig(HttpSession session, File config) throws FileNotFoundException, UnsupportedEncodingException, IOException

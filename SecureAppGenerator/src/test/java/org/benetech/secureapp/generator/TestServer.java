@@ -43,20 +43,28 @@ public class TestServer extends TestCaseEnhanced
 	public void testQaStagingServers() throws Exception
 	{
 		updateSystemEnvironment("staging-benetech-sag");
-		assertTrue("Should be Production server", ServerConstants.usingRealServer());
+		assertTrue("Should be Production server", ServerConstants.usingRealMartusServer());
 		assertEquals("Production server IP incorrect?", ServerConstants.getCurrentServerIp(), "54.72.26.74");
-		
+		assertFalse("Should not be QA", ServerConstants.isQaAwsServer());
+		assertTrue("Should be Staging", ServerConstants.isStagingAwsServer());
+			
 		updateSystemEnvironment("benetech-sag");
-		assertTrue("Should be Production server", ServerConstants.usingRealServer());
+		assertTrue("Should be Production server", ServerConstants.usingRealMartusServer());
 		assertEquals("Production server IP incorrect?", ServerConstants.getCurrentServerIp(), "54.72.26.74");
+		assertFalse("Should not be QA", ServerConstants.isQaAwsServer());
+		assertFalse("Should not be Staging", ServerConstants.isStagingAwsServer());
 
 		updateSystemEnvironment("QA-benetech-sag");
-		assertFalse("Should be QA server", ServerConstants.usingRealServer());
+		assertFalse("Should be QA server", ServerConstants.usingRealMartusServer());
 		assertEquals("QA server IP incorrect?", ServerConstants.getCurrentServerIp(), "54.213.152.140");
+		assertTrue("Should be QA", ServerConstants.isQaAwsServer());
+		assertFalse("Should not be Staging", ServerConstants.isStagingAwsServer());
 
 		updateSystemEnvironment("qa-benetech-sag");
-		assertFalse("Should be QA server", ServerConstants.usingRealServer());
+		assertFalse("Should be QA server", ServerConstants.usingRealMartusServer());
 		assertEquals("QA server IP incorrect?", ServerConstants.getCurrentServerIp(), "54.213.152.140");
+		assertTrue("Should be QA", ServerConstants.isQaAwsServer());
+		assertFalse("Should not be Staging", ServerConstants.isStagingAwsServer());
 	}
 
 	private void updateSystemEnvironment(String bucketToUse)

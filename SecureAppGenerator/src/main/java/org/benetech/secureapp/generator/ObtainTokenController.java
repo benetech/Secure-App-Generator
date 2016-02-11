@@ -141,7 +141,7 @@ public class ObtainTokenController extends WebMvcConfigurerAdapter
 	private void updateServerConfiguration(HttpSession session)
 	{
         AppConfiguration config = (AppConfiguration)session.getAttribute(SessionAttributes.APP_CONFIG);
-		if(ServerConstants.usingRealServer())
+		if(ServerConstants.usingRealMartusServer())
 			config.setServerName(SecureAppGeneratorApplication.getMessage("text.summary_production_server_name"));
 		else
 			config.setServerName(SecureAppGeneratorApplication.getMessage("text.summary_development_server_name"));

@@ -54,14 +54,14 @@ public class ServerConstants {
   
     public static String getCurrentServerIp()
     {
-    		if(usingRealServer())
+    		if(usingRealMartusServer())
     			return IP_FOR_SL1_IE_REAL;
        return IP_FOR_SL1_DEV;
     }
 
     public static String getCurrentSeverKey()
     {
-    		if(usingRealServer())
+    		if(usingRealMartusServer())
     			return PUBLIC_KEY_FOR_SL1_IE_REAL;
         return PUBLIC_KEY_SL1_DEV;
     }
@@ -70,11 +70,30 @@ public class ServerConstants {
     //Bookshare uses a GoldenKey which specifies QA/Staging/Production
     //We should eventually mimic this instead of relying on
     //AWS bucket names.
-    public static boolean usingRealServer()
+    public static boolean usingRealMartusServer()
     {
-   		String bucket = AmazonS3Utils.getDownloadS3Bucket().toLowerCase();
-   		if(bucket.contains("qa"))
-   			return false;
-    		return true;
+   		return !isQaAwsServer();
     }
+
+	private static String getBucket()
+	{
+		return AmazonS3Utils.getDownloadS3Bucket().toLowerCase();
+	}
+	
+	public static boolean isQaAwsServer()
+	{
+		String bucket = getBucket();
+   		if(bucket.contains("qa"))
+   			return true;
+    		return false;
+	}
+
+	public static boolean isStagingAwsServer()
+	{
+		String bucket = getBucket();
+   		if(bucket.contains("staging"))
+   			return true;
+    		return false;
+	}
+	
 }
