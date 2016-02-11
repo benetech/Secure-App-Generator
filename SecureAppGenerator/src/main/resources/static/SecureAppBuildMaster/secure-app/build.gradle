@@ -89,7 +89,7 @@ dependencies  {
     compile files('libs/persiancalendar.jar')
     compile (name:'aFileChooser-1.0.4_5', ext:'aar')
     compile (name:'IOCipherCameraExample-1.0_2-debug', ext:'aar')
-    compile (name:'martus-android-library-1.0_5-debug', ext:'aar')
+    compile (name:'martus-android-library-1.0_6-debug', ext:'aar')
 
     compile (name:'martus-android-server-comm-library-1.0_3-debug', ext:'aar')
     compile (name:'opendatakit.collect-1.0_7-debug', ext:'aar')

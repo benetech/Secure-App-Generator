@@ -52,7 +52,6 @@ import java.io.IOException;
  *         Date: 10/3/12
  */
 
-//FIXME this class is under construction and its user is not hooked to app
 public class UploadBulletinTask extends AsyncTask<Object, Integer, String> implements ProgressUpdater {
 
     private static final String TAG = "UploadBulletinTask";

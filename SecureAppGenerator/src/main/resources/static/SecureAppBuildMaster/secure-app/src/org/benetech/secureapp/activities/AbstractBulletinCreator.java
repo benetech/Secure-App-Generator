@@ -244,7 +244,7 @@ abstract public class AbstractBulletinCreator extends SherlockFragmentActivity i
         indeterminateDialog.dismissAllowingStateLoss();
         finish();
         Toast.makeText(this, getString(id), Toast.LENGTH_LONG).show();
-        Log.w(TAG, msg, e);
+        Log.e(TAG, msg, e);
     }
 
     private String getDesktopPublicKey() {

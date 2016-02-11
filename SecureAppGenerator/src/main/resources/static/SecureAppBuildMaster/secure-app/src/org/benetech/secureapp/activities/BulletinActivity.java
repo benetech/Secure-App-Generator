@@ -34,6 +34,7 @@ import android.widget.Toast;
 import org.benetech.secureapp.MartusUploadManager;
 import org.benetech.secureapp.R;
 import org.benetech.secureapp.application.AppConfig;
+import org.martus.android.library.utilities.AsyncTaskResult;
 import org.benetech.secureapp.tasks.UploadBulletinTask;
 import org.benetech.secureapp.tasks.ZipBulletinTask;
 import org.martus.android.library.common.dialog.DeterminateProgressDialog;
@@ -69,14 +70,14 @@ public class BulletinActivity extends AbstractBulletinCreator implements Bulleti
         indeterminateDialog.show(getSupportFragmentManager(), "dlg_zipping");
 
         //turn off user inactivity checking during zipping and encrypting of file
-        final AsyncTask<Object, Integer, File> zipTask = new ZipBulletinTask(bulletin, this);
+        final AsyncTask<Object, Integer, AsyncTaskResult<File>> zipTask = new ZipBulletinTask(bulletin, this);
         zipTask.execute(getApplication().getCacheDir(), store, ".zip");
     }
 
     @Override
-    public void onZipped(Bulletin bulletin, File zippedFile) {
+    public void onZipped(Bulletin bulletin, AsyncTaskResult<File> zippedFile) {
         try {
-            ZipFile zipFile = new ZipFile(zippedFile);
+            ZipFile zipFile = new ZipFile(zippedFile.getResult());
             BulletinZipUtilities.validateIntegrityOfZipFilePackets(store.getAccountId(), zipFile, getSecurity());
         } catch (Exception e) {
             Log.e(TAG, getString(R.string.error_message_error_verifying_zip_file), e);
@@ -91,7 +92,7 @@ public class BulletinActivity extends AbstractBulletinCreator implements Bulleti
             return;
         }
 
-        uploadBulletin(bulletin, zippedFile);
+        uploadBulletin(bulletin, zippedFile.getResult());
     }
 
     private void uploadBulletin(Bulletin bulletin, File zippedFile) {
@@ -193,7 +194,6 @@ public class BulletinActivity extends AbstractBulletinCreator implements Bulleti
             handleException(e, R.string.xforms_missing_required_field, getString(R.string.error_message_xforms_required_fields_missing));
         } catch (Exception e){
             handleException(e, R.string.failure_zipping_bulletin, getString(R.string.error_message_exception_thrown_trying_to_populate_record));
-            Log.e(TAG, getString(R.string.error_message_exception_thrown_trying_to_populate_record), e);
         }
     }
 

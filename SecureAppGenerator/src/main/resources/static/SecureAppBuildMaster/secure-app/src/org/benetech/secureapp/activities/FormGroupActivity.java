@@ -25,7 +25,6 @@
 
 package org.benetech.secureapp.activities;
 
-import android.content.ContentUris;
 import android.content.ContentValues;
 import android.content.Intent;
 import android.database.Cursor;
@@ -46,6 +45,9 @@ import android.widget.ListView;
 import android.widget.TextView;
 
 import org.benetech.secureapp.R;
+import org.benetech.secureapp.application.MainApplication;
+import org.benetech.secureapp.collect.io.SecureFileStorageManager;
+import org.benetech.secureapp.collect.tasks.SecureSaveToDiskTask;
 import org.javarosa.core.model.FormDef;
 import org.javarosa.core.model.FormIndex;
 import org.javarosa.core.model.IFormElement;
@@ -150,12 +152,6 @@ public class FormGroupActivity extends FormHierarchyActivity {
         }
     }
 
-    private void setTextFieldTextSafely(EditText editText, String value) {
-        if (isValidValue(value)) {
-            editText.setText(value);
-        }
-    }
-
     private boolean isValidValue(String value) {
         return value != null && value.length() > 0;
     }
@@ -195,7 +191,8 @@ public class FormGroupActivity extends FormHierarchyActivity {
     }
 
     private void insertNewRow() {
-        Cursor cursor = Collect.getInstance().getContentResolver().query(FormsProviderAPI.FormsColumns.CONTENT_URI, null, null, null, null);
+        final Uri contentUri = FormsProviderAPI.FormsColumns.CONTENT_URI;
+        Cursor cursor = Collect.getInstance().getContentResolver().query(contentUri, null, null, null, null);
         cursor.moveToFirst();
         String jrformid = cursor.getString(cursor.getColumnIndex(FormsProviderAPI.FormsColumns.JR_FORM_ID));
         String jrversion = cursor.getString(cursor.getColumnIndex(FormsProviderAPI.FormsColumns.JR_VERSION));
@@ -214,6 +211,15 @@ public class FormGroupActivity extends FormHierarchyActivity {
         values.put(InstanceProviderAPI.InstanceColumns.SUBMISSION_URI, submissionUri);
         getContentResolver().insert(InstanceProviderAPI.InstanceColumns.CONTENT_URI, values);
         cursor.close();
+
+        saveNewForm(contentUri);
+    }
+
+    private void saveNewForm(Uri contentUri) {
+        final SecureFileStorageManager mountedSecureStorage = ((MainApplication) getApplication()).getMountedSecureStorage();
+        final String formTitle = mFormTitle.getText().toString();
+        SecureSaveToDiskTask saveTask = new SecureSaveToDiskTask(contentUri, mountedSecureStorage, false, false, formTitle);
+        saveTask.execute();
     }
 
     /**

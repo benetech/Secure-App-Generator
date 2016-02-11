@@ -81,6 +81,7 @@ public class MainActivity extends ListActivity implements ICacheWordSubscriber, 
     public static final String ATTACHMENTS_FOLDER_NAME = "attachments";
     public static final String GALLARY_FOLDER_NAME = "secureGallary";
     public static final String CURRENT_FORM_ID_TAG = "currentFormId";
+    private static final int EXPORT_RECORDS_REQUEST_CODE = 100;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -476,7 +477,23 @@ public class MainActivity extends ListActivity implements ICacheWordSubscriber, 
             intent.putExtra(MartusUploadManager.BULLETIN_FORM_ID_TAG, cursor.getString(formIdColumnIndex));
             intent.putExtra(MartusUploadManager.BULLETIN_AUTHOR_TAG, authorName);
             intent.putExtra(MartusUploadManager.BULLETIN_ORGANIZATION_TAG, organizationName);
-            startActivity(intent);
+            startActivityForResult(intent, EXPORT_RECORDS_REQUEST_CODE);
         }
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        if (requestCode == EXPORT_RECORDS_REQUEST_CODE)
+            displayMessages(resultCode);
+
+        super.onActivityResult(requestCode, resultCode, data);
+    }
+
+    private void displayMessages(int resultCode) {
+        int messageId = R.string.message_export_all_records_successful;
+        if (resultCode == Activity.RESULT_CANCELED) {
+            messageId =  R.string.message_export_all_records_unsuccessful;
+        }
+        Toast.makeText(this, getString(messageId), Toast.LENGTH_LONG).show();
     }
 }
