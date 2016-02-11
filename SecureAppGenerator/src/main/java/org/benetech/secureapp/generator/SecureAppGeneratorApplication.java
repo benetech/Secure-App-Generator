@@ -243,7 +243,9 @@ public class SecureAppGeneratorApplication extends SpringBootServletInitializer
 	
 	public static void logProductionEnviornmentUsed(HttpSession session)
 	{
-		String enviornment = System.getenv(SAG_ENV).toUpperCase();
+		String enviornment = System.getenv(SAG_ENV);
+		if(enviornment == null || enviornment.isEmpty())
+			enviornment = "SAG_ENV_IS_UNDEFINED";
 		String envLogMsg = "***** " + enviornment + " ****** "+ enviornment + " ******";
 		SagLogger.logInfo(session, envLogMsg);
 		if(ServerConstants.usingRealMartusServer())
