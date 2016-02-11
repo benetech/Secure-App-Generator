@@ -19,6 +19,11 @@ apply plugin: 'spring-boot'
 //apply plugin: 'io.spring.dependency-management' 
 apply plugin: 'war'
 
+run {
+    systemProperties = ['aws.accessKeyId':'$System.env.AWS_KEY',
+                        'aws.secretKey':'$System.env.AWS_SECRET']
+}
+
 war {
     baseName = 'SAG'
     version =  '0.1.0'

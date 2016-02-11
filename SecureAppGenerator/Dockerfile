@@ -64,6 +64,8 @@ RUN apt-get purge --yes --auto-remove $BUILD_PACKAGES
 # Cleaning
 RUN apt-get clean
 
+RUN echo 'export JAVA_OPTS="-Daws.accessKeyId=$AWS_KEY -Daws.secretKey=$AWS_SECRET"' > tomcat/bin/setenv.sh
+
 ENV ROOT_WAR_PATH /usr/local/tomcat/webapps/ROOT.war
 
 COPY ./build/libs/SAG-*.war $ROOT_WAR_PATH
