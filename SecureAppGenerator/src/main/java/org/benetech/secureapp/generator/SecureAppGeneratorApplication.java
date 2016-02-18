@@ -57,8 +57,8 @@ public class SecureAppGeneratorApplication extends SpringBootServletInitializer
 	static final String DEFAULT_APP_ICON_LOCATION = "/images/Martus-swoosh-30x30.png";
 	private static final String ICON_LOCAL_File = getStaticWebDirectory() + DEFAULT_APP_ICON_LOCATION;
 	private static final String GRADLE_HOME_ENV = "GRADLE_HOME";
-	private static final String SAG_ENV = "SAG_ENV";
-
+	static final String SAG_ENV = "SAG_ENV";
+	public enum SAGENV {undefined, qa, staging, live, dev};
 
 	@Override
     protected SpringApplicationBuilder configure(SpringApplicationBuilder application) {
@@ -240,12 +240,41 @@ public class SecureAppGeneratorApplication extends SpringBootServletInitializer
 	{
 		return getMessageSource().getMessage(msgId, null, LocaleContextHolder.getLocale());
 	}
-	
-	public static void logProductionEnviornmentUsed(HttpSession session)
+	public static SAGENV getSagEnvironment()
 	{
 		String enviornment = System.getenv(SAG_ENV);
 		if(enviornment == null || enviornment.isEmpty())
+			return SAGENV.undefined;
+		if(enviornment.toLowerCase().contains("qa"))
+			return SAGENV.qa;
+		if(enviornment.toLowerCase().contains("staging"))
+			return SAGENV.staging;
+		if(enviornment.toLowerCase().contains("live"))
+			return SAGENV.live;
+		return SAGENV.undefined;
+	}
+	public static void logProductionEnviornmentUsed(HttpSession session)
+	{
+		String enviornment = "";
+		switch(getSagEnvironment())
+		{
+		case dev:
+			enviornment = "dev";
+			break;
+		case qa:
+			enviornment = "qa";
+			break;
+		case staging:
+			enviornment = "staging";
+			break;
+		case live:
+			enviornment = "live";
+			break;
+		case undefined:
+		default:
 			enviornment = "SAG_ENV_IS_UNDEFINED";
+			break;
+		}
 		String envLogMsg = "***** " + enviornment + " ****** "+ enviornment + " ******";
 		SagLogger.logInfo(session, envLogMsg);
 		if(ServerConstants.usingRealMartusServer())

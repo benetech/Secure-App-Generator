@@ -35,6 +35,8 @@ import java.util.List;
 
 import javax.servlet.http.HttpSession;
 
+import org.benetech.secureapp.generator.SecureAppGeneratorApplication.SAGENV;
+
 import com.amazonaws.auth.BasicAWSCredentials;
 import com.amazonaws.services.s3.AmazonS3;
 import com.amazonaws.services.s3.AmazonS3Client;
@@ -49,6 +51,10 @@ import com.amazonaws.services.s3.model.S3ObjectSummary;
 public class AmazonS3Utils
 {
 	
+	public static final String BUCKET_LIVE = "benetech-sag";
+	public static final String BUCKET_STAGING = "staging-benetech-sag";
+	public static final String BUCKET_QA = "qa-benetech-sag";
+
 	public static class S3Exception extends Exception
 	{
 		private static final long serialVersionUID = 4912559993409813648L;
@@ -162,11 +168,29 @@ public class AmazonS3Utils
 		}
 	}
 
+	//TODO add unit tests
 	static public String getDownloadS3Bucket()
 	{
 		String bucket = System.getenv(AMAZON_S3_DOWNLOAD_BUCKET_ENV);
-		SagLogger.logDebug(null, "Bucket =" + bucket);
-  		return bucket;
+		if(bucket != null && !bucket.isEmpty())
+		{
+			SagLogger.logInfo(null, "Override S3 Download Bucket =" + bucket);
+			return bucket;
+		}
+		SAGENV env = SecureAppGeneratorApplication.getSagEnvironment();
+		switch(env)
+		{
+		case qa:
+			return BUCKET_QA;
+		case staging:
+			return BUCKET_STAGING;
+		case live:
+			return BUCKET_LIVE;
+		case dev:
+		case undefined:
+		default:
+			return BUCKET_QA;
+		}
 	}
 	
 	static private String getAPKDownloadFilePathWithFile(String apkName)

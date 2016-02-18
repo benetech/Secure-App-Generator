@@ -42,38 +42,71 @@ public class TestServer extends TestCaseEnhanced
 	
 	public void testQaStagingServers() throws Exception
 	{
-		updateSystemEnvironment("staging-benetech-sag");
-		assertTrue("Should be Production server", ServerConstants.usingRealMartusServer());
-		assertEquals("Production server IP incorrect?", ServerConstants.getCurrentServerIp(), "54.72.26.74");
-		assertFalse("Should not be QA", ServerConstants.isQaAwsServer());
-		assertTrue("Should be Staging", ServerConstants.isStagingAwsServer());
+		updateSystemBucketEnvironment("staging-benetech-sag");
+		assertEquals("Bucket not correct?", AmazonS3Utils.getDownloadS3Bucket(), AmazonS3Utils.BUCKET_STAGING);
+		assertFalse("Should not be Production server since SAG_ENV wasn't set", ServerConstants.usingRealMartusServer());
+		assertEquals("Dev server IP incorrect?", ServerConstants.getCurrentServerIp(), "54.213.152.140");
 			
-		updateSystemEnvironment("benetech-sag");
+		updateSystemBucketEnvironment("benetech-sag");
+		assertEquals("Bucket not correct?", AmazonS3Utils.getDownloadS3Bucket(), AmazonS3Utils.BUCKET_LIVE);
+		assertFalse("Should not be Production server since SAG_ENV wasn't set", ServerConstants.usingRealMartusServer());
+		assertEquals("Dev server IP incorrect?", ServerConstants.getCurrentServerIp(), "54.213.152.140");
+	
+		updateSystemBucketEnvironment(AmazonS3Utils.BUCKET_QA);
+		assertEquals("Bucket not correct?", AmazonS3Utils.getDownloadS3Bucket(), AmazonS3Utils.BUCKET_QA);
+		assertFalse("Should be QA server", ServerConstants.usingRealMartusServer());
+		assertEquals("QA server IP incorrect?", ServerConstants.getCurrentServerIp(), "54.213.152.140");
+
+		updateSystemBucketEnvironment(AmazonS3Utils.BUCKET_QA);
+		assertEquals("Bucket not correct?", AmazonS3Utils.getDownloadS3Bucket(), AmazonS3Utils.BUCKET_QA);
+		assertFalse("Should be QA server", ServerConstants.usingRealMartusServer());
+		assertEquals("QA server IP incorrect?", ServerConstants.getCurrentServerIp(), "54.213.152.140");
+
+		updateSystemBucketEnvironment(AmazonS3Utils.BUCKET_STAGING);
+		assertEquals("Bucket not correct?", AmazonS3Utils.getDownloadS3Bucket(), AmazonS3Utils.BUCKET_STAGING);
+		assertFalse("Should not be Production server since SAG_ENV wasn't set", ServerConstants.usingRealMartusServer());
+		assertEquals("Dev server IP incorrect?", ServerConstants.getCurrentServerIp(), "54.213.152.140");
+	
+		updateSystemBucketEnvironment("");
+		assertEquals("Bucket not correct?", AmazonS3Utils.getDownloadS3Bucket(), AmazonS3Utils.BUCKET_QA);
+		assertFalse("Should default QA server", ServerConstants.usingRealMartusServer());
+		assertEquals("default QA server IP incorrect?", ServerConstants.getCurrentServerIp(), "54.213.152.140");
+	
+		updateSystemEnvironment("qa");
+		assertEquals("Bucket not correct?", AmazonS3Utils.getDownloadS3Bucket(), AmazonS3Utils.BUCKET_QA);
+		assertFalse("Should be QA server", ServerConstants.usingRealMartusServer());
+		assertEquals("QA server IP incorrect?", ServerConstants.getCurrentServerIp(), "54.213.152.140");
+	
+		updateSystemEnvironment("dev");
+		assertEquals("Bucket not correct?", AmazonS3Utils.getDownloadS3Bucket(), AmazonS3Utils.BUCKET_QA);
+		assertFalse("Should be QA server", ServerConstants.usingRealMartusServer());
+		assertEquals("QA server IP incorrect?", ServerConstants.getCurrentServerIp(), "54.213.152.140");
+
+		updateSystemEnvironment("live");
+		assertEquals("Bucket not correct?", AmazonS3Utils.getDownloadS3Bucket(), AmazonS3Utils.BUCKET_LIVE);
 		assertTrue("Should be Production server", ServerConstants.usingRealMartusServer());
 		assertEquals("Production server IP incorrect?", ServerConstants.getCurrentServerIp(), "54.72.26.74");
-		assertFalse("Should not be QA", ServerConstants.isQaAwsServer());
-		assertFalse("Should not be Staging", ServerConstants.isStagingAwsServer());
 
-		updateSystemEnvironment("QA-benetech-sag");
-		assertFalse("Should be QA server", ServerConstants.usingRealMartusServer());
-		assertEquals("QA server IP incorrect?", ServerConstants.getCurrentServerIp(), "54.213.152.140");
-		assertTrue("Should be QA", ServerConstants.isQaAwsServer());
-		assertFalse("Should not be Staging", ServerConstants.isStagingAwsServer());
-
-		updateSystemEnvironment("qa-benetech-sag");
-		assertFalse("Should be QA server", ServerConstants.usingRealMartusServer());
-		assertEquals("QA server IP incorrect?", ServerConstants.getCurrentServerIp(), "54.213.152.140");
-		assertTrue("Should be QA", ServerConstants.isQaAwsServer());
-		assertFalse("Should not be Staging", ServerConstants.isStagingAwsServer());
+		updateSystemEnvironment("staging");
+		assertEquals("Bucket not correct?", AmazonS3Utils.getDownloadS3Bucket(), AmazonS3Utils.BUCKET_STAGING);
+		assertTrue("Should be Production server", ServerConstants.usingRealMartusServer());
+		assertEquals("Production server IP incorrect?", ServerConstants.getCurrentServerIp(), "54.72.26.74");
 	}
 
-	private void updateSystemEnvironment(String bucketToUse)
+	private void updateSystemBucketEnvironment(String bucketToUse)
 	{
 		Map<String, String> env = new HashMap<String, String>();
 		env.put(AmazonS3Utils.AMAZON_S3_DOWNLOAD_BUCKET_ENV, bucketToUse);
 		setEnv(env);
 	}
 	
+	private void updateSystemEnvironment(String environment)
+	{
+		Map<String, String> env = new HashMap<String, String>();
+		env.put(SecureAppGeneratorApplication.SAG_ENV, environment);
+		setEnv(env);
+	}
+
 	protected static void setEnv(Map<String, String> newenv)
 	{
 	  try

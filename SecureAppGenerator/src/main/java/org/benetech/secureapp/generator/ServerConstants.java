@@ -25,6 +25,8 @@ Boston, MA 02111-1307, USA.
 
 package org.benetech.secureapp.generator;
 
+import org.benetech.secureapp.generator.SecureAppGeneratorApplication.SAGENV;
+
 public class ServerConstants {
 	
     private static final String IP_FOR_SL1_IE_REAL = "54.72.26.74";
@@ -66,34 +68,11 @@ public class ServerConstants {
         return PUBLIC_KEY_SL1_DEV;
     }
     
-    //TODO: This works but is not conventional
-    //Bookshare uses a GoldenKey which specifies QA/Staging/Production
-    //We should eventually mimic this instead of relying on
-    //AWS bucket names.
     public static boolean usingRealMartusServer()
     {
-   		return !isQaAwsServer();
+    		SAGENV env = SecureAppGeneratorApplication.getSagEnvironment();
+    		if(env == SAGENV.staging || env == SAGENV.live)
+    			return true;
+   		return false;
     }
-
-	private static String getBucket()
-	{
-		return AmazonS3Utils.getDownloadS3Bucket().toLowerCase();
-	}
-	
-	public static boolean isQaAwsServer()
-	{
-		String bucket = getBucket();
-   		if(bucket.contains("qa"))
-   			return true;
-    		return false;
-	}
-
-	public static boolean isStagingAwsServer()
-	{
-		String bucket = getBucket();
-   		if(bucket.contains("staging"))
-   			return true;
-    		return false;
-	}
-	
 }
