@@ -66,6 +66,12 @@ public class BulletinToMbaFileExporter extends AbstractBulletinCreator {
         }
     }
 
+    protected void handleException(Exception e, int id, String msg) {
+        setResult(Activity.RESULT_CANCELED);
+
+        super.handleException(e, id, msg);
+    }
+
     private void zipBulletin(Bulletin bulletin)  {
         //turn off user inactivity checking during zipping and encrypting of file
         final AsyncTask<Object, Integer, AsyncTaskResult<File>> zipTask = new ZipBulletinTask(bulletin, this);
@@ -76,6 +82,8 @@ public class BulletinToMbaFileExporter extends AbstractBulletinCreator {
     public void onZipped(Bulletin bulletin, AsyncTaskResult<File> zippedTaskResult) {
         if (zippedTaskResult.getException() != null) {
             indeterminateDialog.dismissAllowingStateLoss();
+            setResult(Activity.RESULT_CANCELED);
+
             return;
         }
 

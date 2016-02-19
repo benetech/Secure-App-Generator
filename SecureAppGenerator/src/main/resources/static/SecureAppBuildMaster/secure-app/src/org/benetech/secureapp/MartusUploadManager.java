@@ -40,6 +40,7 @@ import org.benetech.secureapp.activities.BulletinActivity;
 import org.benetech.secureapp.activities.Util;
 import org.benetech.secureapp.application.AppConfig;
 import org.benetech.secureapp.application.MainApplication;
+import org.benetech.secureapp.tasks.CreateMartusCryptoKeyPairCallback;
 import org.benetech.secureapp.tasks.CreateMartusCryptoKeyPairTask;
 import org.martus.clientside.MobileClientSideNetworkGateway;
 import org.martus.common.crypto.MartusSecurity;
@@ -153,7 +154,7 @@ public class MartusUploadManager {
     }
 
     /** Callback for CreateMartusCryptoKeyPairTask */
-    private CreateMartusCryptoKeyPairTask.CreateMartusCryptoKeyPairCallback mCreateMartusCryptoKeyPairCallback = new CreateMartusCryptoKeyPairTask.CreateMartusCryptoKeyPairCallback() {
+    private CreateMartusCryptoKeyPairCallback mCreateMartusCryptoKeyPairCallback = new CreateMartusCryptoKeyPairCallback() {
         @Override
         public void onCreateKeyPairError() {
             if (mCallback != null) {

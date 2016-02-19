@@ -43,6 +43,7 @@ import org.benetech.secureapp.collect.io.SecureFileStorageManager;
 import org.benetech.secureapp.collect.tasks.SecureFormLoaderTask;
 import org.benetech.secureapp.collect.tasks.SecureSavePointTask;
 import org.benetech.secureapp.collect.tasks.SecureSaveToDiskTask;
+import org.javarosa.form.api.FormEntryCaption;
 import org.javarosa.form.api.FormEntryController;
 import org.martus.android.library.common.dialog.ProgressDialogHandler;
 import org.martus.android.library.io.SecureFile;
@@ -60,6 +61,8 @@ import org.odk.collect.android.tasks.SavePointTask;
 import org.odk.collect.android.tasks.SaveResult;
 import org.odk.collect.android.tasks.SaveToDiskTask;
 import org.odk.collect.android.utilities.CompatibilityUtils;
+import org.odk.collect.android.views.BenetechODKView;
+import org.odk.collect.android.views.ODKView;
 
 import info.guardianproject.cacheword.CacheWordHandler;
 import info.guardianproject.cacheword.ICacheWordSubscriber;
@@ -469,5 +472,9 @@ public class MainFormEntryActivity extends FormEntryActivity implements ICacheWo
                 return true;
         }
         return super.onOptionsItemSelected(item);
+    }
+
+    protected ODKView createODKView(boolean advancingPage, FormController formController, FormEntryCaption[] groups) {
+        return new BenetechODKView(this, formController.getQuestionPrompts(), groups, advancingPage);
     }
 }

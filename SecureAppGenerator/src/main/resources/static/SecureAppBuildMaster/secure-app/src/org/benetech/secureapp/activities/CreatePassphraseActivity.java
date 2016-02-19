@@ -43,6 +43,7 @@ import com.iangclifton.android.floatlabel.FloatLabel;
 import org.apache.commons.io.FileUtils;
 import org.benetech.secureapp.R;
 import org.benetech.secureapp.application.AppConfig;
+import org.benetech.secureapp.tasks.CreateMartusCryptoKeyPairCallback;
 import org.benetech.secureapp.tasks.CreateMartusCryptoKeyPairTask;
 import org.benetech.secureapp.utilities.Utility;
 import org.martus.common.crypto.MartusSecurity;
@@ -60,7 +61,7 @@ import info.guardianproject.cacheword.Wiper;
 
 public class CreatePassphraseActivity extends AbstractLoginActivity implements TextWatcher {
 
-    private static final String TAG = "CreatePassphraseActivity";
+    private static final String TAG = "CreatePassphrase";
     private static final int MIN_PASSPHRASE_LENGTH = 8;
     private static final int NO_ERRORS_FOUND_MESSAGE_ID = -1;
     private FloatLabel passphraseEditField;
@@ -254,9 +255,11 @@ public class CreatePassphraseActivity extends AbstractLoginActivity implements T
 
     @Override
     protected void postMountStorageExecute() {
+        dismissProgressDialog();
         if (getMartusCrypto(getApplication()).hasKeyPair())
             return;
 
+        showProgressDialog(getString(R.string.progress_dialog_message_creating_martus_crytpo_keypair));
         char[] passphrase = passphraseEditField.getEditText().getText().toString().toCharArray();
         try {
             final AsyncTask<Object, Void, Boolean> createAccountTask = new CreateMartusCryptoKeyPairTask(getMartusCrypto(getApplication()), mCreateMartusCryptoKeyPairCallback, getSettings());
@@ -282,10 +285,11 @@ public class CreatePassphraseActivity extends AbstractLoginActivity implements T
     private void startSetupAccountActivity() {
         Intent intent = new Intent(this, AccountInformationActivity.class);
         startActivity(intent);
+        finish();
     }
 
     /** Callback for CreateMartusCryptoKeyPairTask */
-    private CreateMartusCryptoKeyPairTask.CreateMartusCryptoKeyPairCallback mCreateMartusCryptoKeyPairCallback = new CreateMartusCryptoKeyPairTask.CreateMartusCryptoKeyPairCallback() {
+    private CreateMartusCryptoKeyPairCallback mCreateMartusCryptoKeyPairCallback = new CreateMartusCryptoKeyPairCallback() {
         @Override
         public void onCreateKeyPairError() {
             showKeyPairErrorMessage();

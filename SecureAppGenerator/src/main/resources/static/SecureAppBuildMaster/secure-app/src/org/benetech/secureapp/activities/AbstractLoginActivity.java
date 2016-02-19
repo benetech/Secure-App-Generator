@@ -106,7 +106,7 @@ abstract public class AbstractLoginActivity extends Activity implements ICacheWo
     public void onCacheWordUninitialized() {
     }
 
-    protected void mountSecureStorage() {
+    private void mountSecureStorage() {
         char[] passphraseChars = null;
         try {
             CharSequence passphrase = getPassPhraseTextField().getText();
@@ -161,7 +161,7 @@ abstract public class AbstractLoginActivity extends Activity implements ICacheWo
         startMainActivity();
     }
 
-    private void showProgressDialog(String message) {
+    protected void showProgressDialog(String message) {
         getProgressDialogHandler().showProgressDialog(message);
     }
 

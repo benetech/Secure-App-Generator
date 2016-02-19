@@ -42,16 +42,10 @@ import java.io.ByteArrayOutputStream;
  */
 public class CreateMartusCryptoKeyPairTask extends AsyncTask<Object, Void, Boolean> {
 
-    private static final String TAG = "CreateMartusCryptoKeyPairTask";
+    private static final String TAG = "CreateKeyPairTask";
     private MartusCrypto mMartusCrypto;
     private CreateMartusCryptoKeyPairCallback mCallback;
     private SharedPreferences mSettings;
-
-    /** Callback used by clients of this class */
-    public interface CreateMartusCryptoKeyPairCallback {
-        public void onCreateKeyPairError();
-        public void onCreateKeyPairSuccess();
-    }
 
     public CreateMartusCryptoKeyPairTask(MartusCrypto martusCrypto, CreateMartusCryptoKeyPairCallback callback, SharedPreferences settings) {
         mMartusCrypto = martusCrypto;

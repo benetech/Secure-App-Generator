@@ -108,6 +108,14 @@ public class MainApplication extends Collect {
     	}
     }
 
+    public void enableInactivityTimer() {
+        appTimeoutManager.enableInactivityTimer();
+    }
+
+    public void disableInactivityTimer() {
+        appTimeoutManager.disableInactivityTimer();
+    }
+
     public void resetInactivityTimer() {
         appTimeoutManager.resetInactivityTimer();
     }

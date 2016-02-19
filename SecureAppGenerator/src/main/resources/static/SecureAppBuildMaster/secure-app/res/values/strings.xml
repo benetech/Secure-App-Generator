@@ -39,6 +39,7 @@
     <string name="save">Save</string>
     <string name="syncing_form">Syncing Form</string>
     <string name="keypair_creation_failed">Failed to create Martus KeyPair</string>
+    <string name="progress_dialog_message_creating_martus_crytpo_keypair">Creating Security Keys</string>
     <string name="error_message_unexpected_error">Unexpected error</string>
     <string name="error_message_invalid_chars">Invalid characters used in password</string>
     <string name="error_message_move_failed">Problem moving failed record</string>

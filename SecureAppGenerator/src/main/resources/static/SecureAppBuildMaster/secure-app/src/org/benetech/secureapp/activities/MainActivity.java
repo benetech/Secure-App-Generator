@@ -150,6 +150,7 @@ public class MainActivity extends ListActivity implements ICacheWordSubscriber, 
 
         isActivityPaused = false;
         cacheWordActivityHandler.connectToService();
+        ((MainApplication)getApplication()).enableInactivityTimer();
     }
 
     @Override
@@ -210,6 +211,7 @@ public class MainActivity extends ListActivity implements ICacheWordSubscriber, 
     }
 
     private void startForm(Uri formUri) {
+        ((MainApplication)getApplication()).disableInactivityTimer();
         Intent intent = new Intent(this, MainFormEntryActivity.class);
         intent.setData(formUri);
 
@@ -494,6 +496,7 @@ public class MainActivity extends ListActivity implements ICacheWordSubscriber, 
         if (resultCode == Activity.RESULT_CANCELED) {
             messageId =  R.string.message_export_all_records_unsuccessful;
         }
+
         Toast.makeText(this, getString(messageId), Toast.LENGTH_LONG).show();
     }
 }

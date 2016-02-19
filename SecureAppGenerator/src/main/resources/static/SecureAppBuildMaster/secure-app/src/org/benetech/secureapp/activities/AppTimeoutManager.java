@@ -27,6 +27,7 @@ package org.benetech.secureapp.activities;
 
 import android.os.Handler;
 import android.os.Message;
+import android.util.Log;
 
 import org.benetech.secureapp.application.AppConfig;
 import org.benetech.secureapp.application.MainApplication;
@@ -39,12 +40,14 @@ import java.util.concurrent.TimeUnit;
  */
 public class AppTimeoutManager {
 
+    private static final String LOG_TAG = "AppTimeoutManager";
     private MainApplication mainApplication;
     private static Handler inactivityHandler;
     private LogOutProcess inactivityCallback;
     private LogoutActivityHandler logoutActivityHandler;
     private static final int MINUTES = 7;
     private static final long INACTIVITY_TIMEOUT_MILLIS = TimeUnit.MINUTES.toMillis(MINUTES);
+    private boolean isTimerEnabled;
 
     public AppTimeoutManager(MainApplication mainApplicationToUse) {
         mainApplication = mainApplicationToUse;
@@ -66,15 +69,44 @@ public class AppTimeoutManager {
     }
 
     public void resetInactivityTimer(){
-        inactivityHandler.postDelayed(inactivityCallback, INACTIVITY_TIMEOUT_MILLIS);
+        if (isTimerEnabled())
+            postDelayed();
     }
 
-    public void disableInactivityTimer(){
+    public void enableInactivityTimer() {
+        if (isTimerEnabled())
+            Log.e(LOG_TAG, "Timer is already enabled, calling this method twice is unnecessary!");
+
+        enableTimer();
+        postDelayed();
+    }
+
+    public void disableInactivityTimer() {
+        if (!isTimerEnabled())
+            Log.e(LOG_TAG, "Timer is already disabled, calling this method twice is unnecessary!");
+
+        disableTimer();
         inactivityHandler.removeCallbacksAndMessages(null);
+    }
+
+    private void postDelayed() {
+        inactivityHandler.postDelayed(inactivityCallback, INACTIVITY_TIMEOUT_MILLIS);
     }
 
     private MainApplication getMainApplication() {
         return mainApplication;
+    }
+
+    private boolean isTimerEnabled() {
+        return isTimerEnabled;
+    }
+
+    private void enableTimer() {
+        isTimerEnabled =  true;
+    }
+
+    private void disableTimer() {
+        isTimerEnabled = false;
     }
 
     private class EmptyHandler extends Handler {
@@ -94,6 +126,7 @@ public class AppTimeoutManager {
             logoutActivityHandler.finish();
 
             disableInactivityTimer();
+            Log.i(LOG_TAG, "SecureApp is now logging out due to inactivity");
         }
     }
 }

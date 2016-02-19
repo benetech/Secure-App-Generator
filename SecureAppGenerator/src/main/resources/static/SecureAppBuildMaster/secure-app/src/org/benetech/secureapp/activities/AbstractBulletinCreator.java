@@ -89,7 +89,7 @@ abstract public class AbstractBulletinCreator extends SherlockFragmentActivity i
 
         hqKey = new HeadquartersKey(getDesktopPublicKey());
 
-        SecureFileStorageManager secureFileStorageManager = ((MainApplication) getApplication()).getMountedSecureStorage();
+        SecureFileStorageManager secureFileStorageManager = getMainApplication().getMountedSecureStorage();
         Cursor cursor = getApplication().getContentResolver().query(FormsProviderAPI.FormsColumns.CONTENT_URI, null, null, null, null);
         cursor.moveToFirst();
         int columnIndex = cursor.getColumnIndex(FormsProviderAPI.FormsColumns.FORM_FILE_PATH);
@@ -110,6 +110,15 @@ abstract public class AbstractBulletinCreator extends SherlockFragmentActivity i
             finish();
             Toast.makeText(this, getString(R.string.loading_form), Toast.LENGTH_LONG).show();
         }
+
+        getMainApplication().disableInactivityTimer();
+    }
+
+    @Override
+    public void finish() {
+        getMainApplication().enableInactivityTimer();
+
+        super.finish();
     }
 
     protected Bulletin createBulletin() throws Exception {
@@ -171,7 +180,7 @@ abstract public class AbstractBulletinCreator extends SherlockFragmentActivity i
     }
 
     private String getXFormsModelAsString() throws Exception {
-        return new FormFromAssetFolderExtractor((MainApplication)getApplication()).getXFormsModelAsString();
+        return new FormFromAssetFolderExtractor(getMainApplication()).getXFormsModelAsString();
     }
 
     private String getXFormsInstanceContent(Context context) throws Exception{
@@ -242,6 +251,7 @@ abstract public class AbstractBulletinCreator extends SherlockFragmentActivity i
 
     protected void handleException(Exception e, int id, String msg) {
         indeterminateDialog.dismissAllowingStateLoss();
+        getMainApplication().enableInactivityTimer();
         finish();
         Toast.makeText(this, getString(id), Toast.LENGTH_LONG).show();
         Log.e(TAG, msg, e);
@@ -252,7 +262,7 @@ abstract public class AbstractBulletinCreator extends SherlockFragmentActivity i
     }
 
     protected SecureFile getAppDir() {
-        return ((MainApplication)getApplication()).getSecureStorageDir();
+        return getMainApplication().getSecureStorageDir();
     }
 
     protected MartusSecurity getSecurity() {
@@ -275,5 +285,9 @@ abstract public class AbstractBulletinCreator extends SherlockFragmentActivity i
     @Override
     public void loadingError(String errorMsg) {
         Log.e(TAG, errorMsg);
+    }
+
+    protected MainApplication getMainApplication() {
+        return (MainApplication) getApplication();
     }
 }
