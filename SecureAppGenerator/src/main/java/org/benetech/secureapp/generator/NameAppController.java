@@ -64,12 +64,6 @@ public class NameAppController extends WebMvcConfigurerAdapter
 			SecureAppGeneratorApplication.setSessionFromConfig(session, appConfig);
 			return WebPage.NAME_APP;
 		}
-		//TODO TEST:
-		SagLogger.logError(session, "TEST Logging Error: IGNORE");
-		SagLogger.logWarning(session, "TEST Logging Warning: IGNORE");
-		SagLogger.logDebug(session, "TEST Logging DEBUG: IGNORE");
-		SagLogger.logInfo(session, "TEST Logging Info: IGNORE");
-		
 		
 		model.addAttribute(SessionAttributes.APP_CONFIG, appConfig);
 		session.setAttribute(SessionAttributes.APP_CONFIG, appConfig);
