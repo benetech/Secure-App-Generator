@@ -92,7 +92,7 @@ dependencies  {
     compile (name:'martus-android-library-1.0_6-debug', ext:'aar')
 
     compile (name:'martus-android-server-comm-library-1.0_3-debug', ext:'aar')
-    compile (name:'opendatakit.collect-1.0_8-debug', ext:'aar')
+    compile (name:'opendatakit.collect-1.0_9-debug', ext:'aar')
     compile 'com.iangclifton.android:floatlabel:1.0.1'
     compile 'com.actionbarsherlock:actionbarsherlock:4.4.0@aar'
 }
