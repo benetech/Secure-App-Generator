@@ -139,10 +139,15 @@ public class BuildingApkController extends WebMvcConfigurerAdapter
 			Fdroid.copyApkToFDroid(session, renamedApk);
 		model.addAttribute(SessionAttributes.APP_CONFIG, config);
 		session.setAttribute(SessionAttributes.APP_CONFIG, config);
-		File rootDirectory = secureAppBuildDir.getParentFile().getParentFile();
-		LogMemoryCheck(session, "After Build Finished", rootDirectory);
 
-		//TODO this may cause issues on Server.
+		cleanupBuildDirectory(session, secureAppBuildDir, appXFormFileToUse);
+	}
+
+	private static void cleanupBuildDirectory(HttpSession session,
+			File secureAppBuildDir, File appXFormFileToUse)
+	{
+		File rootDirectory = secureAppBuildDir.getParentFile().getParentFile();
+		LogMemoryCheck(session, "Before Delete BuildDir", rootDirectory);
 		try
 		{
 			if(secureAppBuildDir != null)
