@@ -139,17 +139,21 @@ public class BuildingApkController extends WebMvcConfigurerAdapter
 			Fdroid.copyApkToFDroid(session, renamedApk);
 		model.addAttribute(SessionAttributes.APP_CONFIG, config);
 		session.setAttribute(SessionAttributes.APP_CONFIG, config);
-	//TODO this may cause issues on Server.
-//		try
-//		{
-//			if(secureAppBuildDir != null)
-//				FileUtils.deleteDirectory(secureAppBuildDir.getParentFile());
-//			appXFormFileToUse.delete();
-//		}
-//		catch (IOException e)
-//		{
-//			SagLogger.logException(session, e);			
-//		}			
+		File rootDirectory = secureAppBuildDir.getParentFile().getParentFile();
+		LogMemoryCheck(session, "After Build Finished", rootDirectory);
+
+		//TODO this may cause issues on Server.
+		try
+		{
+			if(secureAppBuildDir != null)
+				FileUtils.deleteDirectory(secureAppBuildDir.getParentFile());
+			appXFormFileToUse.delete();
+		}
+		catch (IOException e)
+		{
+			SagLogger.logException(session, e);			
+		}	
+		LogMemoryCheck(session, "After Delete Build", rootDirectory);
 	}
 	
 
@@ -163,8 +167,47 @@ public class BuildingApkController extends WebMvcConfigurerAdapter
 	static private File configureSecureAppBuildDirectory(HttpSession session) throws IOException
 	{
 		File baseBuildDir = getSessionBuildDirectory();
+		LogMemoryCheck(session, "Before File copy", baseBuildDir);
 		copyDefaultBuildFilesToStagingArea(session, baseBuildDir);
+		LogMemoryCheck(session, "After File copy", baseBuildDir);
 		return new File(baseBuildDir, SECURE_APP_PROJECT_DIRECTORY);
+	}
+
+	private static void LogMemoryCheck(HttpSession session, String description, File baseBuildDir)
+	{
+		long totalSpace = getMegaBytes(baseBuildDir.getTotalSpace());
+		long freeSpace = getMegaBytes(baseBuildDir.getFreeSpace());
+		long usableSpace = getMegaBytes(baseBuildDir.getUsableSpace());
+		
+		int processors = Runtime.getRuntime().availableProcessors();
+		long freeMemory = getMegaBytes(Runtime.getRuntime().freeMemory());
+		long maxMemory = Runtime.getRuntime().maxMemory();
+		String jvmMemory = (maxMemory == Long.MAX_VALUE ? "no limit" : String.valueOf(getMegaBytes(maxMemory)));
+		long totalMemory = getMegaBytes(Runtime.getRuntime().totalMemory());
+		StringBuilder memoryUsed = new StringBuilder();
+		memoryUsed.append("MEMORY CHECK: ");
+		memoryUsed.append(description);
+		memoryUsed.append(": Processors = ");
+		memoryUsed.append(processors);
+		memoryUsed.append(", Total Memory = ");
+		memoryUsed.append(totalMemory);
+		memoryUsed.append(" MB, JVM Memory = ");
+		memoryUsed.append(jvmMemory);
+		memoryUsed.append(" MB, Free Memory = ");
+		memoryUsed.append(freeMemory);
+		memoryUsed.append(" MB -- Disk Total Space = ");
+		memoryUsed.append(totalSpace);
+		memoryUsed.append(" MB, Disk Usable Space = ");
+		memoryUsed.append(usableSpace);
+		memoryUsed.append(" MB, Disk Free Space = ");
+		memoryUsed.append(freeSpace);
+		memoryUsed.append(" MB.");
+		SagLogger.logInfo(session, memoryUsed.toString());
+	}
+
+	private static long getMegaBytes(long size)
+	{
+		return size / 1048576;
 	}
 
 	static private void copyFormToApkBuild(File baseBuildDir, File appXFormFile) throws IOException
