@@ -1,4 +1,4 @@
-xforms/Journalist_reporter_Example.xml
+xforms/Journalist_Reporter_Example.xml
 xforms/Martus_Customization_Example.xml
 xforms/Martus_Standard_Fields.xml
 xforms/UN_Special_Rapporteur.xml
