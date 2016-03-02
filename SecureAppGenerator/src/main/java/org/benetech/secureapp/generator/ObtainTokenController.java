@@ -141,16 +141,12 @@ public class ObtainTokenController extends WebMvcConfigurerAdapter
 	private void updateServerConfiguration(HttpSession session)
 	{
         AppConfiguration config = (AppConfiguration)session.getAttribute(SessionAttributes.APP_CONFIG);
-		if(ServerConstants.usingRealMartusServer())
-			config.setServerName(SecureAppGeneratorApplication.getMessage("text.summary_production_server_name"));
-		else
-			config.setServerName(SecureAppGeneratorApplication.getMessage("text.summary_development_server_name"));
-		config.setServerIP(ServerConstants.getCurrentServerIp());
+		ServerConstants.setServerConfig(config);
 		config.setServerPublicKey(ServerConstants.getCurrentSeverKey());
 		session.setAttribute(SessionAttributes.APP_CONFIG, config);
 	}
 
-	private ClientSideNetworkInterface createXmlRpcNetworkInterfaceHandler()
+	private static ClientSideNetworkInterface createXmlRpcNetworkInterfaceHandler()
 	{
 		TransportWrapper transport = new PassThroughTransportWrapper();
 		String ourServer = ServerConstants.getCurrentServerIp();
@@ -159,7 +155,7 @@ public class ObtainTokenController extends WebMvcConfigurerAdapter
 	}
 
 	// TODO add unit tests
-	private void getClientPublicKeyFromToken(HttpSession session, AppConfiguration appConfig) throws Exception
+	static public void getClientPublicKeyFromToken(HttpSession session, AppConfiguration appConfig) throws Exception
 	{
         AppConfiguration config = (AppConfiguration)session.getAttribute(SessionAttributes.APP_CONFIG);
  		try

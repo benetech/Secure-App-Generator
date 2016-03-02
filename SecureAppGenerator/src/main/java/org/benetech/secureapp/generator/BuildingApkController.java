@@ -210,7 +210,7 @@ public class BuildingApkController extends WebMvcConfigurerAdapter
 		SagLogger.logInfo(session, memoryUsed.toString());
 	}
 
-	private static long getMegaBytes(long size)
+	public static long getMegaBytes(long size)
 	{
 		return size / 1048576;
 	}

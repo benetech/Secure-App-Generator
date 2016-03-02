@@ -47,15 +47,8 @@ public class WelcomePageController extends WebMvcConfigurerAdapter
 	private void initialSetup(HttpSession session) throws Exception
 	{
 		SecureAppGeneratorApplication.setInvalidResults(session);
-		setupDefaultSessionAttributes(session);
+		SecureAppGeneratorApplication.setupDefaultSessionAttributes(session);
 	}
-
-	public static void setupDefaultSessionAttributes(HttpSession session) throws Exception
-	{
-		AppConfiguration defaultConfig = new AppConfiguration();
-		SecureAppGeneratorApplication.setDefaultIconForSession(session, defaultConfig);
-		SecureAppGeneratorApplication.setSessionFromConfig(session, defaultConfig);
- 	}
 
 	@RequestMapping(value=WebPage.WELCOME, method=RequestMethod.GET)
     public String directError(HttpSession session, Model model) 

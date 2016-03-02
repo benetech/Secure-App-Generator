@@ -75,4 +75,15 @@ public class ServerConstants {
     			return true;
    		return false;
     }
+
+	static public void setServerConfig(AppConfiguration config)
+	{
+		if(ServerConstants.usingRealMartusServer())
+			config.setServerName(SecureAppGeneratorApplication.getMessage("text.summary_production_server_name"));
+		else
+			config.setServerName(SecureAppGeneratorApplication.getMessage("text.summary_development_server_name"));
+		config.setServerIP(ServerConstants.getCurrentServerIp());
+	}
+
+    
 }

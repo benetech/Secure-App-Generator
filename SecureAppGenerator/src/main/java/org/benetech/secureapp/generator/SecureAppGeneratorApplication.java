@@ -87,6 +87,13 @@ public class SecureAppGeneratorApplication extends SpringBootServletInitializer
 		setInvalidResults(session, getLocalizedErrorMessage(msgId, e));
 	}
 
+	public static void setupDefaultSessionAttributes(HttpSession session) throws Exception
+	{
+		AppConfiguration defaultConfig = new AppConfiguration();
+		SecureAppGeneratorApplication.setDefaultIconForSession(session, defaultConfig);
+		SecureAppGeneratorApplication.setSessionFromConfig(session, defaultConfig);
+ 	}
+
 	static void setDefaultIconForSession(HttpSession session, AppConfiguration config) throws Exception
 	{
 		config.setAppIconLocation(DEFAULT_APP_ICON_LOCATION);
