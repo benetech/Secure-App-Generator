@@ -96,6 +96,7 @@ public class BuildingApkController extends WebMvcConfigurerAdapter
 		if(config == null)
 		{
 			SagLogger.logError(session, "isAPKBuilt called with AppConfiguration:null");
+			SecureAppGeneratorApplication.setInvalidResults(session, "Internal Error");
 			return AppConfiguration.APK_BUILT_ERROR;
 		}
 		return config.getApkBuilt();
