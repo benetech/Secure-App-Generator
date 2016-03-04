@@ -42,7 +42,7 @@ public class AppConfiguration
 	private static final char UNDERSCORE_CHAR = '_';
 	private static final char SPACE_CHAR = ' ';
     private static final String APK_NOT_BUILT = "false";
-    private static final String APK_BUILT_ERROR = "error";
+    static final String APK_BUILT_ERROR = "error";
 	private static final int SHORT_NAME_MAX_CHARACTER_LIMIT = 15;
 	
 	private String appName;

@@ -87,7 +87,11 @@ public class BuildingApkController extends WebMvcConfigurerAdapter
 	@ResponseBody
 	public String isAPKBuilt(HttpSession session)
 	{
+		if(session == null)
+			return AppConfiguration.APK_BUILT_ERROR;
 		AppConfiguration config = (AppConfiguration) session.getAttribute(SessionAttributes.APP_CONFIG);
+		if(config == null)
+			return AppConfiguration.APK_BUILT_ERROR;
 		return config.getApkBuilt();
 	}
 
