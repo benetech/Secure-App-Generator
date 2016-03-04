@@ -62,14 +62,13 @@ public class SmokeTestPageController extends WebMvcConfigurerAdapter
 	@RequestMapping(value=WebPage.SMOKETEST, method=RequestMethod.GET)
 	public String smokeTest(HttpSession session, Model model) throws Exception 
     {
-		SagLogger.logInfo(session, "SMOKE TEST Request");
 		SecureAppGeneratorApplication.setInvalidResults(session);
 		SecureAppGeneratorApplication.setupDefaultSessionAttributes(session);
 		JSONObject smokeResults = new JSONObject();
 		AppConfiguration config = new AppConfiguration();
 		smokeResults.append(KEY_SAG_VERSION, config.getApkVersionNumberFull());
 		setMartusServerUsed(config, smokeResults);
-		testMartusTokenServer(session, config, smokeResults);
+		//testMartusTokenServer(session, config, smokeResults);
 		testAmazonS3Server(session, smokeResults);
 		testFreeDiskSpace(session, smokeResults);
 		File originalBuildDirectory = new File(SecureAppGeneratorApplication.getOriginalBuildDirectory());
