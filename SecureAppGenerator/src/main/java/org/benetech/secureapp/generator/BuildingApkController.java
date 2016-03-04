@@ -85,7 +85,7 @@ public class BuildingApkController extends WebMvcConfigurerAdapter
     
     @RequestMapping(value = "/buildingApk/isAPKBuilt", method = RequestMethod.POST)
 	@ResponseBody
-	public String isAPKBuilt(HttpSession session)
+	public String isAPKBuilt(HttpSession session) throws Exception
 	{
 		if(session == null)
 		{
@@ -96,6 +96,7 @@ public class BuildingApkController extends WebMvcConfigurerAdapter
 		if(config == null)
 		{
 			SagLogger.logError(session, "isAPKBuilt called with AppConfiguration:null");
+			SecureAppGeneratorApplication.setupDefaultSessionAttributes(session);
 			SecureAppGeneratorApplication.setInvalidResults(session, "Internal Error");
 			return AppConfiguration.APK_BUILT_ERROR;
 		}

@@ -69,11 +69,11 @@ public class SmokeTestPageController extends WebMvcConfigurerAdapter
 		smokeResults.append(KEY_SAG_VERSION, config.getApkVersionNumberFull());
 		setMartusServerUsed(config, smokeResults);
 		//testMartusTokenServer(session, config, smokeResults);
-		testAmazonS3Server(session, smokeResults);
+		//testAmazonS3Server(session, smokeResults);
 		testFreeDiskSpace(session, smokeResults);
-		File originalBuildDirectory = new File(SecureAppGeneratorApplication.getOriginalBuildDirectory());
-		testFilesExist(session, MASTER_BUILD_FILES, originalBuildDirectory,  smokeResults);
-		testFilesExist(session, SAG_FILES, SecureAppGeneratorApplication.getStaticWebDirectory(), smokeResults);
+		//File originalBuildDirectory = new File(SecureAppGeneratorApplication.getOriginalBuildDirectory());
+		//testFilesExist(session, MASTER_BUILD_FILES, originalBuildDirectory,  smokeResults);
+		//testFilesExist(session, SAG_FILES, SecureAppGeneratorApplication.getStaticWebDirectory(), smokeResults);
 
 		return smokeResults.toString();
     }
