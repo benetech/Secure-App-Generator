@@ -65,6 +65,7 @@ public class ObtainTokenController extends WebMvcConfigurerAdapter
 	private static final String SAG_KEYPAIR_DIRECTORY = SecureAppGeneratorApplication.getStaticWebDirectory() + "/keys";
 	private static final String SAG_KEYPAIR_FILE = "sagKeyPair.dat";
 	private static final String SAG_KEYPAIR_PASSWORD = "12SaGPassword";
+	private static MartusSecurity security = null;
 
 	@RequestMapping(value=WebPage.OBTAIN_CLIENT_TOKEN, method=RequestMethod.GET)
     public String directError(HttpSession session, Model model) 
@@ -160,9 +161,10 @@ public class ObtainTokenController extends WebMvcConfigurerAdapter
         AppConfiguration config = (AppConfiguration)session.getAttribute(SessionAttributes.APP_CONFIG);
  		try
 		{
+ 			if(security == null)
+ 				security = new MartusSecurity();
  			//TODO do this once not ever time this page gets displayed
- 			MartusSecurity security = new MartusSecurity();
- 			ClientSideNetworkGateway gateway = new ClientSideNetworkGateway(createXmlRpcNetworkInterfaceHandler());
+  			ClientSideNetworkGateway gateway = new ClientSideNetworkGateway(createXmlRpcNetworkInterfaceHandler());
  			
  			File keyPair = new File(SAG_KEYPAIR_DIRECTORY, SAG_KEYPAIR_FILE);
 			boolean createNewKeypair = true;
