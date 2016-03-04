@@ -174,7 +174,7 @@ public class AmazonS3Utils
 		String bucket = System.getenv(AMAZON_S3_DOWNLOAD_BUCKET_ENV);
 		if(bucket != null && !bucket.isEmpty())
 		{
-			SagLogger.logInfo(null, "Override S3 Download Bucket =" + bucket);
+			SagLogger.logDebug(null, "Override S3 Download Bucket =" + bucket);
 			return bucket;
 		}
 		SAGENV env = SecureAppGeneratorApplication.getSagEnvironment();
