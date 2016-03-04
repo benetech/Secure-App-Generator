@@ -88,10 +88,16 @@ public class BuildingApkController extends WebMvcConfigurerAdapter
 	public String isAPKBuilt(HttpSession session)
 	{
 		if(session == null)
+		{
+			SagLogger.logError(session, "isAPKBuilt called with HttpSession:null");
 			return AppConfiguration.APK_BUILT_ERROR;
+		}
 		AppConfiguration config = (AppConfiguration) session.getAttribute(SessionAttributes.APP_CONFIG);
 		if(config == null)
+		{
+			SagLogger.logError(session, "isAPKBuilt called with AppConfiguration:null");
 			return AppConfiguration.APK_BUILT_ERROR;
+		}
 		return config.getApkBuilt();
 	}
 
