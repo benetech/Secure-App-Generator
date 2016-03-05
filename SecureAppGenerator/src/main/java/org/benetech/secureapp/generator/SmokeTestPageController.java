@@ -62,6 +62,13 @@ public class SmokeTestPageController extends WebMvcConfigurerAdapter
 	@RequestMapping(value=WebPage.SMOKETEST, method=RequestMethod.GET)
 	public String smokeTest(HttpSession session, Model model) throws Exception 
     {
+		return "No Smoke Test";
+		//return getSmokeResults(session);
+    }
+
+	private String getSmokeResults(HttpSession session) throws Exception,
+			JSONException
+	{
 		SecureAppGeneratorApplication.setInvalidResults(session);
 		SecureAppGeneratorApplication.setupDefaultSessionAttributes(session);
 		JSONObject smokeResults = new JSONObject();
@@ -76,7 +83,7 @@ public class SmokeTestPageController extends WebMvcConfigurerAdapter
 		testFilesExist(session, SAG_FILES, SecureAppGeneratorApplication.getStaticWebDirectory(), smokeResults);
 
 		return smokeResults.toString();
-    }
+	}
 
 	private void setMartusServerUsed(AppConfiguration config, JSONObject result) throws JSONException
 	{
