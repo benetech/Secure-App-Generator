@@ -33,10 +33,10 @@ import java.util.List;
 
 public class AppConfiguration
 {
-	private static final String VERSION = "SAG Beta 109";
+	private static final String VERSION = "SAG Beta 110";
 	private static final String COPY_RIGHT = "This website is &#169; Copyright 2015-2016, Beneficent Technology, Inc.";
 	private static final char DASH_CHAR = '-';
-	private static final String APK_EXTENSION = ".apk";
+	public static final String APK_EXTENSION = ".apk";
 	private static final String DEBUG_APK_EXTENSION = "-release" + APK_EXTENSION;
 	private static final char DOT_CHAR = '.';
 	private static final char UNDERSCORE_CHAR = '_';
@@ -321,13 +321,19 @@ public class AppConfiguration
 	
 	public String getApkVersionNumberFull()
 	{
+		StringBuilder versionNumber = new StringBuilder(getApkPartialVersionNumber());
+		versionNumber.append(DOT_CHAR);
+		versionNumber.append(apkSagVersionBuild);
+		return versionNumber.toString();
+	}
+
+	public String getApkPartialVersionNumber()
+	{
 		StringBuilder versionNumber = new StringBuilder(apkVersionMajor);
 		versionNumber.append(DOT_CHAR);
 		versionNumber.append(apkVersionMinor);
 		versionNumber.append(DOT_CHAR);
 		versionNumber.append(apkVersionBuild);
-		versionNumber.append(DOT_CHAR);
-		versionNumber.append(apkSagVersionBuild);
 		return versionNumber.toString();
 	}
 
@@ -348,6 +354,15 @@ public class AppConfiguration
 		apkName.append(getApkVersionNumberFull());
         apkName.append(APK_EXTENSION);
 		return apkName.toString();
+	}
+
+	public String getApkNameWithoutSagBuild()
+	{
+        String appNameWithoutSpaces = getAppNameWithoutSpaces();
+        StringBuilder apkName = new StringBuilder(appNameWithoutSpaces);
+        apkName.append(DASH_CHAR);
+		apkName.append(getApkPartialVersionNumber());
+ 		return apkName.toString();
 	}
 
 	protected String getAppNameWithoutSpaces()

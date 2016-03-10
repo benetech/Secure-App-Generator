@@ -134,7 +134,7 @@ public class ObtainTokenController extends WebMvcConfigurerAdapter
 	{
         AppConfiguration config = (AppConfiguration)session.getAttribute(SessionAttributes.APP_CONFIG);
         AppConfiguration.setBuildVersionFromGeneratedSettingsFile(config);
-        String uniqueBuildNumber = AmazonS3Utils.getUniqueBuildNumber(session, config.getApkName());
+        String uniqueBuildNumber = AmazonS3Utils.getUniqueBuildNumber(session, config.getApkNameWithoutSagBuild());
         config.setApkSagVersionBuild(uniqueBuildNumber);
  		session.setAttribute(SessionAttributes.APP_CONFIG, config);
 	}

@@ -124,7 +124,7 @@ public class AmazonS3Utils
 	{
 		try
 		{
-			String partialApkName = apkNameWithNoSagBuild.substring(0, apkNameWithNoSagBuild.length()-5).toLowerCase();
+			String partialApkName = apkNameWithNoSagBuild.toLowerCase();
 			int greatestBuildNumberFound = 0;
 
 			AmazonS3 s3 = getS3();
@@ -149,8 +149,8 @@ public class AmazonS3Utils
 					String amazonObjectPartialName = AMAZON_DOWNLOADS_DIRECTORY + partialApkName;
 					if(currentApkName.startsWith(amazonObjectPartialName))
 					{
-						int buildStartPos = amazonObjectPartialName.length();
-						int buildEndPos = currentApkName.length()-4;
+						int buildStartPos = amazonObjectPartialName.length()+1;
+						int buildEndPos = currentApkName.length()-AppConfiguration.APK_EXTENSION.length();
 						String currentBuildNumberString = currentApkName.substring(buildStartPos, buildEndPos);
 						int currentBuildNumber = Integer.parseInt(currentBuildNumberString);
 						if(currentBuildNumber > greatestBuildNumberFound)
