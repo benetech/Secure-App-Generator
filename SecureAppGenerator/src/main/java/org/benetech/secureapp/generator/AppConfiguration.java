@@ -33,7 +33,7 @@ import java.util.List;
 
 public class AppConfiguration
 {
-	private static final String VERSION = "SAG Beta 111 (nologging)";
+	private static final String VERSION = "SAG Beta 112";
 	private static final String COPY_RIGHT = "This website is &#169; Copyright 2015-2016, Beneficent Technology, Inc.";
 	private static final char DASH_CHAR = '-';
 	public static final String APK_EXTENSION = ".apk";

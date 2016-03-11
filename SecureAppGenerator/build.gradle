@@ -70,7 +70,7 @@ dependencies {
     compile files('./thirdparty/JavaRosa/bin/javarosa-libraries.jar')
     compile files('./thirdparty/ws-commons-util-1.0.2.jar')
 	compile files('./thirdparty/imgscalr-lib-4/imgscalr-lib-4.2.jar')
-    compile files('./thirdparty/cloudwatch-backlog-appender-1.36.jar')
+//    compile files('./thirdparty/cloudwatch-backlog-appender-1.36.jar')
 	
  	compile 'net.sf.kxml:kxml2:2.3.0'
 	compile 'org.apache.xmlrpc:xmlrpc-common:3.1.3'
