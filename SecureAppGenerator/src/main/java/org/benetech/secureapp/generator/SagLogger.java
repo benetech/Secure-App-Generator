@@ -36,32 +36,32 @@ import org.apache.log4j.Logger;
 
 public class SagLogger
 {
-	//public static Logger log = Logger.getLogger("SecureAppGenerator");
+	public static Logger log = Logger.getLogger("SecureAppGenerator");
 	
 	
 	public static synchronized void logDebug(HttpSession session, String text)
 	{
-		//log.debug(getMsgIncludingSessionIdIfPresent(session, text));
+		log.debug(getMsgIncludingSessionIdIfPresent(session, text));
 	}
 
 	public static synchronized void logInfo(HttpSession session, String text)
 	{
-		//log.info(getMsgIncludingSessionIdIfPresent(session, text));
+		log.info(getMsgIncludingSessionIdIfPresent(session, text));
 	}
 
 	public static void logException(HttpSession session, Exception e)
 	{
-		//log.error(getMsgIncludingSessionIdIfPresent(session, "Exception"), e);
+		log.error(getMsgIncludingSessionIdIfPresent(session, "Exception"), e);
 	}
 
 	public static synchronized void logError(HttpSession session, String errorMsg)
 	{
-		//log.error(getMsgIncludingSessionIdIfPresent(session, errorMsg));
+		log.error(getMsgIncludingSessionIdIfPresent(session, errorMsg));
 	}
 
 	public static synchronized void logWarning(HttpSession session, String warningMsg)
 	{
-		//log.warn(getMsgIncludingSessionIdIfPresent(session, warningMsg));
+		log.warn(getMsgIncludingSessionIdIfPresent(session, warningMsg));
 	}
 	
 	public static synchronized void logProcess(HttpSession session, Process p) throws IOException
