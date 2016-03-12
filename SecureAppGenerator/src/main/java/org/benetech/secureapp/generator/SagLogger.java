@@ -53,7 +53,7 @@ public class SagLogger
 	{
 		log.error(getMsgIncludingSessionIdIfPresent(session, "Exception"), e);
 	}
--
+
 	public static synchronized void logError(HttpSession session, String errorMsg)
 	{
 		log.error(getMsgIncludingSessionIdIfPresent(session, errorMsg));
