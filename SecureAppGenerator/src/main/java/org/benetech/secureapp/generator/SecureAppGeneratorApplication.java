@@ -203,9 +203,9 @@ public class SecureAppGeneratorApplication extends SpringBootServletInitializer
 		executor.setWatchdog(watchdog);
 		executor.execute(cmdLine, resultHandler);
 
-		int exitValue = resultHandler.waitFor();
+		resultHandler.waitFor();
 
-		return exitValue;
+		return resultHandler.getExitValue();
 	}
 	
 	static public String getLocalizedErrorMessage(String msgId)
