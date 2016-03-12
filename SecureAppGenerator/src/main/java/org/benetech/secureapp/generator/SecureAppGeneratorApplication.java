@@ -191,7 +191,7 @@ public class SecureAppGeneratorApplication extends SpringBootServletInitializer
     		writer.close();
 	}
 
-	static public int executeCommand(HttpSession session, String command, File initialDirectory)
+	static public int executeCommand(HttpSession session, String command, File initialDirectory) throws IOException, InterruptedException
 	{
 		CommandLine cmdLine = new CommandLine(command);
 
