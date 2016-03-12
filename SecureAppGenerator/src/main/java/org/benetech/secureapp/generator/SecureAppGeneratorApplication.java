@@ -128,7 +128,7 @@ public class SecureAppGeneratorApplication extends SpringBootServletInitializer
 	static String getGadleDirectory()
 	{
    		String dataRootDirectory = System.getenv(SecureAppGeneratorApplication.GRADLE_HOME_ENV);
-   		SagLogger.logDebug(null, "Gradle Dir:"+dataRootDirectory);
+   		SagLogger.logDebug(null, "Gradle Dir:" + dataRootDirectory);
    		return dataRootDirectory;
 	}
 	
@@ -185,14 +185,21 @@ public class SecureAppGeneratorApplication extends SpringBootServletInitializer
     		writer.close();
 	}
 
-	static public int executeCommand(HttpSession session, String command, File initialDirectory) throws IOException, InterruptedException
+	static public int executeCommand(HttpSession session, String command, File initialDirectory)
 	{
-		SagLogger.logDebug(session, "Exec Command:" + command);
-		Runtime rt = Runtime.getRuntime();
-		Process p = rt.exec(command, null, initialDirectory);
-		SagLogger.logProcess(session, p);		
-		p.waitFor();
-		return p.exitValue();
+		CommandLine cmdLine = new CommandLine(command);
+
+		DefaultExecuteResultHandler resultHandler = new DefaultExecuteResultHandler();
+
+		// destory errant process if it lives for longer than 10 minutes
+		ExecuteWatchdog watchdog = new ExecuteWatchdog(60*10*1000);
+		Executor executor = new DefaultExecutor();
+		executor.setWatchdog(watchdog);
+		executor.execute(cmdLine, resultHandler);
+
+		int exitValue = resultHandler.waitFor();
+
+		return exitValue;
 	}
 	
 	static public String getLocalizedErrorMessage(String msgId)
