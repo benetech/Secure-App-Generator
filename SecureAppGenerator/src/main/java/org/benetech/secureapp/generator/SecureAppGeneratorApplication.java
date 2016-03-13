@@ -196,7 +196,7 @@ public class SecureAppGeneratorApplication extends SpringBootServletInitializer
 		/** TODO: This should not really be done synchronously for a number of reasons, commons-exec provides a
 		 *  number of different ways to go about running async processes
 		 */
-		CommandLine cmdLine = new CommandLine(command);
+		CommandLine cmdLine = CommandLine.parse(command);
 		DefaultExecutor executor = new DefaultExecutor();
 		int exitStatus = executor.execute(cmdLine);
 
