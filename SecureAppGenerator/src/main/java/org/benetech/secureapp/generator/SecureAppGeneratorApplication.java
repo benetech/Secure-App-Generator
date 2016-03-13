@@ -193,19 +193,14 @@ public class SecureAppGeneratorApplication extends SpringBootServletInitializer
 
 	static public int executeCommand(HttpSession session, String command, File initialDirectory) throws IOException, InterruptedException
 	{
+		/** TODO: This should not really be done synchronously for a number of reasons, commons-exec provides a
+		 *  number of different ways to go about running async processes
+		 */
 		CommandLine cmdLine = new CommandLine(command);
+		DefaultExecutor executor = new DefaultExecutor();
+		int exitStatus = executor.execute(cmdLine);
 
-		DefaultExecuteResultHandler resultHandler = new DefaultExecuteResultHandler();
-
-		// destory errant process if it lives for longer than 10 minutes
-		ExecuteWatchdog watchdog = new ExecuteWatchdog(60*10*1000);
-		Executor executor = new DefaultExecutor();
-		executor.setWatchdog(watchdog);
-		executor.execute(cmdLine, resultHandler);
-
-		resultHandler.waitFor();
-
-		return resultHandler.getExitValue();
+		return exitStatus;
 	}
 	
 	static public String getLocalizedErrorMessage(String msgId)
