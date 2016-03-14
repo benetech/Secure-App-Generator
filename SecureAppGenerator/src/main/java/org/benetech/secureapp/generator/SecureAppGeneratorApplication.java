@@ -38,6 +38,8 @@ import java.nio.file.Files;
 
 import javax.servlet.http.HttpSession;
 
+import org.apache.commons.exec.CommandLine;
+import org.apache.commons.exec.DefaultExecutor;
 import org.martus.common.Base64XmlOutputStream;
 import org.martus.common.XmlWriterFilter;
 import org.springframework.boot.SpringApplication;
@@ -49,12 +51,6 @@ import org.springframework.context.i18n.LocaleContextHolder;
 import org.springframework.context.support.ReloadableResourceBundleMessageSource;
 import org.springframework.core.io.support.PathMatchingResourcePatternResolver;
 import org.springframework.web.multipart.MultipartFile;
-
-import org.apache.commons.exec.CommandLine;
-import org.apache.commons.exec.DefaultExecuteResultHandler;
-import org.apache.commons.exec.DefaultExecutor;
-import org.apache.commons.exec.ExecuteWatchdog;
-import org.apache.commons.exec.Executor;
 
 @SpringBootApplication
 public class SecureAppGeneratorApplication extends SpringBootServletInitializer 
@@ -266,6 +262,8 @@ public class SecureAppGeneratorApplication extends SpringBootServletInitializer
 			return SAGENV.staging;
 		if(enviornment.toLowerCase().contains("live"))
 			return SAGENV.live;
+		if(enviornment.toLowerCase().contains("dev"))
+			return SAGENV.dev;
 		return SAGENV.undefined;
 	}
 	public static void logProductionEnviornmentUsed(HttpSession session)
