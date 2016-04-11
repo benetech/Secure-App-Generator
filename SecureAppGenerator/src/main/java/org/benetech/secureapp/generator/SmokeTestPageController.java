@@ -62,7 +62,7 @@ public class SmokeTestPageController extends WebMvcConfigurerAdapter
 	@RequestMapping(value=WebPage.SMOKETEST, method=RequestMethod.GET)
 	public String smokeTest(HttpSession session, Model model) throws Exception 
     {
-		SagLogger.logInfo(session, "SMOKE TEST Request");
+		SagLogger.logDebug(session, "SMOKE TEST Request");
 		SecureAppGeneratorApplication.setInvalidResults(session);
 		SecureAppGeneratorApplication.setupDefaultSessionAttributes(session);
 		JSONObject smokeResults = new JSONObject();
