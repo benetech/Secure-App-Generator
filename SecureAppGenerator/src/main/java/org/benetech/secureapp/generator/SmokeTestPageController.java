@@ -38,8 +38,8 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurerAdapter;
 
-import com.amazonaws.util.json.JSONException;
-import com.amazonaws.util.json.JSONObject;
+import org.json.JSONObject;
+
 
 @Controller
 public class SmokeTestPageController extends WebMvcConfigurerAdapter
@@ -79,7 +79,7 @@ public class SmokeTestPageController extends WebMvcConfigurerAdapter
 		return smokeResults.toString();
     }
 
-	private void setMartusServerUsed(AppConfiguration config, JSONObject result) throws JSONException
+	private void setMartusServerUsed(AppConfiguration config, JSONObject result) throws Exception
 	{
 		ServerConstants.setServerConfig(config);
 		if(ServerConstants.usingRealMartusServer())
